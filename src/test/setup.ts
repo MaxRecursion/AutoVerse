@@ -21,3 +21,6 @@ if (!('ResizeObserver' in window)) {
     disconnect() {}
   }
 }
+
+// jsdom does not implement scrolling; pages that bring a target into view only need it not to throw.
+if (!Element.prototype.scrollIntoView) Element.prototype.scrollIntoView = () => {}

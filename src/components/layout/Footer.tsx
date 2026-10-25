@@ -11,6 +11,8 @@ export function Footer() {
         </div>
         <nav aria-label="Footer" className="flex gap-4 text-xs">
           <Link to="/learn" className="hover:text-paper">Topic index</Link>
+          <Link to="/pioneers" className="hover:text-paper">Pioneers</Link>
+          <Link to="/map" className="hover:text-paper">System map</Link>
           <Link to="/about" className="hover:text-paper">Sources &amp; credits</Link>
           <Link to="/progress" className="hover:text-paper">Local progress</Link>
         </nav>

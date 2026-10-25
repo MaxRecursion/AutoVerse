@@ -5,8 +5,17 @@
   "summary": "Brake harder than the tyres can grip and a wheel locks: the car slides, stops later and will not steer. ABS watches every wheel’s speed and, many times a second, eases and restores the pressure to keep each tyre turning near its best grip.",
   "categoryId": "brakes",
   "difficulty": "intermediate",
+  "layer": "engineering",
   "estimatedDuration": 14,
-  "tags": ["brakes", "ABS", "anti-lock", "wheel slip", "grip", "wheel-speed sensor", "safety"],
+  "tags": [
+    "brakes",
+    "ABS",
+    "anti-lock",
+    "wheel slip",
+    "grip",
+    "wheel-speed sensor",
+    "safety"
+  ],
   "learningObjectives": [
     "Explain what wheel slip is and why a locked wheel brakes worse and cannot steer",
     "Describe how wheel-speed sensors let the ABS computer spot a wheel starting to lock",
@@ -23,7 +32,10 @@
       "beginner": "On this wet road the driver presses harder than the tyre can grip. As the pressure rises, the brake asks for more than the road can give.",
       "technical": "Brake demand rises with pressure; at 1.2 g of demand against μ_peak g = 0.7 g of grip, the limit is reached partway up the pressure ramp. From here on extra pressure cannot make extra stopping force — it can only make the wheel slip more.",
       "cue": "grip-limit",
-      "componentIds": ["braked-wheel", "brake-caliper"]
+      "componentIds": [
+        "braked-wheel",
+        "brake-caliper"
+      ]
     },
     {
       "id": "wheel-locks",
@@ -31,7 +43,10 @@
       "beginner": "With nothing to stop it, the wheel stops turning while the car keeps going. The tyre slides on the road — watch the sidewall mark freeze while the road keeps moving.",
       "technical": "Excess torque spins the wheel down within about a tenth of a second; slip goes to 100 %. Friction falls to the sliding value (μ_slide = 0.5 here), so deceleration drops to 0.5 g. With no rolling there is no lateral grip either: steering input does nothing.",
       "cue": "wheel-lock",
-      "componentIds": ["braked-wheel", "brake-disc"]
+      "componentIds": [
+        "braked-wheel",
+        "brake-disc"
+      ]
     },
     {
       "id": "lock-slide-ends",
@@ -39,7 +54,9 @@
       "beginner": "The locked car slides to a stop, further than it needed to. Because the disc wasn’t turning, most of the heat went into the sliding tyre, not the brake.",
       "technical": "From 80 km/h the locked stop takes about 51 m and 4.6 s. Energy accounting changes too: with the disc stationary, nearly all of ½mv² is dissipated in the tyre’s contact patch, which is how locked wheels grind flat spots into tyres.",
       "cue": "lock-stopped",
-      "componentIds": ["braked-wheel"]
+      "componentIds": [
+        "braked-wheel"
+      ]
     },
     {
       "id": "sensing-slip",
@@ -47,7 +64,10 @@
       "beginner": "With ABS on, the wheel-speed sensor counts the teeth of a ring turning with the hub. When the wheel slows much faster than the car could, the ABS computer knows trouble is starting.",
       "technical": "The controller compares each wheel’s speed with a reference vehicle speed and watches wheel deceleration. Rising slip past the target band (or a deceleration spike well above what grip allows) triggers the first HOLD, within a few hundredths of a second of the grip limit.",
       "cue": "abs-sense",
-      "componentIds": ["wheel-speed-sensor", "abs-modulator"]
+      "componentIds": [
+        "wheel-speed-sensor",
+        "abs-modulator"
+      ]
     },
     {
       "id": "abs-cycle",
@@ -55,7 +75,11 @@
       "beginner": "ABS now eases the brake off and on, again and again. The wheel never stops turning, so the tyre keeps gripping and the car can still be steered.",
       "technical": "In the lab’s conceptual cycle, caliper pressure swings between about 60 % and 105 % of the grip-limit pressure while the master cylinder stays at the driver’s full pressure. Slip stays inside an illustrative 10–20 % band, so average deceleration is close to peak grip.",
       "cue": "abs-active",
-      "componentIds": ["abs-modulator", "brake-line", "braked-wheel"]
+      "componentIds": [
+        "abs-modulator",
+        "brake-line",
+        "braked-wheel"
+      ]
     },
     {
       "id": "abs-release-pressure",
@@ -63,7 +87,11 @@
       "beginner": "The ABS unit closes the way in and opens a way out, so some fluid leaves the caliper. The clamp eases and the wheel speeds back up.",
       "technical": "RELEASE: inlet valve closed, outlet valve open (amber lamp) to the low-pressure accumulator. Caliper pressure falls while the master side stays high; the wheel’s surface speed recovers towards the vehicle speed and slip falls.",
       "cue": "abs-release",
-      "componentIds": ["abs-modulator", "brake-line", "brake-caliper"]
+      "componentIds": [
+        "abs-modulator",
+        "brake-line",
+        "brake-caliper"
+      ]
     },
     {
       "id": "abs-reapply-pressure",
@@ -71,7 +99,11 @@
       "beginner": "Once the wheel is turning properly again, ABS lets the pressure back in and squeezes harder, until the wheel starts to slow too quickly again. Then the cycle repeats.",
       "technical": "HOLD (both valves closed) lets the wheel settle; REAPPLY opens the inlet (cyan lamp) to raise caliper pressure again, often in small steps. The pump returns released fluid to the master side — the pedal pulsation drivers feel. Real systems repeat this many times per second; the lab’s stylised cycle runs about six times per second.",
       "cue": "abs-reapply",
-      "componentIds": ["abs-modulator", "brake-line", "caliper-piston"]
+      "componentIds": [
+        "abs-modulator",
+        "brake-line",
+        "caliper-piston"
+      ]
     },
     {
       "id": "abs-shorter-stop",
@@ -79,27 +111,92 @@
       "beginner": "With ABS the car stopped in a shorter distance and could have been steered all the way. The brake disc, not the tyre, took most of the heat.",
       "technical": "In the illustrative wet case the ABS stop takes about 41 m and 3.6 s against 51 m and 4.6 s locked. Most of the energy goes into the brake again; a small share is dissipated by tyre slip.",
       "cue": "abs-stopped",
-      "componentIds": ["brake-disc", "braked-wheel"]
+      "componentIds": [
+        "brake-disc",
+        "braked-wheel"
+      ]
     }
   ],
-  "componentIds": ["wheel-speed-sensor", "abs-modulator", "brake-line", "brake-caliper", "caliper-piston", "brake-disc", "braked-wheel", "master-cylinder"],
+  "componentIds": [
+    "wheel-speed-sensor",
+    "abs-modulator",
+    "brake-line",
+    "brake-caliper",
+    "caliper-piston",
+    "brake-disc",
+    "braked-wheel",
+    "master-cylinder"
+  ],
   "labId": "braking",
   "flow": {
     "nodes": [
-      { "id": "sensor", "label": "Wheel-speed sensor", "detail": "Tone-ring pulses", "componentId": "wheel-speed-sensor" },
-      { "id": "ecu", "label": "ABS computer", "detail": "Slip & wheel decel.", "componentId": "abs-modulator" },
-      { "id": "valves", "label": "Modulator valves", "detail": "Hold · release · reapply", "componentId": "abs-modulator" },
-      { "id": "caliper", "label": "Caliper pressure", "detail": "Rises and falls", "componentId": "brake-caliper" },
-      { "id": "wheel", "label": "Wheel speed", "detail": "Slip ≈ 10–20 %", "componentId": "braked-wheel" },
-      { "id": "grip", "label": "Tyre grip", "detail": "Brake + steer", "topicId": "tyres-and-grip" }
+      {
+        "id": "sensor",
+        "label": "Wheel-speed sensor",
+        "detail": "Tone-ring pulses",
+        "componentId": "wheel-speed-sensor"
+      },
+      {
+        "id": "ecu",
+        "label": "ABS computer",
+        "detail": "Slip & wheel decel.",
+        "componentId": "abs-modulator"
+      },
+      {
+        "id": "valves",
+        "label": "Modulator valves",
+        "detail": "Hold · release · reapply",
+        "componentId": "abs-modulator"
+      },
+      {
+        "id": "caliper",
+        "label": "Caliper pressure",
+        "detail": "Rises and falls",
+        "componentId": "brake-caliper"
+      },
+      {
+        "id": "wheel",
+        "label": "Wheel speed",
+        "detail": "Slip ≈ 10–20 %",
+        "componentId": "braked-wheel"
+      },
+      {
+        "id": "grip",
+        "label": "Tyre grip",
+        "detail": "Brake + steer",
+        "topicId": "tyres-and-grip"
+      }
     ],
     "edges": [
-      { "from": "sensor", "to": "ecu", "label": "speed signal" },
-      { "from": "ecu", "to": "valves", "label": "commands" },
-      { "from": "valves", "to": "caliper", "label": "pressure" },
-      { "from": "caliper", "to": "wheel", "label": "brake torque" },
-      { "from": "wheel", "to": "sensor", "label": "feedback" },
-      { "from": "wheel", "to": "grip" }
+      {
+        "from": "sensor",
+        "to": "ecu",
+        "label": "speed signal"
+      },
+      {
+        "from": "ecu",
+        "to": "valves",
+        "label": "commands"
+      },
+      {
+        "from": "valves",
+        "to": "caliper",
+        "label": "pressure"
+      },
+      {
+        "from": "caliper",
+        "to": "wheel",
+        "label": "brake torque"
+      },
+      {
+        "from": "wheel",
+        "to": "sensor",
+        "label": "feedback"
+      },
+      {
+        "from": "wheel",
+        "to": "grip"
+      }
     ]
   },
   "keyConcepts": [
@@ -153,13 +250,27 @@
     "On a car without ABS, a skidding stop leaves dark rubber marks on the road; with ABS the marks, if any, are faint and broken.",
     "Mismatched or badly worn tyres reduce the grip ABS has to work with — the system can only hold the tyre near the peak it actually has."
   ],
-  "relatedTopicIds": ["disc-brakes", "brake-hydraulics", "tyres-and-grip", "steering-systems", "diagnosing-warning-signs"],
-  "prerequisiteTopicIds": ["disc-brakes", "tyres-and-grip"],
+  "relatedTopicIds": [
+    "disc-brakes",
+    "brake-hydraulics",
+    "tyres-and-grip",
+    "steering-systems",
+    "diagnosing-warning-signs"
+  ],
+  "prerequisiteTopicIds": [
+    "disc-brakes",
+    "tyres-and-grip"
+  ],
   "quiz": [
     {
       "id": "slip-calc",
       "prompt": "The car is doing 20 m/s and the tyre’s surface speed (ωr) is 17 m/s. What is the wheel slip?",
-      "options": ["3 %", "15 %", "85 %", "117 %"],
+      "options": [
+        "3 %",
+        "15 %",
+        "85 %",
+        "117 %"
+      ],
       "answerIndex": 1,
       "explanation": "s = (v − ωr) / v = (20 − 17) / 20 = 0.15, or 15 % — inside the band where many tyres give their best braking grip."
     },
@@ -228,6 +339,8 @@
       "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
     }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

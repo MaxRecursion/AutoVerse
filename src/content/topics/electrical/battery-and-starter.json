@@ -5,8 +5,17 @@
   "summary": "Turning the key or pressing start asks a 12-volt battery to deliver hundreds of amps to a small, powerful motor that spins the engine until it fires. Learn how the battery stores energy, how the starter engages the flywheel, and why cold mornings are hardest.",
   "categoryId": "electrical",
   "difficulty": "beginner",
+  "layer": "surface",
   "estimatedDuration": 11,
-  "tags": ["battery", "starter", "12v", "lead-acid", "solenoid", "cranking", "electrical"],
+  "tags": [
+    "battery",
+    "starter",
+    "12v",
+    "lead-acid",
+    "solenoid",
+    "cranking",
+    "electrical"
+  ],
   "learningObjectives": [
     "Explain how a lead-acid battery stores and releases energy",
     "Estimate state of charge from resting battery voltage",
@@ -49,66 +58,166 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "battery", "label": "12 V battery", "detail": "≈ 12.6 V at rest" },
-      { "id": "switch", "label": "Ignition / start switch", "detail": "Low current" },
-      { "id": "solenoid", "label": "Solenoid", "detail": "Engages pinion, closes contacts" },
-      { "id": "motor", "label": "Starter motor", "detail": "100–300+ A" },
-      { "id": "flywheel", "label": "Flywheel ring gear", "detail": "≈ 10–15 : 1", "topicId": "pistons-and-crankshaft" },
-      { "id": "alternator", "label": "Alternator recharges", "topicId": "alternator-and-charging" }
+      {
+        "id": "battery",
+        "label": "12 V battery",
+        "detail": "≈ 12.6 V at rest"
+      },
+      {
+        "id": "switch",
+        "label": "Ignition / start switch",
+        "detail": "Low current"
+      },
+      {
+        "id": "solenoid",
+        "label": "Solenoid",
+        "detail": "Engages pinion, closes contacts"
+      },
+      {
+        "id": "motor",
+        "label": "Starter motor",
+        "detail": "100–300+ A"
+      },
+      {
+        "id": "flywheel",
+        "label": "Flywheel ring gear",
+        "detail": "≈ 10–15 : 1",
+        "topicId": "pistons-and-crankshaft"
+      },
+      {
+        "id": "alternator",
+        "label": "Alternator recharges",
+        "topicId": "alternator-and-charging"
+      }
     ],
     "edges": [
-      { "from": "switch", "to": "solenoid" },
-      { "from": "battery", "to": "solenoid", "label": "heavy cable" },
-      { "from": "solenoid", "to": "motor" },
-      { "from": "motor", "to": "flywheel" },
-      { "from": "alternator", "to": "battery", "label": "after start" }
+      {
+        "from": "switch",
+        "to": "solenoid"
+      },
+      {
+        "from": "battery",
+        "to": "solenoid",
+        "label": "heavy cable"
+      },
+      {
+        "from": "solenoid",
+        "to": "motor"
+      },
+      {
+        "from": "motor",
+        "to": "flywheel"
+      },
+      {
+        "from": "alternator",
+        "to": "battery",
+        "label": "after start"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Ohm's law voltage drop", "definition": "Voltage lost across a resistance carrying current; tiny resistances matter at cranking currents.", "equation": "V = I × R" },
-    { "term": "Open-circuit voltage", "definition": "Battery voltage at rest with no load, a guide to state of charge (≈ 12.6–12.7 V full, ≈ 12.2 V about half)." },
-    { "term": "Cold-cranking amps (CCA)", "definition": "The current a battery can deliver at −18 °C for a set time while staying above a minimum voltage." },
-    { "term": "Overrunning clutch", "definition": "A one-way clutch that lets the starter drive the engine but not the reverse." }
+    {
+      "term": "Ohm's law voltage drop",
+      "definition": "Voltage lost across a resistance carrying current; tiny resistances matter at cranking currents.",
+      "equation": "V = I × R"
+    },
+    {
+      "term": "Open-circuit voltage",
+      "definition": "Battery voltage at rest with no load, a guide to state of charge (≈ 12.6–12.7 V full, ≈ 12.2 V about half)."
+    },
+    {
+      "term": "Cold-cranking amps (CCA)",
+      "definition": "The current a battery can deliver at −18 °C for a set time while staying above a minimum voltage."
+    },
+    {
+      "term": "Overrunning clutch",
+      "definition": "A one-way clutch that lets the starter drive the engine but not the reverse."
+    }
   ],
   "misconceptions": [
-    { "myth": "If the dashboard lights come on, the battery must be fine.", "reality": "Lights need only a few amps. A battery can light the dashboard yet collapse under the hundreds of amps a starter draws." },
-    { "myth": "Idling the engine for a few minutes fully recharges a flat battery.", "reality": "Charging current at idle is limited and a deeply discharged battery takes hours to recover; a proper charger or a long drive is needed." },
-    { "myth": "A clicking noise when starting always means a dead starter motor.", "reality": "Rapid clicking is often a low battery or poor connection making the solenoid engage and drop out. Check the battery and terminals first." }
+    {
+      "myth": "If the dashboard lights come on, the battery must be fine.",
+      "reality": "Lights need only a few amps. A battery can light the dashboard yet collapse under the hundreds of amps a starter draws."
+    },
+    {
+      "myth": "Idling the engine for a few minutes fully recharges a flat battery.",
+      "reality": "Charging current at idle is limited and a deeply discharged battery takes hours to recover; a proper charger or a long drive is needed."
+    },
+    {
+      "myth": "A clicking noise when starting always means a dead starter motor.",
+      "reality": "Rapid clicking is often a low battery or poor connection making the solenoid engage and drop out. Check the battery and terminals first."
+    }
   ],
   "practicalExamples": [
     "Slow, laboured cranking on a frosty morning that improves later in the day points to a battery near the end of its life.",
     "White or green crust on a terminal adds resistance; cleaning and tightening it can restore normal cranking.",
     "Many cars disconnect non-essential loads such as heated seats during cranking to leave more current for the starter."
   ],
-  "relatedTopicIds": ["alternator-and-charging", "diagnosing-warning-signs", "routine-maintenance", "hybrid-and-electric-drives"],
-  "prerequisiteTopicIds": ["how-a-car-works"],
+  "relatedTopicIds": [
+    "alternator-and-charging",
+    "diagnosing-warning-signs",
+    "routine-maintenance",
+    "hybrid-and-electric-drives"
+  ],
+  "prerequisiteTopicIds": [
+    "how-a-car-works"
+  ],
   "quiz": [
     {
       "id": "resting-voltage",
       "prompt": "A battery reads 12.2 V after resting overnight with no load. What does that suggest?",
-      "options": ["Fully charged", "About half charged", "Overcharged", "Completely flat"],
+      "options": [
+        "Fully charged",
+        "About half charged",
+        "Overcharged",
+        "Completely flat"
+      ],
       "answerIndex": 1,
       "explanation": "Around 12.6–12.7 V is full; about 12.2 V indicates roughly 50% state of charge."
     },
     {
       "id": "voltage-drop",
       "prompt": "A starter draws 200 A through a connection with 4 mΩ resistance. How much voltage is lost there?",
-      "options": ["0.08 V", "0.8 V", "8 V", "50 V"],
+      "options": [
+        "0.08 V",
+        "0.8 V",
+        "8 V",
+        "50 V"
+      ],
       "answerIndex": 1,
       "explanation": "V = I × R = 200 × 0.004 = 0.8 V — a significant loss from a 12 V supply."
     },
     {
       "id": "solenoid-jobs",
       "prompt": "Which two jobs does the starter solenoid perform?",
-      "options": ["Charges the battery and lights the dashboard", "Pushes the pinion into mesh and switches the main motor current", "Controls fuel injection and spark", "Cools the motor and measures speed"],
+      "options": [
+        "Charges the battery and lights the dashboard",
+        "Pushes the pinion into mesh and switches the main motor current",
+        "Controls fuel injection and spark",
+        "Cools the motor and measures speed"
+      ],
       "answerIndex": 1,
       "explanation": "It shifts the pinion via a fork and closes heavy contacts so battery current reaches the motor."
     }
   ],
   "sourceReferences": [
-    {"title":"How to test a car battery","url":"https://www.howacarworks.com/electrical-systems/how-to-test-a-car-battery","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
-    {"title":"Checking a starter circuit","url":"https://www.howacarworks.com/ignition-system/checking-the-starter-circuit","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How to test a car battery",
+      "url": "https://www.howacarworks.com/electrical-systems/how-to-test-a-car-battery",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    },
+    {
+      "title": "Checking a starter circuit",
+      "url": "https://www.howacarworks.com/ignition-system/checking-the-starter-circuit",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

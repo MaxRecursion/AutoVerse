@@ -5,8 +5,16 @@
   "summary": "Above town speeds, pushing air aside becomes the biggest load on a car. Learn the drag equation, why drag power rises with the cube of speed, what drag coefficient and frontal area mean, and how spoilers, diffusers and smooth underbodies manage lift and drag.",
   "categoryId": "aero-technology",
   "difficulty": "intermediate",
+  "layer": "engineering",
   "estimatedDuration": 12,
-  "tags": ["aerodynamics", "drag", "downforce", "efficiency", "cd", "physics"],
+  "tags": [
+    "aerodynamics",
+    "drag",
+    "downforce",
+    "efficiency",
+    "cd",
+    "physics"
+  ],
   "learningObjectives": [
     "Use the drag equation to estimate aerodynamic force and power",
     "Explain why drag power rises with the cube of speed",
@@ -49,64 +57,155 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "speed", "label": "Road speed", "detail": "q = ½ ρ v²" },
-      { "id": "shape", "label": "Shape & size", "detail": "C_d × A" },
-      { "id": "drag", "label": "Drag force", "detail": "F = q C_d A" },
-      { "id": "power", "label": "Engine / motor power", "detail": "P = F v", "topicId": "torque-and-power" },
-      { "id": "downforce", "label": "Lift / downforce", "detail": "Changes tyre load", "topicId": "tyres-and-grip" }
+      {
+        "id": "speed",
+        "label": "Road speed",
+        "detail": "q = ½ ρ v²"
+      },
+      {
+        "id": "shape",
+        "label": "Shape & size",
+        "detail": "C_d × A"
+      },
+      {
+        "id": "drag",
+        "label": "Drag force",
+        "detail": "F = q C_d A"
+      },
+      {
+        "id": "power",
+        "label": "Engine / motor power",
+        "detail": "P = F v",
+        "topicId": "torque-and-power"
+      },
+      {
+        "id": "downforce",
+        "label": "Lift / downforce",
+        "detail": "Changes tyre load",
+        "topicId": "tyres-and-grip"
+      }
     ],
     "edges": [
-      { "from": "speed", "to": "drag" },
-      { "from": "shape", "to": "drag" },
-      { "from": "drag", "to": "power", "label": "∝ v³" },
-      { "from": "speed", "to": "downforce" },
-      { "from": "shape", "to": "downforce" }
+      {
+        "from": "speed",
+        "to": "drag"
+      },
+      {
+        "from": "shape",
+        "to": "drag"
+      },
+      {
+        "from": "drag",
+        "to": "power",
+        "label": "∝ v³"
+      },
+      {
+        "from": "speed",
+        "to": "downforce"
+      },
+      {
+        "from": "shape",
+        "to": "downforce"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Drag force", "definition": "Aerodynamic resistance opposing motion.", "equation": "F_d = ½ ρ v² C_d A" },
-    { "term": "Drag power", "definition": "Power needed to overcome drag; it grows with the cube of speed.", "equation": "P_d = ½ ρ C_d A v³" },
-    { "term": "Drag coefficient (C_d)", "definition": "A dimensionless measure of how efficiently a shape moves through air, independent of size." },
-    { "term": "Downforce", "definition": "Negative lift that pushes the tyres onto the road, increasing grip without adding mass." }
+    {
+      "term": "Drag force",
+      "definition": "Aerodynamic resistance opposing motion.",
+      "equation": "F_d = ½ ρ v² C_d A"
+    },
+    {
+      "term": "Drag power",
+      "definition": "Power needed to overcome drag; it grows with the cube of speed.",
+      "equation": "P_d = ½ ρ C_d A v³"
+    },
+    {
+      "term": "Drag coefficient (C_d)",
+      "definition": "A dimensionless measure of how efficiently a shape moves through air, independent of size."
+    },
+    {
+      "term": "Downforce",
+      "definition": "Negative lift that pushes the tyres onto the road, increasing grip without adding mass."
+    }
   ],
   "misconceptions": [
-    { "myth": "A low drag coefficient means a car has low drag.", "reality": "Drag depends on C_d multiplied by frontal area. A large vehicle with a good C_d can still have more drag than a small car with a worse one." },
-    { "myth": "A rear wing on a road car always improves performance.", "reality": "Wings add downforce but also drag. Poorly designed add-ons often increase drag and fuel use with no useful grip at legal speeds." },
-    { "myth": "Opening the windows is always more efficient than using the air conditioning.", "reality": "At low speeds it often is, but at motorway speeds open windows can add enough drag to rival the A/C's energy use." }
+    {
+      "myth": "A low drag coefficient means a car has low drag.",
+      "reality": "Drag depends on C_d multiplied by frontal area. A large vehicle with a good C_d can still have more drag than a small car with a worse one."
+    },
+    {
+      "myth": "A rear wing on a road car always improves performance.",
+      "reality": "Wings add downforce but also drag. Poorly designed add-ons often increase drag and fuel use with no useful grip at legal speeds."
+    },
+    {
+      "myth": "Opening the windows is always more efficient than using the air conditioning.",
+      "reality": "At low speeds it often is, but at motorway speeds open windows can add enough drag to rival the A/C's energy use."
+    }
   ],
   "practicalExamples": [
     "Driving at 110 km/h instead of 130 km/h cuts the power needed to overcome drag by around 40%.",
     "A roof box can raise motorway fuel consumption noticeably because it increases both frontal area and turbulence.",
     "Electric cars often use smooth aero wheel covers and flat underbodies because range is so sensitive to drag."
   ],
-  "relatedTopicIds": ["torque-and-power", "chassis-construction", "hybrid-and-electric-drives", "mechanical-sympathy"],
-  "prerequisiteTopicIds": ["torque-and-power"],
+  "relatedTopicIds": [
+    "torque-and-power",
+    "chassis-construction",
+    "hybrid-and-electric-drives",
+    "mechanical-sympathy"
+  ],
+  "prerequisiteTopicIds": [
+    "torque-and-power"
+  ],
   "quiz": [
     {
       "id": "double-speed",
       "prompt": "If speed doubles, what happens to the power needed to overcome aerodynamic drag?",
-      "options": ["It doubles", "It quadruples", "It rises eightfold", "It stays the same"],
+      "options": [
+        "It doubles",
+        "It quadruples",
+        "It rises eightfold",
+        "It stays the same"
+      ],
       "answerIndex": 2,
       "explanation": "Drag power is proportional to v³, so 2³ = 8."
     },
     {
       "id": "drag-calc",
       "prompt": "With ρ = 1.2 kg/m³, C_d = 0.3 and A = 2 m², roughly what is the drag force at 30 m/s?",
-      "options": ["32 N", "324 N", "3,240 N", "32,400 N"],
+      "options": [
+        "32 N",
+        "324 N",
+        "3,240 N",
+        "32,400 N"
+      ],
       "answerIndex": 1,
       "explanation": "F = ½ × 1.2 × 30² × 0.3 × 2 = 0.6 × 900 × 0.6 = 324 N."
     },
     {
       "id": "diffuser",
       "prompt": "How does a rear diffuser create downforce?",
-      "options": ["By blowing air upwards", "By expanding underbody flow so pressure under the car is lower", "By adding weight", "By cooling the brakes"],
+      "options": [
+        "By blowing air upwards",
+        "By expanding underbody flow so pressure under the car is lower",
+        "By adding weight",
+        "By cooling the brakes"
+      ],
       "answerIndex": 1,
       "explanation": "The diffuser slows and expands the air leaving the underbody, which lowers pressure beneath the car relative to above it."
     }
   ],
   "sourceReferences": [
-    {"title":"Car aerodynamics","url":"https://www.howacarworks.com/technology/car-aerodynamics","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "Car aerodynamics",
+      "url": "https://www.howacarworks.com/technology/car-aerodynamics",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

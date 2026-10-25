@@ -5,8 +5,18 @@
   "summary": "Front-, rear- and all-wheel drive differ in which wheels push the car and where the heavy parts sit. Compare packaging, traction, handling balance and efficiency, and see how weight transfer decides which layout grips best when accelerating.",
   "categoryId": "drivetrain",
   "difficulty": "beginner",
+  "layer": "surface",
   "estimatedDuration": 12,
-  "tags": ["drivetrain", "fwd", "rwd", "awd", "4wd", "traction", "weight transfer", "handling"],
+  "tags": [
+    "drivetrain",
+    "fwd",
+    "rwd",
+    "awd",
+    "4wd",
+    "traction",
+    "weight transfer",
+    "handling"
+  ],
   "learningObjectives": [
     "Describe front-, rear- and all-wheel-drive layouts and their main components",
     "Explain how longitudinal weight transfer affects traction under acceleration",
@@ -49,66 +59,162 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "engine", "label": "Engine & gearbox", "topicId": "engine-layouts" },
-      { "id": "transfer", "label": "Centre diff / coupling", "detail": "AWD only" },
-      { "id": "front-diff", "label": "Front differential", "topicId": "differential" },
-      { "id": "propshaft", "label": "Propshaft", "topicId": "driveshafts-and-cv-joints" },
-      { "id": "rear-diff", "label": "Rear differential", "topicId": "differential" },
-      { "id": "wheels", "label": "Driven wheels", "topicId": "tyres-and-grip" }
+      {
+        "id": "engine",
+        "label": "Engine & gearbox",
+        "topicId": "engine-layouts"
+      },
+      {
+        "id": "transfer",
+        "label": "Centre diff / coupling",
+        "detail": "AWD only"
+      },
+      {
+        "id": "front-diff",
+        "label": "Front differential",
+        "topicId": "differential"
+      },
+      {
+        "id": "propshaft",
+        "label": "Propshaft",
+        "topicId": "driveshafts-and-cv-joints"
+      },
+      {
+        "id": "rear-diff",
+        "label": "Rear differential",
+        "topicId": "differential"
+      },
+      {
+        "id": "wheels",
+        "label": "Driven wheels",
+        "topicId": "tyres-and-grip"
+      }
     ],
     "edges": [
-      { "from": "engine", "to": "transfer" },
-      { "from": "transfer", "to": "front-diff", "label": "FWD / AWD" },
-      { "from": "transfer", "to": "propshaft", "label": "RWD / AWD" },
-      { "from": "propshaft", "to": "rear-diff" },
-      { "from": "front-diff", "to": "wheels" },
-      { "from": "rear-diff", "to": "wheels" }
+      {
+        "from": "engine",
+        "to": "transfer"
+      },
+      {
+        "from": "transfer",
+        "to": "front-diff",
+        "label": "FWD / AWD"
+      },
+      {
+        "from": "transfer",
+        "to": "propshaft",
+        "label": "RWD / AWD"
+      },
+      {
+        "from": "propshaft",
+        "to": "rear-diff"
+      },
+      {
+        "from": "front-diff",
+        "to": "wheels"
+      },
+      {
+        "from": "rear-diff",
+        "to": "wheels"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Longitudinal load transfer", "definition": "Load moves from the front axle to the rear when accelerating (and the reverse when braking).", "equation": "ΔF = m × a × h / L" },
-    { "term": "Transaxle", "definition": "A gearbox and differential combined in one housing, standard in front-drive cars." },
-    { "term": "Centre differential", "definition": "Lets the front and rear axles turn at different average speeds in permanent all-wheel drive." },
-    { "term": "Driveline wind-up", "definition": "Stress built up when axles are locked together but need to turn at different speeds, as in part-time 4WD on tarmac." }
+    {
+      "term": "Longitudinal load transfer",
+      "definition": "Load moves from the front axle to the rear when accelerating (and the reverse when braking).",
+      "equation": "ΔF = m × a × h / L"
+    },
+    {
+      "term": "Transaxle",
+      "definition": "A gearbox and differential combined in one housing, standard in front-drive cars."
+    },
+    {
+      "term": "Centre differential",
+      "definition": "Lets the front and rear axles turn at different average speeds in permanent all-wheel drive."
+    },
+    {
+      "term": "Driveline wind-up",
+      "definition": "Stress built up when axles are locked together but need to turn at different speeds, as in part-time 4WD on tarmac."
+    }
   ],
   "misconceptions": [
-    { "myth": "All-wheel drive helps you stop and steer on ice.", "reality": "AWD only helps put power down. Braking and cornering grip depend on the tyres, which is why winter tyres matter more than driven wheels." },
-    { "myth": "Rear-wheel-drive cars are useless in snow.", "reality": "Modern traction and stability control, sensible weight distribution and good winter tyres make RWD cars perfectly usable; tyres dominate winter grip." },
-    { "myth": "Part-time 4WD can be left engaged all the time.", "reality": "Without a centre differential, locked axles fight each other on grippy roads, stressing the driveline and scrubbing the tyres." }
+    {
+      "myth": "All-wheel drive helps you stop and steer on ice.",
+      "reality": "AWD only helps put power down. Braking and cornering grip depend on the tyres, which is why winter tyres matter more than driven wheels."
+    },
+    {
+      "myth": "Rear-wheel-drive cars are useless in snow.",
+      "reality": "Modern traction and stability control, sensible weight distribution and good winter tyres make RWD cars perfectly usable; tyres dominate winter grip."
+    },
+    {
+      "myth": "Part-time 4WD can be left engaged all the time.",
+      "reality": "Without a centre differential, locked axles fight each other on grippy roads, stressing the driveline and scrubbing the tyres."
+    }
   ],
   "practicalExamples": [
     "A powerful front-drive car may tug at the steering wheel under hard acceleration — torque steer from unequal driveshaft angles and loads.",
     "Pulling away uphill on a wet road, a front-drive car spins its wheels sooner because load has moved off the front axle.",
     "Many crossover SUVs are front-drive most of the time and engage the rear axle through a clutch only when front wheels begin to slip."
   ],
-  "relatedTopicIds": ["engine-layouts", "differential", "driveshafts-and-cv-joints", "tyres-and-grip"],
-  "prerequisiteTopicIds": ["differential"],
+  "relatedTopicIds": [
+    "engine-layouts",
+    "differential",
+    "driveshafts-and-cv-joints",
+    "tyres-and-grip"
+  ],
+  "prerequisiteTopicIds": [
+    "differential"
+  ],
   "quiz": [
     {
       "id": "launch-traction",
       "prompt": "Why does a rear-drive car usually have better traction when accelerating hard from rest?",
-      "options": ["Its engine is more powerful", "Weight transfers onto the rear driven wheels", "Its tyres are wider", "The front wheels are lighter by design"],
+      "options": [
+        "Its engine is more powerful",
+        "Weight transfers onto the rear driven wheels",
+        "Its tyres are wider",
+        "The front wheels are lighter by design"
+      ],
       "answerIndex": 1,
       "explanation": "Acceleration moves load rearwards (ΔF = m a h / L), increasing the grip available at the rear tyres."
     },
     {
       "id": "transfer-calc",
       "prompt": "A 1,500 kg car with h = 0.5 m and L = 2.5 m accelerates at 2 m/s². How much load moves to the rear axle?",
-      "options": ["300 N", "600 N", "1,500 N", "3,000 N"],
+      "options": [
+        "300 N",
+        "600 N",
+        "1,500 N",
+        "3,000 N"
+      ],
       "answerIndex": 1,
       "explanation": "ΔF = 1,500 × 2 × 0.5 / 2.5 = 600 N."
     },
     {
       "id": "part-time-use",
       "prompt": "When should a part-time 4WD system without a centre differential be engaged?",
-      "options": ["Always", "On dry motorways", "On loose or slippery surfaces", "Only when reversing"],
+      "options": [
+        "Always",
+        "On dry motorways",
+        "On loose or slippery surfaces",
+        "Only when reversing"
+      ],
       "answerIndex": 2,
       "explanation": "On loose surfaces the tyres can slip slightly to relieve wind-up; on grippy roads the locked axles fight each other."
     }
   ],
   "sourceReferences": [
-    {"title":"How the transmission works","url":"https://www.howacarworks.com/basics/how-the-transmission-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How the transmission works",
+      "url": "https://www.howacarworks.com/basics/how-the-transmission-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

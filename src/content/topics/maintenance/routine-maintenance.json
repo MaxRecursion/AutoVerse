@@ -5,8 +5,17 @@
   "summary": "Most expensive failures start as something cheap that was not checked. Learn which simple checks an owner can make, which items are replaced on a schedule and why, and how to read a service schedule — with the understanding that your vehicle's handbook always takes priority.",
   "categoryId": "maintenance",
   "difficulty": "beginner",
+  "layer": "surface",
   "estimatedDuration": 12,
-  "tags": ["maintenance", "servicing", "oil", "tyres", "fluids", "checks", "ownership"],
+  "tags": [
+    "maintenance",
+    "servicing",
+    "oil",
+    "tyres",
+    "fluids",
+    "checks",
+    "ownership"
+  ],
   "learningObjectives": [
     "List the regular owner checks and how to make them safely",
     "Explain why fluids and filters are replaced by time as well as distance",
@@ -49,66 +58,164 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "owner", "label": "Owner checks", "detail": "Fluids, tyres, lights" },
-      { "id": "schedule", "label": "Service schedule", "detail": "Time or distance" },
-      { "id": "oil", "label": "Oil & filter", "topicId": "lubrication-system" },
-      { "id": "coolant", "label": "Coolant", "topicId": "cooling-system" },
-      { "id": "brakes", "label": "Brake fluid & pads", "topicId": "brake-hydraulics" },
-      { "id": "records", "label": "Service records", "detail": "Supports diagnosis", "topicId": "diagnosing-warning-signs" }
+      {
+        "id": "owner",
+        "label": "Owner checks",
+        "detail": "Fluids, tyres, lights"
+      },
+      {
+        "id": "schedule",
+        "label": "Service schedule",
+        "detail": "Time or distance"
+      },
+      {
+        "id": "oil",
+        "label": "Oil & filter",
+        "topicId": "lubrication-system"
+      },
+      {
+        "id": "coolant",
+        "label": "Coolant",
+        "topicId": "cooling-system"
+      },
+      {
+        "id": "brakes",
+        "label": "Brake fluid & pads",
+        "topicId": "brake-hydraulics"
+      },
+      {
+        "id": "records",
+        "label": "Service records",
+        "detail": "Supports diagnosis",
+        "topicId": "diagnosing-warning-signs"
+      }
     ],
     "edges": [
-      { "from": "owner", "to": "records", "label": "notes" },
-      { "from": "schedule", "to": "oil" },
-      { "from": "schedule", "to": "coolant" },
-      { "from": "schedule", "to": "brakes" },
-      { "from": "oil", "to": "records" }
+      {
+        "from": "owner",
+        "to": "records",
+        "label": "notes"
+      },
+      {
+        "from": "schedule",
+        "to": "oil"
+      },
+      {
+        "from": "schedule",
+        "to": "coolant"
+      },
+      {
+        "from": "schedule",
+        "to": "brakes"
+      },
+      {
+        "from": "oil",
+        "to": "records"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Whichever comes first", "definition": "Service items have both a distance and a time limit because fluids and rubber age even when a car is little used." },
-    { "term": "Severe service", "definition": "Shorter intervals for short trips, towing, dusty roads or long idling, which accelerate oil and component wear." },
-    { "term": "Interference engine", "definition": "An engine in which valves and pistons would collide if valve timing were lost, making timing-belt failure destructive." },
-    { "term": "Hygroscopic", "definition": "Tending to absorb moisture from the air — why brake fluid is replaced on a time basis." }
+    {
+      "term": "Whichever comes first",
+      "definition": "Service items have both a distance and a time limit because fluids and rubber age even when a car is little used."
+    },
+    {
+      "term": "Severe service",
+      "definition": "Shorter intervals for short trips, towing, dusty roads or long idling, which accelerate oil and component wear."
+    },
+    {
+      "term": "Interference engine",
+      "definition": "An engine in which valves and pistons would collide if valve timing were lost, making timing-belt failure destructive."
+    },
+    {
+      "term": "Hygroscopic",
+      "definition": "Tending to absorb moisture from the air — why brake fluid is replaced on a time basis."
+    }
   ],
   "misconceptions": [
-    { "myth": "A car that is rarely driven does not need servicing.", "reality": "Oil, brake fluid, coolant, tyres and rubber parts all age with time; low-mileage cars still need time-based servicing." },
-    { "myth": "If the car drives normally, the timing belt is fine.", "reality": "Belts usually give no warning before failing. Replace them at the specified interval regardless of how the engine feels." },
-    { "myth": "Topping up the brake fluid fixes a low level.", "reality": "A low level is a symptom: worn pads or a leak. Find the cause; topping up alone can mask a developing problem." }
+    {
+      "myth": "A car that is rarely driven does not need servicing.",
+      "reality": "Oil, brake fluid, coolant, tyres and rubber parts all age with time; low-mileage cars still need time-based servicing."
+    },
+    {
+      "myth": "If the car drives normally, the timing belt is fine.",
+      "reality": "Belts usually give no warning before failing. Replace them at the specified interval regardless of how the engine feels."
+    },
+    {
+      "myth": "Topping up the brake fluid fixes a low level.",
+      "reality": "A low level is a symptom: worn pads or a leak. Find the cause; topping up alone can mask a developing problem."
+    }
   ],
   "practicalExamples": [
     "Checking tyre pressures monthly and before long trips improves grip, braking and fuel economy, and helps tyres last longer.",
     "A car used only for short school runs may need oil changes more often than the standard interval suggests.",
     "Keeping receipts and noting the date and distance of each service makes it easy to spot when a time-based item is due."
   ],
-  "relatedTopicIds": ["lubrication-system", "cooling-system", "tyres-and-grip", "diagnosing-warning-signs"],
-  "prerequisiteTopicIds": ["how-a-car-works"],
+  "relatedTopicIds": [
+    "lubrication-system",
+    "cooling-system",
+    "tyres-and-grip",
+    "diagnosing-warning-signs"
+  ],
+  "prerequisiteTopicIds": [
+    "how-a-car-works"
+  ],
   "quiz": [
     {
       "id": "time-based",
       "prompt": "Why is brake fluid usually replaced on a time basis rather than distance?",
-      "options": ["It evaporates while driving", "It absorbs moisture over time, lowering its boiling point", "It wears out the pads", "It changes colour"],
+      "options": [
+        "It evaporates while driving",
+        "It absorbs moisture over time, lowering its boiling point",
+        "It wears out the pads",
+        "It changes colour"
+      ],
       "answerIndex": 1,
       "explanation": "Glycol brake fluid is hygroscopic: water absorbed over time reduces its boiling point whether or not the car is driven."
     },
     {
       "id": "interference",
       "prompt": "Why is a timing-belt interval so important on an interference engine?",
-      "options": ["The car will not start without a new belt", "If the belt breaks, valves and pistons can collide and cause major damage", "Belts get louder with age", "It improves fuel economy"],
+      "options": [
+        "The car will not start without a new belt",
+        "If the belt breaks, valves and pistons can collide and cause major damage",
+        "Belts get louder with age",
+        "It improves fuel economy"
+      ],
       "answerIndex": 1,
       "explanation": "Losing valve timing lets open valves meet rising pistons, which can bend valves and damage the head."
     },
     {
       "id": "coolant-check",
       "prompt": "When should you check the coolant level?",
-      "options": ["Immediately after a long drive", "With the engine cold, using the expansion-tank marks", "While the engine is running at high revs", "Only when the warning light is on"],
+      "options": [
+        "Immediately after a long drive",
+        "With the engine cold, using the expansion-tank marks",
+        "While the engine is running at high revs",
+        "Only when the warning light is on"
+      ],
       "answerIndex": 1,
       "explanation": "Cold readings are accurate and safe; opening a hot pressurised system can release scalding coolant."
     }
   ],
   "sourceReferences": [
-    {"title":"Checking and topping up car antifreeze coolant","url":"https://www.howacarworks.com/cooling-systems/checking-and-topping-up-car-antifreeze-coolant","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
-    {"title":"Checking for wheel and tyre damage","url":"https://www.howacarworks.com/wheels-and-tyres/checking-for-wheel-and-tyre-damage","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "Checking and topping up car antifreeze coolant",
+      "url": "https://www.howacarworks.com/cooling-systems/checking-and-topping-up-car-antifreeze-coolant",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    },
+    {
+      "title": "Checking for wheel and tyre damage",
+      "url": "https://www.howacarworks.com/wheels-and-tyres/checking-for-wheel-and-tyre-damage",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

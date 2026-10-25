@@ -5,8 +5,17 @@
   "summary": "How a spark plug lights the compressed charge, why the spark is timed before top dead centre, how the flame spreads to build pressure, and what knock is.",
   "categoryId": "fuel-ignition",
   "difficulty": "intermediate",
+  "layer": "mechanism",
   "estimatedDuration": 12,
-  "tags": ["ignition", "spark plug", "ignition timing", "combustion", "knock", "octane", "petrol"],
+  "tags": [
+    "ignition",
+    "spark plug",
+    "ignition timing",
+    "combustion",
+    "knock",
+    "octane",
+    "petrol"
+  ],
   "learningObjectives": [
     "Describe the parts of a spark plug and how the spark is produced",
     "Explain why ignition is timed before TDC and why the advance changes with engine speed and load",
@@ -23,7 +32,10 @@
       "beginner": "The piston squeezes the fuel and air into the small chamber at the top. It is hot and tightly packed, but it will not burn until something lights it.",
       "technical": "Compression raises charge temperature and density, which speeds up flame propagation. A petrol mixture is designed not to auto-ignite at this temperature — that is the opposite of a diesel.",
       "cue": "compression",
-      "componentIds": ["combustion-chamber", "piston"]
+      "componentIds": [
+        "combustion-chamber",
+        "piston"
+      ]
     },
     {
       "id": "spark",
@@ -31,7 +43,9 @@
       "beginner": "The coil sends a high-voltage pulse to the plug and a spark jumps the gap, a little before the piston reaches the top.",
       "technical": "Secondary voltage climbs until the gap breaks down. At 3000 rpm, 15° of advance is t = 15 / (6 × 3000) ≈ 0.83 ms ahead of TDC.",
       "cue": "spark",
-      "componentIds": ["spark-plug"]
+      "componentIds": [
+        "spark-plug"
+      ]
     },
     {
       "id": "flame-spreads",
@@ -39,7 +53,10 @@
       "beginner": "A small flame grows from the spark and spreads across the chamber while the piston passes over the top.",
       "technical": "An initial slow kernel-development phase is followed by rapid turbulent burning. Most of the mass burns within roughly 40–60 crank degrees at typical speeds; the lab's burn curve is a smooth illustrative S-curve.",
       "cue": "tdc",
-      "componentIds": ["combustion-chamber", "spark-plug"]
+      "componentIds": [
+        "combustion-chamber",
+        "spark-plug"
+      ]
     },
     {
       "id": "peak-pressure",
@@ -47,49 +64,143 @@
       "beginner": "The burning gas reaches its highest pressure just after the top, exactly when it can push the piston down hardest.",
       "technical": "Peak pressure about 15–20° ATDC (around 40 bar in the illustrative curve) balances compression work against expansion work and gives the best torque for the fuel burned.",
       "cue": "power",
-      "componentIds": ["piston", "combustion-chamber", "crankshaft"]
+      "componentIds": [
+        "piston",
+        "combustion-chamber",
+        "crankshaft"
+      ]
     },
     {
       "id": "knock",
       "title": "Knock and timing limits",
       "beginner": "If the spark is too early or the fuel is too weak, the last part of the mixture can explode by itself and make a rattling 'knock'. The engine computer backs the spark off when it hears it.",
       "technical": "End-gas auto-ignition produces pressure oscillations at several kilohertz. Knock sensors on the block detect them and the controller retards timing in steps, then creeps it back.",
-      "componentIds": ["spark-plug", "engine-block"]
+      "componentIds": [
+        "spark-plug",
+        "engine-block"
+      ]
     }
   ],
-  "componentIds": ["spark-plug", "combustion-chamber", "piston", "cylinder-head"],
+  "componentIds": [
+    "spark-plug",
+    "combustion-chamber",
+    "piston",
+    "cylinder-head"
+  ],
   "labId": "engine",
   "flow": {
     "nodes": [
-      { "id": "battery", "label": "12 V supply", "detail": "Battery and alternator", "topicId": "battery-and-starter" },
-      { "id": "coil", "label": "Ignition coil", "detail": "Steps up to kilovolts" },
-      { "id": "plug", "label": "Spark plug", "detail": "Gap breaks down", "componentId": "spark-plug" },
-      { "id": "kernel", "label": "Flame kernel", "detail": "Small, slow-growing", "componentId": "combustion-chamber" },
-      { "id": "front", "label": "Flame front", "detail": "Turbulent burn across the chamber", "componentId": "combustion-chamber" },
-      { "id": "pressure", "label": "Peak pressure", "detail": "≈ 15–20° after TDC", "componentId": "piston" },
-      { "id": "work", "label": "Power stroke", "detail": "Expanding gas does work", "topicId": "four-stroke-cycle" }
+      {
+        "id": "battery",
+        "label": "12 V supply",
+        "detail": "Battery and alternator",
+        "topicId": "battery-and-starter"
+      },
+      {
+        "id": "coil",
+        "label": "Ignition coil",
+        "detail": "Steps up to kilovolts"
+      },
+      {
+        "id": "plug",
+        "label": "Spark plug",
+        "detail": "Gap breaks down",
+        "componentId": "spark-plug"
+      },
+      {
+        "id": "kernel",
+        "label": "Flame kernel",
+        "detail": "Small, slow-growing",
+        "componentId": "combustion-chamber"
+      },
+      {
+        "id": "front",
+        "label": "Flame front",
+        "detail": "Turbulent burn across the chamber",
+        "componentId": "combustion-chamber"
+      },
+      {
+        "id": "pressure",
+        "label": "Peak pressure",
+        "detail": "≈ 15–20° after TDC",
+        "componentId": "piston"
+      },
+      {
+        "id": "work",
+        "label": "Power stroke",
+        "detail": "Expanding gas does work",
+        "topicId": "four-stroke-cycle"
+      }
     ],
     "edges": [
-      { "from": "battery", "to": "coil" },
-      { "from": "coil", "to": "plug", "label": "high voltage" },
-      { "from": "plug", "to": "kernel", "label": "spark" },
-      { "from": "kernel", "to": "front" },
-      { "from": "front", "to": "pressure" },
-      { "from": "pressure", "to": "work" }
+      {
+        "from": "battery",
+        "to": "coil"
+      },
+      {
+        "from": "coil",
+        "to": "plug",
+        "label": "high voltage"
+      },
+      {
+        "from": "plug",
+        "to": "kernel",
+        "label": "spark"
+      },
+      {
+        "from": "kernel",
+        "to": "front"
+      },
+      {
+        "from": "front",
+        "to": "pressure"
+      },
+      {
+        "from": "pressure",
+        "to": "work"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Ignition timing (advance)", "definition": "How many crank degrees before TDC the spark fires. More advance is needed at higher rpm because the burn takes roughly constant time." },
-    { "term": "Time per crank degree", "definition": "At N rpm the crank turns 6N degrees per second, so an advance of Δθ degrees is this many seconds.", "equation": "t = Δθ / (6·N)" },
-    { "term": "Flame front", "definition": "The thin, moving boundary between burned and unburned gas. Turbulence from the intake port wrinkles it and makes it spread faster." },
-    { "term": "Knock", "definition": "Spontaneous ignition of unburned end gas ahead of the flame front, producing sharp pressure waves and an audible metallic rattle." },
-    { "term": "Octane rating", "definition": "A fuel's resistance to knock. Higher octane allows more compression or more advance before knock begins; it does not contain more energy." }
+    {
+      "term": "Ignition timing (advance)",
+      "definition": "How many crank degrees before TDC the spark fires. More advance is needed at higher rpm because the burn takes roughly constant time."
+    },
+    {
+      "term": "Time per crank degree",
+      "definition": "At N rpm the crank turns 6N degrees per second, so an advance of Δθ degrees is this many seconds.",
+      "equation": "t = Δθ / (6·N)"
+    },
+    {
+      "term": "Flame front",
+      "definition": "The thin, moving boundary between burned and unburned gas. Turbulence from the intake port wrinkles it and makes it spread faster."
+    },
+    {
+      "term": "Knock",
+      "definition": "Spontaneous ignition of unburned end gas ahead of the flame front, producing sharp pressure waves and an audible metallic rattle."
+    },
+    {
+      "term": "Octane rating",
+      "definition": "A fuel's resistance to knock. Higher octane allows more compression or more advance before knock begins; it does not contain more energy."
+    }
   ],
   "misconceptions": [
-    { "myth": "Higher-octane fuel gives more power in any car.", "reality": "Octane only resists knock. An engine designed and tuned for regular fuel gains nothing unless it was knocking or retarding its timing." },
-    { "myth": "The spark should fire exactly at TDC.", "reality": "It fires before TDC so the slower early burn is complete in time for peak pressure shortly after TDC." },
-    { "myth": "Knock and pre-ignition are the same thing.", "reality": "Knock happens after the spark, in the end gas. Pre-ignition lights the charge before the spark from a hot spot and is usually more destructive." },
-    { "myth": "A bigger spark always means better combustion.", "reality": "Once the mixture reliably ignites, extra spark energy helps little; mixture quality, turbulence and chamber shape matter more." }
+    {
+      "myth": "Higher-octane fuel gives more power in any car.",
+      "reality": "Octane only resists knock. An engine designed and tuned for regular fuel gains nothing unless it was knocking or retarding its timing."
+    },
+    {
+      "myth": "The spark should fire exactly at TDC.",
+      "reality": "It fires before TDC so the slower early burn is complete in time for peak pressure shortly after TDC."
+    },
+    {
+      "myth": "Knock and pre-ignition are the same thing.",
+      "reality": "Knock happens after the spark, in the end gas. Pre-ignition lights the charge before the spark from a hot spot and is usually more destructive."
+    },
+    {
+      "myth": "A bigger spark always means better combustion.",
+      "reality": "Once the mixture reliably ignites, extra spark energy helps little; mixture quality, turbulence and chamber shape matter more."
+    }
   ],
   "practicalExamples": [
     "At 6000 rpm the crank turns 36,000° per second, so a 30° advance is under 1 ms — modern engine computers calculate and fire it every cycle.",
@@ -97,8 +208,17 @@
     "Engines that recommend premium fuel may still run on lower octane because knock sensors retard timing — at some cost in power and economy.",
     "Older engines set static timing with a timing light aimed at marks on the crank pulley; modern engines control it electronically."
   ],
-  "relatedTopicIds": ["four-stroke-cycle", "fuel-injection", "diesel-engines", "valves-and-camshaft", "battery-and-starter", "torque-and-power"],
-  "prerequisiteTopicIds": ["four-stroke-cycle"],
+  "relatedTopicIds": [
+    "four-stroke-cycle",
+    "fuel-injection",
+    "diesel-engines",
+    "valves-and-camshaft",
+    "battery-and-starter",
+    "torque-and-power"
+  ],
+  "prerequisiteTopicIds": [
+    "four-stroke-cycle"
+  ],
   "quiz": [
     {
       "id": "why-advance",
@@ -115,7 +235,12 @@
     {
       "id": "peak-when",
       "prompt": "Ideally, when should peak cylinder pressure occur?",
-      "options": ["Exactly at TDC", "About 15–20° after TDC", "At bottom dead centre", "During the exhaust stroke"],
+      "options": [
+        "Exactly at TDC",
+        "About 15–20° after TDC",
+        "At bottom dead centre",
+        "During the exhaust stroke"
+      ],
       "answerIndex": 1,
       "explanation": "Slightly after TDC the crank has a lever arm to turn pressure into torque, without the piston fighting the pressure rise on its way up."
     },
@@ -134,14 +259,24 @@
     {
       "id": "time-calc",
       "prompt": "An engine fires 20° before TDC at 4000 rpm. Roughly how long before TDC is that?",
-      "options": ["0.083 ms", "0.83 ms", "8.3 ms", "83 ms"],
+      "options": [
+        "0.083 ms",
+        "0.83 ms",
+        "8.3 ms",
+        "83 ms"
+      ],
       "answerIndex": 1,
       "explanation": "t = 20 / (6 × 4000) = 0.00083 s ≈ 0.83 ms."
     },
     {
       "id": "octane",
       "prompt": "What does a higher octane rating mean?",
-      "options": ["More energy per litre", "Greater resistance to knock", "Faster flame speed", "Lower emissions in every engine"],
+      "options": [
+        "More energy per litre",
+        "Greater resistance to knock",
+        "Faster flame speed",
+        "Lower emissions in every engine"
+      ],
       "answerIndex": 1,
       "explanation": "Octane measures resistance to auto-ignition, allowing more compression or advance before knock."
     }
@@ -162,6 +297,8 @@
       "note": "Further reading. AutoVerse text is original."
     }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

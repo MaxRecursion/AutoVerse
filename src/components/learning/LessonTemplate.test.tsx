@@ -7,6 +7,7 @@ import { topics } from '@/lib/content'
 import type { LabStore } from '@/lib/simulation/labStore'
 import { usePreferences } from '@/stores/preferences'
 import { useProgress } from '@/stores/progress'
+import { useToasts } from '@/stores/toasts'
 import { fixtureOutlineTopic, fixtureTopic } from './__fixtures__/content'
 import { LessonTemplate } from './LessonTemplate'
 
@@ -71,12 +72,18 @@ function renderLesson(topic = fixtureTopic) {
   )
 }
 
-const sectionHeadings = () => screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent)
+// The finish card is a closing panel, not a numbered lesson section.
+const sectionHeadings = () =>
+  screen
+    .getAllByRole('heading', { level: 2 })
+    .filter((h) => h.id !== 'finish-heading')
+    .map((h) => h.textContent)
 
 describe('LessonTemplate', () => {
   beforeEach(() => {
     useProgress.getState().clearAll()
     usePreferences.getState().setLevel('beginner')
+    useToasts.getState().clear()
     lab.store = null
   })
 
@@ -84,17 +91,15 @@ describe('LessonTemplate', () => {
     renderLesson()
     expect(screen.getByRole('heading', { level: 1, name: 'Fixture engine cycle' })).toBeInTheDocument()
     expect(sectionHeadings()).toEqual([
-      'Introduction',
+      'The idea',
       'What you will learn',
-      'Interactive 3D',
-      'Key components',
+      'Try it yourself',
       'Step by step',
+      'Key components',
       'How it flows',
-      'Key concepts',
-      'Common misconceptions',
-      'In the real world',
-      'Related lessons',
+      'Go deeper',
       'Check your understanding',
+      'Related lessons',
       'Sources & attribution',
     ])
     // Breadcrumbs: Learn › Category › Topic.
@@ -217,7 +222,7 @@ describe('LessonTemplate', () => {
     const { unmount } = renderLesson(topic)
     expect(screen.getByRole('heading', { level: 1, name: topic.title })).toBeInTheDocument()
     const headings = sectionHeadings()
-    expect(headings[0]).toBe('Introduction')
+    expect(headings[0]).toBe('The idea')
     expect(headings.at(-1)).toBe('Sources & attribution')
     if (topic.quiz.length) expect(headings).toContain('Check your understanding')
     if (topic.labId) expect(screen.getByTestId('lab-host')).toHaveTextContent(topic.labId)
@@ -228,11 +233,93 @@ describe('LessonTemplate', () => {
     renderLesson(fixtureOutlineTopic)
     expect(screen.getByRole('note')).toHaveTextContent(/Outline only/)
     const headings = sectionHeadings()
-    expect(headings.slice(0, 2)).toEqual(['Introduction', 'What you will learn'])
+    expect(headings.slice(0, 2)).toEqual(['The idea', 'What you will learn'])
     expect(headings.at(-1)).toBe('Sources & attribution')
-    for (const empty of ['Interactive 3D', 'How it flows', 'Key components', 'Step by step', 'Key concepts', 'Check your understanding']) {
+    for (const empty of ['Try it yourself', 'How it flows', 'Key components', 'Step by step', 'Go deeper', 'Check your understanding']) {
       expect(headings).not.toContain(empty)
     }
     expect(screen.queryByTestId('lab-host')).not.toBeInTheDocument()
+  })
+
+  describe('lesson stages', () => {
+    const id = fixtureTopic.id
+    const stepIds = fixtureTopic.steps.map((st) => st.id)
+    const railButton = (name: RegExp) => within(screen.getByRole('navigation', { name: 'Lesson stages' })).getByRole('button', { name })
+
+    it('shows the stages this lesson actually has, in teaching order', () => {
+      renderLesson()
+      const rail = within(screen.getByRole('navigation', { name: 'Lesson stages' }))
+      expect(rail.getAllByRole('button')).toHaveLength(4)
+      for (const label of [/Overview/, /See it work/, /Go deeper/, /Check/]) expect(rail.getByRole('button', { name: label })).toBeInTheDocument()
+      expect(rail.queryByRole('button', { name: /Story/ })).not.toBeInTheDocument()
+      // Nothing is ticked on the learner's behalf.
+      expect(railButton(/Overview/)).not.toHaveAccessibleName(/done/)
+      expect(railButton(/Overview/)).toHaveAttribute('aria-current', 'true')
+    })
+
+    it('counts "Show in 3D" as reading that step and using the lab', async () => {
+      const user = userEvent.setup()
+      renderLesson()
+      await user.click(screen.getByRole('button', { name: 'Show in 3D: Intake stroke' }))
+      const signals = useProgress.getState().lessons[id]
+      expect(signals?.steps).toEqual(['intake'])
+      expect(signals?.lab).toBe(true)
+      // One step of three: the stage is still open and says what is left.
+      expect(railButton(/See it work/)).toHaveAccessibleName(/2 steps left to read/)
+    })
+
+    it('only completes "See it work" once every step is read and the lab was used', () => {
+      renderLesson()
+      const s = useProgress.getState()
+      act(() => {
+        stepIds.slice(0, 2).forEach((step) => s.seeStep(id, step))
+        s.signal(id, 'lab')
+      })
+      expect(railButton(/See it work/)).not.toHaveAccessibleName(/done/)
+      act(() => s.seeStep(id, stepIds[2]!))
+      expect(railButton(/See it work/)).toHaveAccessibleName(/done/)
+    })
+
+    it('treats the Technical level as going deeper, but only when the reader switches to it', async () => {
+      const user = userEvent.setup()
+      renderLesson()
+      expect(useProgress.getState().lessons[id]?.deeper).toBeUndefined()
+      await user.click(screen.getByRole('radio', { name: /^tech/i }))
+      expect(useProgress.getState().lessons[id]?.deeper).toBe(true)
+      expect(railButton(/Go deeper/)).toHaveAccessibleName(/done/)
+    })
+
+    it('offers Finish once the core stages are done, and finishing completes the lesson with feedback', async () => {
+      const user = userEvent.setup()
+      renderLesson()
+      expect(screen.queryByRole('button', { name: /^Finish/ })).not.toBeInTheDocument()
+      const s = useProgress.getState()
+      act(() => {
+        s.signal(id, 'overview')
+        stepIds.forEach((step) => s.seeStep(id, step))
+        s.signal(id, 'lab')
+        s.recordQuiz(id, 2, 2)
+      })
+      // Core stages done → a single "ready" acknowledgement, and the Finish control appears.
+      expect(useToasts.getState().toasts.map((t) => t.title)).toContain('Core stages complete')
+      await user.click(screen.getAllByRole('button', { name: /^Finish/ })[0]!)
+      expect(useProgress.getState().completed[id]).toBeTruthy()
+      expect(useToasts.getState().toasts.at(-1)?.title).toMatch(/^Lesson complete/)
+      expect(screen.getByRole('heading', { name: 'Lesson complete' })).toBeInTheDocument()
+    })
+
+    it('lets a learner finish early, but says so', async () => {
+      const user = userEvent.setup()
+      renderLesson()
+      await user.click(screen.getByRole('button', { name: 'Mark complete anyway' }))
+      expect(useProgress.getState().completed[id]).toBeTruthy()
+    })
+
+    it('does not toast for progress that already existed when the lesson opened', () => {
+      const s = useProgress.getState()
+      s.signal(id, 'overview')
+      renderLesson()
+      expect(useToasts.getState().toasts).toEqual([])
+    })
   })
 })

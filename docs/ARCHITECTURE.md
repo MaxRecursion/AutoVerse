@@ -58,6 +58,10 @@ npm run validate:content
 - Category ids: `basics, engine, fuel-ignition, cooling-lubrication, transmission, drivetrain, brakes, suspension-steering, wheels-tyres, electrical, hvac, body-chassis, aero-technology, maintenance, driving`.
 - Topic files: `src/content/topics/<categoryId>/<topic-id>.json` (one topic per file, `id === slug`). Component files: `src/content/components/<systemId>.json` (array).
 
+## Learning flow
+
+Depth model, stages, missions and pioneers are described in [learning-experience-plan.md](learning-experience-plan.md). Code map: `features/progress/{curriculum,stages,paths,status,actions,useLessonStages}.ts` (pure logic + hooks), `stores/{progress,toasts}.ts` (local-only state), `components/learning/{StageRail,LessonDeeper,LessonFinish,LessonStory,PioneerCard,SystemLadder,ProgressRing}.tsx`, `components/layout/{ProgressPill,ToastHost}.tsx`, `features/labs/{missions,LabMissions}`, `pages/PioneersPage.tsx`. The lab store's `activity` record is written only by user-facing actions, so anything that rewards interaction must read it rather than the playback clock.
+
 ## Design system
 
 Graphite surfaces (`bg-graphite-950/900/850/800/700`), warm white text (`text-paper`), steel greys (`text-steel-300/400/500`), electric cyan for interaction (`cyan`), amber for energy / motion paths (`amber`), `danger` / `ok` for technical states. Utilities: `.panel` (metallic glass panel), `.eyebrow` (mono uppercase label), `.annotation` (mono caption), `.bg-blueprint` (engineering grid). Display font `font-display` (Space Grotesk), body Inter, mono JetBrains Mono. Restrained motion (`motion/react`), respect `prefers-reduced-motion` (`usePrefersReducedMotion`). Touch targets ≥ 36px. shadcn primitives live in `src/components/ui`.

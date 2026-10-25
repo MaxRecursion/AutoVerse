@@ -1,4 +1,4 @@
-import { categories, sceneComponents, topics } from '@/lib/content'
+import { categories, pioneers, sceneComponents, topics } from '@/lib/content'
 import { buildSearchIndex, search, type SearchIndex, type SearchOptions, type SearchResult } from '@/lib/search'
 import { labs } from '@/features/labs/registry'
 
@@ -10,6 +10,7 @@ export function getSiteSearchIndex(): SearchIndex {
     topics,
     categories,
     components: sceneComponents,
+    pioneers,
     labs: labs.map(({ id, title, shortTitle, summary, systemId, topicId }) => ({ id, title, shortTitle, summary, systemId, topicId })),
   })
   return cached

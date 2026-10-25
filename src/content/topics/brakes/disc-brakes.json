@@ -5,8 +5,17 @@
   "summary": "A disc brake slows the wheel by squeezing pads onto a spinning iron disc. Follow one stop from the pedal to the pads, see how a small push becomes tonnes of clamp, and watch the car’s movement energy turn into heat.",
   "categoryId": "brakes",
   "difficulty": "beginner",
+  "layer": "mechanism",
   "estimatedDuration": 14,
-  "tags": ["brakes", "disc brake", "caliper", "brake pads", "friction", "heat", "kinetic energy"],
+  "tags": [
+    "brakes",
+    "disc brake",
+    "caliper",
+    "brake pads",
+    "friction",
+    "heat",
+    "kinetic energy"
+  ],
   "learningObjectives": [
     "Name the parts of a disc brake and say what each one does",
     "Explain how a floating caliper clamps both pads with a single piston",
@@ -23,7 +32,12 @@
       "beginner": "The car is rolling and the disc spins with the wheel. The pads sit a hair away from the disc, so nothing rubs and the wheel turns freely.",
       "technical": "With zero line pressure, seal rollback and disc run-out hold the pads a fraction of a millimetre off the disc (drawn about 200× larger here). Residual drag at this stage would waste fuel and warm the brake, so well-maintained slide pins and seals matter.",
       "cue": "rolling",
-      "componentIds": ["brake-disc", "brake-caliper", "inner-brake-pad", "outer-brake-pad"]
+      "componentIds": [
+        "brake-disc",
+        "brake-caliper",
+        "inner-brake-pad",
+        "outer-brake-pad"
+      ]
     },
     {
       "id": "pedal-to-pressure",
@@ -31,7 +45,12 @@
       "beginner": "Pressing the pedal pushes the master-cylinder piston into the brake fluid. Fluid hardly squashes, so the push becomes pressure that reaches the caliper almost at once.",
       "technical": "Foot force × pedal ratio (3.5) × servo gain (3) acts on the 22 mm master piston: p = F / A. At 120 N of foot force that is about 33 bar. Pressure rises over a short ramp (0.25 s here) as the driver presses and the pads take up their clearance.",
       "cue": "apply",
-      "componentIds": ["brake-pedal", "brake-servo", "master-cylinder", "brake-line"]
+      "componentIds": [
+        "brake-pedal",
+        "brake-servo",
+        "master-cylinder",
+        "brake-line"
+      ]
     },
     {
       "id": "caliper-clamps",
@@ -39,7 +58,12 @@
       "beginner": "Fluid pushes the caliper piston, which presses the inner pad onto the disc. The caliper body slides the other way on its pins and pulls the outer pad onto the other face, so both pads squeeze equally.",
       "technical": "The same pressure on a piston 6.6 times larger in area gives 6.6 times the force: F_clamp = p × A_cal ≈ 8.3 kN at 33 bar. The floating body reacts the piston force, so the outer pad sees the same clamp. Sticky slide pins break that balance and wear the inner pad faster.",
       "cue": "clamp",
-      "componentIds": ["caliper-piston", "brake-caliper", "inner-brake-pad", "outer-brake-pad"]
+      "componentIds": [
+        "caliper-piston",
+        "brake-caliper",
+        "inner-brake-pad",
+        "outer-brake-pad"
+      ]
     },
     {
       "id": "friction-to-torque",
@@ -47,7 +71,11 @@
       "beginner": "The rubbing pads try to stop the disc turning. Because the disc is bolted to the wheel, the tyre pushes back on the road — and that push is what slows the car.",
       "technical": "Two pad faces at μ = 0.4 make F_f = 2μF_clamp ≈ 6.6 kN, acting at r_eff = 0.12 m: T ≈ 800 N·m. At the 0.31 m tyre radius that is about 2.6 kN of road force on a 400 kg corner — roughly 0.66 g, within the grip of a dry road.",
       "cue": "braking",
-      "componentIds": ["brake-disc", "hub-flange", "braked-wheel"]
+      "componentIds": [
+        "brake-disc",
+        "hub-flange",
+        "braked-wheel"
+      ]
     },
     {
       "id": "energy-to-heat",
@@ -55,7 +83,9 @@
       "beginner": "All the energy the car had from moving is turned into heat by the rubbing. The disc warms up — that is where the car’s speed has gone.",
       "technical": "Energy converted so far is exactly ½m(v₀² − v²). Taking the disc as one lumped mass, ΔT = E / (m c): about 29 K for a full stop from 80 km/h in the lab. The colour on the disc is a conceptual heat map; a real disc only glows visibly above roughly 500 °C.",
       "cue": "heat",
-      "componentIds": ["brake-disc"]
+      "componentIds": [
+        "brake-disc"
+      ]
     },
     {
       "id": "stopped-and-hot",
@@ -63,7 +93,10 @@
       "beginner": "The car has stopped and the disc is warm. Between stops, air flowing through the disc’s vanes carries the heat away so the brakes are ready for the next one.",
       "technical": "Stopping distance with a pressure ramp τ and steady deceleration a is d ≈ v₀²/2a + v₀τ/2 (41 m from 80 km/h here, before reaction time). Heat leaves by convection (helped by the vanes’ pumping), radiation and conduction into the hub; repeated stops with too little cooling cause fade.",
       "cue": "stopped",
-      "componentIds": ["brake-disc", "braked-wheel"]
+      "componentIds": [
+        "brake-disc",
+        "braked-wheel"
+      ]
     }
   ],
   "componentIds": [
@@ -82,21 +115,81 @@
   "labId": "braking",
   "flow": {
     "nodes": [
-      { "id": "foot", "label": "Foot on pedal", "detail": "≈ 120 N", "componentId": "brake-pedal" },
-      { "id": "servo", "label": "Lever + servo", "detail": "× 3.5 × 3", "componentId": "brake-servo" },
-      { "id": "master", "label": "Master cylinder", "detail": "p = F / A", "componentId": "master-cylinder" },
-      { "id": "caliper", "label": "Caliper piston", "detail": "F = p × A", "componentId": "caliper-piston" },
-      { "id": "pads", "label": "Pads on disc", "detail": "T = 2μF·r", "componentId": "brake-disc" },
-      { "id": "tyre", "label": "Tyre on road", "detail": "≤ μ_road·N", "componentId": "braked-wheel", "topicId": "tyres-and-grip" },
-      { "id": "heat", "label": "Heat", "detail": "½mv²", "componentId": "brake-disc" }
+      {
+        "id": "foot",
+        "label": "Foot on pedal",
+        "detail": "≈ 120 N",
+        "componentId": "brake-pedal"
+      },
+      {
+        "id": "servo",
+        "label": "Lever + servo",
+        "detail": "× 3.5 × 3",
+        "componentId": "brake-servo"
+      },
+      {
+        "id": "master",
+        "label": "Master cylinder",
+        "detail": "p = F / A",
+        "componentId": "master-cylinder"
+      },
+      {
+        "id": "caliper",
+        "label": "Caliper piston",
+        "detail": "F = p × A",
+        "componentId": "caliper-piston"
+      },
+      {
+        "id": "pads",
+        "label": "Pads on disc",
+        "detail": "T = 2μF·r",
+        "componentId": "brake-disc"
+      },
+      {
+        "id": "tyre",
+        "label": "Tyre on road",
+        "detail": "≤ μ_road·N",
+        "componentId": "braked-wheel",
+        "topicId": "tyres-and-grip"
+      },
+      {
+        "id": "heat",
+        "label": "Heat",
+        "detail": "½mv²",
+        "componentId": "brake-disc"
+      }
     ],
     "edges": [
-      { "from": "foot", "to": "servo", "label": "force" },
-      { "from": "servo", "to": "master", "label": "force" },
-      { "from": "master", "to": "caliper", "label": "pressure" },
-      { "from": "caliper", "to": "pads", "label": "clamp" },
-      { "from": "pads", "to": "tyre", "label": "torque" },
-      { "from": "pads", "to": "heat", "label": "friction" }
+      {
+        "from": "foot",
+        "to": "servo",
+        "label": "force"
+      },
+      {
+        "from": "servo",
+        "to": "master",
+        "label": "force"
+      },
+      {
+        "from": "master",
+        "to": "caliper",
+        "label": "pressure"
+      },
+      {
+        "from": "caliper",
+        "to": "pads",
+        "label": "clamp"
+      },
+      {
+        "from": "pads",
+        "to": "tyre",
+        "label": "torque"
+      },
+      {
+        "from": "pads",
+        "to": "heat",
+        "label": "friction"
+      }
     ]
   },
   "keyConcepts": [
@@ -151,8 +244,17 @@
     "If the car pulls to one side under braking, one caliper may be sticking or one pair of pads may be contaminated.",
     "After driving through deep water, brake gently a few times to dry the discs and pads before you need a firm stop."
   ],
-  "relatedTopicIds": ["brake-hydraulics", "anti-lock-braking", "tyres-and-grip", "routine-maintenance", "diagnosing-warning-signs"],
-  "prerequisiteTopicIds": ["how-a-car-works", "brake-hydraulics"],
+  "relatedTopicIds": [
+    "brake-hydraulics",
+    "anti-lock-braking",
+    "tyres-and-grip",
+    "routine-maintenance",
+    "diagnosing-warning-signs"
+  ],
+  "prerequisiteTopicIds": [
+    "how-a-car-works",
+    "brake-hydraulics"
+  ],
   "quiz": [
     {
       "id": "floating-caliper",
@@ -169,28 +271,48 @@
     {
       "id": "brake-torque",
       "prompt": "Each pad is clamped with 8 kN, pad friction μ is 0.4 and the effective radius is 0.12 m. What is the brake torque from both pads?",
-      "options": ["384 N·m", "768 N·m", "960 N·m", "3,200 N·m"],
+      "options": [
+        "384 N·m",
+        "768 N·m",
+        "960 N·m",
+        "3,200 N·m"
+      ],
       "answerIndex": 1,
       "explanation": "T = 2 μ F r = 2 × 0.4 × 8,000 N × 0.12 m = 768 N·m."
     },
     {
       "id": "speed-squared",
       "prompt": "At the same steady deceleration, how does the braking distance from 100 km/h compare with the distance from 50 km/h?",
-      "options": ["The same", "Twice as long", "Four times as long", "Eight times as long"],
+      "options": [
+        "The same",
+        "Twice as long",
+        "Four times as long",
+        "Eight times as long"
+      ],
       "answerIndex": 2,
       "explanation": "d = v² / 2a, so doubling the speed multiplies the distance by four — as does the energy the brakes must turn into heat."
     },
     {
       "id": "disc-heat",
       "prompt": "A stop puts 99 kJ into a 7.5 kg cast-iron disc (c ≈ 460 J/kg·K). Roughly how much does the disc’s average temperature rise?",
-      "options": ["About 3 K", "About 29 K", "About 290 K", "About 13,000 K"],
+      "options": [
+        "About 3 K",
+        "About 29 K",
+        "About 290 K",
+        "About 13,000 K"
+      ],
       "answerIndex": 1,
       "explanation": "ΔT ≈ E / (m c) = 99,000 / (7.5 × 460) ≈ 29 K. The rubbing surface briefly runs hotter, because the heat takes time to spread through the iron."
     },
     {
       "id": "grip-limit",
       "prompt": "On a wet road with a grip coefficient of 0.7, what is the best deceleration the tyres can give, however hard you brake?",
-      "options": ["About 0.35 g", "About 0.7 g", "About 1.4 g", "There is no limit if the brakes are strong enough"],
+      "options": [
+        "About 0.35 g",
+        "About 0.7 g",
+        "About 1.4 g",
+        "There is no limit if the brakes are strong enough"
+      ],
       "answerIndex": 1,
       "explanation": "The tyre can push on the road with at most μ times the load, so a_max = μg ≈ 0.7 g. Brake harder and the wheel locks instead."
     }
@@ -211,17 +333,8 @@
       "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
     }
   ],
-  "historyNote": {
-    "person": "Frederick S. Duesenberg",
-    "contribution": "Put four-wheel hydraulic brakes into production automobiles with the Model A",
-    "year": "1921",
-    "anecdote": "Four-wheel brakes and hydraulic braking each had earlier pioneers. Duesenberg's Model A was the first production automobile to combine hydraulic brakes on all four wheels, reducing stopping distances as cars became faster.",
-    "source": {
-      "title": "Duesenberg 4-Wheel Hydraulic Braking System",
-      "url": "https://www.asme.org/about-asme/engineering-history/landmarks/284-duesenberg-4-wheel-hydraulic-braking-system",
-      "publisher": "ASME"
-    }
+  "licence": {
+    "name": "AutoVerse original content"
   },
-  "licence": { "name": "AutoVerse original content" },
   "contentStatus": "complete"
 }

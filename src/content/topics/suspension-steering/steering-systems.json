@@ -5,8 +5,16 @@
   "summary": "Turning the wheel moves a rack sideways, which swivels the front wheels on their pivots. Learn how rack-and-pinion steering works, why the inner wheel must turn more than the outer, how power assistance helps, and why a car straightens itself.",
   "categoryId": "suspension-steering",
   "difficulty": "beginner",
+  "layer": "surface",
   "estimatedDuration": 12,
-  "tags": ["steering", "rack and pinion", "power steering", "ackermann", "caster", "alignment"],
+  "tags": [
+    "steering",
+    "rack and pinion",
+    "power steering",
+    "ackermann",
+    "caster",
+    "alignment"
+  ],
   "learningObjectives": [
     "Describe how a rack-and-pinion mechanism converts rotation into sideways motion",
     "Calculate road-wheel angle from steering ratio",
@@ -49,66 +57,162 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "wheel", "label": "Steering wheel", "detail": "Driver torque" },
-      { "id": "eps", "label": "Torque sensor & motor", "detail": "Speed-mapped assist" },
-      { "id": "rack", "label": "Pinion & rack", "detail": "Rotation → translation" },
-      { "id": "track-rods", "label": "Track rods", "detail": "Set toe" },
-      { "id": "knuckles", "label": "Steering knuckles", "detail": "Ackermann arms" },
-      { "id": "tyres", "label": "Tyres", "detail": "Slip angle → cornering force", "topicId": "tyres-and-grip" }
+      {
+        "id": "wheel",
+        "label": "Steering wheel",
+        "detail": "Driver torque"
+      },
+      {
+        "id": "eps",
+        "label": "Torque sensor & motor",
+        "detail": "Speed-mapped assist"
+      },
+      {
+        "id": "rack",
+        "label": "Pinion & rack",
+        "detail": "Rotation → translation"
+      },
+      {
+        "id": "track-rods",
+        "label": "Track rods",
+        "detail": "Set toe"
+      },
+      {
+        "id": "knuckles",
+        "label": "Steering knuckles",
+        "detail": "Ackermann arms"
+      },
+      {
+        "id": "tyres",
+        "label": "Tyres",
+        "detail": "Slip angle → cornering force",
+        "topicId": "tyres-and-grip"
+      }
     ],
     "edges": [
-      { "from": "wheel", "to": "eps" },
-      { "from": "eps", "to": "rack" },
-      { "from": "rack", "to": "track-rods" },
-      { "from": "track-rods", "to": "knuckles" },
-      { "from": "knuckles", "to": "tyres" },
-      { "from": "tyres", "to": "wheel", "label": "self-aligning feel" }
+      {
+        "from": "wheel",
+        "to": "eps"
+      },
+      {
+        "from": "eps",
+        "to": "rack"
+      },
+      {
+        "from": "rack",
+        "to": "track-rods"
+      },
+      {
+        "from": "track-rods",
+        "to": "knuckles"
+      },
+      {
+        "from": "knuckles",
+        "to": "tyres"
+      },
+      {
+        "from": "tyres",
+        "to": "wheel",
+        "label": "self-aligning feel"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Steering ratio", "definition": "Steering-wheel angle divided by the resulting road-wheel angle.", "equation": "i_s = θ_wheel / δ_road" },
-    { "term": "Ackermann geometry", "definition": "Linkage layout that makes the inner wheel steer more than the outer so both roll about a common centre." },
-    { "term": "Caster and trail", "definition": "Rearward tilt of the steering axis places the contact patch behind it, producing self-centring." },
-    { "term": "Toe", "definition": "The angle of the wheels relative to the car's centreline viewed from above; small amounts strongly affect stability and tyre wear." }
+    {
+      "term": "Steering ratio",
+      "definition": "Steering-wheel angle divided by the resulting road-wheel angle.",
+      "equation": "i_s = θ_wheel / δ_road"
+    },
+    {
+      "term": "Ackermann geometry",
+      "definition": "Linkage layout that makes the inner wheel steer more than the outer so both roll about a common centre."
+    },
+    {
+      "term": "Caster and trail",
+      "definition": "Rearward tilt of the steering axis places the contact patch behind it, producing self-centring."
+    },
+    {
+      "term": "Toe",
+      "definition": "The angle of the wheels relative to the car's centreline viewed from above; small amounts strongly affect stability and tyre wear."
+    }
   ],
   "misconceptions": [
-    { "myth": "Light steering means the car has less grip.", "reality": "Assistance level is a tuning choice. Steering effort says little about available grip, although a sudden lightening at speed can indicate front tyres beginning to slide or aquaplane." },
-    { "myth": "Wheel alignment only matters after an accident.", "reality": "Kerb strikes and worn joints shift alignment; even small toe errors noticeably shorten tyre life and can make the car pull." },
-    { "myth": "Both front wheels always point in exactly the same direction.", "reality": "In a turn the inner wheel deliberately points more sharply than the outer, thanks to Ackermann geometry." }
+    {
+      "myth": "Light steering means the car has less grip.",
+      "reality": "Assistance level is a tuning choice. Steering effort says little about available grip, although a sudden lightening at speed can indicate front tyres beginning to slide or aquaplane."
+    },
+    {
+      "myth": "Wheel alignment only matters after an accident.",
+      "reality": "Kerb strikes and worn joints shift alignment; even small toe errors noticeably shorten tyre life and can make the car pull."
+    },
+    {
+      "myth": "Both front wheels always point in exactly the same direction.",
+      "reality": "In a turn the inner wheel deliberately points more sharply than the outer, thanks to Ackermann geometry."
+    }
   ],
   "practicalExamples": [
     "Releasing the steering wheel gently after a slow corner and watching it unwind shows caster's self-centring effect.",
     "Tyres worn on one edge often indicate incorrect toe or camber rather than a tyre fault.",
     "A car that pulls to one side on a level road may have uneven tyre pressures, an alignment error or a sticking brake."
   ],
-  "relatedTopicIds": ["tyres-and-grip", "driveshafts-and-cv-joints", "diagnosing-warning-signs", "mechanical-sympathy"],
-  "prerequisiteTopicIds": ["how-a-car-works"],
+  "relatedTopicIds": [
+    "tyres-and-grip",
+    "driveshafts-and-cv-joints",
+    "diagnosing-warning-signs",
+    "mechanical-sympathy"
+  ],
+  "prerequisiteTopicIds": [
+    "how-a-car-works"
+  ],
   "quiz": [
     {
       "id": "ratio-calc",
       "prompt": "A car has a 15:1 steering ratio. You turn the steering wheel 90°. Roughly how far do the road wheels turn?",
-      "options": ["1.5°", "6°", "15°", "90°"],
+      "options": [
+        "1.5°",
+        "6°",
+        "15°",
+        "90°"
+      ],
       "answerIndex": 1,
       "explanation": "Road-wheel angle = 90° ÷ 15 = 6°."
     },
     {
       "id": "ackermann-q",
       "prompt": "Why does the inner front wheel steer at a larger angle than the outer one?",
-      "options": ["To reduce steering effort", "Because it follows a tighter circle around the turn centre", "To improve braking", "It does not; they are always parallel"],
+      "options": [
+        "To reduce steering effort",
+        "Because it follows a tighter circle around the turn centre",
+        "To improve braking",
+        "It does not; they are always parallel"
+      ],
       "answerIndex": 1,
       "explanation": "Ackermann geometry matches each wheel to its own turning radius so the tyres do not scrub."
     },
     {
       "id": "eps-benefit",
       "prompt": "Which is an advantage of electric power steering over hydraulic?",
-      "options": ["It needs regular fluid changes", "It only uses energy when assistance is needed and can be controlled by software", "It is always heavier to operate", "It cannot vary assistance with speed"],
+      "options": [
+        "It needs regular fluid changes",
+        "It only uses energy when assistance is needed and can be controlled by software",
+        "It is always heavier to operate",
+        "It cannot vary assistance with speed"
+      ],
       "answerIndex": 1,
       "explanation": "EPS draws power on demand and its motor can be commanded for lane-keeping and parking assistance."
     }
   ],
   "sourceReferences": [
-    {"title":"How the steering system works","url":"https://www.howacarworks.com/basics/how-the-steering-system-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How the steering system works",
+      "url": "https://www.howacarworks.com/basics/how-the-steering-system-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

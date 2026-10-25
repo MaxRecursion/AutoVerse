@@ -5,6 +5,7 @@
   "summary": "How a friction clutch connects and disconnects the engine and gearbox: a disc clamped between the flywheel and a spring-loaded pressure plate, released by the pedal. Covers the bite point, controlled slip and why slipping makes heat.",
   "categoryId": "transmission",
   "difficulty": "beginner",
+  "layer": "surface",
   "estimatedDuration": 12,
   "tags": [
     "clutch",

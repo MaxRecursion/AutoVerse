@@ -70,7 +70,11 @@ describe('learning navigation', () => {
   it('shows a category page with its lessons and a further-reading section', async () => {
     renderAt('/learn/engine')
     expect(await screen.findByRole('heading', { level: 1, name: 'Engine' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /Fixture engine cycle/ })).toHaveAttribute('href', '/topics/fixture-engine-cycle')
+    const main = within(screen.getByRole('main'))
+    // One obvious primary action, plus the lesson's own row in the surface → depth ladder.
+    expect(main.getByRole('link', { name: /^Start here: Fixture engine cycle/ })).toHaveAttribute('href', '/topics/fixture-engine-cycle')
+    const surface = within(main.getByRole('region', { name: 'Surface' }))
+    expect(surface.getByRole('link', { name: /Fixture engine cycle/ })).toHaveAttribute('href', '/topics/fixture-engine-cycle')
     expect(screen.getByRole('heading', { name: 'Further reading' })).toBeInTheDocument()
   })
 

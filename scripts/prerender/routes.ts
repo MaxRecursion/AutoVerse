@@ -3,7 +3,7 @@
  * title / description / no-JavaScript fallback content for each. All text is
  * escaped here, so callers can drop `bodyHtml` straight into a document.
  */
-import type { Category, Topic } from '../../src/lib/schemas'
+import type { Category, Pioneer, Topic } from '../../src/lib/schemas'
 
 export const SITE_NAME = 'AutoVerse'
 export const HOME_TITLE = 'AutoVerse — Understand Every Moving Part'
@@ -32,6 +32,7 @@ export interface RouteInput {
   categories: Category[]
   topics: Topic[]
   labs: LabMeta[]
+  pioneers?: Pioneer[]
 }
 
 const ENTITIES: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }
@@ -63,6 +64,7 @@ const NAV = `<nav aria-label="Site">${list([
   link('/', 'Home'),
   link('/learn', 'All topics'),
   link('/labs', 'Labs'),
+  link('/pioneers', 'Pioneers'),
   link('/about', 'About & credits'),
 ])}</nav>`
 
@@ -76,7 +78,12 @@ function topicItem(t: Topic): string {
   return `${link(topicPath(t), t.title)} — ${escapeHtml(t.summary)}`
 }
 
-function topicRoute(t: Topic, category: Category | undefined, byId: Map<string, Topic>): PrerenderRoute {
+const pioneerHtml = (p: Pioneer) =>
+  `<h3>${escapeHtml(p.name)} (${escapeHtml(p.year)})</h3><p><strong>${escapeHtml(p.headline)}</strong></p><p>${escapeHtml(p.story)}</p>${
+    p.caution ? `<p><em>Worth knowing:</em> ${escapeHtml(p.caution)}</p>` : ''
+  }<p>Sources: ${p.sources.map((s) => link(s.url, `${s.publisher ? `${s.publisher}: ` : ''}${s.title}`)).join('; ')}</p>`
+
+function topicRoute(t: Topic, category: Category | undefined, byId: Map<string, Topic>, people: Pioneer[] = []): PrerenderRoute {
   const related = [...new Set([...t.prerequisiteTopicIds, ...t.relatedTopicIds])]
     .map((id) => byId.get(id))
     .filter((x): x is Topic => Boolean(x))
@@ -90,6 +97,7 @@ function topicRoute(t: Topic, category: Category | undefined, byId: Map<string, 
     `<h2>Overview</h2>${paragraphs(t.beginnerExplanation)}`,
     t.steps.length ? `<h2>Step by step</h2><ol>${t.steps.map((s) => `<li><strong>${escapeHtml(s.title)}.</strong> ${escapeHtml(s.beginner)}</li>`).join('')}</ol>` : '',
     related.length ? `<h2>Related topics</h2>${list(related.map((r) => link(topicPath(r), r.title)))}` : '',
+    people.length ? `<h2>The story behind it</h2>${people.map(pioneerHtml).join('')}` : '',
   ].join('')
   return {
     path: topicPath(t),
@@ -102,7 +110,7 @@ function topicRoute(t: Topic, category: Category | undefined, byId: Map<string, 
 }
 
 /** Every prerendered route, in a stable order. */
-export function buildRoutes({ categories, topics, labs }: RouteInput): PrerenderRoute[] {
+export function buildRoutes({ categories, topics, labs, pioneers = [] }: RouteInput): PrerenderRoute[] {
   const sortedCategories = [...categories].sort((a, b) => a.order - b.order)
   const sortedTopics = [...topics].sort((a, b) => a.title.localeCompare(b.title))
   const topicsIn = (c: Category) => sortedTopics.filter((t) => t.categoryId === c.id)
@@ -150,7 +158,14 @@ export function buildRoutes({ categories, topics, labs }: RouteInput): Prerender
         priority: 0.7,
       }
     }),
-    ...sortedTopics.map((t) => topicRoute(t, categoryById.get(t.categoryId), topicById)),
+    ...sortedTopics.map((t) =>
+      topicRoute(
+        t,
+        categoryById.get(t.categoryId),
+        topicById,
+        pioneers.filter((p) => p.topicIds.includes(t.id)),
+      ),
+    ),
     {
       path: '/labs',
       title: pageTitle('Laboratories'),
@@ -181,6 +196,20 @@ export function buildRoutes({ categories, topics, labs }: RouteInput): Prerender
       description: 'See how engine, gearbox, driveline, brakes and suspension connect, and how power flows to the wheels in each drivetrain layout.',
       ogType: 'website',
       bodyHtml: doc('System map', `<p>An interactive map of how the car’s systems connect. Browse the lessons instead:</p>${list(categoryItems)}`),
+      priority: 0.6,
+    },
+    {
+      path: '/pioneers',
+      title: pageTitle('The engineers behind the parts'),
+      description: truncate(`${pioneers.length} engineers and the parts they shaped, from the Ackermann steering geometry to the radial tyre, each story retold from a cited source.`),
+      ogType: 'website',
+      bodyHtml: doc(
+        'The engineers behind the parts',
+        `<p>Every part in a car was somebody’s problem first. Each story below is retold in our own words from the sources it cites; where credit is disputed, it says so.</p>${[...pioneers]
+          .sort((a, b) => a.sortYear - b.sortYear)
+          .map(pioneerHtml)
+          .join('')}`,
+      ),
       priority: 0.6,
     },
     {

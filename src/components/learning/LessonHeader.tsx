@@ -1,4 +1,5 @@
 import { Bookmark, BookmarkCheck, CircleCheck, Circle, Info } from 'lucide-react'
+import { completeLesson, reopenLesson } from '@/features/progress/actions'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { Button } from '@/components/ui/button'
 import type { Category, ContentStatus, Topic } from '@/lib/schemas'
@@ -46,11 +47,10 @@ export function LessonHeader({ topic, category, interactive }: LessonHeaderProps
 }
 
 /** Bookmark + mark-complete toggles (stored locally). */
-export function LessonActions({ topicId, className }: { topicId: string; className?: string }) {
+export function LessonActions({ topicId, className, showComplete = true }: { topicId: string; className?: string; /** Hide the complete toggle where a dedicated finish control is shown. */ showComplete?: boolean }) {
   const completed = useProgress((s) => !!s.completed[topicId])
   const bookmarked = useProgress((s) => s.bookmarks.includes(topicId))
   const toggleBookmark = useProgress((s) => s.toggleBookmark)
-  const setCompleted = useProgress((s) => s.setCompleted)
 
   return (
     <div className={cn('flex flex-wrap gap-2', className)}>
@@ -63,15 +63,15 @@ export function LessonActions({ topicId, className }: { topicId: string; classNa
         {bookmarked ? <BookmarkCheck aria-hidden /> : <Bookmark aria-hidden />}
         {bookmarked ? 'Bookmarked' : 'Bookmark'}
       </Button>
-      <Button
+      {showComplete && <Button
         variant={completed ? 'outline' : 'default'}
         className={cn('h-10', completed && 'border-ok/50 text-ok hover:text-ok')}
         aria-pressed={completed}
-        onClick={() => setCompleted(topicId, !completed)}
+        onClick={() => (completed ? reopenLesson(topicId) : completeLesson(topicId))}
       >
         {completed ? <CircleCheck aria-hidden /> : <Circle aria-hidden />}
         {completed ? 'Completed' : 'Mark complete'}
-      </Button>
+      </Button>}
     </div>
   )
 }

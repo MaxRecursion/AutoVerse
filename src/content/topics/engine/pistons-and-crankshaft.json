@@ -5,8 +5,17 @@
   "summary": "How the slider-crank turns a straight push into rotation: piston, rings, wrist pin, connecting rod, crank throw, counterweights and flywheel — and why the piston does not move at a steady speed.",
   "categoryId": "engine",
   "difficulty": "intermediate",
+  "layer": "mechanism",
   "estimatedDuration": 14,
-  "tags": ["engine", "piston", "connecting rod", "crankshaft", "slider-crank", "flywheel", "torque"],
+  "tags": [
+    "engine",
+    "piston",
+    "connecting rod",
+    "crankshaft",
+    "slider-crank",
+    "flywheel",
+    "torque"
+  ],
   "learningObjectives": [
     "Identify the piston, rings, wrist pin, connecting rod, crank pin, main journals, counterweights and flywheel",
     "Use the slider-crank equation to find piston position from crank angle",
@@ -23,7 +32,11 @@
       "beginner": "At the very top the piston stops for an instant. The rod and crank line up, so pushing on the piston could not turn the crank at all.",
       "technical": "θ = 0° or 360°. x = r + l, piston velocity is zero and the torque lever arm is zero. Firing TDC (360°) is where combustion pressure is building, yet no torque is available until the crank moves on — one reason peak pressure is timed after TDC.",
       "cue": "tdc",
-      "componentIds": ["piston", "connecting-rod", "crankshaft"]
+      "componentIds": [
+        "piston",
+        "connecting-rod",
+        "crankshaft"
+      ]
     },
     {
       "id": "push",
@@ -31,7 +44,11 @@
       "beginner": "As the crank moves round, the rod leans over and the piston's push gets real leverage on the crank pin — like pressing on a level bicycle pedal.",
       "technical": "During the power stroke T = F·r·sin(θ + φ)/cosφ. The effective lever arm grows from zero at TDC to a maximum part-way down, so the falling gas pressure and the growing lever arm combine to give peak torque well after peak pressure.",
       "cue": "power",
-      "componentIds": ["connecting-rod", "crankshaft", "wrist-pin"]
+      "componentIds": [
+        "connecting-rod",
+        "crankshaft",
+        "wrist-pin"
+      ]
     },
     {
       "id": "bdc",
@@ -39,7 +56,10 @@
       "beginner": "At the bottom the piston stops again and reverses. Again the rod pushes straight along the crank, so there is no turning effect.",
       "technical": "θ = 180° or 540°. x = l − r. Acceleration here is lower than at TDC because the rod angularity term subtracts rather than adds; the full stroke is 2r = 90 mm.",
       "cue": "bdc",
-      "componentIds": ["piston", "crankshaft"]
+      "componentIds": [
+        "piston",
+        "crankshaft"
+      ]
     },
     {
       "id": "uneven-motion",
@@ -47,7 +67,10 @@
       "beginner": "The piston does not move at a steady speed. It moves faster near the top half of its travel than near the bottom, because the rod tilts as the crank turns.",
       "technical": "The piston covers about 58% of the stroke in the first 90° after TDC and reaches peak velocity around 74° ATDC. The difference from simple harmonic motion is the second-order component, at twice crank frequency, with amplitude proportional to r/l.",
       "cue": "intake",
-      "componentIds": ["piston", "connecting-rod"]
+      "componentIds": [
+        "piston",
+        "connecting-rod"
+      ]
     },
     {
       "id": "rings-and-pin",
@@ -55,7 +78,10 @@
       "beginner": "Rings seal the piston against the cylinder wall, and the wrist pin lets the rod swing while it pushes on the piston.",
       "technical": "The top compression ring is pressed outward by cylinder pressure acting behind it; the second ring seals and scrapes; the oil ring meters the oil film. The wrist pin oscillates through ±18° here and carries the full gas load on each power stroke.",
       "cue": "compression",
-      "componentIds": ["piston-rings", "wrist-pin"]
+      "componentIds": [
+        "piston-rings",
+        "wrist-pin"
+      ]
     },
     {
       "id": "balance-and-flywheel",
@@ -63,42 +89,141 @@
       "beginner": "Counterweights stop the spinning crankshaft from shaking the engine, and the heavy flywheel keeps it turning smoothly between power strokes.",
       "technical": "Counterweights balance the rotating mass and part of the reciprocating mass; on one cylinder the remaining shaking force can only be traded between directions, not removed without balance shafts. The flywheel limits speed fluctuation: ΔE = I·ω·Δω for small changes.",
       "cue": "exhaust",
-      "componentIds": ["crankshaft", "flywheel"]
+      "componentIds": [
+        "crankshaft",
+        "flywheel"
+      ]
     }
   ],
-  "componentIds": ["piston", "piston-rings", "wrist-pin", "connecting-rod", "crankshaft", "flywheel", "cylinder"],
+  "componentIds": [
+    "piston",
+    "piston-rings",
+    "wrist-pin",
+    "connecting-rod",
+    "crankshaft",
+    "flywheel",
+    "cylinder"
+  ],
   "labId": "engine",
   "flow": {
     "nodes": [
-      { "id": "gas", "label": "Gas pressure", "detail": "Acts on the piston crown", "componentId": "combustion-chamber" },
-      { "id": "piston-node", "label": "Piston", "detail": "Force F = p × crown area", "componentId": "piston" },
-      { "id": "pin", "label": "Wrist pin", "detail": "Hinge to the rod", "componentId": "wrist-pin" },
-      { "id": "rod", "label": "Connecting rod", "detail": "Force F / cos φ along the rod", "componentId": "connecting-rod" },
-      { "id": "crank-node", "label": "Crank pin & throw", "detail": "Torque F·r·sin(θ+φ)/cos φ", "componentId": "crankshaft" },
-      { "id": "flywheel-node", "label": "Flywheel", "detail": "Stores energy between pulses", "componentId": "flywheel" },
-      { "id": "drivetrain", "label": "To the gearbox", "detail": "Torque leaves the engine", "topicId": "torque-and-power" }
+      {
+        "id": "gas",
+        "label": "Gas pressure",
+        "detail": "Acts on the piston crown",
+        "componentId": "combustion-chamber"
+      },
+      {
+        "id": "piston-node",
+        "label": "Piston",
+        "detail": "Force F = p × crown area",
+        "componentId": "piston"
+      },
+      {
+        "id": "pin",
+        "label": "Wrist pin",
+        "detail": "Hinge to the rod",
+        "componentId": "wrist-pin"
+      },
+      {
+        "id": "rod",
+        "label": "Connecting rod",
+        "detail": "Force F / cos φ along the rod",
+        "componentId": "connecting-rod"
+      },
+      {
+        "id": "crank-node",
+        "label": "Crank pin & throw",
+        "detail": "Torque F·r·sin(θ+φ)/cos φ",
+        "componentId": "crankshaft"
+      },
+      {
+        "id": "flywheel-node",
+        "label": "Flywheel",
+        "detail": "Stores energy between pulses",
+        "componentId": "flywheel"
+      },
+      {
+        "id": "drivetrain",
+        "label": "To the gearbox",
+        "detail": "Torque leaves the engine",
+        "topicId": "torque-and-power"
+      }
     ],
     "edges": [
-      { "from": "gas", "to": "piston-node", "label": "push" },
-      { "from": "piston-node", "to": "pin" },
-      { "from": "pin", "to": "rod" },
-      { "from": "rod", "to": "crank-node", "label": "lever arm" },
-      { "from": "crank-node", "to": "flywheel-node", "label": "rotation" },
-      { "from": "flywheel-node", "to": "drivetrain" }
+      {
+        "from": "gas",
+        "to": "piston-node",
+        "label": "push"
+      },
+      {
+        "from": "piston-node",
+        "to": "pin"
+      },
+      {
+        "from": "pin",
+        "to": "rod"
+      },
+      {
+        "from": "rod",
+        "to": "crank-node",
+        "label": "lever arm"
+      },
+      {
+        "from": "crank-node",
+        "to": "flywheel-node",
+        "label": "rotation"
+      },
+      {
+        "from": "flywheel-node",
+        "to": "drivetrain"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Slider-crank piston position", "definition": "Distance from the crank axis to the wrist pin for crank radius r, rod length l and crank angle θ.", "equation": "x = r·cosθ + √(l² − r²·sin²θ)" },
-    { "term": "Rod angle", "definition": "How far the connecting rod leans from the cylinder axis.", "equation": "sin φ = (r / l)·sin θ" },
-    { "term": "Crank torque", "definition": "Torque produced by a gas force F on the piston. Zero at both dead centres.", "equation": "T = F·r·sin(θ + φ) / cos φ" },
-    { "term": "Mean piston speed", "definition": "Average piston speed for stroke S (m) at N rpm. A common way to compare how hard engines work their pistons.", "equation": "v̄ = 2·S·N / 60" },
-    { "term": "Rod ratio", "definition": "Rod length divided by crank radius. Lower ratios mean larger rod angles, more side thrust and more second-order vibration.", "equation": "λ = l / r" }
+    {
+      "term": "Slider-crank piston position",
+      "definition": "Distance from the crank axis to the wrist pin for crank radius r, rod length l and crank angle θ.",
+      "equation": "x = r·cosθ + √(l² − r²·sin²θ)"
+    },
+    {
+      "term": "Rod angle",
+      "definition": "How far the connecting rod leans from the cylinder axis.",
+      "equation": "sin φ = (r / l)·sin θ"
+    },
+    {
+      "term": "Crank torque",
+      "definition": "Torque produced by a gas force F on the piston. Zero at both dead centres.",
+      "equation": "T = F·r·sin(θ + φ) / cos φ"
+    },
+    {
+      "term": "Mean piston speed",
+      "definition": "Average piston speed for stroke S (m) at N rpm. A common way to compare how hard engines work their pistons.",
+      "equation": "v̄ = 2·S·N / 60"
+    },
+    {
+      "term": "Rod ratio",
+      "definition": "Rod length divided by crank radius. Lower ratios mean larger rod angles, more side thrust and more second-order vibration.",
+      "equation": "λ = l / r"
+    }
   ],
   "misconceptions": [
-    { "myth": "The piston is halfway down when the crank has turned 90°.", "reality": "Because the rod tilts, the piston is already about 58% of the way down at 90° after TDC in this geometry." },
-    { "myth": "Maximum torque comes at the moment of maximum cylinder pressure.", "reality": "Peak pressure arrives close to TDC, where the crank's lever arm is still small; torque depends on both pressure and lever arm." },
-    { "myth": "Counterweights make a single-cylinder engine perfectly smooth.", "reality": "They balance rotating mass, but the piston's back-and-forth motion leaves a shaking force that counterweights can only redirect. Balance shafts or more cylinders are needed to cancel it." },
-    { "myth": "The flywheel adds power.", "reality": "It stores and returns energy within each cycle, smoothing speed. It cannot add energy, and a heavy one makes the engine slower to rev." }
+    {
+      "myth": "The piston is halfway down when the crank has turned 90°.",
+      "reality": "Because the rod tilts, the piston is already about 58% of the way down at 90° after TDC in this geometry."
+    },
+    {
+      "myth": "Maximum torque comes at the moment of maximum cylinder pressure.",
+      "reality": "Peak pressure arrives close to TDC, where the crank's lever arm is still small; torque depends on both pressure and lever arm."
+    },
+    {
+      "myth": "Counterweights make a single-cylinder engine perfectly smooth.",
+      "reality": "They balance rotating mass, but the piston's back-and-forth motion leaves a shaking force that counterweights can only redirect. Balance shafts or more cylinders are needed to cancel it."
+    },
+    {
+      "myth": "The flywheel adds power.",
+      "reality": "It stores and returns energy within each cycle, smoothing speed. It cannot add energy, and a heavy one makes the engine slower to rev."
+    }
   ],
   "practicalExamples": [
     "Pedalling a bicycle is a slider-crank in reverse: you get no drive with the pedals at top and bottom, and the most when the crank is level.",
@@ -106,27 +231,50 @@
     "A knocking noise that rises with engine speed can come from a worn big-end bearing — the crank pin's oil film can no longer carry the rod load.",
     "Single-cylinder motorcycles often add a balance shaft geared to the crank to cancel the vibration that counterweights cannot."
   ],
-  "relatedTopicIds": ["four-stroke-cycle", "torque-and-power", "engine-layouts", "lubrication-system", "valves-and-camshaft"],
-  "prerequisiteTopicIds": ["four-stroke-cycle"],
+  "relatedTopicIds": [
+    "four-stroke-cycle",
+    "torque-and-power",
+    "engine-layouts",
+    "lubrication-system",
+    "valves-and-camshaft"
+  ],
+  "prerequisiteTopicIds": [
+    "four-stroke-cycle"
+  ],
   "quiz": [
     {
       "id": "stroke-from-throw",
       "prompt": "A crankshaft has a throw (crank radius) of 40 mm. What is the engine's stroke?",
-      "options": ["20 mm", "40 mm", "80 mm", "160 mm"],
+      "options": [
+        "20 mm",
+        "40 mm",
+        "80 mm",
+        "160 mm"
+      ],
       "answerIndex": 2,
       "explanation": "The piston travels from r above the crank axis to r below it (plus the rod length), so the stroke is 2r = 80 mm."
     },
     {
       "id": "zero-torque",
       "prompt": "At which crank positions does gas pressure produce no torque on the crankshaft?",
-      "options": ["At 90° and 270°", "At top and bottom dead centre", "Only during the exhaust stroke", "Whenever the valves are open"],
+      "options": [
+        "At 90° and 270°",
+        "At top and bottom dead centre",
+        "Only during the exhaust stroke",
+        "Whenever the valves are open"
+      ],
       "answerIndex": 1,
       "explanation": "At TDC and BDC the rod pushes straight through the crank axis, so the lever arm r·sin(θ + φ) is zero."
     },
     {
       "id": "ninety-degrees",
       "prompt": "With a real connecting rod, where is the piston when the crank is 90° after TDC?",
-      "options": ["Exactly halfway down", "Less than halfway down", "More than halfway down", "At BDC"],
+      "options": [
+        "Exactly halfway down",
+        "Less than halfway down",
+        "More than halfway down",
+        "At BDC"
+      ],
       "answerIndex": 2,
       "explanation": "The rod's tilt lowers the wrist pin further, so the piston is past halfway (about 58% here)."
     },
@@ -164,6 +312,8 @@
       "note": "Further reading. AutoVerse text is original."
     }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { Outlet, ScrollRestoration } from 'react-router'
 import { Header } from './Header'
 import { Footer } from './Footer'
+import { ToastHost } from './ToastHost'
 
 export function AppShell() {
   return (
@@ -16,6 +17,7 @@ export function AppShell() {
         </Suspense>
       </main>
       <Footer />
+      <ToastHost />
       {/* Key by path on the initial load so a fresh (or prerendered) page never inherits another page's scroll offset. */}
       <ScrollRestoration getKey={(loc) => (loc.key === 'default' ? loc.pathname + loc.search : loc.key)} />
     </div>

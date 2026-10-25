@@ -4,6 +4,7 @@ import { getComponent } from '@/lib/content'
 import type { ExplanationLevel, SceneComponent, Step } from '@/lib/schemas'
 import type { LabStore } from '@/lib/simulation/labStore'
 import { cn } from '@/lib/utils'
+import { DwellSentinel } from './DwellSentinel'
 import { labHasCue, selectActiveStepId, useOptionalLab } from './labSync'
 
 interface LessonStepsProps {
@@ -15,6 +16,8 @@ interface LessonStepsProps {
   onShowCue: (cue: string) => void
   /** Select a component (in the lab when present). */
   onSelectComponent: (componentId: string) => void
+  /** A step was read (on screen for a moment) or played — evidence for the "See it work" stage. */
+  onSeen?: (stepId: string) => void
 }
 
 /**
@@ -23,7 +26,7 @@ interface LessonStepsProps {
  * cue is currently playing is highlighted live — so text follows animation
  * and animation follows text.
  */
-export function LessonSteps({ steps, level, store, onShowCue, onSelectComponent }: LessonStepsProps) {
+export function LessonSteps({ steps, level, store, onShowCue, onSelectComponent, onSeen }: LessonStepsProps) {
   // The selector runs on every store update but returns a step id, so this
   // re-renders only when the highlighted step changes — not every frame.
   const activeStepId = useOptionalLab(store, (s) => (store ? selectActiveStepId(steps, s) : null))
@@ -43,10 +46,11 @@ export function LessonSteps({ steps, level, store, onShowCue, onSelectComponent 
             aria-current={active ? 'step' : undefined}
             data-active={active || undefined}
             className={cn(
-              'scroll-mt-28 rounded-xl border p-4 transition-colors sm:p-5',
+              'relative scroll-mt-28 rounded-xl border p-4 transition-colors sm:p-5',
               active ? 'border-amber/50 bg-amber/[0.06]' : 'border-white/[0.07] bg-graphite-900/60',
             )}
           >
+            {onSeen && <DwellSentinel onSeen={() => onSeen(step.id)} threshold={0.6} ms={1500} />}
             <div className="flex items-start gap-3 sm:gap-4">
               <span
                 aria-hidden
@@ -78,7 +82,11 @@ export function LessonSteps({ steps, level, store, onShowCue, onSelectComponent 
                         variant={active ? 'default' : 'outline'}
                         size="sm"
                         className="h-9"
-                        onClick={() => step.cue && onShowCue(step.cue)}
+                        onClick={() => {
+                          if (!step.cue) return
+                          onShowCue(step.cue)
+                          onSeen?.(step.id)
+                        }}
                       >
                         <Play aria-hidden /> Show in 3D<span className="sr-only">: {step.title}</span>
                       </Button>

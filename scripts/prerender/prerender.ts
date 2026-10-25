@@ -64,7 +64,7 @@ async function main() {
   const basePath = resolveBasePath()
   if (!fromEnv) console.warn(`[prerender] warning: SITE_URL not set; canonical and sitemap URLs use ${PREVIEW_ORIGIN}`)
 
-  const routes = buildRoutes({ categories: content.categories, topics: content.topics, labs })
+  const routes = buildRoutes({ categories: content.categories, topics: content.topics, labs, pioneers: content.pioneers })
   const seen = new Set<string>()
   for (const route of routes) {
     if (seen.has(route.path)) throw new Error(`duplicate route ${route.path}`)

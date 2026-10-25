@@ -2,11 +2,13 @@
 import type { z } from 'zod'
 import {
   CategorySchema,
+  PioneerSchema,
   SceneComponentSchema,
   SourceArticleSchema,
   SystemMapSchema,
   TopicSchema,
   type Category,
+  type Pioneer,
   type SceneComponent,
   type SourceArticle,
   type SystemMap,
@@ -63,6 +65,7 @@ export interface ContentBundle {
   topics: Topic[]
   components: SceneComponent[]
   systemMap: SystemMap | null
+  pioneers?: Pioneer[]
 }
 
 export interface ReferenceCheckOptions {
@@ -93,7 +96,7 @@ export function findPrerequisiteCycles(topics: Pick<Topic, 'id' | 'prerequisiteT
 
 /** Cross-reference checks that schemas alone cannot express (pure). */
 export function findReferenceErrors(bundle: ContentBundle, options: ReferenceCheckOptions = {}): ContentError[] {
-  const { categories, topics, components, systemMap } = bundle
+  const { categories, topics, components, systemMap, pioneers = [] } = bundle
   const errors: ContentError[] = []
   const categoryIds = new Set(categories.map((c) => c.id))
   const topicIds = new Set(topics.map((t) => t.id))
@@ -150,6 +153,17 @@ export function findReferenceErrors(bundle: ContentBundle, options: ReferenceChe
     })
   }
 
+  for (const p of pioneers) {
+    const f = `pioneer:${p.id}`
+    check(f, 'category', p.categoryId, categoryIds.has(p.categoryId))
+    p.topicIds.forEach((r) => check(f, 'topic', r, topicIds.has(r)))
+    p.componentIds.forEach((c) => check(f, 'component', c, componentIds.has(c)))
+    p.sources.forEach((src) => {
+      if (!src.url.startsWith('https://')) errors.push({ file: f, message: `source must use https: ${src.url}` })
+    })
+  }
+  duplicates(pioneers.map((p) => p.id)).forEach((d) => errors.push({ file: 'pioneers', message: `duplicate pioneer id "${d}"` }))
+
   const ids = new Set(topics.map((t) => t.id))
   if (ids.size !== topics.length) errors.push({ file: 'topics', message: 'duplicate topic ids' })
   duplicates(topics.map((t) => t.slug)).forEach((d) => errors.push({ file: 'topics', message: `duplicate topic slug "${d}"` }))
@@ -181,12 +195,15 @@ const topicFiles = vite ? import.meta.glob('../content/topics/**/*.json', { eage
 const componentFiles = vite ? import.meta.glob('../content/components/*.json', { eager: true }) : {}
 const mapFiles = vite ? import.meta.glob('../content/system-map.json', { eager: true }) : {}
 const sourceFiles = vite ? import.meta.glob('../content/source-index.json', { eager: true }) : {}
+const pioneerFiles = vite ? import.meta.glob('../content/pioneers.json', { eager: true }) : {}
 
 export const categories: Category[] = parseEach(CategorySchema, categoryFiles).sort((a, b) => a.order - b.order)
 export const topics: Topic[] = parseEach(TopicSchema, topicFiles).sort((a, b) => a.title.localeCompare(b.title))
 export const sceneComponents: SceneComponent[] = parseEach(SceneComponentSchema, componentFiles)
 export const sourceArticles: SourceArticle[] = parseEach(SourceArticleSchema, sourceFiles)
 export const systemMap: SystemMap | null = parseEach(SystemMapSchema, mapFiles)[0] ?? null
+/** People behind the parts, oldest milestone first. */
+export const pioneers: Pioneer[] = parseEach(PioneerSchema, pioneerFiles).sort((a, b) => a.sortYear - b.sortYear || a.name.localeCompare(b.name))
 
 const byId = <T extends { id: string }>(list: T[]) => new Map(list.map((x) => [x.id, x]))
 const topicById = byId(topics)
@@ -194,12 +211,18 @@ const topicBySlug = new Map(topics.map((t) => [t.slug, t]))
 const categoryById = byId(categories)
 const categoryBySlug = new Map(categories.map((c) => [c.slug, c]))
 const componentById = byId(sceneComponents)
+const pioneerById = byId(pioneers)
 
 export const getTopic = (id: string) => topicById.get(id)
 export const getTopicBySlug = (slug: string) => topicBySlug.get(slug)
 export const getCategory = (id: string) => categoryById.get(id)
 export const getCategoryBySlug = (slug: string) => categoryBySlug.get(slug)
 export const getComponent = (id: string) => componentById.get(id)
+export const getPioneer = (id: string) => pioneerById.get(id)
+export const getPioneersForTopic = (topicId: string) => pioneers.filter((p) => p.topicIds.includes(topicId))
+export const getPioneersForComponent = (componentId: string) => pioneers.filter((p) => p.componentIds.includes(componentId))
+export const getPioneersForCategory = (categoryId: string) =>
+  pioneers.filter((p) => p.categoryId === categoryId || p.topicIds.some((t) => topicById.get(t)?.categoryId === categoryId))
 export const getComponentsForSystem = (systemId: string) => sceneComponents.filter((c) => c.systemId === systemId)
 export const getTopicsInCategory = (categoryId: string) => topics.filter((t) => t.categoryId === categoryId)
 export const getTopicForLab = (labId: string) => topics.find((t) => t.labId === labId)
@@ -224,7 +247,7 @@ export function getRelatedTopics(topic: Topic, limit = 6): Topic[] {
 
 /** Cross-reference checks over the bundled content (see findReferenceErrors). */
 export function findBrokenReferences(): ContentError[] {
-  return findReferenceErrors({ categories, topics, components: sceneComponents, systemMap })
+  return findReferenceErrors({ categories, topics, components: sceneComponents, systemMap, pioneers })
 }
 
 /* ------------------------------------------------------------------------ */

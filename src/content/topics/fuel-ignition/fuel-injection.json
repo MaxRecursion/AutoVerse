@@ -5,8 +5,17 @@
   "summary": "Modern petrol engines meter fuel electronically: the ECU measures the air going in, works out how much fuel will burn cleanly with it, and opens the injectors for precisely timed pulses. Learn port and direct injection and closed-loop mixture control.",
   "categoryId": "fuel-ignition",
   "difficulty": "intermediate",
+  "layer": "mechanism",
   "estimatedDuration": 14,
-  "tags": ["fuel", "injection", "ecu", "air-fuel ratio", "lambda", "emissions", "petrol"],
+  "tags": [
+    "fuel",
+    "injection",
+    "ecu",
+    "air-fuel ratio",
+    "lambda",
+    "emissions",
+    "petrol"
+  ],
   "learningObjectives": [
     "Explain why the air-fuel ratio must be controlled and what λ = 1 means",
     "Name the main parts of an injection system and what each one measures or does",
@@ -49,66 +58,167 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "sensors", "label": "Air & engine sensors", "detail": "MAF / MAP, temperature, throttle, rpm" },
-      { "id": "ecu", "label": "ECU", "detail": "Fuel mass → pulse width" },
-      { "id": "pump", "label": "Pump & rail", "detail": "Fuel held at pressure" },
-      { "id": "injector", "label": "Injector", "detail": "Timed spray" },
-      { "id": "cylinder", "label": "Combustion", "detail": "Air + fuel + spark", "topicId": "four-stroke-cycle" },
-      { "id": "lambda", "label": "Oxygen sensor", "detail": "Rich or lean?" }
+      {
+        "id": "sensors",
+        "label": "Air & engine sensors",
+        "detail": "MAF / MAP, temperature, throttle, rpm"
+      },
+      {
+        "id": "ecu",
+        "label": "ECU",
+        "detail": "Fuel mass → pulse width"
+      },
+      {
+        "id": "pump",
+        "label": "Pump & rail",
+        "detail": "Fuel held at pressure"
+      },
+      {
+        "id": "injector",
+        "label": "Injector",
+        "detail": "Timed spray"
+      },
+      {
+        "id": "cylinder",
+        "label": "Combustion",
+        "detail": "Air + fuel + spark",
+        "topicId": "four-stroke-cycle"
+      },
+      {
+        "id": "lambda",
+        "label": "Oxygen sensor",
+        "detail": "Rich or lean?"
+      }
     ],
     "edges": [
-      { "from": "sensors", "to": "ecu" },
-      { "from": "ecu", "to": "injector", "label": "pulse" },
-      { "from": "pump", "to": "injector", "label": "pressure" },
-      { "from": "injector", "to": "cylinder" },
-      { "from": "cylinder", "to": "lambda", "label": "exhaust" },
-      { "from": "lambda", "to": "ecu", "label": "feedback" }
+      {
+        "from": "sensors",
+        "to": "ecu"
+      },
+      {
+        "from": "ecu",
+        "to": "injector",
+        "label": "pulse"
+      },
+      {
+        "from": "pump",
+        "to": "injector",
+        "label": "pressure"
+      },
+      {
+        "from": "injector",
+        "to": "cylinder"
+      },
+      {
+        "from": "cylinder",
+        "to": "lambda",
+        "label": "exhaust"
+      },
+      {
+        "from": "lambda",
+        "to": "ecu",
+        "label": "feedback"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Stoichiometric ratio", "definition": "The air-fuel mass ratio at which all fuel and all oxygen can react; about 14.7:1 for petrol.", "equation": "AFR_stoich ≈ 14.7" },
-    { "term": "Lambda (λ)", "definition": "Actual air-fuel ratio divided by the stoichiometric ratio. Below 1 is rich, above 1 is lean.", "equation": "λ = AFR_actual / AFR_stoich" },
-    { "term": "Injector pulse width", "definition": "How long the injector is held open each cycle; fuel delivered is roughly proportional to it once the opening delay is subtracted.", "equation": "m_fuel ≈ q × (t_pulse − t_dead)" },
-    { "term": "Fuel trim", "definition": "The ECU's percentage correction to its calculated fuel quantity, based on oxygen-sensor feedback. Short-term trim reacts quickly; long-term trim learns slowly." }
+    {
+      "term": "Stoichiometric ratio",
+      "definition": "The air-fuel mass ratio at which all fuel and all oxygen can react; about 14.7:1 for petrol.",
+      "equation": "AFR_stoich ≈ 14.7"
+    },
+    {
+      "term": "Lambda (λ)",
+      "definition": "Actual air-fuel ratio divided by the stoichiometric ratio. Below 1 is rich, above 1 is lean.",
+      "equation": "λ = AFR_actual / AFR_stoich"
+    },
+    {
+      "term": "Injector pulse width",
+      "definition": "How long the injector is held open each cycle; fuel delivered is roughly proportional to it once the opening delay is subtracted.",
+      "equation": "m_fuel ≈ q × (t_pulse − t_dead)"
+    },
+    {
+      "term": "Fuel trim",
+      "definition": "The ECU's percentage correction to its calculated fuel quantity, based on oxygen-sensor feedback. Short-term trim reacts quickly; long-term trim learns slowly."
+    }
   ],
   "misconceptions": [
-    { "myth": "Adding more fuel always makes more power.", "reality": "Power is limited by how much air the engine can burn. Best power occurs slightly rich of stoichiometric; beyond that, extra fuel only cools the charge and wastes fuel." },
-    { "myth": "The oxygen sensor measures how much fuel is in the exhaust.", "reality": "It measures leftover oxygen. Little oxygen means the mixture was rich; plenty of oxygen means it was lean." },
-    { "myth": "Direct injection is simply a better version of port injection.", "reality": "It enables higher efficiency and power, but brings higher particulate emissions and intake-valve deposits, which is why some engines use both systems." }
+    {
+      "myth": "Adding more fuel always makes more power.",
+      "reality": "Power is limited by how much air the engine can burn. Best power occurs slightly rich of stoichiometric; beyond that, extra fuel only cools the charge and wastes fuel."
+    },
+    {
+      "myth": "The oxygen sensor measures how much fuel is in the exhaust.",
+      "reality": "It measures leftover oxygen. Little oxygen means the mixture was rich; plenty of oxygen means it was lean."
+    },
+    {
+      "myth": "Direct injection is simply a better version of port injection.",
+      "reality": "It enables higher efficiency and power, but brings higher particulate emissions and intake-valve deposits, which is why some engines use both systems."
+    }
   ],
   "practicalExamples": [
     "A trip computer showing zero consumption while coasting downhill in gear is the ECU's overrun fuel cut-off at work.",
     "A split intake hose after the airflow sensor lets in unmeasured air, so the engine runs lean and often logs a 'system too lean' fault code.",
     "Cold engines idle faster and use more fuel for the first minutes because the ECU enriches the mixture until fuel evaporates properly."
   ],
-  "relatedTopicIds": ["spark-ignition", "four-stroke-cycle", "diesel-engines", "diagnosing-warning-signs"],
-  "prerequisiteTopicIds": ["four-stroke-cycle"],
+  "relatedTopicIds": [
+    "spark-ignition",
+    "four-stroke-cycle",
+    "diesel-engines",
+    "diagnosing-warning-signs"
+  ],
+  "prerequisiteTopicIds": [
+    "four-stroke-cycle"
+  ],
   "quiz": [
     {
       "id": "stoich-ratio",
       "prompt": "Roughly how many kilograms of air are needed to burn one kilogram of petrol completely?",
-      "options": ["About 1.5", "About 7", "About 14.7", "About 50"],
+      "options": [
+        "About 1.5",
+        "About 7",
+        "About 14.7",
+        "About 50"
+      ],
       "answerIndex": 2,
       "explanation": "The stoichiometric air-fuel ratio for petrol is about 14.7:1 by mass, which defines λ = 1."
     },
     {
       "id": "lambda-meaning",
       "prompt": "The oxygen sensor reports very little oxygen in the exhaust. What does the ECU conclude?",
-      "options": ["The mixture was rich, so it reduces fuel", "The mixture was lean, so it adds fuel", "The catalyst has failed", "The spark is too early"],
+      "options": [
+        "The mixture was rich, so it reduces fuel",
+        "The mixture was lean, so it adds fuel",
+        "The catalyst has failed",
+        "The spark is too early"
+      ],
       "answerIndex": 0,
       "explanation": "Little leftover oxygen means there was more fuel than the air could burn, so the ECU trims fuel down."
     },
     {
       "id": "gdi-benefit",
       "prompt": "Why can a direct-injection engine often run a higher compression ratio?",
-      "options": ["Its injectors make a stronger spark", "Fuel evaporating inside the cylinder cools the charge and resists knock", "It needs no throttle", "Its pistons are lighter"],
+      "options": [
+        "Its injectors make a stronger spark",
+        "Fuel evaporating inside the cylinder cools the charge and resists knock",
+        "It needs no throttle",
+        "Its pistons are lighter"
+      ],
       "answerIndex": 1,
       "explanation": "Evaporation absorbs heat from the trapped air, lowering its temperature and making knock less likely."
     }
   ],
   "sourceReferences": [
-    {"title":"How a fuel pump works","url":"https://www.howacarworks.com/basics/how-a-fuel-pump-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How a fuel pump works",
+      "url": "https://www.howacarworks.com/basics/how-a-fuel-pump-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

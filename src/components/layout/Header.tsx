@@ -6,7 +6,8 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { SearchCommand } from '@/features/search/SearchCommand'
 import { cn } from '@/lib/utils'
 import { Logo } from './Logo'
-import { primaryNav } from './nav'
+import { primaryNav, secondaryNav } from './nav'
+import { ProgressPill } from './ProgressPill'
 
 export function Header() {
   const [open, setOpen] = useState(false)
@@ -28,6 +29,7 @@ export function Header() {
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-2">
+          <ProgressPill />
           <SearchCommand />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -42,7 +44,7 @@ export function Header() {
                 </SheetTitle>
               </SheetHeader>
               <nav aria-label="Mobile" className="flex flex-col gap-1 px-4">
-                {primaryNav.map((item) => (
+                {[...primaryNav, ...secondaryNav].map((item) => (
                   <NavLink
                     key={item.to}
                     to={item.to}

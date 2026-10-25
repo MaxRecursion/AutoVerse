@@ -5,8 +5,17 @@
   "summary": "A car's structure must carry loads, resist twisting, protect occupants and stay light. Compare ladder frames, monocoques and space frames, and see how crumple zones and a rigid safety cell manage crash energy.",
   "categoryId": "body-chassis",
   "difficulty": "beginner",
+  "layer": "surface",
   "estimatedDuration": 11,
-  "tags": ["chassis", "monocoque", "ladder frame", "crumple zone", "safety", "materials", "stiffness"],
+  "tags": [
+    "chassis",
+    "monocoque",
+    "ladder frame",
+    "crumple zone",
+    "safety",
+    "materials",
+    "stiffness"
+  ],
   "learningObjectives": [
     "Describe ladder-frame, monocoque and space-frame construction",
     "Explain why torsional stiffness matters for handling and refinement",
@@ -49,63 +58,150 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "impact", "label": "Impact energy", "detail": "E = ½ m v²" },
-      { "id": "crumple", "label": "Crumple zone", "detail": "Controlled crush" },
-      { "id": "load-paths", "label": "Load paths", "detail": "Rails, sub-frame, sills" },
-      { "id": "cell", "label": "Safety cell", "detail": "Minimal intrusion" },
-      { "id": "restraints", "label": "Belts & airbags", "detail": "Occupant deceleration" }
+      {
+        "id": "impact",
+        "label": "Impact energy",
+        "detail": "E = ½ m v²"
+      },
+      {
+        "id": "crumple",
+        "label": "Crumple zone",
+        "detail": "Controlled crush"
+      },
+      {
+        "id": "load-paths",
+        "label": "Load paths",
+        "detail": "Rails, sub-frame, sills"
+      },
+      {
+        "id": "cell",
+        "label": "Safety cell",
+        "detail": "Minimal intrusion"
+      },
+      {
+        "id": "restraints",
+        "label": "Belts & airbags",
+        "detail": "Occupant deceleration"
+      }
     ],
     "edges": [
-      { "from": "impact", "to": "crumple" },
-      { "from": "crumple", "to": "load-paths", "label": "residual force" },
-      { "from": "load-paths", "to": "cell", "label": "around the cabin" },
-      { "from": "cell", "to": "restraints" }
+      {
+        "from": "impact",
+        "to": "crumple"
+      },
+      {
+        "from": "crumple",
+        "to": "load-paths",
+        "label": "residual force"
+      },
+      {
+        "from": "load-paths",
+        "to": "cell",
+        "label": "around the cabin"
+      },
+      {
+        "from": "cell",
+        "to": "restraints"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Kinetic energy", "definition": "Energy of motion, which a crash structure must absorb; it grows with the square of speed.", "equation": "E_k = ½ m v²" },
-    { "term": "Average crash deceleration", "definition": "For a stop from speed v over crush distance s.", "equation": "a = v² / (2s)" },
-    { "term": "Torsional stiffness", "definition": "Torque needed to twist the body by one degree between front and rear axles." },
-    { "term": "Monocoque (unibody)", "definition": "Construction in which the body shell itself carries the structural loads." }
+    {
+      "term": "Kinetic energy",
+      "definition": "Energy of motion, which a crash structure must absorb; it grows with the square of speed.",
+      "equation": "E_k = ½ m v²"
+    },
+    {
+      "term": "Average crash deceleration",
+      "definition": "For a stop from speed v over crush distance s.",
+      "equation": "a = v² / (2s)"
+    },
+    {
+      "term": "Torsional stiffness",
+      "definition": "Torque needed to twist the body by one degree between front and rear axles."
+    },
+    {
+      "term": "Monocoque (unibody)",
+      "definition": "Construction in which the body shell itself carries the structural loads."
+    }
   ],
   "misconceptions": [
-    { "myth": "A car that crumples badly in a crash was poorly built.", "reality": "Crumpling is deliberate: deforming structure absorbs energy so the occupants decelerate more gently. The cabin should stay intact." },
-    { "myth": "Heavier, separate-frame vehicles are always safer.", "reality": "Mass helps in collisions between vehicles, but modern monocoques manage crash energy far better than old rigid frames, and occupant protection depends on structure design and restraints." },
-    { "myth": "Stiffness only matters for racing cars.", "reality": "Body stiffness affects everyday ride quality, steering precision and freedom from squeaks and rattles." }
+    {
+      "myth": "A car that crumples badly in a crash was poorly built.",
+      "reality": "Crumpling is deliberate: deforming structure absorbs energy so the occupants decelerate more gently. The cabin should stay intact."
+    },
+    {
+      "myth": "Heavier, separate-frame vehicles are always safer.",
+      "reality": "Mass helps in collisions between vehicles, but modern monocoques manage crash energy far better than old rigid frames, and occupant protection depends on structure design and restraints."
+    },
+    {
+      "myth": "Stiffness only matters for racing cars.",
+      "reality": "Body stiffness affects everyday ride quality, steering precision and freedom from squeaks and rattles."
+    }
   ],
   "practicalExamples": [
     "Doors that become hard to close after a car has been jacked at one corner reveal how a body twists under uneven support.",
     "Repairers follow manufacturer guidance on which panels can be sectioned or heated, because press-hardened steels lose strength if heated.",
     "Doubling speed from 50 to 100 km/h quadruples the crash energy the structure must absorb."
   ],
-  "relatedTopicIds": ["aerodynamics", "steering-systems", "tyres-and-grip", "routine-maintenance"],
-  "prerequisiteTopicIds": ["how-a-car-works"],
+  "relatedTopicIds": [
+    "aerodynamics",
+    "steering-systems",
+    "tyres-and-grip",
+    "routine-maintenance"
+  ],
+  "prerequisiteTopicIds": [
+    "how-a-car-works"
+  ],
   "quiz": [
     {
       "id": "ke-calc",
       "prompt": "A 1,200 kg car travels at 20 m/s (72 km/h). How much kinetic energy does it carry?",
-      "options": ["24 kJ", "240 kJ", "480 kJ", "2,400 kJ"],
+      "options": [
+        "24 kJ",
+        "240 kJ",
+        "480 kJ",
+        "2,400 kJ"
+      ],
       "answerIndex": 1,
       "explanation": "E = ½ × 1,200 × 20² = 240,000 J = 240 kJ."
     },
     {
       "id": "crumple-purpose",
       "prompt": "What is the main purpose of a crumple zone?",
-      "options": ["To make repairs cheaper", "To absorb crash energy by deforming in a controlled way", "To reduce aerodynamic drag", "To protect the engine"],
+      "options": [
+        "To make repairs cheaper",
+        "To absorb crash energy by deforming in a controlled way",
+        "To reduce aerodynamic drag",
+        "To protect the engine"
+      ],
       "answerIndex": 1,
       "explanation": "Controlled deformation converts kinetic energy into work and lengthens the stopping distance, lowering forces on occupants."
     },
     {
       "id": "monocoque-q",
       "prompt": "What distinguishes a monocoque from a ladder frame?",
-      "options": ["It has no wheels", "The body shell itself carries the structural loads", "It is always made from aluminium", "It has a separate body bolted to rails"],
+      "options": [
+        "It has no wheels",
+        "The body shell itself carries the structural loads",
+        "It is always made from aluminium",
+        "It has a separate body bolted to rails"
+      ],
       "answerIndex": 1,
       "explanation": "In a monocoque the welded body structure is the chassis; a ladder frame carries loads in separate rails."
     }
   ],
   "sourceReferences": [
-    {"title":"How cars are designed","url":"https://www.howacarworks.com/technology/how-cars-are-designed","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How cars are designed",
+      "url": "https://www.howacarworks.com/technology/how-cars-are-designed",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

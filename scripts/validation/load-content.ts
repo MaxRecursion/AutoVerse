@@ -13,6 +13,7 @@ import {
   CategorySchema,
   LearningPathSchema,
   ModelManifestSchema,
+  PioneerSchema,
   SceneComponentSchema,
   SourceArticleSchema,
   SystemMapSchema,
@@ -72,6 +73,7 @@ export function loadContent(contentDir = CONTENT_DIR): LoadedContent {
   const mapFiles = exists(at('system-map.json'))
   const sourceFiles = exists(at('source-index.json'))
   const pathFiles = exists(at('learning-paths.json'))
+  const pioneerFiles = exists(at('pioneers.json'))
 
   const parse = <S extends z.ZodType>(schema: S, files: string[]) => {
     const result = parseContentFiles(schema, readJsonFiles(files, errors))
@@ -90,13 +92,14 @@ export function loadContent(contentDir = CONTENT_DIR): LoadedContent {
   const systemMap = parse(SystemMapSchema, mapFiles)[0] ?? null
   const sourceArticles = parse(SourceArticleSchema, sourceFiles)
   const learningPaths = parse(LearningPathSchema, pathFiles).sort((a, b) => a.order - b.order)
+  const pioneers = parse(PioneerSchema, pioneerFiles)
 
-  const known = new Set([...categoryFiles, ...topicPaths, ...componentPaths, ...mapFiles, ...sourceFiles, ...pathFiles].map(rel))
+  const known = new Set([...categoryFiles, ...topicPaths, ...componentPaths, ...mapFiles, ...sourceFiles, ...pathFiles, ...pioneerFiles].map(rel))
   const unknownFiles = listJsonFiles(contentDir)
     .map(rel)
     .filter((f) => !known.has(f))
 
-  return { categories, topics, components, systemMap, sourceArticles, learningPaths, topicFiles, errors, unknownFiles }
+  return { categories, topics, components, systemMap, pioneers, sourceArticles, learningPaths, topicFiles, errors, unknownFiles }
 }
 
 /** Lab ids declared in src/features/labs/registry.ts (read as text — the registry imports React). */

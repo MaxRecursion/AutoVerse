@@ -1,13 +1,14 @@
 import { useState, type ReactNode } from 'react'
-import { Boxes, Eye, EyeOff, Focus, PanelBottomClose, PanelBottomOpen, RotateCcw, Tag, View } from 'lucide-react'
+import { Boxes, Eye, EyeOff, Focus, History, PanelBottomClose, PanelBottomOpen, RotateCcw, Tag, View } from 'lucide-react'
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { LevelToggle } from '@/components/learning/LevelToggle'
-import { getComponent, getTopic } from '@/lib/content'
+import { getComponent, getPioneersForComponent, getTopic } from '@/lib/content'
 import { cn } from '@/lib/utils'
 import { usePreferences } from '@/stores/preferences'
+import { LabMissions } from '@/features/labs/LabMissions'
 import { AnimationControls } from './AnimationControls'
 import { useLab, useLabStoreApi } from './LabContext'
 
@@ -97,6 +98,7 @@ export function LabWorkbench({
       </section>
 
       <aside className="panel flex min-h-0 flex-col overflow-hidden" aria-label={`${title} explanation`}>
+        <LabMissions />
         <Tabs defaultValue="explain" className="flex min-h-0 flex-1 flex-col gap-0">
           <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] px-3 py-2">
             <TabsList>
@@ -196,6 +198,18 @@ export function ComponentInspector({ componentIds }: { componentIds: string[] })
               ))}
             </dl>
           )}
+          {getPioneersForComponent(selected.id).map((p) => (
+            <Link
+              key={p.id}
+              to={`/pioneers?focus=${p.id}`}
+              className="mt-2 flex min-h-9 items-center gap-2 rounded-md border border-amber/25 bg-amber/[0.05] px-2.5 py-1.5 text-xs text-amber hover:border-amber/60"
+            >
+              <History aria-hidden className="size-3.5 shrink-0" />
+              <span className="min-w-0">
+                History: <span className="font-medium">{p.name}</span>, {p.year}
+              </span>
+            </Link>
+          ))}
           {selected.relatedTopicIds.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1.5">
               {selected.relatedTopicIds.map((tid) => {

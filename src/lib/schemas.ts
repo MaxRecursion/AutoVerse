@@ -9,6 +9,8 @@ import { z } from 'zod'
 const id = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'ids must be kebab-case')
 
 export const DifficultySchema = z.enum(['beginner', 'intermediate', 'advanced'])
+/** Depth of a lesson within its system: the learner descends surface → mechanism → engineering. */
+export const LayerSchema = z.enum(['surface', 'mechanism', 'engineering'])
 export const ContentStatusSchema = z.enum(['complete', 'draft', 'outline'])
 export const ExplanationLevelSchema = z.enum(['beginner', 'technical'])
 
@@ -19,16 +21,6 @@ export const SourceReferenceSchema = z.object({
   /** ISO date the source was consulted. */
   accessed: z.string().optional(),
   note: z.string().optional(),
-})
-
-/** A concise, sourced story about the people behind a technical milestone. */
-export const EngineeringHistoryNoteSchema = z.object({
-  person: z.string().min(1),
-  contribution: z.string().min(1),
-  /** Display text for an exact year, range, or era. */
-  year: z.string().min(1),
-  anecdote: z.string().min(1),
-  source: SourceReferenceSchema,
 })
 
 export const LicenceSchema = z.object({
@@ -89,6 +81,8 @@ export const TopicSchema = z.object({
   summary: z.string().min(1),
   categoryId: id,
   difficulty: DifficultySchema,
+  /** Depth within the system ladder; every authored lesson sets one (asserted in content.test.ts). */
+  layer: LayerSchema.optional(),
   /** Minutes. */
   estimatedDuration: z.number().int().positive(),
   tags: z.array(z.string()).default([]),
@@ -108,7 +102,6 @@ export const TopicSchema = z.object({
     .default([]),
   misconceptions: z.array(z.object({ myth: z.string().min(1), reality: z.string().min(1) })).default([]),
   practicalExamples: z.array(z.string().min(1)).default([]),
-  historyNote: EngineeringHistoryNoteSchema.optional(),
   relatedTopicIds: z.array(id).default([]),
   prerequisiteTopicIds: z.array(id).default([]),
   quiz: z.array(QuizQuestionSchema).default([]),
@@ -116,6 +109,31 @@ export const TopicSchema = z.object({
   attribution: z.string().optional(),
   licence: LicenceSchema,
   contentStatus: ContentStatusSchema,
+})
+
+/**
+ * An engineer (or team) behind a part or technology. Every entry must cite at
+ * least one source that was actually read; `story` is original wording, and
+ * `caution` records where priority is disputed or the account is thin.
+ */
+export const PioneerSchema = z.object({
+  id,
+  name: z.string().min(1),
+  /** Who they were in a few words, taken from a source ("Swiss engineer"). */
+  role: z.string().min(1),
+  /** Year or span of the milestone as displayed ("1876", "1867–1876"). */
+  year: z.string().min(1),
+  /** First year of the milestone, for timeline ordering. */
+  sortYear: z.number().int(),
+  /** System the milestone belongs to (category id). */
+  categoryId: id,
+  headline: z.string().min(1),
+  story: z.string().min(1),
+  caution: z.string().optional(),
+  topicIds: z.array(id).min(1),
+  /** Scene parts this person is associated with (shown as "Developed by…" on the part). */
+  componentIds: z.array(id).default([]),
+  sources: z.array(SourceReferenceSchema).min(1),
 })
 
 export const SceneComponentSchema = z.object({
@@ -210,12 +228,13 @@ export const ModelManifestSchema = z.object({
   ),
 })
 
+export type Layer = z.infer<typeof LayerSchema>
 export type Difficulty = z.infer<typeof DifficultySchema>
 export type ContentStatus = z.infer<typeof ContentStatusSchema>
 export type ExplanationLevel = z.infer<typeof ExplanationLevelSchema>
 export type Category = z.infer<typeof CategorySchema>
 export type Topic = z.infer<typeof TopicSchema>
-export type EngineeringHistoryNote = z.infer<typeof EngineeringHistoryNoteSchema>
+export type Pioneer = z.infer<typeof PioneerSchema>
 export type Step = z.infer<typeof StepSchema>
 export type QuizQuestion = z.infer<typeof QuizQuestionSchema>
 export type FlowDiagram = z.infer<typeof FlowDiagramSchema>

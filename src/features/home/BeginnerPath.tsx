@@ -4,9 +4,10 @@ import { Link } from 'react-router'
 import { DifficultyMeter } from '@/components/learning/TopicMeta'
 import { DIFFICULTY_LABEL, topicHref } from '@/components/learning/labels'
 import { Progress } from '@/components/ui/progress'
+import { resolveNextUp } from '@/features/progress/curriculum'
 import { PathAction } from '@/features/progress/PathAction'
 import { resolveCurrentPathProgress, resolveNextPathProgress } from '@/features/progress/paths'
-import { getTopic, learningPaths } from '@/lib/content'
+import { getTopic, learningPaths, topics } from '@/lib/content'
 import { cn } from '@/lib/utils'
 import { useProgress } from '@/stores/progress'
 import { HomeSection } from './HomeSection'
@@ -16,10 +17,12 @@ import { displayPathTitle, totalMinutes } from './homeData'
 export function BeginnerPath() {
   const completed = useProgress((s) => s.completed)
   const recent = useProgress((s) => s.recent)
-  const progress = useMemo(
-    () => resolveCurrentPathProgress(learningPaths, recent.map((item) => item.topicId), getTopic, completed),
-    [recent, completed],
-  )
+  // The highlighted step follows the same global answer as the header pill and the hero, when it lies on this path.
+  const progress = useMemo(() => {
+    const base = resolveCurrentPathProgress(learningPaths, recent.map((item) => item.topicId), getTopic, completed)
+    const focus = resolveNextUp({ topics, paths: learningPaths, completed, recent, getTopic }).topic
+    return base && focus && base.topics.some((t) => t.id === focus.id) ? { ...base, next: focus } : base
+  }, [recent, completed])
   if (!progress || progress.total === 0) return null
 
   const { path, topics: stops, next, missing, percent } = progress

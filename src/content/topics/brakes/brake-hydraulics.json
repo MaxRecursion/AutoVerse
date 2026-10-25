@@ -5,8 +5,16 @@
   "summary": "A light push on the brake pedal becomes tonnes of clamping force at the wheels. Follow the force through the pedal lever, servo, master cylinder and fluid lines to the calipers, and see why air or water in the fluid makes brakes spongy or fade.",
   "categoryId": "brakes",
   "difficulty": "beginner",
+  "layer": "surface",
   "estimatedDuration": 12,
-  "tags": ["brakes", "hydraulics", "master cylinder", "brake fluid", "servo", "pascal"],
+  "tags": [
+    "brakes",
+    "hydraulics",
+    "master cylinder",
+    "brake fluid",
+    "servo",
+    "pascal"
+  ],
   "learningObjectives": [
     "Explain how hydraulic pressure transmits and multiplies force",
     "Trace force from pedal through servo and master cylinder to the calipers",
@@ -49,66 +57,167 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "pedal", "label": "Pedal", "detail": "Lever ≈ 3–4 : 1" },
-      { "id": "servo", "label": "Servo / booster", "detail": "Assistance" },
-      { "id": "master", "label": "Master cylinder", "detail": "p = F / A" },
-      { "id": "abs", "label": "ABS / ESC modulator", "detail": "Valves per wheel" },
-      { "id": "caliper", "label": "Calipers", "detail": "F = p × A" },
-      { "id": "tyre", "label": "Tyre grip", "detail": "Final limit", "topicId": "tyres-and-grip" }
+      {
+        "id": "pedal",
+        "label": "Pedal",
+        "detail": "Lever ≈ 3–4 : 1"
+      },
+      {
+        "id": "servo",
+        "label": "Servo / booster",
+        "detail": "Assistance"
+      },
+      {
+        "id": "master",
+        "label": "Master cylinder",
+        "detail": "p = F / A"
+      },
+      {
+        "id": "abs",
+        "label": "ABS / ESC modulator",
+        "detail": "Valves per wheel"
+      },
+      {
+        "id": "caliper",
+        "label": "Calipers",
+        "detail": "F = p × A"
+      },
+      {
+        "id": "tyre",
+        "label": "Tyre grip",
+        "detail": "Final limit",
+        "topicId": "tyres-and-grip"
+      }
     ],
     "edges": [
-      { "from": "pedal", "to": "servo" },
-      { "from": "servo", "to": "master" },
-      { "from": "master", "to": "abs", "label": "two circuits" },
-      { "from": "abs", "to": "caliper" },
-      { "from": "caliper", "to": "tyre", "label": "braking torque" }
+      {
+        "from": "pedal",
+        "to": "servo"
+      },
+      {
+        "from": "servo",
+        "to": "master"
+      },
+      {
+        "from": "master",
+        "to": "abs",
+        "label": "two circuits"
+      },
+      {
+        "from": "abs",
+        "to": "caliper"
+      },
+      {
+        "from": "caliper",
+        "to": "tyre",
+        "label": "braking torque"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Pascal's principle", "definition": "Pressure applied to an enclosed fluid is transmitted equally throughout it.", "equation": "p = F / A" },
-    { "term": "Hydraulic force multiplication", "definition": "Output force scales with the ratio of piston areas; the price is proportionally more input travel.", "equation": "F_out = F_in × (A_out / A_in)" },
-    { "term": "Dual circuit", "definition": "Two independent hydraulic circuits so a single leak cannot remove all braking." },
-    { "term": "Hygroscopic fluid", "definition": "Glycol brake fluid absorbs water over time, lowering its boiling point; hence periodic replacement." }
+    {
+      "term": "Pascal's principle",
+      "definition": "Pressure applied to an enclosed fluid is transmitted equally throughout it.",
+      "equation": "p = F / A"
+    },
+    {
+      "term": "Hydraulic force multiplication",
+      "definition": "Output force scales with the ratio of piston areas; the price is proportionally more input travel.",
+      "equation": "F_out = F_in × (A_out / A_in)"
+    },
+    {
+      "term": "Dual circuit",
+      "definition": "Two independent hydraulic circuits so a single leak cannot remove all braking."
+    },
+    {
+      "term": "Hygroscopic fluid",
+      "definition": "Glycol brake fluid absorbs water over time, lowering its boiling point; hence periodic replacement."
+    }
   ],
   "misconceptions": [
-    { "myth": "A spongy pedal just means the pads are worn.", "reality": "Worn pads usually mean a longer pedal, not a spongy one. Sponginess points to air or vapour in the fluid, or flexing hoses, and needs prompt attention." },
-    { "myth": "Brake fluid never needs changing because it is in a sealed system.", "reality": "The system breathes through the reservoir cap and absorbs moisture through hoses; fluid is replaced at the interval the manufacturer specifies, commonly around every two years." },
-    { "myth": "Bigger brakes always mean shorter stopping distances.", "reality": "Once the brakes can lock or reach ABS intervention, tyre grip sets the limit. Bigger brakes mainly resist fade during repeated or prolonged stops." }
+    {
+      "myth": "A spongy pedal just means the pads are worn.",
+      "reality": "Worn pads usually mean a longer pedal, not a spongy one. Sponginess points to air or vapour in the fluid, or flexing hoses, and needs prompt attention."
+    },
+    {
+      "myth": "Brake fluid never needs changing because it is in a sealed system.",
+      "reality": "The system breathes through the reservoir cap and absorbs moisture through hoses; fluid is replaced at the interval the manufacturer specifies, commonly around every two years."
+    },
+    {
+      "myth": "Bigger brakes always mean shorter stopping distances.",
+      "reality": "Once the brakes can lock or reach ABS intervention, tyre grip sets the limit. Bigger brakes mainly resist fade during repeated or prolonged stops."
+    }
   ],
   "practicalExamples": [
     "With the engine off, pump the pedal a few times until it goes firm, then start the engine: the pedal dips slightly as the vacuum servo begins to assist.",
     "A falling fluid level in the reservoir often reflects pad wear, as caliper pistons move outward and hold more fluid — but a sudden drop suggests a leak.",
     "Descending a long mountain pass on the brakes alone can boil old fluid; using a lower gear keeps brake temperatures down."
   ],
-  "relatedTopicIds": ["tyres-and-grip", "routine-maintenance", "diagnosing-warning-signs", "mechanical-sympathy"],
-  "prerequisiteTopicIds": ["how-a-car-works"],
+  "relatedTopicIds": [
+    "tyres-and-grip",
+    "routine-maintenance",
+    "diagnosing-warning-signs",
+    "mechanical-sympathy"
+  ],
+  "prerequisiteTopicIds": [
+    "how-a-car-works"
+  ],
   "quiz": [
     {
       "id": "pressure-calc",
       "prompt": "Brake pressure is 60 bar (6 MPa). What clamp force does a caliper piston of 2,000 mm² produce?",
-      "options": ["1.2 kN", "3 kN", "12 kN", "120 kN"],
+      "options": [
+        "1.2 kN",
+        "3 kN",
+        "12 kN",
+        "120 kN"
+      ],
       "answerIndex": 2,
       "explanation": "F = p × A = 6 N/mm² × 2,000 mm² = 12,000 N."
     },
     {
       "id": "two-circuits",
       "prompt": "Why do cars have two separate brake hydraulic circuits?",
-      "options": ["To brake harder", "So a leak in one circuit still leaves some braking", "To separate front and rear fluid types", "To make bleeding easier"],
+      "options": [
+        "To brake harder",
+        "So a leak in one circuit still leaves some braking",
+        "To separate front and rear fluid types",
+        "To make bleeding easier"
+      ],
       "answerIndex": 1,
       "explanation": "Redundancy: a failure in one circuit leaves the other able to stop the car, though with longer distances."
     },
     {
       "id": "spongy",
       "prompt": "Why does air in the brake lines make the pedal feel spongy?",
-      "options": ["Air is lighter than fluid", "Air is compressible, so pedal travel squashes it instead of moving the pistons", "Air makes the pads slippery", "Air blocks the servo"],
+      "options": [
+        "Air is lighter than fluid",
+        "Air is compressible, so pedal travel squashes it instead of moving the pistons",
+        "Air makes the pads slippery",
+        "Air blocks the servo"
+      ],
       "answerIndex": 1,
       "explanation": "Unlike brake fluid, air compresses, absorbing pedal travel before pressure builds."
     }
   ],
   "sourceReferences": [
-    {"title":"How the braking system works","url":"https://www.howacarworks.com/basics/how-the-braking-system-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
-    {"title":"Bleeding the brakes","url":"https://www.howacarworks.com/brakes/bleeding-the-brakes","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How the braking system works",
+      "url": "https://www.howacarworks.com/basics/how-the-braking-system-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    },
+    {
+      "title": "Bleeding the brakes",
+      "url": "https://www.howacarworks.com/brakes/bleeding-the-brakes",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

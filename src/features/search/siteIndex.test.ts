@@ -22,6 +22,6 @@ describe('site search index', () => {
   })
 
   it('links every result to an in-app route', () => {
-    for (const d of getSiteSearchIndex().docs) expect(d.href).toMatch(/^\/(topics|labs|learn)\//)
+    for (const d of getSiteSearchIndex().docs) expect(d.href).toMatch(/^\/(topics|labs|learn|pioneers)[/?]/)
   })
 })

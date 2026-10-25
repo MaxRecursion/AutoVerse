@@ -5,8 +5,16 @@
   "summary": "Only part of the fuel's energy becomes motion; much of the rest is heat that must leave the engine. Follow coolant through the water jacket, thermostat, radiator and pressure cap, and learn why an engine must run warm — but never too hot.",
   "categoryId": "cooling-lubrication",
   "difficulty": "beginner",
+  "layer": "surface",
   "estimatedDuration": 11,
-  "tags": ["cooling", "coolant", "radiator", "thermostat", "heat", "overheating"],
+  "tags": [
+    "cooling",
+    "coolant",
+    "radiator",
+    "thermostat",
+    "heat",
+    "overheating"
+  ],
   "learningObjectives": [
     "Explain where engine heat comes from and why it must be controlled",
     "Trace the coolant circuit through pump, jacket, thermostat and radiator",
@@ -49,66 +57,166 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "engine", "label": "Water jacket", "detail": "Heat picked up", "topicId": "four-stroke-cycle" },
-      { "id": "thermostat", "label": "Thermostat", "detail": "Opens ≈ 85–95 °C" },
-      { "id": "radiator", "label": "Radiator & fan", "detail": "Heat to air" },
-      { "id": "pump", "label": "Water pump", "detail": "Circulates coolant" },
-      { "id": "heater", "label": "Heater core", "detail": "Cabin warmth", "topicId": "air-conditioning" }
+      {
+        "id": "engine",
+        "label": "Water jacket",
+        "detail": "Heat picked up",
+        "topicId": "four-stroke-cycle"
+      },
+      {
+        "id": "thermostat",
+        "label": "Thermostat",
+        "detail": "Opens ≈ 85–95 °C"
+      },
+      {
+        "id": "radiator",
+        "label": "Radiator & fan",
+        "detail": "Heat to air"
+      },
+      {
+        "id": "pump",
+        "label": "Water pump",
+        "detail": "Circulates coolant"
+      },
+      {
+        "id": "heater",
+        "label": "Heater core",
+        "detail": "Cabin warmth",
+        "topicId": "air-conditioning"
+      }
     ],
     "edges": [
-      { "from": "pump", "to": "engine" },
-      { "from": "engine", "to": "thermostat" },
-      { "from": "thermostat", "to": "radiator", "label": "when warm" },
-      { "from": "radiator", "to": "pump" },
-      { "from": "engine", "to": "heater", "label": "always" },
-      { "from": "heater", "to": "pump" }
+      {
+        "from": "pump",
+        "to": "engine"
+      },
+      {
+        "from": "engine",
+        "to": "thermostat"
+      },
+      {
+        "from": "thermostat",
+        "to": "radiator",
+        "label": "when warm"
+      },
+      {
+        "from": "radiator",
+        "to": "pump"
+      },
+      {
+        "from": "engine",
+        "to": "heater",
+        "label": "always"
+      },
+      {
+        "from": "heater",
+        "to": "pump"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Heat carried by coolant", "definition": "Heat flow equals mass flow times specific heat times the temperature change.", "equation": "Q̇ = ṁ × c_p × ΔT" },
-    { "term": "Thermostat", "definition": "A temperature-operated valve that holds the engine at its design temperature by controlling flow to the radiator." },
-    { "term": "Pressure cap", "definition": "A spring-loaded valve that keeps the sealed system above atmospheric pressure, raising the coolant's boiling point." },
-    { "term": "Antifreeze (glycol)", "definition": "Lowers the freezing point, raises the boiling point and carries corrosion inhibitors that protect the engine's metals." }
+    {
+      "term": "Heat carried by coolant",
+      "definition": "Heat flow equals mass flow times specific heat times the temperature change.",
+      "equation": "Q̇ = ṁ × c_p × ΔT"
+    },
+    {
+      "term": "Thermostat",
+      "definition": "A temperature-operated valve that holds the engine at its design temperature by controlling flow to the radiator."
+    },
+    {
+      "term": "Pressure cap",
+      "definition": "A spring-loaded valve that keeps the sealed system above atmospheric pressure, raising the coolant's boiling point."
+    },
+    {
+      "term": "Antifreeze (glycol)",
+      "definition": "Lowers the freezing point, raises the boiling point and carries corrosion inhibitors that protect the engine's metals."
+    }
   ],
   "misconceptions": [
-    { "myth": "Removing the thermostat makes an engine run cooler and therefore better.", "reality": "The engine may never reach its design temperature, increasing wear, fuel use and emissions — and in some designs uneven flow can even cause local overheating." },
-    { "myth": "Plain water is a better coolant than a water-glycol mix.", "reality": "Water carries heat well, but it freezes, boils sooner and offers no corrosion protection. The correct mix protects the whole system." },
-    { "myth": "It is fine to open the cap to check the coolant on a hot engine.", "reality": "The coolant is under pressure above its atmospheric boiling point; releasing the cap can make it flash to steam and scald. Check only when cold." }
+    {
+      "myth": "Removing the thermostat makes an engine run cooler and therefore better.",
+      "reality": "The engine may never reach its design temperature, increasing wear, fuel use and emissions — and in some designs uneven flow can even cause local overheating."
+    },
+    {
+      "myth": "Plain water is a better coolant than a water-glycol mix.",
+      "reality": "Water carries heat well, but it freezes, boils sooner and offers no corrosion protection. The correct mix protects the whole system."
+    },
+    {
+      "myth": "It is fine to open the cap to check the coolant on a hot engine.",
+      "reality": "The coolant is under pressure above its atmospheric boiling point; releasing the cap can make it flash to steam and scald. Check only when cold."
+    }
   ],
   "practicalExamples": [
     "The temperature gauge settles mid-scale within minutes of starting: that is the thermostat opening and holding temperature.",
     "In stationary traffic on a hot day you may hear the radiator fan run on — there is no ram air, so the fan provides the airflow.",
     "Turning the cabin heater to full hot with the fan on maximum can buy time if an engine starts to overheat, because the heater core is an extra radiator."
   ],
-  "relatedTopicIds": ["lubrication-system", "air-conditioning", "diagnosing-warning-signs", "routine-maintenance"],
-  "prerequisiteTopicIds": ["how-a-car-works"],
+  "relatedTopicIds": [
+    "lubrication-system",
+    "air-conditioning",
+    "diagnosing-warning-signs",
+    "routine-maintenance"
+  ],
+  "prerequisiteTopicIds": [
+    "how-a-car-works"
+  ],
   "quiz": [
     {
       "id": "thermostat-cold",
       "prompt": "What does the thermostat do while the engine is still cold?",
-      "options": ["Opens fully to cool the engine faster", "Stays closed so coolant bypasses the radiator", "Switches the fan on", "Releases pressure from the system"],
+      "options": [
+        "Opens fully to cool the engine faster",
+        "Stays closed so coolant bypasses the radiator",
+        "Switches the fan on",
+        "Releases pressure from the system"
+      ],
       "answerIndex": 1,
       "explanation": "Keeping coolant out of the radiator lets the engine reach working temperature quickly."
     },
     {
       "id": "pressure-cap",
       "prompt": "Why is the cooling system pressurised?",
-      "options": ["To push coolant into the cylinders", "To raise the coolant's boiling point", "To make the pump work harder", "To cool the oil"],
+      "options": [
+        "To push coolant into the cylinders",
+        "To raise the coolant's boiling point",
+        "To make the pump work harder",
+        "To cool the oil"
+      ],
       "answerIndex": 1,
       "explanation": "Higher pressure means a higher boiling point, so coolant stays liquid and keeps transferring heat."
     },
     {
       "id": "heat-calc",
       "prompt": "Coolant (c_p ≈ 3.6 kJ/kg·K) flows at 1.5 kg/s and cools by 8 °C in the radiator. About how much heat is rejected?",
-      "options": ["4 kW", "12 kW", "43 kW", "430 kW"],
+      "options": [
+        "4 kW",
+        "12 kW",
+        "43 kW",
+        "430 kW"
+      ],
       "answerIndex": 2,
       "explanation": "Q̇ = 1.5 × 3.6 × 8 ≈ 43 kW."
     }
   ],
   "sourceReferences": [
-    {"title":"How an engine cooling system works","url":"https://www.howacarworks.com/basics/how-an-engine-cooling-system-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
-    {"title":"Checking hoses and the radiator cap","url":"https://www.howacarworks.com/cooling-systems/checking-hoses-and-the-radiator-cap","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How an engine cooling system works",
+      "url": "https://www.howacarworks.com/basics/how-an-engine-cooling-system-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    },
+    {
+      "title": "Checking hoses and the radiator cap",
+      "url": "https://www.howacarworks.com/cooling-systems/checking-hoses-and-the-radiator-cap",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

@@ -5,8 +5,16 @@
   "summary": "Mechanical sympathy means driving in a way that respects how the car works. Learn why gentle warm-ups, sensible engine speeds, smooth inputs, anticipation and engine braking reduce wear, save fuel and make driving safer.",
   "categoryId": "driving",
   "difficulty": "beginner",
+  "layer": "surface",
   "estimatedDuration": 11,
-  "tags": ["driving", "technique", "wear", "economy", "engine braking", "smoothness"],
+  "tags": [
+    "driving",
+    "technique",
+    "wear",
+    "economy",
+    "engine braking",
+    "smoothness"
+  ],
   "learningObjectives": [
     "Explain why a cold engine should be driven gently rather than idled or revved",
     "Explain why labouring an engine at very low speed and high load is harmful",
@@ -49,68 +57,170 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "driver", "label": "Driver inputs", "detail": "Throttle, gears, brakes, steering" },
-      { "id": "engine", "label": "Engine load & speed", "topicId": "torque-and-power" },
-      { "id": "gearbox", "label": "Gear choice", "topicId": "automatic-transmission" },
-      { "id": "brakes", "label": "Brake heat", "topicId": "brake-hydraulics" },
-      { "id": "tyres", "label": "Tyre forces", "topicId": "tyres-and-grip" },
-      { "id": "outcome", "label": "Wear · economy · safety" }
+      {
+        "id": "driver",
+        "label": "Driver inputs",
+        "detail": "Throttle, gears, brakes, steering"
+      },
+      {
+        "id": "engine",
+        "label": "Engine load & speed",
+        "topicId": "torque-and-power"
+      },
+      {
+        "id": "gearbox",
+        "label": "Gear choice",
+        "topicId": "automatic-transmission"
+      },
+      {
+        "id": "brakes",
+        "label": "Brake heat",
+        "topicId": "brake-hydraulics"
+      },
+      {
+        "id": "tyres",
+        "label": "Tyre forces",
+        "topicId": "tyres-and-grip"
+      },
+      {
+        "id": "outcome",
+        "label": "Wear · economy · safety"
+      }
     ],
     "edges": [
-      { "from": "driver", "to": "engine" },
-      { "from": "driver", "to": "gearbox" },
-      { "from": "driver", "to": "brakes" },
-      { "from": "driver", "to": "tyres" },
-      { "from": "engine", "to": "outcome" },
-      { "from": "brakes", "to": "outcome" },
-      { "from": "tyres", "to": "outcome" }
+      {
+        "from": "driver",
+        "to": "engine"
+      },
+      {
+        "from": "driver",
+        "to": "gearbox"
+      },
+      {
+        "from": "driver",
+        "to": "brakes"
+      },
+      {
+        "from": "driver",
+        "to": "tyres"
+      },
+      {
+        "from": "engine",
+        "to": "outcome"
+      },
+      {
+        "from": "brakes",
+        "to": "outcome"
+      },
+      {
+        "from": "tyres",
+        "to": "outcome"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Kinetic energy lost in braking", "definition": "Every stop converts the car's kinetic energy into brake heat; anticipation avoids wasting it.", "equation": "E_k = ½ m v²" },
-    { "term": "Labouring (lugging)", "definition": "Demanding high load from an engine at very low speed, which stresses bearings and the driveline." },
-    { "term": "Engine braking", "definition": "Using the drag of the engine, in gear with the throttle closed, to slow the car without heating the brakes." },
-    { "term": "Brake fade", "definition": "Loss of braking effectiveness as pads and discs overheat or brake fluid boils." }
+    {
+      "term": "Kinetic energy lost in braking",
+      "definition": "Every stop converts the car's kinetic energy into brake heat; anticipation avoids wasting it.",
+      "equation": "E_k = ½ m v²"
+    },
+    {
+      "term": "Labouring (lugging)",
+      "definition": "Demanding high load from an engine at very low speed, which stresses bearings and the driveline."
+    },
+    {
+      "term": "Engine braking",
+      "definition": "Using the drag of the engine, in gear with the throttle closed, to slow the car without heating the brakes."
+    },
+    {
+      "term": "Brake fade",
+      "definition": "Loss of braking effectiveness as pads and discs overheat or brake fluid boils."
+    }
   ],
   "misconceptions": [
-    { "myth": "Modern engines must be idled for several minutes to warm up.", "reality": "Gentle driving warms an engine much faster than idling and wastes less fuel; long idling adds fuel dilution without benefit." },
-    { "myth": "Using the lowest possible revs is always the most economical.", "reality": "Labouring in too high a gear can increase fuel use and wear. The aim is moderate revs where the engine pulls cleanly." },
-    { "myth": "Engine braking wears the engine and clutch.", "reality": "With the clutch fully engaged there is no clutch slip, and the engine loads are modest; it is the intended way to control speed on descents." }
+    {
+      "myth": "Modern engines must be idled for several minutes to warm up.",
+      "reality": "Gentle driving warms an engine much faster than idling and wastes less fuel; long idling adds fuel dilution without benefit."
+    },
+    {
+      "myth": "Using the lowest possible revs is always the most economical.",
+      "reality": "Labouring in too high a gear can increase fuel use and wear. The aim is moderate revs where the engine pulls cleanly."
+    },
+    {
+      "myth": "Engine braking wears the engine and clutch.",
+      "reality": "With the clutch fully engaged there is no clutch slip, and the engine loads are modest; it is the intended way to control speed on descents."
+    }
   ],
   "practicalExamples": [
     "On a long mountain descent, selecting the gear you would use to climb the same hill keeps the brakes cool.",
     "Approaching a red light, lifting off early often means arriving as it turns green — without stopping at all.",
     "If the car shudders when accelerating from 40 km/h in top gear, dropping two gears gives smoother, healthier progress."
   ],
-  "relatedTopicIds": ["torque-and-power", "brake-hydraulics", "tyres-and-grip", "automatic-transmission"],
-  "prerequisiteTopicIds": ["torque-and-power"],
+  "relatedTopicIds": [
+    "torque-and-power",
+    "brake-hydraulics",
+    "tyres-and-grip",
+    "automatic-transmission"
+  ],
+  "prerequisiteTopicIds": [
+    "torque-and-power"
+  ],
   "quiz": [
     {
       "id": "warm-up-q",
       "prompt": "What is the kindest way to warm up a cold engine?",
-      "options": ["Idle for ten minutes", "Rev it hard to warm the oil quickly", "Drive off gently after a short moment", "Switch it on and off several times"],
+      "options": [
+        "Idle for ten minutes",
+        "Rev it hard to warm the oil quickly",
+        "Drive off gently after a short moment",
+        "Switch it on and off several times"
+      ],
       "answerIndex": 2,
       "explanation": "Light-load driving warms the engine and catalyst fastest while keeping wear-inducing loads low."
     },
     {
       "id": "descent",
       "prompt": "Why use a lower gear on a long, steep descent?",
-      "options": ["To use more fuel", "So the engine helps control speed and the brakes do not overheat", "To charge the 12 V battery", "To improve steering"],
+      "options": [
+        "To use more fuel",
+        "So the engine helps control speed and the brakes do not overheat",
+        "To charge the 12 V battery",
+        "To improve steering"
+      ],
       "answerIndex": 1,
       "explanation": "Engine braking shares the energy that would otherwise all become brake heat, preventing fade."
     },
     {
       "id": "anticipation",
       "prompt": "A 1,500 kg car brakes to a stop from 20 m/s. How much energy becomes heat in the brakes?",
-      "options": ["15 kJ", "30 kJ", "300 kJ", "3,000 kJ"],
+      "options": [
+        "15 kJ",
+        "30 kJ",
+        "300 kJ",
+        "3,000 kJ"
+      ],
       "answerIndex": 2,
       "explanation": "E = ½ × 1,500 × 20² = 300,000 J = 300 kJ — energy anticipation can often avoid wasting."
     }
   ],
   "sourceReferences": [
-    {"title":"Acceleration and Economy","url":"https://www.howacarworks.com/advanced-driving/acceleration-and-economy","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
-    {"title":"Advanced Gearshifts","url":"https://www.howacarworks.com/advanced-driving/advanced-gearshifts","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "Acceleration and Economy",
+      "url": "https://www.howacarworks.com/advanced-driving/acceleration-and-economy",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    },
+    {
+      "title": "Advanced Gearshifts",
+      "url": "https://www.howacarworks.com/advanced-driving/advanced-gearshifts",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

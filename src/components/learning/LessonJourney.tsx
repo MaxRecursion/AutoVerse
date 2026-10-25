@@ -16,6 +16,7 @@ export function LessonJourney({
   path,
   next,
   nextLabel,
+  skipped = [],
 }: {
   topic: Topic
   category?: Category
@@ -23,6 +24,8 @@ export function LessonJourney({
   path?: PathProgress
   next?: Topic
   nextLabel: string
+  /** Earlier, unfinished steps of this route. */
+  skipped?: Topic[]
 }) {
   const completed = useProgress((s) => s.completed)
   const currentIndex = routeTopics.findIndex((item) => item.id === topic.id)
@@ -56,11 +59,25 @@ export function LessonJourney({
                   : 'Sequence complete — every lesson is done.'
               : isComplete
                 ? `Lesson complete · ${completedCount} of ${routeTopics.length} lessons done.`
-                : `You’re on step ${currentIndex + 1}. Mark it complete when you’re finished.`}
+                : `You’re on step ${currentIndex + 1}. Work through the stages below to finish it.`}
           </p>
           <span className="shrink-0 font-mono tabular-nums">{percent}%</span>
         </div>
         <Progress value={percent} aria-label={`${routeTitle} progress`} className="mt-1.5 h-1.5 bg-graphite-700" />
+        {skipped.length > 0 && !isComplete && (
+          <p className="mt-2 text-xs text-steel-400">
+            {skipped.length === 1 ? 'An earlier step is' : `${skipped.length} earlier steps are`} still open:{' '}
+            {skipped.map((t, i) => (
+              <span key={t.id}>
+                {i > 0 && ', '}
+                <Link to={topicHref(t)} className="text-cyan underline-offset-4 hover:underline">
+                  {t.title}
+                </Link>
+              </span>
+            ))}
+            .
+          </p>
+        )}
       </div>
       {next ? (
         <Link

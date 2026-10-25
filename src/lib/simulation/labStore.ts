@@ -63,6 +63,13 @@ export interface LabState {
   exploded: boolean
   showLabels: boolean
   camera: CameraApi | null
+  /**
+   * What the learner has actually done in this lab ("play", "scrub", "cue:power",
+   * "select:piston", "param:gear", "explode"…). Written only by user-facing
+   * actions — never by the playback clock — so lab missions and lesson stages
+   * can reward real interaction.
+   */
+  activity: Record<string, true>
 
   advance: (dt: number) => void
   play: () => void
@@ -110,7 +117,12 @@ export function createLabStore(config: LabConfig, opts: { autoplay?: boolean } =
     return cue === s.cue ? { progress, params } : { progress, params, cue }
   }
 
-  return createStore<LabState>()((set, get) => ({
+  return createStore<LabState>()((set, get) => {
+  // Records one learner action. Returns {} when already recorded so subscribers are not woken needlessly.
+  const note = (key: string): Pick<Partial<LabState>, 'activity'> =>
+    get().activity[key] ? {} : { activity: { ...get().activity, [key]: true as const } }
+
+  return {
     config,
     progress: 0,
     playing: opts.autoplay ?? false,
@@ -124,6 +136,7 @@ export function createLabStore(config: LabConfig, opts: { autoplay?: boolean } =
     exploded: false,
     showLabels: false,
     camera: null,
+    activity: {},
 
     advance: (dt) => {
       const s = get()
@@ -141,47 +154,48 @@ export function createLabStore(config: LabConfig, opts: { autoplay?: boolean } =
     play: () => {
       const s = get()
       // One-shot timelines restart when played from the end.
-      if (!config.loop && s.progress >= 1) set({ ...withCue(s, 0), playing: true })
-      else set({ playing: true })
+      if (!config.loop && s.progress >= 1) set({ ...withCue(s, 0), playing: true, ...note('play') })
+      else set({ playing: true, ...note('play') })
     },
-    pause: () => set({ playing: false }),
+    pause: () => set({ playing: false, ...note('pause') }),
     toggle: () => (get().playing ? get().pause() : get().play()),
-    restart: () => set({ ...withCue(get(), 0), playing: true }),
+    restart: () => set({ ...withCue(get(), 0), playing: true, ...note('restart') }),
     seek: (p) => {
       const s = get()
-      set(withCue(s, config.loop ? wrap01(p) : clamp(p, 0, 1)))
+      set({ ...withCue(s, config.loop ? wrap01(p) : clamp(p, 0, 1)), ...note('scrub') })
     },
     stepBy: (n) => {
       const s = get()
       // Snap to the step grid so repeated steps land on identical poses.
       const steps = Math.round(s.progress / config.stepSize) + n
-      set({ ...withCue(s, config.loop ? wrap01(steps * config.stepSize) : clamp(steps * config.stepSize, 0, 1)), playing: false })
+      set({ ...withCue(s, config.loop ? wrap01(steps * config.stepSize) : clamp(steps * config.stepSize, 0, 1)), playing: false, ...note('step') })
     },
-    setSpeed: (speed) => set({ speed }),
+    setSpeed: (speed) => set({ speed, ...note('speed') }),
     seekCue: (cueId) => {
       const cue = config.cues.find((c) => c.id === cueId)
       if (!cue) return
       const s = get()
       const params = cue.params ? { ...s.params, ...cue.params } : s.params
-      set({ ...withCue(s, cue.progress ?? s.progress, params), playing: false })
+      set({ ...withCue(s, cue.progress ?? s.progress, params), playing: false, ...note(`cue:${cueId}`) })
     },
     setParam: (key, value) => {
       const s = get()
-      set(withCue(s, s.progress, { ...s.params, [key]: value }))
+      set({ ...withCue(s, s.progress, { ...s.params, [key]: value }), ...note(`param:${key}`) })
     },
-    select: (id) => set({ selectedId: id }),
+    select: (id) => set({ selectedId: id, ...(id ? note(`select:${id}`) : {}) }),
     hover: (id) => set({ hoveredId: id }),
     toggleHidden: (id) => {
       const hidden = { ...get().hidden }
       if (hidden[id]) delete hidden[id]
       else hidden[id] = true
-      set({ hidden })
+      set({ hidden, ...note('hide') })
     },
-    showAll: () => set({ hidden: {}, isolatedId: null }),
-    isolate: (id) => set({ isolatedId: id, selectedId: id ?? get().selectedId }),
-    setExploded: (exploded) => set({ exploded }),
-    toggleLabels: () => set({ showLabels: !get().showLabels }),
+    showAll: () => set({ hidden: {}, isolatedId: null, ...note('show-all') }),
+    isolate: (id) => set({ isolatedId: id, selectedId: id ?? get().selectedId, ...(id ? note('isolate') : {}) }),
+    setExploded: (exploded) => set({ exploded, ...(exploded ? note('explode') : {}) }),
+    toggleLabels: () => set({ showLabels: !get().showLabels, ...note('labels') }),
     registerCamera: (camera) => set({ camera }),
     resetCamera: () => get().camera?.reset(),
-  }))
+  }
+  })
 }

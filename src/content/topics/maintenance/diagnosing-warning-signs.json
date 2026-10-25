@@ -5,8 +5,17 @@
   "summary": "Cars announce most problems before they become failures — through warning lights, noises, smells, smoke and changes in feel. Learn what the common signs usually point to, how fault codes help, and a methodical way to narrow down a cause.",
   "categoryId": "maintenance",
   "difficulty": "intermediate",
+  "layer": "engineering",
   "estimatedDuration": 14,
-  "tags": ["diagnosis", "warning lights", "obd", "fault codes", "noises", "troubleshooting", "safety"],
+  "tags": [
+    "diagnosis",
+    "warning lights",
+    "obd",
+    "fault codes",
+    "noises",
+    "troubleshooting",
+    "safety"
+  ],
   "learningObjectives": [
     "Interpret warning-light colours and decide how urgently to act",
     "Link common noises, smells, smoke colours and vibrations to likely systems",
@@ -49,67 +58,167 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "symptom", "label": "Symptom", "detail": "Light, noise, smell, feel" },
-      { "id": "codes", "label": "Fault codes & live data", "detail": "OBD socket" },
-      { "id": "checks", "label": "Basic checks", "detail": "Fluids, tyres, connections", "topicId": "routine-maintenance" },
-      { "id": "isolate", "label": "Isolate system", "detail": "Engine, driveline, brakes…" },
-      { "id": "test", "label": "Test & repair", "detail": "Against specification" },
-      { "id": "verify", "label": "Verify", "detail": "Same conditions" }
+      {
+        "id": "symptom",
+        "label": "Symptom",
+        "detail": "Light, noise, smell, feel"
+      },
+      {
+        "id": "codes",
+        "label": "Fault codes & live data",
+        "detail": "OBD socket"
+      },
+      {
+        "id": "checks",
+        "label": "Basic checks",
+        "detail": "Fluids, tyres, connections",
+        "topicId": "routine-maintenance"
+      },
+      {
+        "id": "isolate",
+        "label": "Isolate system",
+        "detail": "Engine, driveline, brakes…"
+      },
+      {
+        "id": "test",
+        "label": "Test & repair",
+        "detail": "Against specification"
+      },
+      {
+        "id": "verify",
+        "label": "Verify",
+        "detail": "Same conditions"
+      }
     ],
     "edges": [
-      { "from": "symptom", "to": "codes" },
-      { "from": "symptom", "to": "checks" },
-      { "from": "codes", "to": "isolate" },
-      { "from": "checks", "to": "isolate" },
-      { "from": "isolate", "to": "test" },
-      { "from": "test", "to": "verify" }
+      {
+        "from": "symptom",
+        "to": "codes"
+      },
+      {
+        "from": "symptom",
+        "to": "checks"
+      },
+      {
+        "from": "codes",
+        "to": "isolate"
+      },
+      {
+        "from": "checks",
+        "to": "isolate"
+      },
+      {
+        "from": "isolate",
+        "to": "test"
+      },
+      {
+        "from": "test",
+        "to": "verify"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Warning-light colours", "definition": "Red: stop safely and investigate. Amber/yellow: attention needed soon. Green/blue: information only." },
-    { "term": "Diagnostic trouble code (DTC)", "definition": "A stored code identifying which monitored signal went out of range — a symptom, not necessarily the failed part." },
-    { "term": "Freeze-frame data", "definition": "A snapshot of key engine parameters recorded when a fault code was set." },
-    { "term": "Road-speed vs engine-speed symptoms", "definition": "Whether a noise or vibration follows road speed or engine speed points to the driveline/wheels or the engine respectively." }
+    {
+      "term": "Warning-light colours",
+      "definition": "Red: stop safely and investigate. Amber/yellow: attention needed soon. Green/blue: information only."
+    },
+    {
+      "term": "Diagnostic trouble code (DTC)",
+      "definition": "A stored code identifying which monitored signal went out of range — a symptom, not necessarily the failed part."
+    },
+    {
+      "term": "Freeze-frame data",
+      "definition": "A snapshot of key engine parameters recorded when a fault code was set."
+    },
+    {
+      "term": "Road-speed vs engine-speed symptoms",
+      "definition": "Whether a noise or vibration follows road speed or engine speed points to the driveline/wheels or the engine respectively."
+    }
   ],
   "misconceptions": [
-    { "myth": "A fault code tells you exactly which part to replace.", "reality": "It tells you what the computer measured as abnormal. Wiring, connectors or a different component upstream are often the real cause." },
-    { "myth": "Clearing the code fixes the problem.", "reality": "Clearing only erases the record. If the cause remains, the light returns — and useful freeze-frame data has been lost." },
-    { "myth": "An amber engine light can be ignored if the car drives normally.", "reality": "The car may be running in a protective mode or with higher emissions; some faults, such as misfires, can damage the catalytic converter if ignored." }
+    {
+      "myth": "A fault code tells you exactly which part to replace.",
+      "reality": "It tells you what the computer measured as abnormal. Wiring, connectors or a different component upstream are often the real cause."
+    },
+    {
+      "myth": "Clearing the code fixes the problem.",
+      "reality": "Clearing only erases the record. If the cause remains, the light returns — and useful freeze-frame data has been lost."
+    },
+    {
+      "myth": "An amber engine light can be ignored if the car drives normally.",
+      "reality": "The car may be running in a protective mode or with higher emissions; some faults, such as misfires, can damage the catalytic converter if ignored."
+    }
   ],
   "practicalExamples": [
     "A humming that rises with road speed and changes when gently weaving left and right is characteristic of a worn wheel bearing.",
     "A sweet smell inside the cabin with misting windows can indicate a leaking heater core.",
     "A steering-wheel shimmy only when braking from speed usually points to uneven brake discs rather than wheel balance."
   ],
-  "relatedTopicIds": ["routine-maintenance", "cooling-system", "lubrication-system", "alternator-and-charging"],
-  "prerequisiteTopicIds": ["routine-maintenance"],
+  "relatedTopicIds": [
+    "routine-maintenance",
+    "cooling-system",
+    "lubrication-system",
+    "alternator-and-charging"
+  ],
+  "prerequisiteTopicIds": [
+    "routine-maintenance"
+  ],
   "quiz": [
     {
       "id": "red-light",
       "prompt": "The red oil-pressure warning light comes on while driving. What is the right response?",
-      "options": ["Continue and check at the next service", "Stop safely as soon as possible and switch off the engine", "Rev the engine to raise pressure", "Ignore it if it flickers"],
+      "options": [
+        "Continue and check at the next service",
+        "Stop safely as soon as possible and switch off the engine",
+        "Rev the engine to raise pressure",
+        "Ignore it if it flickers"
+      ],
       "answerIndex": 1,
       "explanation": "Red warnings indicate potentially serious damage; without oil pressure, bearings can fail within minutes."
     },
     {
       "id": "dtc-meaning",
       "prompt": "A scanner shows P0171 'system too lean'. What does that mean?",
-      "options": ["The oxygen sensor must be replaced", "The engine computer has been adding unusually large amounts of fuel to correct a lean mixture", "The fuel tank is empty", "The catalytic converter is missing"],
+      "options": [
+        "The oxygen sensor must be replaced",
+        "The engine computer has been adding unusually large amounts of fuel to correct a lean mixture",
+        "The fuel tank is empty",
+        "The catalytic converter is missing"
+      ],
       "answerIndex": 1,
       "explanation": "The code reports a symptom — excessive positive fuel trim — whose cause could be an air leak, fuel delivery or a sensor issue."
     },
     {
       "id": "noise-source",
       "prompt": "A noise changes with road speed but not when you change gear at the same speed. Where is it most likely coming from?",
-      "options": ["The engine", "The wheels, tyres, bearings or driveline", "The alternator", "The exhaust manifold"],
+      "options": [
+        "The engine",
+        "The wheels, tyres, bearings or driveline",
+        "The alternator",
+        "The exhaust manifold"
+      ],
       "answerIndex": 1,
       "explanation": "Changing gear changes engine speed but not road speed, so a noise that ignores gear changes is road-speed related."
     }
   ],
   "sourceReferences": [
-    {"title":"Checking the instruments","url":"https://www.howacarworks.com/accessories/checking-the-instruments","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
-    {"title":"Diagnosing faults in automatic transmission","url":"https://www.howacarworks.com/transmission/diagnosing-faults-in-automatic-transmission","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "Checking the instruments",
+      "url": "https://www.howacarworks.com/accessories/checking-the-instruments",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    },
+    {
+      "title": "Diagnosing faults in automatic transmission",
+      "url": "https://www.howacarworks.com/transmission/diagnosing-faults-in-automatic-transmission",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

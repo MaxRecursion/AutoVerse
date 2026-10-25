@@ -122,14 +122,16 @@ describe('HomePage', () => {
     expect(within(section).getAllByRole('listitem')).toHaveLength(1)
   })
 
-  it('resumes the path of the most recently visited lesson across the home actions', () => {
+  it('resumes the lesson the learner was in, consistently across the home actions', () => {
     const recentTopic = getTopic('pistons-and-crankshaft')!
     useProgress.setState({ recent: [{ topicId: recentTopic.id, at: new Date().toISOString() }] })
     renderHome()
 
-    expect(screen.getByRole('link', { name: 'Continue Learning' })).toHaveAttribute('href', '/topics/four-stroke-cycle')
+    // Hero, header-style next-up caption and the path card all agree: continue where you were,
+    // rather than sending the learner back to the first unfinished step of the path.
+    expect(screen.getByRole('link', { name: 'Continue Learning' })).toHaveAttribute('href', `/topics/${recentTopic.id}`)
     const pathSection = screen.getByRole('region', { name: 'Inside the engine' })
-    expect(within(pathSection).getByRole('link', { name: /Continue with The Four-Stroke Cycle/ })).toHaveAttribute('href', '/topics/four-stroke-cycle')
+    expect(within(pathSection).getByRole('link', { name: new RegExp(`Continue with ${recentTopic.title}`) })).toHaveAttribute('href', `/topics/${recentTopic.id}`)
   })
 
   it('keeps the page usable when the 3D hero cannot load', async () => {

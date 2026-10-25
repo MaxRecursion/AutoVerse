@@ -121,3 +121,33 @@ describe('engine lab store', () => {
     expect(engineStateAt(a.getState().progress)).toEqual(engineStateAt(b.getState().progress))
   })
 })
+
+describe('learner activity', () => {
+  it('records only user-facing actions, never the playback clock', () => {
+    const store = createLabStore(engineLabConfig, { autoplay: true })
+    store.getState().advance(0.5)
+    store.getState().advance(0.5)
+    expect(store.getState().activity).toEqual({})
+
+    store.getState().seekCue('power')
+    store.getState().select('piston')
+    store.getState().setExploded(true)
+    store.getState().toggle()
+    expect(Object.keys(store.getState().activity).sort()).toEqual(['cue:power', 'explode', 'play', 'select:piston'])
+  })
+
+  it('does not rewrite the record (or wake subscribers) when an action repeats', () => {
+    const store = createLabStore(engineLabConfig)
+    store.getState().seek(0.25)
+    const first = store.getState().activity
+    store.getState().seek(0.5)
+    expect(store.getState().activity).toBe(first)
+  })
+
+  it('ignores deselect and un-exploding', () => {
+    const store = createLabStore(engineLabConfig)
+    store.getState().select(null)
+    store.getState().setExploded(false)
+    expect(store.getState().activity).toEqual({})
+  })
+})

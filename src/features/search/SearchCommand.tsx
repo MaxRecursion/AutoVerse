@@ -1,5 +1,5 @@
 import { useDeferredValue, useEffect, useMemo, useState } from 'react'
-import { BookOpen, Box, Clock, Cpu, FolderTree, Search } from 'lucide-react'
+import { BookOpen, Box, Clock, Cpu, FolderTree, History, Search } from 'lucide-react'
 import { useNavigate } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command'
@@ -18,9 +18,10 @@ const GROUPS: { kind: SearchKind; heading: string; limit: number; icon: typeof B
   { kind: 'lab', heading: 'Labs', limit: 4, icon: Box },
   { kind: 'component', heading: 'Components', limit: 6, icon: Cpu },
   { kind: 'category', heading: 'Categories', limit: 4, icon: FolderTree },
+  { kind: 'pioneer', heading: 'Engineers', limit: 4, icon: History },
 ]
 
-const KIND_LABEL: Record<SearchKind, string> = { topic: 'Lesson', lab: 'Lab', component: 'Component', category: 'Category' }
+const KIND_LABEL: Record<SearchKind, string> = { topic: 'Lesson', lab: 'Lab', component: 'Component', category: 'Category', pioneer: 'Engineer' }
 
 const ITEM = 'min-h-11 gap-3 rounded-md px-2.5 py-2 data-[selected=true]:bg-white/[0.06] data-[selected=true]:text-paper'
 

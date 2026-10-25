@@ -5,8 +5,17 @@
   "summary": "Electric motors deliver strong torque from standstill, run efficiently and can turn braking energy back into charge. Learn how a battery, inverter and motor drive an electric car, and how mild, full and plug-in hybrids share the work with an engine.",
   "categoryId": "aero-technology",
   "difficulty": "intermediate",
+  "layer": "engineering",
   "estimatedDuration": 15,
-  "tags": ["electric", "hybrid", "ev", "battery", "inverter", "regenerative braking", "motor"],
+  "tags": [
+    "electric",
+    "hybrid",
+    "ev",
+    "battery",
+    "inverter",
+    "regenerative braking",
+    "motor"
+  ],
   "learningObjectives": [
     "Trace energy from the traction battery through the inverter and motor to the wheels",
     "Explain why electric motors give strong torque from zero speed and usually need only one gear",
@@ -49,64 +58,158 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "charger", "label": "Charging", "detail": "AC on-board or DC fast" },
-      { "id": "battery", "label": "Traction battery", "detail": "≈ 400 / 800 V" },
-      { "id": "inverter", "label": "Inverter", "detail": "DC ↔ 3-phase AC" },
-      { "id": "motor", "label": "Motor-generator", "detail": "Torque from 0 rpm", "topicId": "torque-and-power" },
-      { "id": "reduction", "label": "Reduction & differential", "detail": "≈ 8–10 : 1", "topicId": "differential" },
-      { "id": "dcdc", "label": "DC-DC converter", "detail": "Feeds 12 V system", "topicId": "battery-and-starter" }
+      {
+        "id": "charger",
+        "label": "Charging",
+        "detail": "AC on-board or DC fast"
+      },
+      {
+        "id": "battery",
+        "label": "Traction battery",
+        "detail": "≈ 400 / 800 V"
+      },
+      {
+        "id": "inverter",
+        "label": "Inverter",
+        "detail": "DC ↔ 3-phase AC"
+      },
+      {
+        "id": "motor",
+        "label": "Motor-generator",
+        "detail": "Torque from 0 rpm",
+        "topicId": "torque-and-power"
+      },
+      {
+        "id": "reduction",
+        "label": "Reduction & differential",
+        "detail": "≈ 8–10 : 1",
+        "topicId": "differential"
+      },
+      {
+        "id": "dcdc",
+        "label": "DC-DC converter",
+        "detail": "Feeds 12 V system",
+        "topicId": "battery-and-starter"
+      }
     ],
     "edges": [
-      { "from": "charger", "to": "battery" },
-      { "from": "battery", "to": "inverter" },
-      { "from": "inverter", "to": "motor", "label": "drive" },
-      { "from": "motor", "to": "inverter", "label": "regeneration" },
-      { "from": "motor", "to": "reduction" },
-      { "from": "battery", "to": "dcdc" }
+      {
+        "from": "charger",
+        "to": "battery"
+      },
+      {
+        "from": "battery",
+        "to": "inverter"
+      },
+      {
+        "from": "inverter",
+        "to": "motor",
+        "label": "drive"
+      },
+      {
+        "from": "motor",
+        "to": "inverter",
+        "label": "regeneration"
+      },
+      {
+        "from": "motor",
+        "to": "reduction"
+      },
+      {
+        "from": "battery",
+        "to": "dcdc"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Energy and range", "definition": "Range is usable battery energy divided by consumption.", "equation": "range = E_battery / consumption" },
-    { "term": "Inverter", "definition": "Power electronics that convert battery DC into controlled three-phase AC for the motor, and back again during regeneration." },
-    { "term": "Regenerative braking", "definition": "Using the motor as a generator to convert kinetic energy into stored electrical energy." },
-    { "term": "Power-split hybrid", "definition": "A hybrid in which a planetary gearset combines engine and motor-generators, decoupling engine speed from road speed." }
+    {
+      "term": "Energy and range",
+      "definition": "Range is usable battery energy divided by consumption.",
+      "equation": "range = E_battery / consumption"
+    },
+    {
+      "term": "Inverter",
+      "definition": "Power electronics that convert battery DC into controlled three-phase AC for the motor, and back again during regeneration."
+    },
+    {
+      "term": "Regenerative braking",
+      "definition": "Using the motor as a generator to convert kinetic energy into stored electrical energy."
+    },
+    {
+      "term": "Power-split hybrid",
+      "definition": "A hybrid in which a planetary gearset combines engine and motor-generators, decoupling engine speed from road speed."
+    }
   ],
   "misconceptions": [
-    { "myth": "Regenerative braking recovers all the energy used to accelerate.", "reality": "Losses occur in the motor, inverter, battery and tyres, and regeneration is limited by power and charge acceptance; a useful fraction is recovered, not all of it." },
-    { "myth": "Electric cars need multi-speed gearboxes like petrol cars.", "reality": "A motor's wide speed range and torque from zero mean one reduction gear is enough for nearly all road cars." },
-    { "myth": "A mild hybrid can drive on electric power alone.", "reality": "Mild-hybrid motors assist the engine and smooth stop-start but are too small to propel the car independently for any distance." }
+    {
+      "myth": "Regenerative braking recovers all the energy used to accelerate.",
+      "reality": "Losses occur in the motor, inverter, battery and tyres, and regeneration is limited by power and charge acceptance; a useful fraction is recovered, not all of it."
+    },
+    {
+      "myth": "Electric cars need multi-speed gearboxes like petrol cars.",
+      "reality": "A motor's wide speed range and torque from zero mean one reduction gear is enough for nearly all road cars."
+    },
+    {
+      "myth": "A mild hybrid can drive on electric power alone.",
+      "reality": "Mild-hybrid motors assist the engine and smooth stop-start but are too small to propel the car independently for any distance."
+    }
   ],
   "practicalExamples": [
     "Many EVs offer 'one-pedal driving': lifting off the accelerator applies strong regeneration, so the brake pedal is used far less.",
     "Range falls noticeably on a cold motorway trip because of higher drag at speed, cabin heating and reduced battery performance.",
     "Hybrid taxis often show long brake-pad life because so much urban braking is done regeneratively."
   ],
-  "relatedTopicIds": ["torque-and-power", "battery-and-starter", "alternator-and-charging", "aerodynamics"],
-  "prerequisiteTopicIds": ["torque-and-power", "battery-and-starter"],
+  "relatedTopicIds": [
+    "torque-and-power",
+    "battery-and-starter",
+    "alternator-and-charging",
+    "aerodynamics"
+  ],
+  "prerequisiteTopicIds": [
+    "torque-and-power",
+    "battery-and-starter"
+  ],
   "quiz": [
     {
       "id": "range-calc",
       "prompt": "An EV has 72 kWh usable energy and uses 18 kWh per 100 km. What is its approximate range?",
-      "options": ["130 km", "250 km", "400 km", "720 km"],
+      "options": [
+        "130 km",
+        "250 km",
+        "400 km",
+        "720 km"
+      ],
       "answerIndex": 2,
       "explanation": "Range = 72 ÷ 18 × 100 km = 400 km."
     },
     {
       "id": "one-gear",
       "prompt": "Why do most electric cars need only one gear ratio?",
-      "options": ["Electric motors cannot use gearboxes", "Motors give high torque from zero speed and operate over a very wide speed range", "Batteries are too heavy for gearboxes", "Regulations forbid gearboxes"],
+      "options": [
+        "Electric motors cannot use gearboxes",
+        "Motors give high torque from zero speed and operate over a very wide speed range",
+        "Batteries are too heavy for gearboxes",
+        "Regulations forbid gearboxes"
+      ],
       "answerIndex": 1,
       "explanation": "A constant-torque then constant-power characteristic covers everything from pulling away to top speed."
     },
     {
       "id": "inverter-role",
       "prompt": "What does the inverter do in an electric drive?",
-      "options": ["Charges the 12 V battery", "Converts battery DC into controlled AC for the motor", "Cools the battery", "Selects the gear"],
+      "options": [
+        "Charges the 12 V battery",
+        "Converts battery DC into controlled AC for the motor",
+        "Cools the battery",
+        "Selects the gear"
+      ],
       "answerIndex": 1,
       "explanation": "It synthesises three-phase AC of the right frequency and amplitude to produce the requested torque, and reverses the flow during regeneration."
     }
   ],
   "sourceReferences": [],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { CategorySchema, TopicSchema, type Category, type Topic } from '../../src/lib/schemas'
+import { CategorySchema, PioneerSchema, TopicSchema, type Category, type Pioneer, type Topic } from '../../src/lib/schemas'
 import { absoluteUrl, buildRedirects, buildSitemap, outputFileFor, parseLabMeta, renderDocument, restoreTemplate } from './html'
 import { buildRoutes, escapeHtml, truncate, type PrerenderRoute } from './routes'
 
@@ -182,4 +182,36 @@ describe('outputs', () => {
       { id: 'braking', title: 'Disc Brake Laboratory', summary: "Press the pedal 'firmly'." },
     ])
   })
+
+describe('pioneers in the static build', () => {
+  const pioneer: Pioneer = PioneerSchema.parse({
+    id: 'test-person',
+    name: 'Ada <Test>',
+    role: 'Engineer',
+    year: '1901',
+    sortYear: 1901,
+    categoryId: 'fuel-ignition',
+    headline: 'Made a hot spark & more.',
+    story: 'A story with <markup> & "quotes".',
+    caution: 'Credit is shared.',
+    topicIds: ['spark'],
+    sources: [{ title: 'Source <one>', url: 'https://example.com/a?b=1&c=2', publisher: 'Example', accessed: '2026-10-25' }],
+  })
+  const routes = buildRoutes({ categories: [category], topics: [topic({ id: 'spark' }), topic({ id: 'other' })], labs: [], pioneers: [pioneer] })
+
+  it('adds a /pioneers page that is readable without JavaScript, with escaped text and its sources', () => {
+    const page = routes.find((r) => r.path === '/pioneers')!
+    expect(page.title).toBe('The engineers behind the parts · AutoVerse')
+    expect(page.bodyHtml).toContain('Ada &lt;Test&gt; (1901)')
+    expect(page.bodyHtml).toContain('A story with &lt;markup&gt; &amp; &quot;quotes&quot;.')
+    expect(page.bodyHtml).toContain('Worth knowing:</em> Credit is shared.')
+    expect(page.bodyHtml).toContain('href="https://example.com/a?b=1&amp;c=2"')
+    expect(page.bodyHtml).not.toContain('<markup>')
+  })
+
+  it('adds "The story behind it" only to lessons that have one', () => {
+    expect(routes.find((r) => r.path === '/topics/spark')!.bodyHtml).toContain('<h2>The story behind it</h2>')
+    expect(routes.find((r) => r.path === '/topics/other')!.bodyHtml).not.toContain('The story behind it')
+  })
+})
 })

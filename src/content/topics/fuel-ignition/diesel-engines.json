@@ -5,8 +5,16 @@
   "summary": "Diesels have no spark plugs: they squeeze air until it is hot enough to ignite fuel injected at very high pressure. See why that makes them efficient and torquey, and why they need glow plugs, turbochargers and elaborate exhaust cleaning.",
   "categoryId": "fuel-ignition",
   "difficulty": "intermediate",
+  "layer": "engineering",
   "estimatedDuration": 14,
-  "tags": ["diesel", "compression ignition", "common rail", "turbo", "emissions", "efficiency"],
+  "tags": [
+    "diesel",
+    "compression ignition",
+    "common rail",
+    "turbo",
+    "emissions",
+    "efficiency"
+  ],
   "learningObjectives": [
     "Explain compression ignition and how it differs from spark ignition",
     "Describe how a diesel controls power without a throttle",
@@ -49,64 +57,157 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "turbo", "label": "Turbo & intercooler", "detail": "Dense, cool air" },
-      { "id": "compression", "label": "High compression", "detail": "≈ 15–18 : 1", "topicId": "four-stroke-cycle" },
-      { "id": "rail", "label": "Common rail", "detail": "≈ 2,000 bar fuel" },
-      { "id": "combustion", "label": "Self-ignition", "detail": "No spark plug" },
-      { "id": "aftertreatment", "label": "After-treatment", "detail": "DOC · DPF · SCR" }
+      {
+        "id": "turbo",
+        "label": "Turbo & intercooler",
+        "detail": "Dense, cool air"
+      },
+      {
+        "id": "compression",
+        "label": "High compression",
+        "detail": "≈ 15–18 : 1",
+        "topicId": "four-stroke-cycle"
+      },
+      {
+        "id": "rail",
+        "label": "Common rail",
+        "detail": "≈ 2,000 bar fuel"
+      },
+      {
+        "id": "combustion",
+        "label": "Self-ignition",
+        "detail": "No spark plug"
+      },
+      {
+        "id": "aftertreatment",
+        "label": "After-treatment",
+        "detail": "DOC · DPF · SCR"
+      }
     ],
     "edges": [
-      { "from": "turbo", "to": "compression" },
-      { "from": "compression", "to": "combustion", "label": "hot air" },
-      { "from": "rail", "to": "combustion", "label": "injection" },
-      { "from": "combustion", "to": "aftertreatment", "label": "exhaust" },
-      { "from": "aftertreatment", "to": "turbo", "label": "EGR (part)" }
+      {
+        "from": "turbo",
+        "to": "compression"
+      },
+      {
+        "from": "compression",
+        "to": "combustion",
+        "label": "hot air"
+      },
+      {
+        "from": "rail",
+        "to": "combustion",
+        "label": "injection"
+      },
+      {
+        "from": "combustion",
+        "to": "aftertreatment",
+        "label": "exhaust"
+      },
+      {
+        "from": "aftertreatment",
+        "to": "turbo",
+        "label": "EGR (part)"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Compression ignition", "definition": "Fuel ignites because the air it is injected into is already hotter than the fuel's auto-ignition temperature." },
-    { "term": "Compression ratio", "definition": "Cylinder volume with the piston at the bottom divided by the volume with it at the top.", "equation": "r = (V_swept + V_clearance) / V_clearance" },
-    { "term": "Quality (fuel-quantity) load control", "definition": "Diesel power is set by how much fuel is injected into an unthrottled air charge, so the engine runs lean at part load." },
-    { "term": "Cetane number", "definition": "A measure of how readily a diesel fuel auto-ignites; higher cetane shortens ignition delay and softens combustion noise." }
+    {
+      "term": "Compression ignition",
+      "definition": "Fuel ignites because the air it is injected into is already hotter than the fuel's auto-ignition temperature."
+    },
+    {
+      "term": "Compression ratio",
+      "definition": "Cylinder volume with the piston at the bottom divided by the volume with it at the top.",
+      "equation": "r = (V_swept + V_clearance) / V_clearance"
+    },
+    {
+      "term": "Quality (fuel-quantity) load control",
+      "definition": "Diesel power is set by how much fuel is injected into an unthrottled air charge, so the engine runs lean at part load."
+    },
+    {
+      "term": "Cetane number",
+      "definition": "A measure of how readily a diesel fuel auto-ignites; higher cetane shortens ignition delay and softens combustion noise."
+    }
   ],
   "misconceptions": [
-    { "myth": "Diesels make more torque because diesel fuel is far more powerful.", "reality": "Diesel holds only roughly 10–15% more energy per litre than petrol. The torque comes mainly from turbocharging, high cylinder pressures and efficient, unthrottled operation." },
-    { "myth": "A diesel needs a spark to start when cold.", "reality": "There is no spark at all. Glow plugs simply heat the chamber so compression can reach ignition temperature in a cold engine." },
-    { "myth": "A blocked particulate filter means the engine is broken.", "reality": "Usually the filter has not had a chance to regenerate. Regular short trips never get the exhaust hot enough; a longer steady drive often lets it clear." }
+    {
+      "myth": "Diesels make more torque because diesel fuel is far more powerful.",
+      "reality": "Diesel holds only roughly 10–15% more energy per litre than petrol. The torque comes mainly from turbocharging, high cylinder pressures and efficient, unthrottled operation."
+    },
+    {
+      "myth": "A diesel needs a spark to start when cold.",
+      "reality": "There is no spark at all. Glow plugs simply heat the chamber so compression can reach ignition temperature in a cold engine."
+    },
+    {
+      "myth": "A blocked particulate filter means the engine is broken.",
+      "reality": "Usually the filter has not had a chance to regenerate. Regular short trips never get the exhaust hot enough; a longer steady drive often lets it clear."
+    }
   ],
   "practicalExamples": [
     "A dashboard coil symbol that lights before starting a cold diesel shows the glow plugs pre-heating.",
     "A diesel used only for short urban trips may show a particulate-filter warning; a sustained run at motorway speed lets it regenerate.",
     "Diesel tractors and lorries rev low but pull hard: long strokes, turbocharging and high cylinder pressure suit heavy, steady loads."
   ],
-  "relatedTopicIds": ["fuel-injection", "four-stroke-cycle", "torque-and-power", "spark-ignition"],
-  "prerequisiteTopicIds": ["four-stroke-cycle", "fuel-injection"],
+  "relatedTopicIds": [
+    "fuel-injection",
+    "four-stroke-cycle",
+    "torque-and-power",
+    "spark-ignition"
+  ],
+  "prerequisiteTopicIds": [
+    "four-stroke-cycle",
+    "fuel-injection"
+  ],
   "quiz": [
     {
       "id": "ignition-source",
       "prompt": "What ignites the fuel in a diesel engine?",
-      "options": ["A spark plug", "The glow plug on every cycle", "Air heated by compression", "The turbocharger"],
+      "options": [
+        "A spark plug",
+        "The glow plug on every cycle",
+        "Air heated by compression",
+        "The turbocharger"
+      ],
       "answerIndex": 2,
       "explanation": "The air is compressed until it is hotter than the fuel's auto-ignition temperature; glow plugs only help cold starts."
     },
     {
       "id": "load-control",
       "prompt": "How does a diesel engine mainly control its power output?",
-      "options": ["By throttling the intake air", "By varying the amount of fuel injected", "By changing the compression ratio", "By retarding the spark"],
+      "options": [
+        "By throttling the intake air",
+        "By varying the amount of fuel injected",
+        "By changing the compression ratio",
+        "By retarding the spark"
+      ],
       "answerIndex": 1,
       "explanation": "Diesels run unthrottled and vary fuel quantity, which avoids pumping losses and is a key reason for their efficiency."
     },
     {
       "id": "scr-purpose",
       "prompt": "What does a selective catalytic reduction (SCR) system with urea dosing remove?",
-      "options": ["Soot particles", "Carbon monoxide", "Nitrogen oxides (NOx)", "Sulphur"],
+      "options": [
+        "Soot particles",
+        "Carbon monoxide",
+        "Nitrogen oxides (NOx)",
+        "Sulphur"
+      ],
       "answerIndex": 2,
       "explanation": "Urea decomposes to ammonia, which reacts with NOx over the SCR catalyst to form nitrogen and water."
     }
   ],
   "sourceReferences": [
-    {"title":"How a diesel engine works","url":"https://www.howacarworks.com/basics/how-a-diesel-engine-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How a diesel engine works",
+      "url": "https://www.howacarworks.com/basics/how-a-diesel-engine-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

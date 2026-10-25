@@ -5,8 +5,16 @@
   "summary": "Wheels move up and down and steer, yet they must keep receiving smooth drive. Learn how propshafts, universal joints and constant-velocity joints carry torque through changing angles — and why a torn rubber boot can end in a clicking joint.",
   "categoryId": "drivetrain",
   "difficulty": "intermediate",
+  "layer": "mechanism",
   "estimatedDuration": 11,
-  "tags": ["driveshaft", "cv joint", "universal joint", "propshaft", "half-shaft", "drivetrain"],
+  "tags": [
+    "driveshaft",
+    "cv joint",
+    "universal joint",
+    "propshaft",
+    "half-shaft",
+    "drivetrain"
+  ],
   "learningObjectives": [
     "Explain why driveshafts need joints that work at an angle and change length",
     "Describe the speed fluctuation of a Hooke's (universal) joint and how it is cancelled",
@@ -49,64 +57,155 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "gearbox", "label": "Gearbox / diff output", "topicId": "differential" },
-      { "id": "inner-joint", "label": "Inner plunging joint", "detail": "Tripod: length change" },
-      { "id": "shaft", "label": "Half-shaft", "detail": "Carries wheel torque" },
-      { "id": "outer-joint", "label": "Outer CV joint", "detail": "Rzeppa: up to ≈ 45–50°" },
-      { "id": "hub", "label": "Wheel hub", "detail": "Steers and moves vertically", "topicId": "steering-systems" }
+      {
+        "id": "gearbox",
+        "label": "Gearbox / diff output",
+        "topicId": "differential"
+      },
+      {
+        "id": "inner-joint",
+        "label": "Inner plunging joint",
+        "detail": "Tripod: length change"
+      },
+      {
+        "id": "shaft",
+        "label": "Half-shaft",
+        "detail": "Carries wheel torque"
+      },
+      {
+        "id": "outer-joint",
+        "label": "Outer CV joint",
+        "detail": "Rzeppa: up to ≈ 45–50°"
+      },
+      {
+        "id": "hub",
+        "label": "Wheel hub",
+        "detail": "Steers and moves vertically",
+        "topicId": "steering-systems"
+      }
     ],
     "edges": [
-      { "from": "gearbox", "to": "inner-joint" },
-      { "from": "inner-joint", "to": "shaft" },
-      { "from": "shaft", "to": "outer-joint" },
-      { "from": "outer-joint", "to": "hub" }
+      {
+        "from": "gearbox",
+        "to": "inner-joint"
+      },
+      {
+        "from": "inner-joint",
+        "to": "shaft"
+      },
+      {
+        "from": "shaft",
+        "to": "outer-joint"
+      },
+      {
+        "from": "outer-joint",
+        "to": "hub"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Hooke's joint speed ratio", "definition": "Instantaneous output/input speed ratio of a universal joint at angle β and input position θ.", "equation": "ω₂/ω₁ = cos β / (1 − sin²β · sin²θ)" },
-    { "term": "Constant-velocity joint", "definition": "A joint whose driving contacts lie on the plane bisecting the shaft angle, so output speed always equals input speed." },
-    { "term": "Plunge", "definition": "Axial sliding in an inboard joint that accommodates changes in shaft length as the suspension moves." },
-    { "term": "Phasing", "definition": "Aligning the yokes of two universal joints so that their speed fluctuations cancel." }
+    {
+      "term": "Hooke's joint speed ratio",
+      "definition": "Instantaneous output/input speed ratio of a universal joint at angle β and input position θ.",
+      "equation": "ω₂/ω₁ = cos β / (1 − sin²β · sin²θ)"
+    },
+    {
+      "term": "Constant-velocity joint",
+      "definition": "A joint whose driving contacts lie on the plane bisecting the shaft angle, so output speed always equals input speed."
+    },
+    {
+      "term": "Plunge",
+      "definition": "Axial sliding in an inboard joint that accommodates changes in shaft length as the suspension moves."
+    },
+    {
+      "term": "Phasing",
+      "definition": "Aligning the yokes of two universal joints so that their speed fluctuations cancel."
+    }
   ],
   "misconceptions": [
-    { "myth": "A clicking noise when turning is just normal tyre noise.", "reality": "A rhythmic click that speeds up with road speed and is loudest at full lock under power is the classic outer CV joint wear symptom." },
-    { "myth": "A torn CV boot is cosmetic.", "reality": "The boot is the joint's only protection. Once grease leaves and grit enters, wear accelerates quickly; replacing a boot early is far cheaper than a joint." },
-    { "myth": "Any universal joint gives smooth drive as long as it is in good condition.", "reality": "A single Hooke's joint at an angle always produces speed fluctuation; smooth drive relies on correct pairing and phasing." }
+    {
+      "myth": "A clicking noise when turning is just normal tyre noise.",
+      "reality": "A rhythmic click that speeds up with road speed and is loudest at full lock under power is the classic outer CV joint wear symptom."
+    },
+    {
+      "myth": "A torn CV boot is cosmetic.",
+      "reality": "The boot is the joint's only protection. Once grease leaves and grit enters, wear accelerates quickly; replacing a boot early is far cheaper than a joint."
+    },
+    {
+      "myth": "Any universal joint gives smooth drive as long as it is in good condition.",
+      "reality": "A single Hooke's joint at an angle always produces speed fluctuation; smooth drive relies on correct pairing and phasing."
+    }
   ],
   "practicalExamples": [
     "Driving slowly in a tight circle on a car park with gentle throttle is a simple test for outer CV joint clicks.",
     "Grease spattered around the inside of a wheel arch is a sign of a split CV boot.",
     "A vibration that appears only when accelerating and disappears when coasting often points to a worn inner plunging joint."
   ],
-  "relatedTopicIds": ["differential", "drivetrain-layouts", "steering-systems", "diagnosing-warning-signs"],
-  "prerequisiteTopicIds": ["drivetrain-layouts"],
+  "relatedTopicIds": [
+    "differential",
+    "drivetrain-layouts",
+    "steering-systems",
+    "diagnosing-warning-signs"
+  ],
+  "prerequisiteTopicIds": [
+    "drivetrain-layouts"
+  ],
   "quiz": [
     {
       "id": "plunge",
       "prompt": "Why is the inner joint on a front-drive half-shaft usually a plunging type?",
-      "options": ["To allow steering", "To let the shaft change length as the suspension moves", "To multiply torque", "To reduce weight"],
+      "options": [
+        "To allow steering",
+        "To let the shaft change length as the suspension moves",
+        "To multiply torque",
+        "To reduce weight"
+      ],
       "answerIndex": 1,
       "explanation": "Suspension travel changes the distance between the differential and the hub, so the inner joint must slide axially."
     },
     {
       "id": "hooke",
       "prompt": "A single universal joint runs at a significant angle. What happens to the output speed?",
-      "options": ["It is constant", "It fluctuates twice per revolution", "It is always slower than the input", "It reverses direction"],
+      "options": [
+        "It is constant",
+        "It fluctuates twice per revolution",
+        "It is always slower than the input",
+        "It reverses direction"
+      ],
       "answerIndex": 1,
       "explanation": "Output speed swings between ω cos β and ω / cos β twice every revolution."
     },
     {
       "id": "symptom",
       "prompt": "A clicking noise appears when accelerating on full steering lock. What is the most likely cause?",
-      "options": ["Worn brake pads", "Worn outer CV joint", "Low engine oil", "Loose exhaust"],
+      "options": [
+        "Worn brake pads",
+        "Worn outer CV joint",
+        "Low engine oil",
+        "Loose exhaust"
+      ],
       "answerIndex": 1,
       "explanation": "Outer CV joints work at their largest angles on full lock, where wear in the ball tracks becomes audible under load."
     }
   ],
   "sourceReferences": [
-    {"title":"How to check U-Joints","url":"https://www.howacarworks.com/transmission/how-to-check-u-joints","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
-    {"title":"Checking the half shafts","url":"https://www.howacarworks.com/transmission/checking-the-half-shafts","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How to check U-Joints",
+      "url": "https://www.howacarworks.com/transmission/how-to-check-u-joints",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    },
+    {
+      "title": "Checking the half shafts",
+      "url": "https://www.howacarworks.com/transmission/checking-the-half-shafts",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

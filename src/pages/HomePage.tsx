@@ -4,6 +4,7 @@ import { CategoryGrid } from '@/features/home/CategoryGrid'
 import { ContinueLearning } from '@/features/home/ContinueLearning'
 import { FeaturedLabs } from '@/features/home/FeaturedLabs'
 import { HeroSection } from '@/features/home/HeroSection'
+import { LearningJourney } from '@/features/home/LearningJourney'
 import { HomeSearch } from '@/features/home/HomeSearch'
 import { HOME_DOCUMENT_TITLE } from '@/features/home/homeData'
 import { HomeMotion } from '@/features/home/Reveal'
@@ -32,8 +33,9 @@ export default function HomePage() {
       <div className="pb-16 lg:pb-24">
         <HeroSection />
         <div className="flex flex-col gap-16 pt-10 lg:gap-24 lg:pt-14">
-          <HomeSearch />
+          <LearningJourney />
           <ContinueLearning />
+          <HomeSearch />
           <FeaturedLabs />
           <BeginnerPath />
           <CategoryGrid />

@@ -5,6 +5,7 @@
   "summary": "How a five-speed manual gearbox gives the engine a choice of ratios: gears that are always in mesh, a layshaft that drives them all, and synchronisers that pick which one drives the output — plus direct drive, overdrive and reverse.",
   "categoryId": "transmission",
   "difficulty": "intermediate",
+  "layer": "mechanism",
   "estimatedDuration": 18,
   "tags": [
     "gearbox",

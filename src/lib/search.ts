@@ -1,4 +1,4 @@
-import type { Category, Difficulty, SceneComponent, Topic } from './schemas'
+import type { Category, Difficulty, Pioneer, SceneComponent, Topic } from './schemas'
 
 /**
  * Client-side full-text search over AutoVerse content.
@@ -18,9 +18,9 @@ import type { Category, Difficulty, SceneComponent, Topic } from './schemas'
  * endings) and a few UK/US spellings are folded together (tyre/tire).
  */
 
-export type SearchKind = 'topic' | 'lab' | 'component' | 'category'
+export type SearchKind = 'topic' | 'lab' | 'component' | 'category' | 'pioneer'
 
-export const SEARCH_KINDS: readonly SearchKind[] = ['topic', 'lab', 'component', 'category']
+export const SEARCH_KINDS: readonly SearchKind[] = ['topic', 'lab', 'component', 'category', 'pioneer']
 
 /** Minimal lab shape (features/labs registry) so this module stays free of React / three.js. */
 export interface SearchableLab {
@@ -37,6 +37,8 @@ export interface SearchSources {
   categories: readonly Category[]
   labs: readonly SearchableLab[]
   components: readonly SceneComponent[]
+  /** Engineers behind the parts (content/pioneers.json). Optional so callers without history content still work. */
+  pioneers?: readonly Pioneer[]
 }
 
 export interface SearchDoc {
@@ -83,7 +85,7 @@ export interface SearchIndex {
 export const FIELD_WEIGHTS = { title: 10, tags: 6, summary: 3, body: 1 } as const
 type Field = keyof typeof FIELD_WEIGHTS
 
-const KIND_ORDER: Record<SearchKind, number> = { topic: 0, lab: 1, component: 2, category: 3 }
+const KIND_ORDER: Record<SearchKind, number> = { topic: 0, lab: 1, component: 2, category: 3, pioneer: 4 }
 
 const STOP_WORDS = new Set([
   'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'do', 'does', 'for', 'from', 'how', 'in', 'is', 'it', 'its',
@@ -264,6 +266,28 @@ function componentDoc(c: SceneComponent, src: SearchSources, topicById: Map<stri
   }
 }
 
+function pioneerDoc(p: Pioneer, topicById: Map<string, Topic>): DocInput {
+  const categoryIds = new Set([p.categoryId, ...p.topicIds.map((t) => topicById.get(t)?.categoryId).filter((c): c is string => !!c)])
+  return {
+    doc: {
+      key: `pioneer:${p.id}`,
+      kind: 'pioneer',
+      id: p.id,
+      title: p.name,
+      description: `${p.year} · ${p.headline}`,
+      href: `/pioneers?focus=${p.id}`,
+      categoryIds: [...categoryIds],
+      interactive: false,
+    },
+    fields: {
+      title: [p.name],
+      tags: ['engineer', 'inventor', 'history', 'pioneer', p.role, p.year],
+      summary: [p.headline],
+      body: nonEmpty([p.story, p.caution]),
+    },
+  }
+}
+
 export function buildSearchIndex(src: SearchSources): SearchIndex {
   const topicById = new Map(src.topics.map((t) => [t.id, t]))
   const inputs: DocInput[] = [
@@ -271,6 +295,7 @@ export function buildSearchIndex(src: SearchSources): SearchIndex {
     ...src.labs.map((l) => labDoc(l, src.categories)),
     ...src.components.map((c) => componentDoc(c, src, topicById)).filter((d): d is DocInput => !!d),
     ...src.categories.map(categoryDoc),
+    ...(src.pioneers ?? []).map((p) => pioneerDoc(p, topicById)),
   ]
 
   const postings = new Map<string, Map<number, number>>()
@@ -357,7 +382,7 @@ export function search(index: SearchIndex, query: string, opts: SearchOptions = 
 
 /** Group results by kind, preserving rank order within each group. */
 export function groupByKind(results: readonly SearchResult[]): Record<SearchKind, SearchResult[]> {
-  const out: Record<SearchKind, SearchResult[]> = { topic: [], lab: [], component: [], category: [] }
+  const out: Record<SearchKind, SearchResult[]> = { topic: [], lab: [], component: [], category: [], pioneer: [] }
   for (const r of results) out[r.doc.kind].push(r)
   return out
 }

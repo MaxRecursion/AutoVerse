@@ -5,8 +5,16 @@
   "summary": "A conventional automatic replaces the clutch pedal with a fluid torque converter and swaps gears by clamping parts of planetary gearsets with hydraulic clutches. See how it pulls away smoothly, multiplies torque and shifts without interrupting drive.",
   "categoryId": "transmission",
   "difficulty": "intermediate",
+  "layer": "engineering",
   "estimatedDuration": 15,
-  "tags": ["automatic", "gearbox", "torque converter", "planetary gears", "transmission", "shifting"],
+  "tags": [
+    "automatic",
+    "gearbox",
+    "torque converter",
+    "planetary gears",
+    "transmission",
+    "shifting"
+  ],
   "learningObjectives": [
     "Explain how a torque converter couples the engine to the gearbox and multiplies torque",
     "Describe how a planetary gearset produces different ratios by holding different members",
@@ -55,63 +63,152 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "engine", "label": "Engine", "detail": "Crank torque", "topicId": "torque-and-power" },
-      { "id": "converter", "label": "Torque converter", "detail": "Impeller · turbine · stator" },
-      { "id": "gearsets", "label": "Planetary gearsets", "detail": "Clutches & brakes" },
-      { "id": "tcu", "label": "Control unit", "detail": "Speed, load, throttle" },
-      { "id": "output", "label": "Output shaft", "detail": "To final drive", "topicId": "differential" }
+      {
+        "id": "engine",
+        "label": "Engine",
+        "detail": "Crank torque",
+        "topicId": "torque-and-power"
+      },
+      {
+        "id": "converter",
+        "label": "Torque converter",
+        "detail": "Impeller · turbine · stator"
+      },
+      {
+        "id": "gearsets",
+        "label": "Planetary gearsets",
+        "detail": "Clutches & brakes"
+      },
+      {
+        "id": "tcu",
+        "label": "Control unit",
+        "detail": "Speed, load, throttle"
+      },
+      {
+        "id": "output",
+        "label": "Output shaft",
+        "detail": "To final drive",
+        "topicId": "differential"
+      }
     ],
     "edges": [
-      { "from": "engine", "to": "converter" },
-      { "from": "converter", "to": "gearsets", "label": "turbine shaft" },
-      { "from": "tcu", "to": "gearsets", "label": "hydraulic pressure" },
-      { "from": "gearsets", "to": "output" }
+      {
+        "from": "engine",
+        "to": "converter"
+      },
+      {
+        "from": "converter",
+        "to": "gearsets",
+        "label": "turbine shaft"
+      },
+      {
+        "from": "tcu",
+        "to": "gearsets",
+        "label": "hydraulic pressure"
+      },
+      {
+        "from": "gearsets",
+        "to": "output"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Torque converter", "definition": "A fluid coupling with a stator that lets the engine idle in gear and multiplies torque when the turbine is slower than the impeller." },
-    { "term": "Planetary (epicyclic) gearset", "definition": "Sun, planets on a carrier, and ring gear in constant mesh; holding or driving different members gives different ratios.", "equation": "(S + R) ω_c = S ω_s + R ω_r" },
-    { "term": "Planetary reduction (ring held)", "definition": "Driving the sun with the ring held and taking output from the carrier gives this reduction ratio.", "equation": "i = 1 + R / S" },
-    { "term": "Lock-up clutch", "definition": "A friction clutch inside the converter that joins engine and gearbox directly to eliminate slip losses." }
+    {
+      "term": "Torque converter",
+      "definition": "A fluid coupling with a stator that lets the engine idle in gear and multiplies torque when the turbine is slower than the impeller."
+    },
+    {
+      "term": "Planetary (epicyclic) gearset",
+      "definition": "Sun, planets on a carrier, and ring gear in constant mesh; holding or driving different members gives different ratios.",
+      "equation": "(S + R) ω_c = S ω_s + R ω_r"
+    },
+    {
+      "term": "Planetary reduction (ring held)",
+      "definition": "Driving the sun with the ring held and taking output from the carrier gives this reduction ratio.",
+      "equation": "i = 1 + R / S"
+    },
+    {
+      "term": "Lock-up clutch",
+      "definition": "A friction clutch inside the converter that joins engine and gearbox directly to eliminate slip losses."
+    }
   ],
   "misconceptions": [
-    { "myth": "Automatics are always less efficient than manuals.", "reality": "Early automatics lost energy in the converter, but lock-up clutches, more ratios and better control mean many modern automatics match or beat a manual on economy." },
-    { "myth": "Selecting neutral at traffic lights saves the gearbox.", "reality": "Automatics are designed to sit in drive with the brake applied; frequent shuffling between N and D can add wear to the engagement clutches." },
-    { "myth": "A CVT and a torque-converter automatic work the same way.", "reality": "A CVT varies its ratio continuously with pulleys and a belt or chain; a conventional automatic steps between fixed planetary ratios." }
+    {
+      "myth": "Automatics are always less efficient than manuals.",
+      "reality": "Early automatics lost energy in the converter, but lock-up clutches, more ratios and better control mean many modern automatics match or beat a manual on economy."
+    },
+    {
+      "myth": "Selecting neutral at traffic lights saves the gearbox.",
+      "reality": "Automatics are designed to sit in drive with the brake applied; frequent shuffling between N and D can add wear to the engagement clutches."
+    },
+    {
+      "myth": "A CVT and a torque-converter automatic work the same way.",
+      "reality": "A CVT varies its ratio continuously with pulleys and a belt or chain; a conventional automatic steps between fixed planetary ratios."
+    }
   ],
   "practicalExamples": [
     "Creep: an automatic in drive edges forward when you lift off the brake because the converter transmits a little torque at idle.",
     "Pressing the accelerator firmly triggers a kick-down to a lower gear, putting the engine nearer its power peak.",
     "Engine speed briefly rises above road speed when pulling away hard: that is converter slip before the turbine catches up."
   ],
-  "relatedTopicIds": ["torque-and-power", "differential", "drivetrain-layouts", "mechanical-sympathy"],
-  "prerequisiteTopicIds": ["torque-and-power"],
+  "relatedTopicIds": [
+    "torque-and-power",
+    "differential",
+    "drivetrain-layouts",
+    "mechanical-sympathy"
+  ],
+  "prerequisiteTopicIds": [
+    "torque-and-power"
+  ],
   "quiz": [
     {
       "id": "stator-role",
       "prompt": "Which part of a torque converter makes torque multiplication possible?",
-      "options": ["The impeller", "The turbine", "The stator on its one-way clutch", "The lock-up clutch"],
+      "options": [
+        "The impeller",
+        "The turbine",
+        "The stator on its one-way clutch",
+        "The lock-up clutch"
+      ],
       "answerIndex": 2,
       "explanation": "The stator redirects fluid returning from the turbine so it assists the impeller, multiplying torque at high slip."
     },
     {
       "id": "planetary-calc",
       "prompt": "A planetary set has a 30-tooth sun and a 72-tooth ring. With the ring held, sun driven and carrier as output, what is the reduction?",
-      "options": ["2.4 : 1", "3.4 : 1", "1.4 : 1", "0.4 : 1"],
+      "options": [
+        "2.4 : 1",
+        "3.4 : 1",
+        "1.4 : 1",
+        "0.4 : 1"
+      ],
       "answerIndex": 1,
       "explanation": "i = 1 + R/S = 1 + 72/30 = 3.4."
     },
     {
       "id": "seamless",
       "prompt": "Why does drive continue through a well-executed automatic upshift?",
-      "options": ["The engine stops briefly", "The off-going clutch releases as the on-coming one applies", "The converter locks solid", "Both gears are engaged permanently"],
+      "options": [
+        "The engine stops briefly",
+        "The off-going clutch releases as the on-coming one applies",
+        "The converter locks solid",
+        "Both gears are engaged permanently"
+      ],
       "answerIndex": 1,
       "explanation": "Clutch-to-clutch control hands torque from one element to the next without a gap in drive."
     }
   ],
   "sourceReferences": [
-    {"title":"How automatic gearboxes work","url":"https://www.howacarworks.com/basics/how-automatic-gearboxes-work","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How automatic gearboxes work",
+      "url": "https://www.howacarworks.com/basics/how-automatic-gearboxes-work",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

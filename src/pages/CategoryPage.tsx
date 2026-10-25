@@ -3,13 +3,17 @@ import { ArrowLeft, ArrowRight, Box, ChevronDown, ExternalLink } from 'lucide-re
 import { Link, useParams } from 'react-router'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { CategoryIcon } from '@/components/learning/CategoryIcon'
-import { sortForLearning } from '@/components/learning/labels'
-import { TopicCard } from '@/components/learning/TopicCard'
+import { ProgressRing } from '@/components/learning/ProgressRing'
+import { SystemLadder } from '@/components/learning/SystemLadder'
+import { topicHref } from '@/components/learning/labels'
 import { useDocumentTitle } from '@/components/learning/useDocumentTitle'
 import { Button } from '@/components/ui/button'
+import { buildLadder } from '@/features/progress/curriculum'
+import { lessonStatus } from '@/features/progress/status'
 import { labs } from '@/features/labs/registry'
-import { categories, getCategoryBySlug, getTopicsInCategory, sourceArticles } from '@/lib/content'
+import { categories, getCategoryBySlug, getPioneersForCategory, getTopicsInCategory, sourceArticles } from '@/lib/content'
 import type { Category, SourceArticle } from '@/lib/schemas'
+import { useProgress } from '@/stores/progress'
 
 /** Only links whose page was actually retrieved (metadata recorded) are offered as further reading. */
 const LINKABLE: ReadonlySet<SourceArticle['importStatus']> = new Set(['metadata-only', 'imported'])
@@ -25,19 +29,27 @@ const hostOf = (url: string) => {
 /** /learn/:categorySlug — lessons, related lab and further reading for one category. */
 export default function CategoryPage() {
   const { categorySlug = '' } = useParams()
+  const completed = useProgress((s) => s.completed)
+  const lessonSignals = useProgress((s) => s.lessons)
   const category = getCategoryBySlug(categorySlug)
   useDocumentTitle(category ? category.title : 'Category not found')
 
   if (!category) return <CategoryNotFound slug={categorySlug} />
 
-  const list = sortForLearning(getTopicsInCategory(category.id))
+  const list = getTopicsInCategory(category.id)
+  const rungs = buildLadder(list, completed)
+  const ordered = rungs.flatMap((r) => r.topics)
+  const next = ordered.find((t) => !completed[t.id])
+  const doneCount = ordered.filter((t) => completed[t.id]).length
+  const started = ordered.some((t) => lessonStatus(t.id, completed, lessonSignals) !== 'todo')
+  const people = getPioneersForCategory(category.id)
   const relatedLabs = category.systemId ? labs.filter((l) => l.systemId === category.systemId).sort((a, b) => a.order - b.order) : []
   const reading = sourceArticles
     .filter((a) => a.mappedCategoryId === category.id && LINKABLE.has(a.importStatus))
     .sort((a, b) => a.title.localeCompare(b.title))
   const index = categories.findIndex((c) => c.id === category.id)
   const prev: Category | undefined = categories[index - 1]
-  const next: Category | undefined = categories[index + 1]
+  const nextCategory: Category | undefined = categories[index + 1]
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
@@ -49,21 +61,41 @@ export default function CategoryPage() {
         </p>
         <h1 className="mt-2 text-3xl font-semibold text-paper sm:text-4xl">{category.title}</h1>
         <p className="mt-3 text-lg leading-relaxed text-steel-300">{category.summary}</p>
+        {list.length > 0 && (
+          <div className="mt-6 flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-3" role="group" aria-label="Your progress in this system">
+              <span className="relative grid place-items-center">
+                <ProgressRing percent={Math.round((doneCount / list.length) * 100)} size={44} stroke={4} />
+                <span aria-hidden className="absolute font-mono text-[10px] tabular-nums text-steel-300">
+                  {doneCount}/{list.length}
+                </span>
+              </span>
+              <span className="text-sm text-steel-300">
+                {doneCount === list.length ? 'Every lesson here is done.' : `${doneCount} of ${list.length} lessons done`}
+              </span>
+            </div>
+            {next ? (
+              <Button asChild className="h-11 px-5">
+                <Link to={topicHref(next)}>
+                  {started ? 'Continue' : 'Start here'}: {next.title} <ArrowRight aria-hidden />
+                </Link>
+              </Button>
+            ) : (
+              <Button asChild variant="outline" className="h-11 px-5">
+                <Link to="/progress">See your progress</Link>
+              </Button>
+            )}
+          </div>
+        )}
       </header>
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
         <section aria-labelledby="lessons-heading">
           <h2 id="lessons-heading" className="mb-4 text-lg font-semibold text-paper">
-            Lessons <span className="font-mono text-xs font-normal text-steel-500">{list.length}</span>
+            Learn it from the surface down <span className="font-mono text-xs font-normal text-steel-500">{list.length} lessons</span>
           </h2>
           {list.length ? (
-            <ul className="grid gap-3 sm:grid-cols-2">
-              {list.map((t) => (
-                <li key={t.id}>
-                  <TopicCard topic={t} />
-                </li>
-              ))}
-            </ul>
+            <SystemLadder rungs={rungs} nextId={next?.id} />
           ) : (
             <div className="panel p-6">
               <p className="text-paper">Lessons for this category are still being written.</p>
@@ -101,6 +133,31 @@ export default function CategoryPage() {
             </section>
           )}
 
+          {people.length > 0 && (
+            <section aria-labelledby="people-heading">
+              <h2 id="people-heading" className="mb-3 text-lg font-semibold text-paper">
+                Meet the engineers
+              </h2>
+              <ul className="flex flex-col gap-2">
+                {people.slice(0, 4).map((p) => (
+                  <li key={p.id}>
+                    <Link
+                      to={`/pioneers?focus=${p.id}`}
+                      className="group flex min-h-14 flex-col justify-center rounded-xl border border-amber/20 bg-amber/[0.035] px-4 py-2.5 transition-colors hover:border-amber/50"
+                    >
+                      <span className="eyebrow text-amber">{p.year}</span>
+                      <span className="font-medium text-paper group-hover:text-amber">{p.name}</span>
+                      <span className="text-xs leading-snug text-steel-400">{p.headline}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link to="/pioneers" className="mt-2 inline-flex min-h-10 items-center text-sm text-cyan underline-offset-4 hover:underline">
+                All engineers on the timeline →
+              </Link>
+            </section>
+          )}
+
           <section aria-labelledby="reading-heading">
             <h2 id="reading-heading" className="text-lg font-semibold text-paper">
               Further reading
@@ -125,11 +182,11 @@ export default function CategoryPage() {
         ) : (
           <span />
         )}
-        {next && (
-          <Link to={`/learn/${next.slug}`} className="group flex min-h-11 items-center gap-2 text-sm text-steel-300 hover:text-cyan sm:text-right">
+        {nextCategory && (
+          <Link to={`/learn/${nextCategory.slug}`} className="group flex min-h-11 items-center gap-2 text-sm text-steel-300 hover:text-cyan sm:text-right">
             <span>
               <span className="eyebrow block">Next</span>
-              {next.title}
+              {nextCategory.title}
             </span>
             <ArrowRight aria-hidden className="size-4" />
           </Link>

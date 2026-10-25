@@ -5,8 +5,16 @@
   "summary": "In a corner the outside wheel travels further than the inside wheel, so driven wheels cannot be locked together. The differential lets them turn at different speeds while still sharing torque — and adds the final gear reduction on the way.",
   "categoryId": "drivetrain",
   "difficulty": "intermediate",
+  "layer": "mechanism",
   "estimatedDuration": 12,
-  "tags": ["differential", "final drive", "drivetrain", "limited slip", "traction", "cornering"],
+  "tags": [
+    "differential",
+    "final drive",
+    "drivetrain",
+    "limited slip",
+    "traction",
+    "cornering"
+  ],
   "learningObjectives": [
     "Explain why driven wheels must turn at different speeds in a corner",
     "Describe the crown wheel, pinion and planet gears of an open differential",
@@ -49,66 +57,165 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "input", "label": "Gearbox output", "detail": "Propshaft or transaxle", "topicId": "automatic-transmission" },
-      { "id": "pinion", "label": "Pinion & crown wheel", "detail": "Final drive ≈ 3–4.5 : 1" },
-      { "id": "carrier", "label": "Carrier & planets", "detail": "ω_c = (ω_L + ω_R) / 2" },
-      { "id": "left", "label": "Left half-shaft", "topicId": "driveshafts-and-cv-joints" },
-      { "id": "right", "label": "Right half-shaft", "topicId": "driveshafts-and-cv-joints" },
-      { "id": "tyres", "label": "Tyres", "detail": "Grip limits torque", "topicId": "tyres-and-grip" }
+      {
+        "id": "input",
+        "label": "Gearbox output",
+        "detail": "Propshaft or transaxle",
+        "topicId": "automatic-transmission"
+      },
+      {
+        "id": "pinion",
+        "label": "Pinion & crown wheel",
+        "detail": "Final drive ≈ 3–4.5 : 1"
+      },
+      {
+        "id": "carrier",
+        "label": "Carrier & planets",
+        "detail": "ω_c = (ω_L + ω_R) / 2"
+      },
+      {
+        "id": "left",
+        "label": "Left half-shaft",
+        "topicId": "driveshafts-and-cv-joints"
+      },
+      {
+        "id": "right",
+        "label": "Right half-shaft",
+        "topicId": "driveshafts-and-cv-joints"
+      },
+      {
+        "id": "tyres",
+        "label": "Tyres",
+        "detail": "Grip limits torque",
+        "topicId": "tyres-and-grip"
+      }
     ],
     "edges": [
-      { "from": "input", "to": "pinion" },
-      { "from": "pinion", "to": "carrier" },
-      { "from": "carrier", "to": "left", "label": "T / 2" },
-      { "from": "carrier", "to": "right", "label": "T / 2" },
-      { "from": "left", "to": "tyres" },
-      { "from": "right", "to": "tyres" }
+      {
+        "from": "input",
+        "to": "pinion"
+      },
+      {
+        "from": "pinion",
+        "to": "carrier"
+      },
+      {
+        "from": "carrier",
+        "to": "left",
+        "label": "T / 2"
+      },
+      {
+        "from": "carrier",
+        "to": "right",
+        "label": "T / 2"
+      },
+      {
+        "from": "left",
+        "to": "tyres"
+      },
+      {
+        "from": "right",
+        "to": "tyres"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Differential speed rule", "definition": "The carrier (crown wheel) speed is always the average of the two output speeds.", "equation": "ω_c = (ω_L + ω_R) / 2" },
-    { "term": "Open-differential torque split", "definition": "An ideal open differential gives each side half the input torque regardless of grip.", "equation": "T_L = T_R = T_c / 2" },
-    { "term": "Final drive ratio", "definition": "The fixed reduction between gearbox output and wheels, applied in every gear." },
-    { "term": "Limited-slip differential", "definition": "A differential that resists speed difference between its outputs, biasing torque towards the wheel with more grip." }
+    {
+      "term": "Differential speed rule",
+      "definition": "The carrier (crown wheel) speed is always the average of the two output speeds.",
+      "equation": "ω_c = (ω_L + ω_R) / 2"
+    },
+    {
+      "term": "Open-differential torque split",
+      "definition": "An ideal open differential gives each side half the input torque regardless of grip.",
+      "equation": "T_L = T_R = T_c / 2"
+    },
+    {
+      "term": "Final drive ratio",
+      "definition": "The fixed reduction between gearbox output and wheels, applied in every gear."
+    },
+    {
+      "term": "Limited-slip differential",
+      "definition": "A differential that resists speed difference between its outputs, biasing torque towards the wheel with more grip."
+    }
   ],
   "misconceptions": [
-    { "myth": "An open differential sends all the power to the wheel that is spinning.", "reality": "It sends equal torque to both. The spinning wheel gets most of the speed, and therefore most of the power, but torque — what pushes the car — is equal and small." },
-    { "myth": "Four-wheel drive never gets stuck.", "reality": "With open differentials, one spinning wheel on each axle can still stop the vehicle. Lockers or traction control are needed to keep driving the wheels that grip." },
-    { "myth": "The differential is only for rear-wheel-drive cars.", "reality": "Every driven axle needs one. In front-drive cars it is built into the transaxle alongside the gearbox." }
+    {
+      "myth": "An open differential sends all the power to the wheel that is spinning.",
+      "reality": "It sends equal torque to both. The spinning wheel gets most of the speed, and therefore most of the power, but torque — what pushes the car — is equal and small."
+    },
+    {
+      "myth": "Four-wheel drive never gets stuck.",
+      "reality": "With open differentials, one spinning wheel on each axle can still stop the vehicle. Lockers or traction control are needed to keep driving the wheels that grip."
+    },
+    {
+      "myth": "The differential is only for rear-wheel-drive cars.",
+      "reality": "Every driven axle needs one. In front-drive cars it is built into the transaxle alongside the gearbox."
+    }
   ],
   "practicalExamples": [
     "A car stuck with one wheel on ice and the other on tarmac: the icy wheel spins while the other barely moves — classic open-differential behaviour.",
     "Jacking up one driven wheel and turning it by hand (car in neutral) makes the opposite wheel turn the other way, showing the planet gears at work.",
     "Track cars use limited-slip differentials so the inside wheel does not spin away power when accelerating out of tight corners."
   ],
-  "relatedTopicIds": ["drivetrain-layouts", "driveshafts-and-cv-joints", "tyres-and-grip", "torque-and-power"],
-  "prerequisiteTopicIds": ["torque-and-power"],
+  "relatedTopicIds": [
+    "drivetrain-layouts",
+    "driveshafts-and-cv-joints",
+    "tyres-and-grip",
+    "torque-and-power"
+  ],
+  "prerequisiteTopicIds": [
+    "torque-and-power"
+  ],
   "quiz": [
     {
       "id": "why-diff",
       "prompt": "Why do driven wheels need a differential?",
-      "options": ["To change gear automatically", "Because the outer wheel travels further than the inner wheel in a corner", "To reduce engine vibration", "To cool the axle oil"],
+      "options": [
+        "To change gear automatically",
+        "Because the outer wheel travels further than the inner wheel in a corner",
+        "To reduce engine vibration",
+        "To cool the axle oil"
+      ],
       "answerIndex": 1,
       "explanation": "Different path lengths in a corner require different wheel speeds; a solid axle would scrub the tyres."
     },
     {
       "id": "carrier-speed",
       "prompt": "The left wheel turns at 600 rpm and the right at 700 rpm. How fast does the differential carrier turn?",
-      "options": ["100 rpm", "600 rpm", "650 rpm", "1,300 rpm"],
+      "options": [
+        "100 rpm",
+        "600 rpm",
+        "650 rpm",
+        "1,300 rpm"
+      ],
       "answerIndex": 2,
       "explanation": "ω_c = (600 + 700) / 2 = 650 rpm."
     },
     {
       "id": "ice",
       "prompt": "One driven wheel is on ice. Why does the car barely move with an open differential?",
-      "options": ["The differential locks up", "Both wheels get the same small torque the icy wheel can support", "All torque goes to the gripping wheel", "The engine stalls"],
+      "options": [
+        "The differential locks up",
+        "Both wheels get the same small torque the icy wheel can support",
+        "All torque goes to the gripping wheel",
+        "The engine stalls"
+      ],
       "answerIndex": 1,
       "explanation": "Torque is split equally, so the gripping wheel is limited to the tiny torque the icy wheel can resist."
     }
   ],
   "sourceReferences": [
-    {"title":"How the transmission works","url":"https://www.howacarworks.com/basics/how-the-transmission-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How the transmission works",
+      "url": "https://www.howacarworks.com/basics/how-the-transmission-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

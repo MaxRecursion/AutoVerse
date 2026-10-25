@@ -5,8 +5,14 @@
   "summary": "Follow energy from the fuel tank or battery to the tyre contact patch, and meet the supporting systems that keep that chain working safely.",
   "categoryId": "basics",
   "difficulty": "beginner",
+  "layer": "surface",
   "estimatedDuration": 10,
-  "tags": ["overview", "energy", "powertrain", "systems"],
+  "tags": [
+    "overview",
+    "energy",
+    "powertrain",
+    "systems"
+  ],
   "learningObjectives": [
     "Trace the path of energy from fuel or battery to the road",
     "Name the job of the engine, transmission, driveline and tyres in that chain",
@@ -49,75 +55,161 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "energy", "label": "Fuel or battery", "detail": "Stored chemical or electrochemical energy" },
-      { "id": "engine", "label": "Engine / motor", "detail": "Converts energy into crankshaft rotation", "topicId": "four-stroke-cycle" },
-      { "id": "gearbox", "label": "Transmission", "detail": "Trades speed for torque", "topicId": "torque-and-power" },
-      { "id": "driveline", "label": "Driveline & differential", "detail": "Carries torque to the driven wheels", "topicId": "differential" },
-      { "id": "tyres", "label": "Tyres", "detail": "Turn wheel torque into thrust at the road", "topicId": "tyres-and-grip" }
+      {
+        "id": "energy",
+        "label": "Fuel or battery",
+        "detail": "Stored chemical or electrochemical energy"
+      },
+      {
+        "id": "engine",
+        "label": "Engine / motor",
+        "detail": "Converts energy into crankshaft rotation",
+        "topicId": "four-stroke-cycle"
+      },
+      {
+        "id": "gearbox",
+        "label": "Transmission",
+        "detail": "Trades speed for torque",
+        "topicId": "torque-and-power"
+      },
+      {
+        "id": "driveline",
+        "label": "Driveline & differential",
+        "detail": "Carries torque to the driven wheels",
+        "topicId": "differential"
+      },
+      {
+        "id": "tyres",
+        "label": "Tyres",
+        "detail": "Turn wheel torque into thrust at the road",
+        "topicId": "tyres-and-grip"
+      }
     ],
     "edges": [
-      { "from": "energy", "to": "engine", "label": "fuel / current" },
-      { "from": "engine", "to": "gearbox", "label": "torque at engine speed" },
-      { "from": "gearbox", "to": "driveline", "label": "multiplied torque" },
-      { "from": "driveline", "to": "tyres", "label": "wheel torque" }
+      {
+        "from": "energy",
+        "to": "engine",
+        "label": "fuel / current"
+      },
+      {
+        "from": "engine",
+        "to": "gearbox",
+        "label": "torque at engine speed"
+      },
+      {
+        "from": "gearbox",
+        "to": "driveline",
+        "label": "multiplied torque"
+      },
+      {
+        "from": "driveline",
+        "to": "tyres",
+        "label": "wheel torque"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Powertrain", "definition": "Everything that creates and delivers drive: engine or motor, transmission, driveshafts, differential." },
-    { "term": "Tractive force", "definition": "The forward push the driven tyres exert on the road.", "equation": "F = T_wheel / r" },
-    { "term": "Road load", "definition": "The forces resisting motion: aerodynamic drag, rolling resistance and gradient. Surplus tractive force accelerates the car." },
-    { "term": "Kinetic energy", "definition": "Energy of motion that the brakes must turn into heat to stop the car.", "equation": "E = ½ m v²" }
+    {
+      "term": "Powertrain",
+      "definition": "Everything that creates and delivers drive: engine or motor, transmission, driveshafts, differential."
+    },
+    {
+      "term": "Tractive force",
+      "definition": "The forward push the driven tyres exert on the road.",
+      "equation": "F = T_wheel / r"
+    },
+    {
+      "term": "Road load",
+      "definition": "The forces resisting motion: aerodynamic drag, rolling resistance and gradient. Surplus tractive force accelerates the car."
+    },
+    {
+      "term": "Kinetic energy",
+      "definition": "Energy of motion that the brakes must turn into heat to stop the car.",
+      "equation": "E = ½ m v²"
+    }
   ],
   "misconceptions": [
-    { "myth": "The engine pushes the car directly.", "reality": "The engine only spins a shaft. The forward push comes from the tyres reacting against the road surface." },
-    { "myth": "Most of the fuel's energy moves the car.", "reality": "In typical driving most of it leaves as heat through the exhaust and radiator; only a minority reaches the wheels." },
-    { "myth": "Brakes and steering are separate from the drivetrain's physics.", "reality": "All of them work through the same four tyre contact patches, which share a limited amount of grip." }
+    {
+      "myth": "The engine pushes the car directly.",
+      "reality": "The engine only spins a shaft. The forward push comes from the tyres reacting against the road surface."
+    },
+    {
+      "myth": "Most of the fuel's energy moves the car.",
+      "reality": "In typical driving most of it leaves as heat through the exhaust and radiator; only a minority reaches the wheels."
+    },
+    {
+      "myth": "Brakes and steering are separate from the drivetrain's physics.",
+      "reality": "All of them work through the same four tyre contact patches, which share a limited amount of grip."
+    }
   ],
   "practicalExamples": [
     "A warm radiator and hot exhaust after a drive are the unused energy from the fuel made visible.",
     "Pulling away in third gear feels sluggish because the gearbox is multiplying the engine's torque less than first gear does.",
     "On ice the engine and gearbox work exactly as usual, but the tyres cannot pass the force to the road, so the wheels spin."
   ],
-  "relatedTopicIds": ["torque-and-power", "four-stroke-cycle", "drivetrain-layouts", "tyres-and-grip"],
+  "relatedTopicIds": [
+    "torque-and-power",
+    "four-stroke-cycle",
+    "drivetrain-layouts",
+    "tyres-and-grip"
+  ],
   "prerequisiteTopicIds": [],
   "quiz": [
     {
       "id": "where-force-comes-from",
       "prompt": "What ultimately pushes a car forward?",
-      "options": ["The pistons pressing on the body", "The tyres pushing against the road surface", "Air pressure from the exhaust", "The gearbox casing"],
+      "options": [
+        "The pistons pressing on the body",
+        "The tyres pushing against the road surface",
+        "Air pressure from the exhaust",
+        "The gearbox casing"
+      ],
       "answerIndex": 1,
       "explanation": "Engine torque reaches the wheels, but the forward force acts at the contact patch where the tyre pushes back on the road."
     },
     {
       "id": "gearbox-role",
       "prompt": "What does a low gear do compared with a high gear?",
-      "options": ["Gives more wheel torque but less road speed for a given engine speed", "Makes the engine produce more power", "Reduces fuel use at all speeds", "Disconnects the differential"],
+      "options": [
+        "Gives more wheel torque but less road speed for a given engine speed",
+        "Makes the engine produce more power",
+        "Reduces fuel use at all speeds",
+        "Disconnects the differential"
+      ],
       "answerIndex": 0,
       "explanation": "A ratio multiplies torque and divides speed by the same factor; it cannot create power."
     },
     {
       "id": "energy-losses",
       "prompt": "Where does most of the fuel's energy go in a typical petrol car?",
-      "options": ["Into moving the car", "Into charging the battery", "Out as heat through the exhaust and cooling system", "Into the brakes"],
+      "options": [
+        "Into moving the car",
+        "Into charging the battery",
+        "Out as heat through the exhaust and cooling system",
+        "Into the brakes"
+      ],
       "answerIndex": 2,
       "explanation": "Heat engines reject a large share of the fuel energy as heat; only a minority becomes useful work at the wheels."
     }
   ],
   "sourceReferences": [
-    {"title":"The engine","url":"https://www.howacarworks.com/basics/the-engine","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
-    {"title":"How the transmission works","url":"https://www.howacarworks.com/basics/how-the-transmission-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
-  ],
-  "historyNote": {
-    "person": "Bertha Benz",
-    "contribution": "Demonstrated the practical value of the motor car with an early long-distance drive",
-    "year": "1888",
-    "anecdote": "She set off from Mannheim toward Pforzheim with her sons, without telling Carl Benz. Along the way, a chemist's shop supplied more ligroin fuel, turning a road trip into an early lesson in what drivers and vehicles needed beyond the workshop.",
-    "source": {
-      "title": "Bertha Benz",
-      "url": "https://group.mercedes-benz.com/company/tradition/founders-pioneers/bertha-benz.html",
-      "publisher": "Mercedes-Benz Group"
+    {
+      "title": "The engine",
+      "url": "https://www.howacarworks.com/basics/the-engine",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    },
+    {
+      "title": "How the transmission works",
+      "url": "https://www.howacarworks.com/basics/how-the-transmission-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
     }
+  ],
+  "licence": {
+    "name": "AutoVerse original content"
   },
-  "licence": { "name": "AutoVerse original content" },
   "contentStatus": "complete"
 }

@@ -5,6 +5,7 @@
   "summary": "Why a car needs several ratios, how to work them out from tooth counts, and how a gearbox trades rotational speed for torque while keeping power almost unchanged, from 1st gear's leverage to overdrive.",
   "categoryId": "transmission",
   "difficulty": "intermediate",
+  "layer": "engineering",
   "estimatedDuration": 15,
   "tags": [
     "gear ratio",

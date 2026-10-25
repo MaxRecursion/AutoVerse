@@ -5,8 +5,17 @@
   "summary": "Car air conditioning does not make cold — it moves heat out of the cabin. Follow refrigerant around the compressor, condenser, expansion valve and evaporator, and learn why the same system clears a misted windscreen in winter.",
   "categoryId": "hvac",
   "difficulty": "intermediate",
+  "layer": "mechanism",
   "estimatedDuration": 12,
-  "tags": ["air conditioning", "refrigerant", "compressor", "evaporator", "heat pump", "demisting", "hvac"],
+  "tags": [
+    "air conditioning",
+    "refrigerant",
+    "compressor",
+    "evaporator",
+    "heat pump",
+    "demisting",
+    "hvac"
+  ],
   "learningObjectives": [
     "Explain the vapour-compression refrigeration cycle",
     "Identify the high- and low-pressure sides of the system",
@@ -49,66 +58,166 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "compressor", "label": "Compressor", "detail": "Low → high pressure" },
-      { "id": "condenser", "label": "Condenser", "detail": "Heat to outside air" },
-      { "id": "drier", "label": "Receiver-drier", "detail": "Stores liquid, removes moisture" },
-      { "id": "expansion", "label": "Expansion valve", "detail": "Pressure drop" },
-      { "id": "evaporator", "label": "Evaporator", "detail": "Heat from cabin air" },
-      { "id": "heater", "label": "Heater core", "detail": "Re-warms dry air", "topicId": "cooling-system" }
+      {
+        "id": "compressor",
+        "label": "Compressor",
+        "detail": "Low → high pressure"
+      },
+      {
+        "id": "condenser",
+        "label": "Condenser",
+        "detail": "Heat to outside air"
+      },
+      {
+        "id": "drier",
+        "label": "Receiver-drier",
+        "detail": "Stores liquid, removes moisture"
+      },
+      {
+        "id": "expansion",
+        "label": "Expansion valve",
+        "detail": "Pressure drop"
+      },
+      {
+        "id": "evaporator",
+        "label": "Evaporator",
+        "detail": "Heat from cabin air"
+      },
+      {
+        "id": "heater",
+        "label": "Heater core",
+        "detail": "Re-warms dry air",
+        "topicId": "cooling-system"
+      }
     ],
     "edges": [
-      { "from": "compressor", "to": "condenser", "label": "hot gas" },
-      { "from": "condenser", "to": "drier", "label": "liquid" },
-      { "from": "drier", "to": "expansion" },
-      { "from": "expansion", "to": "evaporator", "label": "cold mix" },
-      { "from": "evaporator", "to": "compressor", "label": "vapour" },
-      { "from": "evaporator", "to": "heater", "label": "cabin air" }
+      {
+        "from": "compressor",
+        "to": "condenser",
+        "label": "hot gas"
+      },
+      {
+        "from": "condenser",
+        "to": "drier",
+        "label": "liquid"
+      },
+      {
+        "from": "drier",
+        "to": "expansion"
+      },
+      {
+        "from": "expansion",
+        "to": "evaporator",
+        "label": "cold mix"
+      },
+      {
+        "from": "evaporator",
+        "to": "compressor",
+        "label": "vapour"
+      },
+      {
+        "from": "evaporator",
+        "to": "heater",
+        "label": "cabin air"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Latent heat", "definition": "Heat absorbed or released when a substance changes phase without changing temperature; evaporation absorbs it." },
-    { "term": "Coefficient of performance", "definition": "Heat moved divided by work input; car A/C systems typically achieve around 2–3.", "equation": "COP = Q̇_evap / W_comp" },
-    { "term": "Dew point", "definition": "The temperature at which air becomes saturated and water vapour starts to condense." },
-    { "term": "Heat pump", "definition": "A refrigeration cycle run to deliver heat into the cabin, moving more heat than the electrical energy it consumes." }
+    {
+      "term": "Latent heat",
+      "definition": "Heat absorbed or released when a substance changes phase without changing temperature; evaporation absorbs it."
+    },
+    {
+      "term": "Coefficient of performance",
+      "definition": "Heat moved divided by work input; car A/C systems typically achieve around 2–3.",
+      "equation": "COP = Q̇_evap / W_comp"
+    },
+    {
+      "term": "Dew point",
+      "definition": "The temperature at which air becomes saturated and water vapour starts to condense."
+    },
+    {
+      "term": "Heat pump",
+      "definition": "A refrigeration cycle run to deliver heat into the cabin, moving more heat than the electrical energy it consumes."
+    }
   ],
   "misconceptions": [
-    { "myth": "Air conditioning creates cold.", "reality": "It moves heat from the cabin to the outside air. That is why the condenser at the front gets hot while the system runs." },
-    { "myth": "A/C is only for summer.", "reality": "It is the fastest way to dry cabin air and clear misting in cold, damp weather, and running it periodically keeps compressor seals lubricated." },
-    { "myth": "A system that blows warm air just needs a top-up.", "reality": "Refrigerant does not get used up; a low charge means a leak. Simply recharging without fixing the leak releases more refrigerant to the atmosphere." }
+    {
+      "myth": "Air conditioning creates cold.",
+      "reality": "It moves heat from the cabin to the outside air. That is why the condenser at the front gets hot while the system runs."
+    },
+    {
+      "myth": "A/C is only for summer.",
+      "reality": "It is the fastest way to dry cabin air and clear misting in cold, damp weather, and running it periodically keeps compressor seals lubricated."
+    },
+    {
+      "myth": "A system that blows warm air just needs a top-up.",
+      "reality": "Refrigerant does not get used up; a low charge means a leak. Simply recharging without fixing the leak releases more refrigerant to the atmosphere."
+    }
   ],
   "practicalExamples": [
     "A puddle of clear water under the car on a hot day is condensate from the evaporator, not a leak.",
     "Setting the heater to warm with A/C on clears a fogged windscreen faster than heat alone, because the air is dried first.",
     "On older engine-driven systems you may feel a slight dip in idle speed as the compressor clutch engages."
   ],
-  "relatedTopicIds": ["cooling-system", "alternator-and-charging", "hybrid-and-electric-drives", "routine-maintenance"],
-  "prerequisiteTopicIds": ["cooling-system"],
+  "relatedTopicIds": [
+    "cooling-system",
+    "alternator-and-charging",
+    "hybrid-and-electric-drives",
+    "routine-maintenance"
+  ],
+  "prerequisiteTopicIds": [
+    "cooling-system"
+  ],
   "quiz": [
     {
       "id": "where-heat",
       "prompt": "Where does the heat removed from the cabin end up?",
-      "options": ["It is destroyed by the refrigerant", "It is released to outside air at the condenser", "It is stored in the battery", "It goes into the engine oil"],
+      "options": [
+        "It is destroyed by the refrigerant",
+        "It is released to outside air at the condenser",
+        "It is stored in the battery",
+        "It goes into the engine oil"
+      ],
       "answerIndex": 1,
       "explanation": "The condenser rejects the cabin heat, plus the compressor's work, to the air flowing through the front of the car."
     },
     {
       "id": "cop",
       "prompt": "A compressor uses 1.5 kW and the system's COP is 2.4. How much heat is removed from the cabin?",
-      "options": ["0.6 kW", "1.5 kW", "3.6 kW", "6 kW"],
+      "options": [
+        "0.6 kW",
+        "1.5 kW",
+        "3.6 kW",
+        "6 kW"
+      ],
       "answerIndex": 2,
       "explanation": "Q̇ = COP × W = 2.4 × 1.5 = 3.6 kW."
     },
     {
       "id": "demist",
       "prompt": "Why does switching on the A/C help clear a misted windscreen in winter?",
-      "options": ["It heats the glass directly", "It dries the air by condensing moisture on the evaporator", "It adds fresh refrigerant to the air", "It increases the fan speed"],
+      "options": [
+        "It heats the glass directly",
+        "It dries the air by condensing moisture on the evaporator",
+        "It adds fresh refrigerant to the air",
+        "It increases the fan speed"
+      ],
       "answerIndex": 1,
       "explanation": "Cooling air below its dew point removes water; the heater can then re-warm that dry air."
     }
   ],
   "sourceReferences": [
-    {"title":"How car heating and ventilation systems work","url":"https://www.howacarworks.com/basics/how-car-heating-and-ventilation-systems-work","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "How car heating and ventilation systems work",
+      "url": "https://www.howacarworks.com/basics/how-car-heating-and-ventilation-systems-work",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

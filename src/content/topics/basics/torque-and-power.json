@@ -5,8 +5,15 @@
   "summary": "Torque is twisting force; power is how quickly that force does work. Learn how they relate (P = Tω), why gearing changes torque but not power, and how to read an engine's curves.",
   "categoryId": "basics",
   "difficulty": "beginner",
+  "layer": "surface",
   "estimatedDuration": 12,
-  "tags": ["physics", "torque", "power", "gearing", "performance"],
+  "tags": [
+    "physics",
+    "torque",
+    "power",
+    "gearing",
+    "performance"
+  ],
   "learningObjectives": [
     "Define torque and power and state their units",
     "Use P = T × ω to convert between torque, engine speed and power",
@@ -43,63 +50,153 @@
   ],
   "flow": {
     "nodes": [
-      { "id": "crank", "label": "Crankshaft torque", "detail": "T_engine at engine speed n" },
-      { "id": "gear", "label": "Gear ratio", "detail": "× i_gear, ÷ speed" },
-      { "id": "final", "label": "Final drive", "detail": "× i_final", "topicId": "differential" },
-      { "id": "wheel", "label": "Wheel torque", "detail": "T_engine × i_gear × i_final × η" },
-      { "id": "thrust", "label": "Tractive force", "detail": "F = T_wheel / r", "topicId": "tyres-and-grip" }
+      {
+        "id": "crank",
+        "label": "Crankshaft torque",
+        "detail": "T_engine at engine speed n"
+      },
+      {
+        "id": "gear",
+        "label": "Gear ratio",
+        "detail": "× i_gear, ÷ speed"
+      },
+      {
+        "id": "final",
+        "label": "Final drive",
+        "detail": "× i_final",
+        "topicId": "differential"
+      },
+      {
+        "id": "wheel",
+        "label": "Wheel torque",
+        "detail": "T_engine × i_gear × i_final × η"
+      },
+      {
+        "id": "thrust",
+        "label": "Tractive force",
+        "detail": "F = T_wheel / r",
+        "topicId": "tyres-and-grip"
+      }
     ],
     "edges": [
-      { "from": "crank", "to": "gear" },
-      { "from": "gear", "to": "final" },
-      { "from": "final", "to": "wheel" },
-      { "from": "wheel", "to": "thrust", "label": "at the contact patch" }
+      {
+        "from": "crank",
+        "to": "gear"
+      },
+      {
+        "from": "gear",
+        "to": "final"
+      },
+      {
+        "from": "final",
+        "to": "wheel"
+      },
+      {
+        "from": "wheel",
+        "to": "thrust",
+        "label": "at the contact patch"
+      }
     ]
   },
   "keyConcepts": [
-    { "term": "Torque", "definition": "A twisting force about an axis, measured in newton-metres.", "equation": "T = F × r" },
-    { "term": "Power", "definition": "Rate of doing work, measured in watts (kW for engines).", "equation": "P = T × ω" },
-    { "term": "Handy conversion", "definition": "Power in kilowatts from torque in N·m and engine speed in rpm.", "equation": "P[kW] = T[N·m] × rpm / 9549" },
-    { "term": "Wheel torque", "definition": "Engine torque multiplied by the overall gearing, less driveline losses.", "equation": "T_wheel = T_engine × i_gear × i_final × η" }
+    {
+      "term": "Torque",
+      "definition": "A twisting force about an axis, measured in newton-metres.",
+      "equation": "T = F × r"
+    },
+    {
+      "term": "Power",
+      "definition": "Rate of doing work, measured in watts (kW for engines).",
+      "equation": "P = T × ω"
+    },
+    {
+      "term": "Handy conversion",
+      "definition": "Power in kilowatts from torque in N·m and engine speed in rpm.",
+      "equation": "P[kW] = T[N·m] × rpm / 9549"
+    },
+    {
+      "term": "Wheel torque",
+      "definition": "Engine torque multiplied by the overall gearing, less driveline losses.",
+      "equation": "T_wheel = T_engine × i_gear × i_final × η"
+    }
   ],
   "misconceptions": [
-    { "myth": "Torque makes a car fast; power is just a number.", "reality": "Acceleration at a given road speed depends on wheel torque, which is set by engine power once you are free to choose the best gear. Torque and power describe the same output from different angles." },
-    { "myth": "A gearbox increases power.", "reality": "Gears multiply torque and divide speed by the same factor. Power stays the same apart from small friction losses." },
-    { "myth": "Diesels pull harder because they make more power.", "reality": "Diesels often make more torque at low engine speed, but they usually rev lower, so peak power is often similar to or below a comparable petrol engine." }
+    {
+      "myth": "Torque makes a car fast; power is just a number.",
+      "reality": "Acceleration at a given road speed depends on wheel torque, which is set by engine power once you are free to choose the best gear. Torque and power describe the same output from different angles."
+    },
+    {
+      "myth": "A gearbox increases power.",
+      "reality": "Gears multiply torque and divide speed by the same factor. Power stays the same apart from small friction losses."
+    },
+    {
+      "myth": "Diesels pull harder because they make more power.",
+      "reality": "Diesels often make more torque at low engine speed, but they usually rev lower, so peak power is often similar to or below a comparable petrol engine."
+    }
   ],
   "practicalExamples": [
     "Changing down a gear to overtake raises engine speed towards the power peak, giving more wheel torque at the same road speed.",
     "Cycling up a hill: standing on the pedals gives torque; spinning a low gear quickly keeps power up without crushing your knees.",
     "Two cars with the same peak power but different torque curves can feel very different: a flat torque curve feels strong without many gear changes."
   ],
-  "relatedTopicIds": ["how-a-car-works", "automatic-transmission", "differential", "mechanical-sympathy"],
-  "prerequisiteTopicIds": ["how-a-car-works"],
+  "relatedTopicIds": [
+    "how-a-car-works",
+    "automatic-transmission",
+    "differential",
+    "mechanical-sympathy"
+  ],
+  "prerequisiteTopicIds": [
+    "how-a-car-works"
+  ],
   "quiz": [
     {
       "id": "power-calc",
       "prompt": "An engine makes 300 N·m at 4,000 rpm. About how much power is that?",
-      "options": ["30 kW", "126 kW", "300 kW", "1,200 kW"],
+      "options": [
+        "30 kW",
+        "126 kW",
+        "300 kW",
+        "1,200 kW"
+      ],
       "answerIndex": 1,
       "explanation": "P[kW] = 300 × 4000 / 9549 ≈ 126 kW."
     },
     {
       "id": "gear-effect",
       "prompt": "Ignoring friction, what does a 3:1 gear reduction do to torque and power?",
-      "options": ["Triples torque and triples power", "Triples torque, power unchanged", "Torque unchanged, triples power", "Divides both by three"],
+      "options": [
+        "Triples torque and triples power",
+        "Triples torque, power unchanged",
+        "Torque unchanged, triples power",
+        "Divides both by three"
+      ],
       "answerIndex": 1,
       "explanation": "Torque is multiplied by the ratio and speed divided by it, so the product (power) is unchanged."
     },
     {
       "id": "power-peak",
       "prompt": "Why does peak power usually occur at a higher engine speed than peak torque?",
-      "options": ["Because power is torque multiplied by speed, and speed keeps rising after torque starts to fall", "Because the turbo only works at high rpm", "Because the gearbox changes ratio automatically", "It never does"],
+      "options": [
+        "Because power is torque multiplied by speed, and speed keeps rising after torque starts to fall",
+        "Because the turbo only works at high rpm",
+        "Because the gearbox changes ratio automatically",
+        "It never does"
+      ],
       "answerIndex": 0,
       "explanation": "As long as rpm rises proportionally faster than torque falls, their product (power) still increases."
     }
   ],
   "sourceReferences": [
-    {"title":"Torque and BHP explained","url":"https://www.howacarworks.com/technology/torque-and-bhp-explained","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+    {
+      "title": "Torque and BHP explained",
+      "url": "https://www.howacarworks.com/technology/torque-and-bhp-explained",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
   ],
-  "licence": { "name": "AutoVerse original content" },
+  "licence": {
+    "name": "AutoVerse original content"
+  },
   "contentStatus": "complete"
 }

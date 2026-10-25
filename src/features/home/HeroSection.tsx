@@ -3,7 +3,7 @@ import { ArrowRight, Car, GraduationCap, Network } from 'lucide-react'
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { labs } from '@/features/labs/registry'
-import { resolveCurrentPathProgress, resolveNextPathProgress } from '@/features/progress/paths'
+import { resolveNextUp } from '@/features/progress/curriculum'
 import { getTopic, learningPaths, sceneComponents, topics } from '@/lib/content'
 import { useProgress } from '@/stores/progress'
 import { HeroEngine } from './HeroEngine'
@@ -14,16 +14,18 @@ import { Reveal } from './Reveal'
 export function HeroSection() {
   const completed = useProgress((s) => s.completed)
   const recent = useProgress((s) => s.recent)
-  const { startHref, startLabel } = useMemo(() => {
-    const current = resolveCurrentPathProgress(learningPaths, recent.map((item) => item.topicId), getTopic, completed)
-    if (current?.next) {
-      const hasStarted = current.completed > 0 || recent.some((item) => current.path.topicIds.includes(item.topicId))
-      return { startHref: startLearningHref(current.next), startLabel: hasStarted ? 'Continue Learning' : 'Start Learning' }
-    }
-    const nextPath = current && resolveNextPathProgress(learningPaths, current.path.id, getTopic, completed)
-    if (nextPath?.next) return { startHref: startLearningHref(nextPath.next), startLabel: 'Start Next Path' }
-    return { startHref: '/learn', startLabel: 'Explore Lessons' }
-  }, [completed, recent])
+  // The same answer as the header's progress pill, so the page never gives two different "next" lessons.
+  const nextUp = useMemo(() => resolveNextUp({ topics, paths: learningPaths, completed, recent, getTopic }), [completed, recent])
+  const nextTopic = nextUp.topic
+  const startHref = startLearningHref(nextTopic)
+  const startLabel =
+    nextUp.kind === 'start'
+      ? 'Start Learning'
+      : nextUp.kind === 'continue' || nextUp.kind === 'next' || nextUp.kind === 'revisit'
+        ? 'Continue Learning'
+        : nextUp.kind === 'new-route'
+          ? 'Start Next Path'
+          : 'Explore Lessons'
 
   const stats = [
     { label: 'Lessons', value: topics.length },
@@ -64,26 +66,34 @@ export function HeroSection() {
 
           <div className="mt-8 grid gap-2.5 sm:flex sm:flex-wrap">
             <Button asChild size="lg" className="h-11 px-5 text-[15px]">
-              <Link to="/explore">
-                <Car aria-hidden />
-                Explore the Car
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="h-11 border-white/12 bg-graphite-900/60 px-5 text-[15px] hover:border-cyan/40">
-              <Link to="/map">
-                <Network aria-hidden />
-                Explore Systems
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="ghost" className="h-11 px-4 text-[15px] text-paper hover:text-cyan">
               <Link to={startHref}>
                 <GraduationCap aria-hidden />
                 {startLabel}
                 <ArrowRight aria-hidden />
               </Link>
             </Button>
+            <Button asChild size="lg" variant="outline" className="h-11 border-white/12 bg-graphite-900/60 px-5 text-[15px] hover:border-cyan/40">
+              <Link to="/explore">
+                <Car aria-hidden />
+                Explore the Car
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="ghost" className="h-11 px-4 text-[15px] text-paper hover:text-cyan">
+              <Link to="/map">
+                <Network aria-hidden />
+                Explore Systems
+              </Link>
+            </Button>
           </div>
-
+          {nextTopic && (
+            <p className="mt-3 text-sm text-steel-400">
+              <span className="eyebrow mr-2">Next up</span>
+              <Link to={startHref} className="text-steel-300 underline-offset-4 hover:text-cyan hover:underline">
+                {nextTopic.title}
+              </Link>{' '}
+              · {nextTopic.estimatedDuration} min
+            </p>
+          )}
         </div>
 
         <Reveal trigger="mount" delay={0.1} className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
