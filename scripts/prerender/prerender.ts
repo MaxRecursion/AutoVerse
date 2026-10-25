@@ -31,12 +31,20 @@ function resolveSiteUrl(): { url: string; fromEnv: boolean } {
     if (!c) continue
     try {
       const u = new URL(c)
-      if (u.protocol === 'http:' || u.protocol === 'https:') return { url: u.origin, fromEnv: true }
+      if (u.protocol === 'http:' || u.protocol === 'https:') {
+        return { url: `${u.origin}${u.pathname.replace(/\/+$/, '')}`, fromEnv: true }
+      }
     } catch {
       /* try the next candidate */
     }
   }
   return { url: PREVIEW_ORIGIN, fromEnv: false }
+}
+
+function resolveBasePath(): string {
+  const configured = process.env.PUBLIC_BASE_PATH?.trim() || '/'
+  const leadingSlash = configured.startsWith('/') ? configured : `/${configured}`
+  return leadingSlash === '/' ? '/' : `${leadingSlash.replace(/\/+$/, '')}/`
 }
 
 async function main() {
@@ -53,6 +61,7 @@ async function main() {
   if (!labs.length) console.warn('[prerender] warning: no labs parsed from src/features/labs/registry.ts; /labs/<id> pages skipped')
 
   const { url: siteUrl, fromEnv } = resolveSiteUrl()
+  const basePath = resolveBasePath()
   if (!fromEnv) console.warn(`[prerender] warning: SITE_URL not set; canonical and sitemap URLs use ${PREVIEW_ORIGIN}`)
 
   const routes = buildRoutes({ categories: content.categories, topics: content.topics, labs })
@@ -62,7 +71,7 @@ async function main() {
     seen.add(route.path)
     const file = path.join(DIST, outputFileFor(route.path))
     await mkdir(path.dirname(file), { recursive: true })
-    await writeFile(file, renderDocument(template, route, { siteUrl }))
+    await writeFile(file, renderDocument(template, route, { siteUrl, basePath }))
   }
 
   const notFound: PrerenderRoute = {
@@ -73,7 +82,7 @@ async function main() {
     bodyHtml: `<h1>Page not found</h1><p>${escapeHtml('There is no page at this address.')}</p><ul><li><a href="/">Home</a></li><li><a href="/learn">All topics</a></li><li><a href="/labs">Labs</a></li></ul>`,
     priority: 0,
   }
-  await writeFile(path.join(DIST, '404.html'), renderDocument(template, notFound, { siteUrl, noindex: true }))
+  await writeFile(path.join(DIST, '404.html'), renderDocument(template, notFound, { siteUrl, basePath, noindex: true }))
 
   const lastmod = new Date().toISOString().slice(0, 10)
   await writeFile(path.join(DIST, 'sitemap.xml'), buildSitemap(routes, siteUrl, lastmod))

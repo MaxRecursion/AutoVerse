@@ -20,9 +20,15 @@ export function restoreTemplate(html: string): string {
     .replace(between(NOSCRIPT_START, NOSCRIPT_END), NOSCRIPT_PLACEHOLDER)
 }
 
-/** Join a site origin and a route path (no trailing slash except for "/"). */
+/** Join a site URL prefix and route path (no trailing slash except for "/"). */
 export function absoluteUrl(siteUrl: string, path: string): string {
   return `${siteUrl.replace(/\/+$/, '')}${path === '/' ? '/' : path}`
+}
+
+function prefixLocalLinks(html: string, basePath: string): string {
+  const prefix = basePath === '/' ? '' : `/${basePath.split('/').filter(Boolean).join('/')}`
+  if (!prefix) return html
+  return html.replace(/\bhref=(["'])\/(?!\/)([^"']*)\1/g, (_match, quote: string, path: string) => `href=${quote}${prefix}/${path}${quote}`)
 }
 
 /** Readable fallback styles: the app's CSS resets lists and headings. */
@@ -35,12 +41,14 @@ const NOSCRIPT_STYLE =
 
 export interface RenderOptions {
   siteUrl: string
+  /** Repository subpath for hosts such as GitHub Pages. */
+  basePath?: string
   /** Adds <meta name="robots" content="noindex"> (used for 404.html). */
   noindex?: boolean
 }
 
 /** Produce the HTML for one route from the built index.html template. */
-export function renderDocument(template: string, route: PrerenderRoute, { siteUrl, noindex = false }: RenderOptions): string {
+export function renderDocument(template: string, route: PrerenderRoute, { siteUrl, basePath = '/', noindex = false }: RenderOptions): string {
   const base = restoreTemplate(template)
   if (!base.includes(NOSCRIPT_PLACEHOLDER)) throw new Error(`template is missing ${NOSCRIPT_PLACEHOLDER}`)
   if (!/<\/head>/i.test(base)) throw new Error('template has no </head>')
@@ -73,7 +81,7 @@ export function renderDocument(template: string, route: PrerenderRoute, { siteUr
     ? html.replace(/<meta\s+name=["']description["'][^>]*>/i, metaDescription)
     : html.replace(/<\/head>/i, `${metaDescription}\n  </head>`)
   html = html.replace(/<\/head>/i, `  ${head}\n  </head>`)
-  const noscript = `${NOSCRIPT_START}<noscript>${NOSCRIPT_STYLE}<main class="prerender-fallback">${route.bodyHtml}</main></noscript>${NOSCRIPT_END}`
+  const noscript = `${NOSCRIPT_START}<noscript>${NOSCRIPT_STYLE}<main class="prerender-fallback">${prefixLocalLinks(route.bodyHtml, basePath)}</main></noscript>${NOSCRIPT_END}`
   return html.replace(NOSCRIPT_PLACEHOLDER, () => noscript)
 }
 

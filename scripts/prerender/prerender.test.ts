@@ -113,6 +113,16 @@ describe('renderDocument', () => {
     expect(html.match(/<title>/g)).toHaveLength(1)
   })
 
+  it('prefixes static links and canonical URLs for a repository subpath', () => {
+    const pagesHtml = renderDocument(TEMPLATE, route, {
+      siteUrl: 'https://maxrecursion.github.io/AutoVerse',
+      basePath: '/AutoVerse/',
+    })
+    expect(pagesHtml).toContain('href="https://maxrecursion.github.io/AutoVerse/topics/fuel-injection"')
+    expect(pagesHtml).toContain('href="/AutoVerse/learn/fuel-and-ignition"')
+    expect(pagesHtml).toContain('href="/AutoVerse/"')
+  })
+
   it('replaces the noscript placeholder and keeps the app script', () => {
     expect(html).not.toContain('<!--prerender:noscript-->')
     expect(html).toMatch(/<noscript>.*<h1>Fuel Injection<\/h1>.*<\/noscript>/s)

@@ -20,8 +20,8 @@ import { labelAnchor } from './vehicleParts'
 import { ProceduralModules } from './ProceduralModules'
 import { SUBSTITUTE_SHAPES } from './vehicleParts'
 
-export const CARCONCEPT_URL = '/models/vehicle/khronos-carconcept.glb'
-export const KENNEY_URL = '/models/vehicle/kenney-car-kit.glb'
+export const CARCONCEPT_URL = `${import.meta.env.BASE_URL}models/vehicle/khronos-carconcept.glb`
+export const KENNEY_URL = `${import.meta.env.BASE_URL}models/vehicle/kenney-car-kit.glb`
 
 /** What the Kenney sedan lacks and the procedural set supplies. */
 const KENNEY_SUBSTITUTES = PROCEDURAL_SUBSTITUTES.filter((id) => !MODEL_COMPONENTS.kenney.includes(id))
