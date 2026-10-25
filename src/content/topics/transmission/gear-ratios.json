@@ -1,0 +1,328 @@
+{
+  "id": "gear-ratios",
+  "slug": "gear-ratios",
+  "title": "Gear Ratios and Torque Multiplication",
+  "summary": "Why a car needs several ratios, how to work them out from tooth counts, and how a gearbox trades rotational speed for torque while keeping power almost unchanged, from 1st gear's leverage to overdrive.",
+  "categoryId": "transmission",
+  "difficulty": "intermediate",
+  "estimatedDuration": 15,
+  "tags": [
+    "gear ratio",
+    "torque",
+    "rpm",
+    "overdrive",
+    "final drive",
+    "road speed",
+    "efficiency"
+  ],
+  "learningObjectives": [
+    "Calculate a gear ratio from tooth counts and combine ratios in series",
+    "Use a ratio to find output speed and output torque, including losses",
+    "Explain why power is almost the same on both sides of a gearbox",
+    "Work out road speed from engine speed, overall ratio and tyre radius",
+    "Explain why ratios are spaced the way they are, and what direct drive and overdrive are for"
+  ],
+  "beginnerExplanation": "When a small gear drives a big gear, the big gear turns more slowly, but with more turning force. If the small gear has 17 teeth and the big one 37, the small gear has to go round more than twice for the big one to go round once. That relationship, how many turns in for one turn out, is the gear ratio. You find it by dividing the teeth on the driven gear by the teeth on the driving gear.\n\nThe trade is fair. The output turns slower by exactly the same factor that its turning force (torque) goes up. So a gearbox cannot create power, it only changes the mix of speed and force. A tiny amount is lost as heat in the teeth, bearings and oil, which is why the output torque is slightly less than the ratio alone would suggest.\n\nA car needs a big ratio to pull away. Starting a heavy car from rest takes a lot of force at the wheels, and the engine cannot turn slowly enough by itself. So 1st gear has a large ratio. As the car speeds up, the engine would soon hit its rev limit, so you change to ratios that are closer to one, and then even below one (overdrive), so the engine can turn slowly while the car cruises.\n\nThe gearbox is not the only reduction: the final drive in the axle adds another fixed ratio. Multiply the gearbox and final-drive ratios and you get the overall ratio between the engine and the wheels. From that and the size of the tyre you can work out exactly how fast the car goes at any engine speed in any gear.",
+  "technicalExplanation": "For one external gear pair, i = z_driven / z_driver = n_in / n_out. Pairs in series multiply, and each external mesh reverses the direction of rotation; an idler between two gears reverses the direction again but its tooth count cancels from the ratio. In the illustrative layshaft gearbox, every indirect gear passes through the constant-mesh pair (34/20 = 1.70) and one speed pair, giving 3.70, 2.13, 1.47, 1.00 (direct) and 0.78 : 1, with reverse at −3.51 : 1.\n\nTorque scales the opposite way to speed. An ideal gear pair transmits the same power on both sides, P = T·ω, so T_out = T_in · i. Real meshes lose 1–2% each to sliding friction and oil churning, and bearings lose a little more, so T_out = T_in · i · η. The lab uses an illustrative 98.5% per loaded mesh and 99% for bearings, so indirect gears are about 96% efficient and direct drive about 99%. Output power is therefore η·P_in, never more.\n\nRoad speed follows from the overall ratio: v = 2π · r_w · n_engine / (60 · i_gear · i_final) in metres per second, where r_w is the tyre's rolling radius. With the lab's 4.10 final drive and 0.31 m tyre, 2,000 rpm gives about 15 km/h in 1st, 57 km/h in 4th and 73 km/h in 5th. The overall spread of a gearbox is i_1st / i_top (4.7 here). The steps between neighbouring gears (1.74, 1.45, 1.47, 1.28) generally get smaller towards the top: each upshift drops engine speed by its step, and closer upper steps keep the engine near its power band at higher road speeds, where air resistance makes every lost rpm count.\n\nRatio choice is a compromise. A tall (numerically low) top gear lowers cruising engine speed and fuel consumption but may stop the car reaching the engine speed where it makes peak power, so top speed and overtaking pull can fall. A short 1st gear helps hill starts and towing but adds an upshift sooner. All numbers in the lab are illustrative teaching values.",
+  "steps": [
+    {
+      "id": "driven-over-driver",
+      "title": "Driven ÷ driver",
+      "beginner": "In 1st gear a small 17-tooth gear on the layshaft drives a big 37-tooth gear on the mainshaft. Divide driven teeth by driver teeth: 37 ÷ 17 ≈ 2.18. Add the constant-mesh pair (34 ÷ 20 = 1.70) and the gearbox ratio is 1.70 × 2.18 = 3.70 : 1.",
+      "technical": "i_1 = (34/20) × (37/17) = 3.70. The output turns at n_in / 3.70 (541 rpm for 2,000 rpm in) and, with two meshes at 98.5% and 99% for bearings, carries T_in × 3.70 × 0.96 ≈ 3.55 × T_in.",
+      "cue": "first",
+      "componentIds": [
+        "first-gear",
+        "layshaft",
+        "constant-mesh-gears"
+      ]
+    },
+    {
+      "id": "ratio-steps",
+      "title": "Stepping up the ratios",
+      "beginner": "Changing from 1st to 2nd drops the ratio from 3.70 to 2.13. At the same road speed the engine turns 1.74 times slower, so after an upshift the engine speed falls back into its comfortable range.",
+      "technical": "Step ratios in this set are 3.70/2.13 = 1.74, 2.13/1.47 = 1.45, 1.47/1.00 = 1.47 and 1.00/0.78 = 1.28. Engine speed after an upshift is n_before ÷ step, so a 6,000 rpm shift from 1st lands at about 3,450 rpm in 2nd.",
+      "cue": "second",
+      "componentIds": [
+        "second-gear",
+        "synchro-1-2"
+      ]
+    },
+    {
+      "id": "power-conserved",
+      "title": "Torque up, speed down, power (almost) unchanged",
+      "beginner": "In 3rd the output turns 1.47 times slower than the input and its torque is about 1.41 times larger. Multiply speed by torque and you get power, so power out is nearly the same as power in. The small difference is heat in the teeth, bearings and oil.",
+      "technical": "P = T · ω. With i = 1.47 and η ≈ 0.96, P_out = (T_in · i · η) · (ω_in / i) = η · P_in. The lab's live numbers show the input and output power side by side; their ratio is the efficiency.",
+      "cue": "third",
+      "componentIds": [
+        "third-gear",
+        "synchro-3-4"
+      ]
+    },
+    {
+      "id": "direct",
+      "title": "1 : 1, direct drive",
+      "beginner": "In 4th the input shaft is locked straight to the output. Same speed in, same speed out, and almost the same torque. With the engine at 2,000 rpm the output turns at 2,000 rpm too.",
+      "technical": "i = 1. No tooth mesh is loaded, so only bearing and churning losses remain (η ≈ 0.99 in the model). With the final drive, the overall ratio is simply the final-drive ratio, 4.10 : 1.",
+      "cue": "fourth",
+      "componentIds": [
+        "synchro-3-4",
+        "input-shaft",
+        "mainshaft"
+      ]
+    },
+    {
+      "id": "overdrive",
+      "title": "Overdrive: below 1 : 1",
+      "beginner": "In 5th the big layshaft gear drives a small mainshaft gear, so the output turns faster than the engine. The engine can turn slowly on the motorway, saving fuel and noise, but there is less pulling force for climbing or overtaking.",
+      "technical": "i = 0.78, so n_out = 1.28 · n_in and T_out ≈ 0.75 · T_in. Engine speed at 120 km/h falls from about 4,200 rpm in 4th to about 3,300 rpm in 5th in this illustrative car.",
+      "cue": "fifth",
+      "componentIds": [
+        "fifth-gear",
+        "synchro-5"
+      ]
+    },
+    {
+      "id": "idler",
+      "title": "Reverse: direction, not ratio",
+      "beginner": "The reverse idler sits between two gears. It makes the output turn backwards, but it does not change how many turns in give one turn out.",
+      "technical": "With the idler, i = −(34/20) × (18/16) × (33/18) = −(34/20) × (33/16) = −3.51. The idler's 18 teeth appear once as driven and once as driver, so they cancel; only the sign changes.",
+      "cue": "reverse",
+      "componentIds": [
+        "reverse-idler",
+        "mainshaft"
+      ]
+    }
+  ],
+  "componentIds": [
+    "constant-mesh-gears",
+    "layshaft",
+    "first-gear",
+    "second-gear",
+    "third-gear",
+    "fifth-gear",
+    "synchro-3-4",
+    "reverse-idler",
+    "mainshaft"
+  ],
+  "labId": "transmission",
+  "flow": {
+    "nodes": [
+      {
+        "id": "engine",
+        "label": "Engine speed and torque",
+        "detail": "n_in, T_in",
+        "topicId": "torque-and-power"
+      },
+      {
+        "id": "head",
+        "label": "Constant-mesh pair",
+        "detail": "× 1.70",
+        "componentId": "constant-mesh-gears"
+      },
+      {
+        "id": "pair",
+        "label": "Speed pair",
+        "detail": "× z_main / z_lay",
+        "componentId": "first-gear"
+      },
+      {
+        "id": "output",
+        "label": "Gearbox output",
+        "detail": "n_in / i, T_in · i · η",
+        "componentId": "mainshaft"
+      },
+      {
+        "id": "final",
+        "label": "Final drive",
+        "detail": "× 4.10",
+        "topicId": "differential"
+      },
+      {
+        "id": "wheels",
+        "label": "Wheel torque and road speed",
+        "detail": "v = ω_wheel · r",
+        "topicId": "tyres-and-grip"
+      }
+    ],
+    "edges": [
+      {
+        "from": "engine",
+        "to": "head"
+      },
+      {
+        "from": "head",
+        "to": "pair",
+        "label": "ratios multiply"
+      },
+      {
+        "from": "pair",
+        "to": "output"
+      },
+      {
+        "from": "engine",
+        "to": "output",
+        "label": "4th: direct, × 1"
+      },
+      {
+        "from": "output",
+        "to": "final"
+      },
+      {
+        "from": "final",
+        "to": "wheels"
+      }
+    ]
+  },
+  "keyConcepts": [
+    {
+      "term": "Gear ratio",
+      "definition": "Driven teeth divided by driver teeth, which equals input speed divided by output speed.",
+      "equation": "i = z_driven / z_driver = n_in / n_out"
+    },
+    {
+      "term": "Ratios in series",
+      "definition": "When gear pairs follow each other, their ratios multiply.",
+      "equation": "i_total = i_1 × i_2 × …"
+    },
+    {
+      "term": "Output torque",
+      "definition": "Torque is multiplied by the ratio, less the losses in the meshes and bearings.",
+      "equation": "T_out = T_in · i · η"
+    },
+    {
+      "term": "Power",
+      "definition": "Torque times angular speed. A gearbox changes the mix but cannot increase the product.",
+      "equation": "P = T · ω = 2π · n · T / 60"
+    },
+    {
+      "term": "Road speed",
+      "definition": "Engine speed divided by the overall ratio gives wheel speed; times the tyre's rolling circumference gives road speed.",
+      "equation": "v = 2π · r_w · n_engine / (60 · i_gear · i_final)"
+    },
+    {
+      "term": "Ratio spread",
+      "definition": "Lowest gear ratio divided by the highest: how wide a range of road speeds the gearbox covers for one engine speed.",
+      "equation": "spread = i_1st / i_top"
+    }
+  ],
+  "misconceptions": [
+    {
+      "myth": "A lower gear makes the engine more powerful.",
+      "reality": "It multiplies torque at the wheels and lets the engine rev higher, where it makes more power, but the gearbox itself never adds power."
+    },
+    {
+      "myth": "The reverse idler gives reverse a special ratio.",
+      "reality": "The idler only changes direction. Its own teeth cancel out; the ratio comes from the gears either side of it."
+    },
+    {
+      "myth": "A gear ratio is a property of a single gear.",
+      "reality": "A ratio describes a pair (or train) of gears: how many turns of the input give one turn of the output."
+    },
+    {
+      "myth": "The highest gear always gives the highest top speed.",
+      "reality": "An overdrive top gear may stop the engine reaching the speed where it makes peak power against air resistance, so some cars reach top speed in the gear below."
+    }
+  ],
+  "practicalExamples": [
+    "In the lab at 2,000 rpm, the illustrative car does about 15 km/h in 1st, 57 km/h in 4th and 73 km/h in 5th. Try it with the engine-speed slider.",
+    "On a bicycle, a big rear sprocket with a small chainring is a low gear: easy to pedal uphill but slow. The arithmetic is exactly the same as in a gearbox.",
+    "Choosing a lower gear before a long descent keeps the engine speed up, so engine braking does more of the work and the brakes stay cool.",
+    "Towing a trailer or carrying a heavy load calls for earlier, lower gears, keeping the engine where it makes good torque."
+  ],
+  "relatedTopicIds": [
+    "manual-gearbox",
+    "clutch",
+    "torque-and-power",
+    "differential",
+    "automatic-transmission",
+    "tyres-and-grip",
+    "mechanical-sympathy"
+  ],
+  "prerequisiteTopicIds": [
+    "manual-gearbox",
+    "torque-and-power"
+  ],
+  "quiz": [
+    {
+      "id": "simple-ratio",
+      "prompt": "A 15-tooth gear drives a 45-tooth gear at 3,000 rpm. How fast does the 45-tooth gear turn?",
+      "options": [
+        "9,000 rpm",
+        "3,000 rpm",
+        "1,000 rpm",
+        "333 rpm"
+      ],
+      "answerIndex": 2,
+      "explanation": "The ratio is 45/15 = 3 : 1, so the output turns at 3,000 ÷ 3 = 1,000 rpm."
+    },
+    {
+      "id": "series",
+      "prompt": "A 2 : 1 pair is followed by a 1.5 : 1 pair. What is the overall ratio?",
+      "options": [
+        "0.5 : 1",
+        "3.5 : 1",
+        "3 : 1",
+        "1.33 : 1"
+      ],
+      "answerIndex": 2,
+      "explanation": "Ratios in series multiply: 2 × 1.5 = 3 : 1."
+    },
+    {
+      "id": "torque-out",
+      "prompt": "A gearbox in a 2.0 : 1 gear is 95% efficient and receives 200 N·m. What torque comes out?",
+      "options": [
+        "400 N·m",
+        "380 N·m",
+        "210 N·m",
+        "100 N·m"
+      ],
+      "answerIndex": 1,
+      "explanation": "T_out = T_in · i · η = 200 × 2.0 × 0.95 = 380 N·m."
+    },
+    {
+      "id": "power-same",
+      "prompt": "Why is the output power of a gearbox almost the same as the input power?",
+      "options": [
+        "Because the gears store energy",
+        "Because torque rises by the same factor that speed falls, minus small losses",
+        "Because the clutch adds power",
+        "It is not: a low gear doubles power"
+      ],
+      "answerIndex": 1,
+      "explanation": "Power is torque × speed. The ratio multiplies one and divides the other, so only the efficiency losses remain."
+    },
+    {
+      "id": "overdrive-true",
+      "prompt": "Which statement about an overdrive gear is true?",
+      "options": [
+        "Its ratio is greater than 1 : 1",
+        "The output turns faster than the input",
+        "It multiplies torque",
+        "It reverses the output"
+      ],
+      "answerIndex": 1,
+      "explanation": "Overdrive means a ratio below 1 : 1, so the output shaft turns faster than the engine and torque is reduced."
+    }
+  ],
+  "sourceReferences": [
+    {
+      "title": "How the transmission works",
+      "url": "https://www.howacarworks.com/basics/how-the-transmission-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading. AutoVerse text is original."
+    },
+    {
+      "title": "Advanced Gearshifts",
+      "url": "https://www.howacarworks.com/advanced-driving/advanced-gearshifts",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading. AutoVerse text is original."
+    }
+  ],
+  "licence": {
+    "name": "AutoVerse original content"
+  },
+  "contentStatus": "complete"
+}

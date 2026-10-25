@@ -1,0 +1,164 @@
+[
+  {
+    "id": "wheel-and-tyre",
+    "name": "Wheel and tyre",
+    "systemId": "suspension",
+    "description": "The road wheel and the tyre fitted to it. The tyre is the only part of the car that touches the road, and its air-filled carcass is itself a stiff spring that soaks up small, sharp bumps before the suspension even moves.",
+    "technical": "In the quarter-car model the tyre is a vertical spring of rate k_t (here an illustrative 200 N/mm) between the road and the unsprung mass. It can only push: if the wheel rises faster than the road or the road drops away, the tyre force falls to zero and the tyre leaves the surface. Grip is roughly proportional to that vertical force, so a steady tyre load matters as much as comfort. Here the wheel spins at the rolling speed (distance travelled ÷ rolling radius) and leans with the knuckle as camber changes.",
+    "relatedTopicIds": ["tyres-and-grip", "suspension-basics", "springs-and-dampers"],
+    "annotations": [
+      { "label": "Contact patch", "text": "The flattened footprint where the tyre meets the road; its load is shown as the amber patch." },
+      { "label": "Unsprung mass", "text": "Wheel, tyre, hub and knuckle move with the road rather than with the body." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "hub-bearing",
+    "name": "Wheel hub and bearing",
+    "systemId": "suspension",
+    "description": "The spinning flange the wheel bolts to, carried on a sealed bearing pressed into the steering knuckle. It lets the wheel turn freely while every suspension and braking force passes through it.",
+    "technical": "Modern hubs usually use a double-row angular-contact ball or tapered-roller bearing unit that takes radial load, cornering (axial) load and the bending moment from the tyre's offset. The wheel studs sit on the hub flange; on a driven wheel the driveshaft's outer constant-velocity joint is splined into the hub. A worn bearing typically announces itself as a speed-related hum that changes as the car's weight shifts in corners.",
+    "relatedTopicIds": ["suspension-basics", "driveshafts-and-cv-joints", "diagnosing-warning-signs"],
+    "annotations": [
+      { "label": "Wheel studs", "text": "Five studs clamp the wheel to the hub face." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "knuckle-upright",
+    "name": "Steering knuckle (upright)",
+    "systemId": "suspension",
+    "description": "A strong casting that carries the wheel hub. Its top and bottom are held by ball joints on the upper and lower control arms, and a steering arm on its back is pushed and pulled by the tie rod to steer the wheel.",
+    "technical": "The knuckle is the rigid link that closes the double-wishbone geometry: the line through its two ball joints is the steering axis (kingpin axis). Because the upper arm is shorter than the lower one, the knuckle tilts as it rises — in this model the top of the wheel leans in by about 2° at 58 mm of bump (negative camber gain), which helps keep the tyre upright on the road when the body rolls in a corner.",
+    "relatedTopicIds": ["steering-systems", "suspension-basics"],
+    "annotations": [
+      { "label": "Steering arm", "text": "Reaches back to the outer tie-rod joint." },
+      { "label": "Kingpin axis", "text": "The line through both ball joints that the wheel steers about." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "ball-joints",
+    "name": "Ball joints",
+    "systemId": "suspension",
+    "description": "Small ball-and-socket joints at the outer ends of both control arms. They let the knuckle swing up and down and also turn for steering, while holding it firmly in place.",
+    "technical": "Each joint is a hardened ball stud in a greased, sealed socket. In this layout the lower joint carries most of the vertical load because the coil-over sits on the lower arm; the upper joint mainly locates the top of the knuckle. Wear shows up as knocking over bumps and play when the wheel is rocked top-to-bottom with the weight off it, and a split rubber boot lets water in and shortens the joint's life quickly.",
+    "relatedTopicIds": ["suspension-basics", "steering-systems", "routine-maintenance"],
+    "annotations": [
+      { "label": "Lower joint", "text": "Load-carrying: the spring pushes on the lower arm." },
+      { "label": "Upper joint", "text": "Locates the top of the knuckle." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "upper-control-arm",
+    "name": "Upper control arm (wishbone)",
+    "systemId": "suspension",
+    "description": "A short A-shaped arm hinged to the body on rubber bushes. Together with the lower arm it guides the wheel up and down along a controlled path.",
+    "technical": "The arm pivots about an axis through its two inner bushes and holds the upper ball joint on an arc around that axis. Making it shorter than the lower arm (a short–long-arm layout) pulls the top of the wheel inward in bump, giving camber gain, while the lengths and angles are chosen to keep the track change at the tyre small (under 2 cm over the full travel here). The arm angles also set the roll centre height of the axle.",
+    "relatedTopicIds": ["suspension-basics", "steering-systems"],
+    "annotations": [
+      { "label": "Inner bushes", "text": "Rubber pivots that isolate noise from the body." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "lower-control-arm",
+    "name": "Lower control arm (wishbone)",
+    "systemId": "suspension",
+    "description": "The longer, heavier A-shaped arm at the bottom of the wheel. It pivots on the subframe, carries the lower ball joint and, in this design, also supports the bottom of the spring and damper.",
+    "technical": "Because the coil-over is mounted about 60% of the way out along the arm, the spring and damper move only about 0.55 mm for every 1 mm of wheel travel. This motion ratio means the spring must be roughly 1 ÷ 0.55² ≈ 3.3 times stiffer than the wheel rate it provides, and the damper must be correspondingly firmer. The rear leg also carries the anti-roll bar's drop link.",
+    "relatedTopicIds": ["suspension-basics", "springs-and-dampers"],
+    "annotations": [
+      { "label": "Coil-over mount", "text": "The spring and damper's lower eye bolts here." },
+      { "label": "Motion ratio", "text": "About 0.55: the spring moves a little over half as far as the wheel." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "coil-spring",
+    "name": "Coil spring",
+    "systemId": "suspension",
+    "description": "A coil of spring steel that carries the weight of the car and stores energy when the wheel hits a bump. Watch the gaps between its coils close up as the suspension compresses.",
+    "technical": "Spring force rises with compression, F = k·x. The lab's slider sets the wheel rate (15–60 N/mm); with the tyre in series it fixes the body's natural bounce frequency, f ≈ (1/2π)·√(k_ride/m_s), about 1.4 Hz at the default 25 N/mm. A softer spring gives a lower, more comfortable frequency but uses more travel and lets the body move further, so it reaches the bump stop sooner. The end coils are closed so it sits flat on its seats; only the active coils between them change pitch.",
+    "relatedTopicIds": ["springs-and-dampers", "suspension-basics"],
+    "annotations": [
+      { "label": "Active coils", "text": "Their spacing shrinks as the spring is squeezed." },
+      { "label": "Closed ends", "text": "Ground-flat end coils seat on the spring pans." }
+    ],
+    "highlight": { "color": "#f6a63a", "emphasis": "glow" }
+  },
+  {
+    "id": "damper",
+    "name": "Damper (shock absorber)",
+    "systemId": "suspension",
+    "description": "An oil-filled tube with a piston on a rod. It resists movement in both directions, so the spring's stored energy is turned into heat instead of setting the car bouncing. The polished rod slides in and out as the wheel moves.",
+    "technical": "The damper force depends on how fast it is moved, not how far: roughly F = c·v. Oil is forced through small orifices and spring-loaded shim valves in the piston, so the force rises steeply at low speeds (controlling body motion) and less steeply at high speeds (so sharp bumps are not passed straight into the body) — the 'digressive' curve used in this model. The lab's presets are damping ratios of about 0.08, 0.32 and 1.1 for the body bounce mode.",
+    "relatedTopicIds": ["springs-and-dampers", "suspension-basics", "diagnosing-warning-signs"],
+    "annotations": [
+      { "label": "Piston rod", "text": "Chrome rod sliding through a seal into the oil-filled body." },
+      { "label": "Spring seats", "text": "The lower seat is welded to the damper body; the upper seat sits under the top mount." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "bump-stop",
+    "name": "Bump stop",
+    "systemId": "suspension",
+    "description": "A ribbed rubber or foam buffer around the damper rod. Near the end of the suspension's travel the damper body squeezes it, cushioning the last few millimetres so metal never hits metal.",
+    "technical": "Bump stops act as a very progressive extra spring. In this model the bump stop starts to work after 58 mm of wheel travel and adds an illustrative 160 N/mm, so a soft spring on a big bump visibly squashes it. Engineers often let the bump stop touch earlier on purpose, using it as part of the spring curve to limit body roll without stiffening the ride over small bumps.",
+    "relatedTopicIds": ["springs-and-dampers", "suspension-basics"],
+    "annotations": [
+      { "label": "Progressive", "text": "The more it is squeezed, the harder it pushes back." }
+    ],
+    "highlight": { "color": "#f6a63a", "emphasis": "glow" }
+  },
+  {
+    "id": "anti-roll-bar",
+    "name": "Anti-roll bar",
+    "systemId": "suspension",
+    "description": "A steel bar running across the car, clamped to the body in rubber bushes, with an arm at each end linked to the suspension. When one wheel rises more than the other — as the body leans in a corner — the bar twists and resists the lean.",
+    "technical": "The bar is a torsion spring that only acts on the difference between left and right wheel movement. If both wheels rise together it simply rotates in its bushes, so it does not stiffen the straight-line ride; in roll it adds stiffness and shifts load transfer towards that axle, which is a key tuning tool for handling balance. In this one-corner model the far end is not shown, so the arm turns freely with the wheel.",
+    "relatedTopicIds": ["suspension-basics", "tyres-and-grip"],
+    "annotations": [
+      { "label": "Torsion", "text": "Resists twisting between the left and right arms." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "drop-link",
+    "name": "Anti-roll bar drop link",
+    "systemId": "suspension",
+    "description": "A short rod with a ball joint at each end connecting the anti-roll bar's arm to the lower control arm.",
+    "technical": "The link keeps a fixed length, so as the lower arm rises the bar arm is forced to rotate; the solver in this lab finds that angle exactly at every pose. Ball joints at both ends let the link follow the arc of the control arm. Worn drop-link joints are a common source of light knocking over small bumps at low speed.",
+    "relatedTopicIds": ["suspension-basics", "diagnosing-warning-signs"],
+    "annotations": [],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "tie-rod",
+    "name": "Tie rod",
+    "systemId": "suspension",
+    "description": "The steering link between the end of the steering rack and the knuckle's steering arm, shown here with the rack's rubber gaiter. Moving it sideways steers the wheel; its length sets the wheel's toe.",
+    "technical": "The tie rod's inner joint is placed at the centre of the arc that its outer joint follows as the knuckle rises, so the rod hardly changes the steering angle as the suspension moves. Getting this wrong causes bump steer — the wheel steering itself over bumps. Adjusting the threaded tie-rod end changes toe, which is set during wheel alignment.",
+    "relatedTopicIds": ["steering-systems", "suspension-basics"],
+    "annotations": [
+      { "label": "Gaiter", "text": "Rubber boot keeping dirt out of the steering rack." },
+      { "label": "Bump steer", "text": "Minimised by the inner-joint position." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "chassis-mounts",
+    "name": "Body and subframe mounts",
+    "systemId": "suspension",
+    "description": "The parts of the car's structure the suspension is attached to: the subframe carrying the lower-arm bushes, the spring tower with the upper-arm bracket, and the turret with the rubber top mount for the coil-over. They move with the car body — the 'sprung' part of the car.",
+    "technical": "Everything bolted here belongs to the sprung mass, which in the quarter-car model is one quarter of the body (an illustrative 300 kg). Mount positions are the suspension's 'hard points' and fix its geometry. Rubber bushes and the top mount filter noise and vibration, and a bolted-in subframe lets manufacturers isolate road noise further. The cut faces show where this one-corner section is sliced out of the body.",
+    "relatedTopicIds": ["chassis-construction", "suspension-basics"],
+    "annotations": [
+      { "label": "Top mount", "text": "Rubber-insulated mount for the top of the coil-over." },
+      { "label": "Sprung mass", "text": "Moves with the body, not with the wheel." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  }
+]

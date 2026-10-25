@@ -1,0 +1,111 @@
+{
+  "id": "chassis-construction",
+  "slug": "chassis-construction",
+  "title": "Chassis Construction",
+  "summary": "A car's structure must carry loads, resist twisting, protect occupants and stay light. Compare ladder frames, monocoques and space frames, and see how crumple zones and a rigid safety cell manage crash energy.",
+  "categoryId": "body-chassis",
+  "difficulty": "beginner",
+  "estimatedDuration": 11,
+  "tags": ["chassis", "monocoque", "ladder frame", "crumple zone", "safety", "materials", "stiffness"],
+  "learningObjectives": [
+    "Describe ladder-frame, monocoque and space-frame construction",
+    "Explain why torsional stiffness matters for handling and refinement",
+    "Explain how crumple zones and a safety cell work together in a crash",
+    "Calculate the kinetic energy a structure must absorb and how it scales with speed"
+  ],
+  "beginnerExplanation": "Early cars were built like carts: a strong frame of two steel rails with cross-members (a 'ladder'), with the engine, suspension and a separate body bolted on top. Many pick-ups, large off-roaders and lorries are still built this way because the frame is tough, easy to repair and simple to adapt to different bodies.\n\nMost modern cars instead use a monocoque, or unibody: the body shell itself is the structure. Hundreds of pressed steel panels are welded into one stiff box, with the floor, sills, roof pillars and bulkheads all carrying load. This saves weight and makes the car stiffer, which helps both handling and comfort.\n\nThe structure is also the main safety system. The front and rear are designed to crush in a controlled way — crumple zones — absorbing the energy of a crash. The passenger compartment is made as strong as possible so it keeps its shape around the occupants, while seatbelts and airbags slow them down gently.",
+  "technicalExplanation": "A ladder frame carries bending loads well but is relatively weak in torsion because its open-section rails twist easily; the body is mounted on rubber bushes that isolate noise but add mass. A monocoque uses the closed sections formed by sills, pillars, roof rails, tunnel and floor to achieve high torsional stiffness at lower mass; modern cars commonly exceed 20,000 N·m per degree. Stiffness matters because the suspension is tuned assuming a rigid platform: a body that twists changes wheel loads and geometry, blurs handling responses and lets trim panels squeak. Space frames — welded tube structures or extruded and cast aluminium nodes clothed with non-structural panels — suit low-volume sports cars; carbon-fibre tubs offer the highest stiffness-to-weight at high cost.\n\nMaterial choice is graded by role. Mild steels form complex outer panels; high-strength and advanced high-strength steels make up much of the structure; press-hardened boron steels with very high strength are used for A- and B-pillars, roof rails and door intrusion beams where deformation must be minimal. Aluminium, magnesium and composites reduce mass, joined by spot welding, self-piercing rivets, structural adhesives and laser welding. Corrosion protection comes from zinc galvanising, phosphate and electro-deposited (e-coat) primers and cavity wax.\n\nCrash energy scales with the square of speed: E_k = ½ m v². A 1,500 kg car at 50 km/h carries about 145 kJ; at 100 km/h, four times that. Front longitudinal rails are designed to fold progressively, absorbing energy at a controlled force so that deceleration stays survivable while the deformation distance is used fully. Load paths split crash forces across several members — upper rails, main rails and sub-frame — and route them around the safety cell. Average deceleration is roughly a = v² / (2s): stopping from 50 km/h over 0.6 m of crush averages about 16 g, which restraint systems spread over the occupant's stronger body regions.",
+  "steps": [
+    {
+      "id": "ladder",
+      "title": "Ladder frame",
+      "beginner": "Two long steel rails with cross-pieces carry everything; the body sits on top.",
+      "technical": "Open-section rails resist bending but are weak in torsion; body mounts isolate vibration at the cost of mass."
+    },
+    {
+      "id": "monocoque",
+      "title": "Monocoque shell",
+      "beginner": "The body itself is the structure — welded panels form one stiff, light box.",
+      "technical": "Closed sections (sills, pillars, tunnel) give high torsional stiffness per kilogram; sub-frames carry the engine and suspension."
+    },
+    {
+      "id": "stiffness",
+      "title": "Why stiffness matters",
+      "beginner": "A stiff body lets the suspension do its job precisely and keeps the cabin quiet.",
+      "technical": "Torsional stiffness (N·m/deg) keeps wheel loads and geometry as the suspension designer intended."
+    },
+    {
+      "id": "crumple",
+      "title": "Crumple zones absorb energy",
+      "beginner": "The front and rear are designed to crush in a controlled way, soaking up crash energy.",
+      "technical": "Front rails fold progressively at a designed force; E_k = ½ m v² is converted into plastic deformation over the crush distance."
+    },
+    {
+      "id": "safety-cell",
+      "title": "A rigid safety cell",
+      "beginner": "The cabin is made as strong as possible so it keeps its shape around the occupants.",
+      "technical": "Press-hardened steel pillars, roof rails and door beams resist intrusion; restraints manage occupant deceleration."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "impact", "label": "Impact energy", "detail": "E = ½ m v²" },
+      { "id": "crumple", "label": "Crumple zone", "detail": "Controlled crush" },
+      { "id": "load-paths", "label": "Load paths", "detail": "Rails, sub-frame, sills" },
+      { "id": "cell", "label": "Safety cell", "detail": "Minimal intrusion" },
+      { "id": "restraints", "label": "Belts & airbags", "detail": "Occupant deceleration" }
+    ],
+    "edges": [
+      { "from": "impact", "to": "crumple" },
+      { "from": "crumple", "to": "load-paths", "label": "residual force" },
+      { "from": "load-paths", "to": "cell", "label": "around the cabin" },
+      { "from": "cell", "to": "restraints" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Kinetic energy", "definition": "Energy of motion, which a crash structure must absorb; it grows with the square of speed.", "equation": "E_k = ½ m v²" },
+    { "term": "Average crash deceleration", "definition": "For a stop from speed v over crush distance s.", "equation": "a = v² / (2s)" },
+    { "term": "Torsional stiffness", "definition": "Torque needed to twist the body by one degree between front and rear axles." },
+    { "term": "Monocoque (unibody)", "definition": "Construction in which the body shell itself carries the structural loads." }
+  ],
+  "misconceptions": [
+    { "myth": "A car that crumples badly in a crash was poorly built.", "reality": "Crumpling is deliberate: deforming structure absorbs energy so the occupants decelerate more gently. The cabin should stay intact." },
+    { "myth": "Heavier, separate-frame vehicles are always safer.", "reality": "Mass helps in collisions between vehicles, but modern monocoques manage crash energy far better than old rigid frames, and occupant protection depends on structure design and restraints." },
+    { "myth": "Stiffness only matters for racing cars.", "reality": "Body stiffness affects everyday ride quality, steering precision and freedom from squeaks and rattles." }
+  ],
+  "practicalExamples": [
+    "Doors that become hard to close after a car has been jacked at one corner reveal how a body twists under uneven support.",
+    "Repairers follow manufacturer guidance on which panels can be sectioned or heated, because press-hardened steels lose strength if heated.",
+    "Doubling speed from 50 to 100 km/h quadruples the crash energy the structure must absorb."
+  ],
+  "relatedTopicIds": ["aerodynamics", "steering-systems", "tyres-and-grip", "routine-maintenance"],
+  "prerequisiteTopicIds": ["how-a-car-works"],
+  "quiz": [
+    {
+      "id": "ke-calc",
+      "prompt": "A 1,200 kg car travels at 20 m/s (72 km/h). How much kinetic energy does it carry?",
+      "options": ["24 kJ", "240 kJ", "480 kJ", "2,400 kJ"],
+      "answerIndex": 1,
+      "explanation": "E = ½ × 1,200 × 20² = 240,000 J = 240 kJ."
+    },
+    {
+      "id": "crumple-purpose",
+      "prompt": "What is the main purpose of a crumple zone?",
+      "options": ["To make repairs cheaper", "To absorb crash energy by deforming in a controlled way", "To reduce aerodynamic drag", "To protect the engine"],
+      "answerIndex": 1,
+      "explanation": "Controlled deformation converts kinetic energy into work and lengthens the stopping distance, lowering forces on occupants."
+    },
+    {
+      "id": "monocoque-q",
+      "prompt": "What distinguishes a monocoque from a ladder frame?",
+      "options": ["It has no wheels", "The body shell itself carries the structural loads", "It is always made from aluminium", "It has a separate body bolted to rails"],
+      "answerIndex": 1,
+      "explanation": "In a monocoque the welded body structure is the chassis; a ladder frame carries loads in separate rails."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"How cars are designed","url":"https://www.howacarworks.com/technology/how-cars-are-designed","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

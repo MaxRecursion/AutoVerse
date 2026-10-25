@@ -1,0 +1,253 @@
+[
+  {
+    "id": "engine-block",
+    "name": "Engine block",
+    "systemId": "engine",
+    "description": "The main casting of the engine. It holds the cylinder, carries the crankshaft in its bearings and contains passages for coolant and oil. Everything else bolts to it.",
+    "technical": "Usually cast iron or aluminium alloy. The upper deck carries the cylinder bores and an open or closed coolant jacket; the lower crankcase carries the main-bearing bulkheads. It must stay stiff under combustion loads so bores stay round and bearings stay aligned. In this cutaway the front half is removed along the cylinder centre-line.",
+    "relatedTopicIds": ["cooling-system", "lubrication-system", "engine-layouts"],
+    "annotations": [
+      { "label": "Coolant jacket", "text": "The gap around the cylinder liner where coolant circulates." },
+      { "label": "Main bearing", "text": "The rear wall supports the crankshaft journal." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "cylinder",
+    "name": "Cylinder (bore)",
+    "systemId": "engine",
+    "description": "The smooth round tube the piston slides up and down in. Its diameter is the bore, and the distance the piston travels is the stroke.",
+    "technical": "Either machined directly into the block or formed by a pressed-in liner. The bore is honed with a fine cross-hatch so it holds a thin oil film for the rings. Swept volume per cylinder = π/4 × bore² × stroke; this teaching engine uses an illustrative 84 mm bore and 90 mm stroke (about 499 cm³).",
+    "relatedTopicIds": ["four-stroke-cycle", "pistons-and-crankshaft", "torque-and-power"],
+    "annotations": [
+      { "label": "Bore × stroke", "text": "84 × 90 mm (illustrative)" },
+      { "label": "Liner", "text": "Wet-sided: coolant touches its outer wall." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "cylinder-head",
+    "name": "Cylinder head",
+    "systemId": "engine",
+    "description": "The lid on top of the cylinder. It forms the roof of the combustion chamber and holds the valves, camshafts, spark plug and the ports that let air in and exhaust out.",
+    "technical": "Normally aluminium for weight and heat conduction, sealed to the block by a head gasket. It contains intake and exhaust ports, valve guides and seats, spring pockets, camshaft bearings and coolant passages around the hottest areas near the exhaust seat and plug. This one is sectioned through the valve centre-lines.",
+    "relatedTopicIds": ["valves-and-camshaft", "cooling-system", "spark-ignition"],
+    "annotations": [
+      { "label": "Twin-cam", "text": "One camshaft for the intake valve, one for the exhaust." },
+      { "label": "Section", "text": "Upper casting cut away to show the valvetrain." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "combustion-chamber",
+    "name": "Combustion chamber",
+    "systemId": "engine",
+    "description": "The small space left above the piston when it is at the top. The fuel–air mixture is squeezed into it and burned here.",
+    "technical": "Its volume at top dead centre is the clearance volume, which together with the swept volume sets the compression ratio: CR = (swept + clearance) / clearance. This model uses a pent-roof shape — two sloping faces, each square to its valve — with the spark plug at the apex for a short flame path. The glow shown in the lab is a conceptual visualisation, not a combustion simulation.",
+    "relatedTopicIds": ["four-stroke-cycle", "spark-ignition", "fuel-injection"],
+    "annotations": [
+      { "label": "Compression ratio", "text": "10.5 : 1 (illustrative)" },
+      { "label": "Shape", "text": "Pent roof, plug central" }
+    ],
+    "highlight": { "color": "#f6a63a", "emphasis": "glow" }
+  },
+  {
+    "id": "piston",
+    "name": "Piston",
+    "systemId": "engine",
+    "description": "A metal plug that slides in the cylinder. Expanding gas pushes it down on the power stroke; on the other strokes it pulls in air, squeezes it and pushes out exhaust.",
+    "technical": "Typically cast or forged aluminium alloy, slightly oval and tapered when cold so it becomes round and parallel at running temperature. The crown faces combustion; the skirt keeps it square in the bore and takes the side thrust created by the angled connecting rod. Its position follows the slider-crank relation x = r·cosθ + √(l² − r²·sin²θ).",
+    "relatedTopicIds": ["pistons-and-crankshaft", "four-stroke-cycle", "lubrication-system"],
+    "annotations": [
+      { "label": "Crown", "text": "Faces the burning gas" },
+      { "label": "Skirt", "text": "Guides the piston and takes side thrust" }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "piston-rings",
+    "name": "Piston rings",
+    "systemId": "engine",
+    "description": "Springy split rings in grooves around the piston. They seal the gap to the cylinder wall so pressure stays above the piston and oil stays below it.",
+    "technical": "Usually three: a top compression ring, a second ring that both seals and scrapes, and a slotted oil-control ring that wipes excess oil back to the sump. Cylinder pressure gets behind the top ring and presses it against the wall, so it seals harder exactly when sealing matters most. Worn rings show up as blow-by, low compression and oil consumption.",
+    "relatedTopicIds": ["pistons-and-crankshaft", "lubrication-system"],
+    "annotations": [
+      { "label": "Top ring", "text": "Main gas seal" },
+      { "label": "Bottom ring", "text": "Oil control" }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "wrist-pin",
+    "name": "Wrist pin (gudgeon pin)",
+    "systemId": "engine",
+    "description": "A short hollow steel pin that joins the piston to the top of the connecting rod and lets the rod swing as the crank turns.",
+    "technical": "A hardened, ground tube running in bosses in the piston and either floating in or pressed into the rod's small end. It carries the full gas force on every power stroke while oscillating through only a few degrees, so it relies on splash and mist lubrication rather than a pressure-fed film.",
+    "relatedTopicIds": ["pistons-and-crankshaft"],
+    "annotations": [{ "label": "Motion", "text": "Rocks a few degrees each way" }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "connecting-rod",
+    "name": "Connecting rod",
+    "systemId": "engine",
+    "description": "The link between the piston and the crankshaft. It turns the piston's straight up-and-down motion into rotation, a bit like your leg pushing a bicycle pedal.",
+    "technical": "Forged or sintered steel with an I-section shank. The small end carries the wrist pin; the big end is split, bolted around the crank pin and runs on a shell bearing fed with pressurised oil. Its centre-to-centre length l sets the rod ratio l/r (about 3.2 here) — shorter rods mean larger rod angles, more side thrust and stronger second-order vibration.",
+    "relatedTopicIds": ["pistons-and-crankshaft", "engine-layouts"],
+    "annotations": [
+      { "label": "Small end", "text": "Wrist pin" },
+      { "label": "Big end", "text": "Crank pin, shell bearing" },
+      { "label": "Rod length", "text": "145 mm (illustrative)" }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "crankshaft",
+    "name": "Crankshaft",
+    "systemId": "engine",
+    "description": "The shaft that the connecting rod turns. Its offset crank pin works like a pedal crank, so every push on the piston becomes a turning force that eventually drives the wheels.",
+    "technical": "Main journals turn in the block's bearings; the offset crank pin (throw radius r = half the stroke) carries the rod's big end. Webs join them, and counterweights opposite the pin balance the rotating mass. Torque at the crank = rod force × the perpendicular lever arm, which is zero at TDC and BDC and largest roughly mid-stroke. Two revolutions complete one four-stroke cycle.",
+    "relatedTopicIds": ["pistons-and-crankshaft", "torque-and-power", "four-stroke-cycle"],
+    "annotations": [
+      { "label": "Throw", "text": "45 mm — half the stroke" },
+      { "label": "Counterweight", "text": "Balances the crank pin and big end" }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "flywheel",
+    "name": "Flywheel",
+    "systemId": "engine",
+    "description": "A heavy disc on the end of the crankshaft. It stores energy from the power stroke and keeps the engine turning smoothly through the other three strokes.",
+    "technical": "Its moment of inertia smooths the very uneven torque of a single cylinder, which only pushes for about a quarter of each cycle. It also carries the starter ring gear and the clutch friction face in manual cars. A heavier flywheel idles more smoothly but lets the engine change speed more slowly.",
+    "relatedTopicIds": ["pistons-and-crankshaft", "torque-and-power", "battery-and-starter"],
+    "annotations": [{ "label": "Job", "text": "Carries the crank through the non-power strokes" }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "intake-camshaft",
+    "name": "Intake camshaft",
+    "systemId": "engine",
+    "description": "A rotating shaft with an egg-shaped lobe that pushes the intake valve open at the right moment and lets it close again.",
+    "technical": "Driven from the crankshaft at exactly half crank speed by the timing belt, because each valve opens once per two crank revolutions. The lobe's profile sets when the valve opens, how far and for how long. In this model the lobe is generated from the lift curve so the roller follower tracks it exactly; peak intake lift is about 105° after TDC.",
+    "relatedTopicIds": ["valves-and-camshaft", "four-stroke-cycle"],
+    "annotations": [
+      { "label": "Speed", "text": "Half crank speed" },
+      { "label": "Opens", "text": "10° before TDC (illustrative)" },
+      { "label": "Closes", "text": "40° after BDC (illustrative)" }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "exhaust-camshaft",
+    "name": "Exhaust camshaft",
+    "systemId": "engine",
+    "description": "The second camshaft. Its lobe opens the exhaust valve near the end of the power stroke so the burnt gas can be pushed out.",
+    "technical": "Same half-speed drive as the intake cam but phased differently: the exhaust valve opens about 40° before BDC so cylinder pressure starts emptying the cylinder (blow-down) before the piston rises, and closes just after TDC. Separate cams let variable-timing systems shift intake and exhaust events independently.",
+    "relatedTopicIds": ["valves-and-camshaft", "four-stroke-cycle"],
+    "annotations": [
+      { "label": "Opens", "text": "40° before BDC (illustrative)" },
+      { "label": "Closes", "text": "10° after TDC (illustrative)" }
+    ],
+    "highlight": { "color": "#f6a63a", "emphasis": "glow" }
+  },
+  {
+    "id": "cam-follower",
+    "name": "Cam follower",
+    "systemId": "engine",
+    "description": "The part that rides on the cam lobe and passes its push to the valve. Here it is a small roller sitting on a cup over the valve spring.",
+    "technical": "Followers turn the cam's rotation into straight-line valve motion. Flat buckets, roller fingers and rockers are common designs; a roller follower cuts friction because it rolls rather than slides. With a roller, the lobe surface is the inner offset of the curve traced by the roller's centre, which is how this model's lobes are drawn.",
+    "relatedTopicIds": ["valves-and-camshaft"],
+    "annotations": [{ "label": "Type", "text": "Roller over a cup (one per valve)" }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "intake-valve",
+    "name": "Intake valve",
+    "systemId": "engine",
+    "description": "A mushroom-shaped valve that opens to let the fuel–air charge into the cylinder, then closes tightly so it can be compressed.",
+    "technical": "A poppet valve: the head seals on a hardened seat; the stem slides in a guide. Intake valves are usually larger than exhaust valves because the incoming charge is pushed in only by atmospheric (or boost) pressure. Closing after BDC uses the momentum of the moving air to pack in a little more charge. Many engines use two intake valves per cylinder; this model shows one of each for clarity.",
+    "relatedTopicIds": ["valves-and-camshaft", "four-stroke-cycle", "fuel-injection"],
+    "annotations": [
+      { "label": "Head", "text": "Larger than the exhaust valve" },
+      { "label": "Lift", "text": "9 mm (drawn 1.5× in 3D)" }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "exhaust-valve",
+    "name": "Exhaust valve",
+    "systemId": "engine",
+    "description": "The valve that opens to let burnt gas out of the cylinder into the exhaust port.",
+    "technical": "Runs much hotter than the intake valve because hot gas rushes past it; it loses most of its heat through the seat and guide into the coolant-cooled head, and may use heat-resistant alloys or a sodium-filled stem. Opening before BDC lets the remaining pressure blow most of the gas out on its own.",
+    "relatedTopicIds": ["valves-and-camshaft", "four-stroke-cycle", "cooling-system"],
+    "annotations": [{ "label": "Lift", "text": "8.5 mm (drawn 1.5× in 3D)" }],
+    "highlight": { "color": "#f6a63a", "emphasis": "glow" }
+  },
+  {
+    "id": "valve-spring",
+    "name": "Valve springs",
+    "systemId": "engine",
+    "description": "Coil springs that snap each valve shut again after the cam lobe has pushed it open. Watch them squash as the valve opens.",
+    "technical": "Each spring sits between a seat on the head and a retainer locked to the valve stem. It must close the valve and keep the follower on the lobe even at high rpm; if it cannot, the valve 'floats' and may meet the piston. Preload holds the valve on its seat when closed.",
+    "relatedTopicIds": ["valves-and-camshaft"],
+    "annotations": [{ "label": "Job", "text": "Closes the valve and keeps the follower on the cam" }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "spark-plug",
+    "name": "Spark plug",
+    "systemId": "engine",
+    "description": "Screws into the head with its tip in the combustion chamber. A high-voltage spark jumps its small gap to light the compressed mixture.",
+    "technical": "A ceramic insulator carries the centre electrode; the threaded steel shell carries the earth electrode. The ignition coil raises the voltage until the gap breaks down — typically several thousand to tens of thousands of volts depending on pressure and gap. The spark is timed before TDC (15° here, illustrative) because the flame takes time to spread.",
+    "relatedTopicIds": ["spark-ignition", "four-stroke-cycle", "battery-and-starter"],
+    "annotations": [
+      { "label": "Fires", "text": "15° before firing TDC (illustrative)" },
+      { "label": "Gap", "text": "Typically around 0.7–1.1 mm" }
+    ],
+    "highlight": { "color": "#ffd36b", "emphasis": "glow" }
+  },
+  {
+    "id": "intake-port",
+    "name": "Intake port",
+    "systemId": "engine",
+    "description": "The curved passage in the head that leads fresh air (and in many engines fuel) to the intake valve.",
+    "technical": "Shaped for smooth, high-velocity flow and often to set up swirl or tumble in the cylinder, which speeds up burning. In port-injected engines the injector sprays onto the back of the intake valve; direct-injection engines spray into the chamber instead. The cyan tint in the lab is a conceptual flow indicator.",
+    "relatedTopicIds": ["valves-and-camshaft", "fuel-injection"],
+    "annotations": [{ "label": "Flow", "text": "Fresh charge (cyan, conceptual)" }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "exhaust-port",
+    "name": "Exhaust port",
+    "systemId": "engine",
+    "description": "The passage that carries burnt gas away from the exhaust valve to the exhaust manifold.",
+    "technical": "Kept short and surrounded by coolant because it is the hottest passage in the head. Gas leaves in a fast pulse at exhaust-valve opening (blow-down), then the rising piston pushes out most of the rest. The amber-to-grey tint is a conceptual indicator of hot then cooler exhaust.",
+    "relatedTopicIds": ["valves-and-camshaft", "cooling-system"],
+    "annotations": [{ "label": "Flow", "text": "Exhaust (amber → grey, conceptual)" }],
+    "highlight": { "color": "#f6a63a", "emphasis": "glow" }
+  },
+  {
+    "id": "timing-belt",
+    "name": "Timing belt and pulleys",
+    "systemId": "engine",
+    "description": "A toothed belt that turns both camshafts from the crankshaft, keeping the valves in step with the piston.",
+    "technical": "The cam pulleys have twice the diameter (and tooth count) of the crank sprocket, giving the 2 : 1 reduction a four-stroke needs. Teeth prevent slip so timing never drifts. Belts are replaced at the interval the manufacturer specifies; on many engines a broken belt lets pistons hit open valves. Some engines use a chain or gears instead.",
+    "relatedTopicIds": ["valves-and-camshaft", "routine-maintenance"],
+    "annotations": [
+      { "label": "Ratio", "text": "2 : 1 (crank : cam)" },
+      { "label": "Location", "text": "Rear of this model" }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "oil-sump",
+    "name": "Oil sump",
+    "systemId": "engine",
+    "description": "The pan at the bottom of the engine that holds the oil. A pump draws oil from it and sends it to the bearings.",
+    "technical": "A wet sump stores the oil below the crankshaft; the pump's pickup draws from its lowest point and pressure-feeds the main and big-end bearings and the camshafts. Oil drains back by gravity. The drain plug at its base is where the oil is changed.",
+    "relatedTopicIds": ["lubrication-system", "routine-maintenance"],
+    "annotations": [{ "label": "Type", "text": "Wet sump" }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  }
+]

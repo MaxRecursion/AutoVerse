@@ -1,0 +1,167 @@
+{
+  "id": "valves-and-camshaft",
+  "slug": "valves-and-camshaft",
+  "title": "Valves, Camshafts and Valve Timing",
+  "summary": "How spinning cam lobes open poppet valves at precisely the right crank angles: lift, duration, overlap, half-speed drive and why the valves open and close away from the dead centres.",
+  "categoryId": "engine",
+  "difficulty": "intermediate",
+  "estimatedDuration": 14,
+  "tags": ["engine", "valves", "camshaft", "valve timing", "overlap", "DOHC", "timing belt"],
+  "learningObjectives": [
+    "Describe how a cam lobe, follower and spring open and close a poppet valve",
+    "Explain why camshafts turn at half crankshaft speed and how a 2 : 1 timing drive achieves it",
+    "Read a valve-timing diagram: opening and closing angles, lift, duration and overlap",
+    "Explain why the intake valve closes after BDC and the exhaust valve opens before BDC",
+    "Relate valve timing to engine behaviour at low and high speed"
+  ],
+  "beginnerExplanation": "Each cylinder has doors that let air in and exhaust out. These doors are valves: metal discs on long stems that sit in round holes in the cylinder head. A spring holds each valve shut.\n\nAbove each valve is a camshaft — a rod with an egg-shaped bump, called a lobe. As the camshaft turns, the bump comes round and presses the valve down, opening it. When the bump has passed, the spring snaps the valve shut again. The shape of the bump decides how far the valve opens and for how long.\n\nThe camshafts are turned by a toothed belt from the crankshaft. Each valve needs to open only once every four strokes, which is two turns of the crankshaft, so the pulleys on the camshafts are twice the size of the one on the crankshaft and turn at half the speed.\n\nThis engine has two camshafts on top (\"twin cam\" or DOHC): one works the intake valve and one works the exhaust valve. In the laboratory, watch the springs squash as each lobe comes round.",
+  "technicalExplanation": "A poppet valve is opened by the cam and closed by its spring. The follower — here a roller riding on the lobe, over a cup on the valve spring — turns the lobe's rotation into linear lift. For a roller follower the lobe surface is the inner offset, by the roller radius, of the curve traced by the roller's centre, so the valve lift is a direct function of cam angle. The model uses smooth sin² lift ramps: zero velocity at the seat, maximum lift at the centre of the event.\n\nThe cams are driven at half crank speed through a 2 : 1 toothed-belt drive (cam pulleys with twice the crank sprocket's diameter and teeth). One cam revolution therefore spans the full 720° cycle, and a feature on the lobe moves through 1° of cam for every 2° of crank.\n\nIllustrative timing for this engine: intake opens (IVO) 10° BTDC and closes (IVC) 40° ABDC, giving 230° of crank duration and peak lift at 105° ATDC; exhaust opens (EVO) 40° BBDC and closes (EVC) 10° ATDC, also 230°, with peak lift 105° BTDC. The two lobe centre-lines are therefore 105° of cam apart (the lobe separation angle). Around exhaust/intake TDC the events overlap by 20°.\n\nThe reasons are gas dynamics. Late intake closing lets the momentum of the intake air keep filling the cylinder after BDC, improving volumetric efficiency at speed, at the cost of pushing some charge back at low speed. Early exhaust opening sacrifices a little expansion work so blow-down empties the cylinder before the piston has to pump against it. Overlap uses the outgoing exhaust pulse to help draw in fresh charge. Because the best timing differs between idle and high rpm, many engines shift cam phasing (variable valve timing) or switch lobe profiles. If the belt slips or breaks, timing is lost — and in an interference engine an open valve can be struck by the piston.",
+  "steps": [
+    {
+      "id": "half-speed",
+      "title": "Half-speed drive",
+      "beginner": "The belt turns the camshafts at half the crankshaft's speed, so each valve opens once every two crank turns.",
+      "technical": "Cam pulleys have twice the crank sprocket's diameter and tooth count: ω_cam = ω_crank / 2, so the cam angle shown in the lab is always exactly half the crank angle.",
+      "componentIds": ["timing-belt", "intake-camshaft", "exhaust-camshaft", "crankshaft"]
+    },
+    {
+      "id": "intake-opens",
+      "title": "Intake lobe opens the intake valve",
+      "beginner": "The intake lobe comes round, presses the follower and spring down, and the intake valve opens wide while the piston goes down.",
+      "technical": "IVO is 10° BTDC; lift rises along a sin² ramp to 9 mm at 105° ATDC, a little after the piston passes its peak speed (about 74° ATDC) and the incoming air is moving quickest.",
+      "cue": "intake",
+      "componentIds": ["intake-camshaft", "cam-follower", "valve-spring", "intake-valve"]
+    },
+    {
+      "id": "intake-closes-late",
+      "title": "Intake closes after BDC",
+      "beginner": "The intake valve stays open a little after the piston starts rising, because the moving air keeps flowing in for a moment.",
+      "technical": "IVC is 40° ABDC (220°). Between BDC and IVC the charge's inertia continues to fill the cylinder at speed; effective compression only begins once the valve seats.",
+      "cue": "bdc",
+      "componentIds": ["intake-valve", "valve-spring"]
+    },
+    {
+      "id": "sealed",
+      "title": "Both valves sealed",
+      "beginner": "Through compression and most of the power stroke both valves stay firmly shut so no pressure escapes.",
+      "technical": "From IVC (220°) to EVO (500°) both followers sit on their base circles and the springs' preload holds the valves on their seats against cylinder pressure.",
+      "cue": "compression",
+      "componentIds": ["intake-valve", "exhaust-valve", "valve-spring"]
+    },
+    {
+      "id": "exhaust-opens-early",
+      "title": "Exhaust opens before BDC",
+      "beginner": "The exhaust valve opens before the piston reaches the bottom, letting the still-pressurised gas rush out on its own.",
+      "technical": "EVO is 40° BBDC (500°). Blow-down releases most of the remaining pressure before BDC, so the piston has less gas to push during the exhaust stroke; peak exhaust lift of 8.5 mm comes at 615°.",
+      "cue": "exhaust",
+      "componentIds": ["exhaust-camshaft", "exhaust-valve", "exhaust-port"]
+    },
+    {
+      "id": "overlap",
+      "title": "Valve overlap",
+      "beginner": "Around the top, both valves are slightly open at once. The escaping exhaust helps pull the fresh charge in.",
+      "technical": "EVC 10° ATDC and IVO 10° BTDC give 20° of overlap. Lifts are tiny here (about 2% of maximum at TDC), yet the pressure waves in the ports make overlap a powerful tuning tool.",
+      "cue": "overlap",
+      "componentIds": ["intake-valve", "exhaust-valve"]
+    }
+  ],
+  "componentIds": ["intake-camshaft", "exhaust-camshaft", "cam-follower", "valve-spring", "intake-valve", "exhaust-valve", "intake-port", "exhaust-port", "timing-belt", "cylinder-head"],
+  "labId": "engine",
+  "flow": {
+    "nodes": [
+      { "id": "crank", "label": "Crankshaft", "detail": "Drives the timing belt", "componentId": "crankshaft" },
+      { "id": "belt", "label": "Timing belt 2 : 1", "detail": "Cams turn at half speed", "componentId": "timing-belt" },
+      { "id": "cam", "label": "Cam lobe", "detail": "Profile sets lift and duration", "componentId": "intake-camshaft" },
+      { "id": "follower", "label": "Follower", "detail": "Roller turns rotation into lift", "componentId": "cam-follower" },
+      { "id": "valve", "label": "Valve opens", "detail": "Gas flows through the port", "componentId": "intake-valve" },
+      { "id": "spring", "label": "Spring closes it", "detail": "Keeps the follower on the lobe", "componentId": "valve-spring" }
+    ],
+    "edges": [
+      { "from": "crank", "to": "belt" },
+      { "from": "belt", "to": "cam", "label": "½ speed" },
+      { "from": "cam", "to": "follower", "label": "lobe pushes" },
+      { "from": "follower", "to": "valve" },
+      { "from": "valve", "to": "spring", "label": "compresses" },
+      { "from": "spring", "to": "follower", "label": "returns" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Valve lift", "definition": "How far the valve moves off its seat. Flow area grows with lift until the port itself becomes the restriction." },
+    { "term": "Duration", "definition": "How many crank degrees the valve is off its seat. Here 230° for each valve (illustrative).", "equation": "duration = closing angle − opening angle (mod 720°)" },
+    { "term": "Valve overlap", "definition": "The crank angle during which both valves are open together, around exhaust/intake TDC.", "equation": "overlap = IVO (° BTDC) + EVC (° ATDC)" },
+    { "term": "Half-speed camshaft", "definition": "The camshaft makes one turn per four-stroke cycle.", "equation": "θ_cam = θ_crank / 2" },
+    { "term": "Lobe separation angle", "definition": "Cam-degree spacing between the intake and exhaust lobe centre-lines.", "equation": "LSA = (intake centre ATDC + exhaust centre BTDC) / 2" }
+  ],
+  "misconceptions": [
+    { "myth": "The cam pushes the valve closed.", "reality": "The cam only opens the valve. The spring closes it and must be strong enough to keep the follower on the lobe at high rpm." },
+    { "myth": "Valves open at TDC and close at BDC.", "reality": "They open early and close late to use the momentum and pressure of the gas; this engine's intake closes 40° after BDC." },
+    { "myth": "Overlap means the engine is leaking.", "reality": "Overlap is deliberate: the departing exhaust helps draw in fresh charge. Too much overlap at idle does cause a rough idle, which variable timing can avoid." },
+    { "myth": "Twin-cam means two valves.", "reality": "DOHC means two overhead camshafts per cylinder bank. Most DOHC engines have four valves per cylinder; this model shows one intake and one exhaust valve for clarity." }
+  ],
+  "practicalExamples": [
+    "Timing marks on the crank sprocket and cam pulleys must line up when a timing belt is fitted; one tooth out shifts every valve event by several degrees.",
+    "Replacing a timing belt at the specified interval matters most on interference engines, where a broken belt lets the pistons hit open valves.",
+    "A ticking noise from the top of the engine can mean excessive clearance in the valvetrain or low oil supply to the cams.",
+    "Variable valve timing systems rotate the camshaft relative to its pulley under oil pressure, advancing intake timing at low rpm for torque and retarding it at high rpm for power."
+  ],
+  "relatedTopicIds": ["four-stroke-cycle", "pistons-and-crankshaft", "spark-ignition", "fuel-injection", "lubrication-system", "routine-maintenance"],
+  "prerequisiteTopicIds": ["four-stroke-cycle"],
+  "quiz": [
+    {
+      "id": "cam-turns",
+      "prompt": "The crankshaft turns 1440°. How far has the camshaft turned?",
+      "options": ["360°", "720°", "1440°", "2880°"],
+      "answerIndex": 1,
+      "explanation": "The camshaft turns at half crank speed: 1440° / 2 = 720°, two full cam revolutions for two complete cycles."
+    },
+    {
+      "id": "what-closes",
+      "prompt": "What closes a poppet valve after the cam lobe has passed?",
+      "options": ["The piston", "The valve spring", "Cylinder vacuum alone", "The timing belt"],
+      "answerIndex": 1,
+      "explanation": "The spring returns the valve to its seat and keeps the follower in contact with the lobe."
+    },
+    {
+      "id": "ivc-late",
+      "prompt": "Why does the intake valve close after bottom dead centre?",
+      "options": [
+        "To let exhaust gas back in",
+        "Because the moving air column keeps filling the cylinder for a while after BDC",
+        "To reduce compression permanently",
+        "So the spark plug can cool"
+      ],
+      "answerIndex": 1,
+      "explanation": "The charge has momentum. Holding the valve open after BDC lets it keep flowing in, improving filling at speed."
+    },
+    {
+      "id": "overlap-calc",
+      "prompt": "Intake opens 12° BTDC and exhaust closes 8° ATDC. How much valve overlap is there?",
+      "options": ["4°", "8°", "12°", "20°"],
+      "answerIndex": 3,
+      "explanation": "Overlap = 12° + 8° = 20° of crank rotation with both valves open."
+    },
+    {
+      "id": "pulley-ratio",
+      "prompt": "Why is each camshaft pulley twice the diameter of the crankshaft sprocket?",
+      "options": [
+        "To make the belt last longer",
+        "To turn the camshafts at half crank speed",
+        "To increase valve lift",
+        "To balance the engine"
+      ],
+      "answerIndex": 1,
+      "explanation": "Twice the teeth on the driven pulley gives a 2 : 1 reduction, so the cams turn once per two crank revolutions."
+    }
+  ],
+  "sourceReferences": [
+    {
+      "title": "How engine timing works",
+      "url": "https://www.howacarworks.com/basics/how-engine-timing-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading. AutoVerse text is original."
+    }
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

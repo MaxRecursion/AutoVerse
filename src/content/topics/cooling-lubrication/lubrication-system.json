@@ -1,0 +1,115 @@
+{
+  "id": "lubrication-system",
+  "slug": "lubrication-system",
+  "title": "Lubrication System",
+  "summary": "Engine oil keeps rotating metal parts from ever touching by holding them apart on a pressurised film. Learn how the pump, filter and galleries feed the bearings, what viscosity grades mean, and why oil pressure warnings are urgent.",
+  "categoryId": "cooling-lubrication",
+  "difficulty": "intermediate",
+  "estimatedDuration": 12,
+  "tags": ["oil", "lubrication", "bearings", "viscosity", "oil pressure", "wear"],
+  "learningObjectives": [
+    "Explain how an oil film separates a spinning journal from its bearing",
+    "Trace oil from the sump through the pump, filter and galleries",
+    "Interpret an SAE viscosity grade such as 5W-30",
+    "List the jobs oil does besides reducing friction"
+  ],
+  "beginnerExplanation": "Inside an engine, metal parts slide and spin against each other thousands of times a minute. If they actually touched, they would wear out or weld together within minutes. Oil prevents that by forming a thin film between the surfaces so they glide on liquid instead of rubbing metal to metal.\n\nThe oil lives in the sump at the bottom of the engine. A pump draws it up through a strainer, pushes it through a filter that catches dirt, and sends it along drilled passages to the crankshaft bearings, the camshafts, the valve gear and often the turbocharger. It then drains back down to the sump to start again. Some oil is also sprayed or splashed under the pistons to cool them.\n\nOil gradually breaks down and collects soot, fuel and acids, so it is changed at regular intervals. If the oil pressure warning light comes on while driving, the film may no longer be protecting the bearings — stopping the engine promptly can be the difference between topping up and rebuilding.",
+  "technicalExplanation": "Crankshaft main and big-end bearings are plain (journal) bearings running with clearances of a few hundredths of a millimetre. As the journal rotates it drags viscous oil into the converging gap, generating a pressure wedge that lifts the journal off the shell: hydrodynamic lubrication. The film thickness depends on viscosity, speed and load. The Stribeck curve describes the regimes: at low speed or high load the film collapses into boundary and mixed lubrication where surface asperities touch, which is why starting and labouring at very low engine speed produce disproportionate wear. Anti-wear additives (for example zinc dialkyldithiophosphate) form protective layers for those moments.\n\nThe pump — gear, gerotor, or a variable-displacement vane type that reduces parasitic loss — supplies more flow than the bearings need; a relief valve caps pressure. A full-flow filter has a bypass valve so a clogged or cold, thick filter never starves the engine (unfiltered oil is better than none). Main galleries feed the main bearings, drillings through the crankshaft feed the big ends, and further passages supply cam bearings, hydraulic lifters, variable valve timing actuators and turbo bearings. Piston-cooling jets spray the underside of the crowns. Most cars use a wet sump; racing and some performance cars use a dry sump with scavenge pumps and a remote tank to avoid oil surge under high cornering loads.\n\nSAE J300 grades describe viscosity: the 'W' number rates cold-cranking and pumping performance (lower flows better when cold), and the second number is the viscosity class at 100 °C. A 0W-20 thus pumps quickly on a cold start but is thinner when hot than a 5W-40. Oil also transfers heat away from pistons and bearings, carries detergents and dispersants that hold soot in suspension, neutralises acids, helps the piston rings seal, and protects against corrosion.",
+  "steps": [
+    {
+      "id": "pickup",
+      "title": "Draw oil from the sump",
+      "beginner": "The pump sucks oil up from the sump through a mesh strainer that stops large debris.",
+      "technical": "The pickup must stay submerged under braking, acceleration and cornering; baffles or a dry sump prevent surge."
+    },
+    {
+      "id": "pressurise-filter",
+      "title": "Pressurise and filter",
+      "beginner": "The pump pushes oil through a filter that traps fine dirt and metal particles.",
+      "technical": "Delivery pressure is capped by a relief valve; a filter bypass opens on high differential pressure, e.g. with cold oil or a blocked element."
+    },
+    {
+      "id": "feed-bearings",
+      "title": "Feed the bearings",
+      "beginner": "Drilled passages carry the oil to the crankshaft and camshaft bearings, where it forms a protective film.",
+      "technical": "Oil enters each main bearing, then crosses to the big ends through crankshaft drillings; the rotating journal builds the hydrodynamic pressure wedge."
+    },
+    {
+      "id": "cool-and-clean",
+      "title": "Cool, clean and seal",
+      "beginner": "Oil also carries heat away, holds dirt in suspension and helps the piston rings seal.",
+      "technical": "Piston-cooling jets, oil coolers and detergent/dispersant additives manage heat and deposits; ring-pack oil control limits consumption."
+    },
+    {
+      "id": "return",
+      "title": "Drain back",
+      "beginner": "The oil runs back down to the sump and the cycle repeats many times a minute.",
+      "technical": "Drain-back passages and crankcase ventilation separate oil mist from blow-by gas, routing gases to the intake for burning."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "sump", "label": "Sump", "detail": "Oil reservoir" },
+      { "id": "pump", "label": "Oil pump", "detail": "Pressure + relief valve" },
+      { "id": "filter", "label": "Filter", "detail": "Full-flow with bypass" },
+      { "id": "gallery", "label": "Main gallery", "detail": "Drilled passages" },
+      { "id": "bearings", "label": "Crank bearings", "detail": "Hydrodynamic film", "topicId": "pistons-and-crankshaft" },
+      { "id": "valvetrain", "label": "Valve gear", "detail": "Cams, lifters, VVT", "topicId": "valves-and-camshaft" }
+    ],
+    "edges": [
+      { "from": "sump", "to": "pump" },
+      { "from": "pump", "to": "filter" },
+      { "from": "filter", "to": "gallery" },
+      { "from": "gallery", "to": "bearings" },
+      { "from": "gallery", "to": "valvetrain" },
+      { "from": "bearings", "to": "sump", "label": "drain" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Hydrodynamic lubrication", "definition": "A rotating journal drags oil into a narrowing gap, generating pressure that holds the surfaces fully apart." },
+    { "term": "Viscosity", "definition": "A fluid's resistance to flow. It falls sharply as oil warms, so grades specify behaviour both cold and hot." },
+    { "term": "SAE grade (e.g. 5W-30)", "definition": "The W number rates cold performance; the second number is the viscosity class at 100 °C." },
+    { "term": "Oil film thickness (trend)", "definition": "Thicker films come from higher viscosity and speed and lower load, which is why lugging at low rpm is hard on bearings.", "equation": "h ∝ (η × ω) / load" }
+  ],
+  "misconceptions": [
+    { "myth": "A thicker oil always protects better.", "reality": "Thick oil flows slowly when cold, when most wear happens, and adds friction. Modern engines with tight clearances are designed for the grade in the handbook." },
+    { "myth": "The oil pressure light means the oil level is a bit low.", "reality": "It means pressure has fallen below a safe threshold. That may be low level, but it can also be a pump or bearing problem. Stop safely and investigate before driving on." },
+    { "myth": "If the dipstick is full, the oil does not need changing.", "reality": "Oil degrades: additives deplete and contaminants build up even when the level is correct. Change it at the interval the manufacturer specifies." }
+  ],
+  "practicalExamples": [
+    "Checking the dipstick on level ground with the engine off for a few minutes gives a true reading because the oil has drained back to the sump.",
+    "A brief flicker of the oil light during hard cornering with low oil shows surge uncovering the pickup.",
+    "Turbocharged engines are particularly sensitive to oil quality because the turbo shaft runs at very high speed on an oil-fed bearing."
+  ],
+  "relatedTopicIds": ["pistons-and-crankshaft", "cooling-system", "routine-maintenance", "diagnosing-warning-signs"],
+  "prerequisiteTopicIds": ["pistons-and-crankshaft"],
+  "quiz": [
+    {
+      "id": "film",
+      "prompt": "In a healthy crankshaft bearing running at speed, what separates the journal from the bearing shell?",
+      "options": ["Small steel balls", "A pressurised film of oil", "A layer of grease", "Nothing — they are designed to touch"],
+      "answerIndex": 1,
+      "explanation": "Rotation drags oil into the converging gap and builds pressure that holds the surfaces apart."
+    },
+    {
+      "id": "grade",
+      "prompt": "In the grade 5W-30, what does the '5W' describe?",
+      "options": ["Viscosity at 100 °C", "Cold-start and pumping performance", "Additive content", "The recommended mileage"],
+      "answerIndex": 1,
+      "explanation": "The W (winter) number rates performance at low temperature; 30 is the hot viscosity class."
+    },
+    {
+      "id": "bypass",
+      "prompt": "Why does an oil filter have a bypass valve?",
+      "options": ["To let unfiltered oil reach the bearings if the filter is blocked or the oil is very cold", "To drain oil during an oil change", "To increase oil pressure", "To cool the oil"],
+      "answerIndex": 0,
+      "explanation": "Unfiltered oil is far better than no oil; the bypass ensures the bearings are never starved."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"How an oil pressure gauge works","url":"https://www.howacarworks.com/accessories/how-an-oil-pressure-guage-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
+    {"title":"How car oil is refined","url":"https://www.howacarworks.com/technology/how-car-oil-is-refined","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

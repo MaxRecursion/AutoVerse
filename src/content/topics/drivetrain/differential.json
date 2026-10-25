@@ -1,0 +1,114 @@
+{
+  "id": "differential",
+  "slug": "differential",
+  "title": "The Differential",
+  "summary": "In a corner the outside wheel travels further than the inside wheel, so driven wheels cannot be locked together. The differential lets them turn at different speeds while still sharing torque — and adds the final gear reduction on the way.",
+  "categoryId": "drivetrain",
+  "difficulty": "intermediate",
+  "estimatedDuration": 12,
+  "tags": ["differential", "final drive", "drivetrain", "limited slip", "traction", "cornering"],
+  "learningObjectives": [
+    "Explain why driven wheels must turn at different speeds in a corner",
+    "Describe the crown wheel, pinion and planet gears of an open differential",
+    "Use the rule that carrier speed equals the average of the two wheel speeds",
+    "Explain the weakness of an open differential and how limited-slip designs address it"
+  ],
+  "beginnerExplanation": "When a car turns, the wheels on the outside of the bend follow a bigger circle than the wheels on the inside, so they must spin faster. Non-driven wheels can simply roll at whatever speed they need. Driven wheels are connected to the engine, though, and if they were bolted to one solid axle one of them would have to scrub and skid round every corner.\n\nThe differential solves this. Drive arrives from the gearbox and turns a large gear (the crown wheel) and the case attached to it. Inside the case, small gears connect the two wheel shafts. Going straight, everything turns together. In a corner the small gears rotate on their own pins, letting one wheel speed up exactly as much as the other slows down.\n\nThe catch is that a simple ('open') differential always shares torque equally. If one wheel is on ice, it can only take a tiny amount of torque before spinning — so the wheel with grip receives the same tiny amount. Limited-slip differentials and electronic traction control exist to fix that.",
+  "technicalExplanation": "The final drive is usually a hypoid (offset spiral-bevel) pinion and crown wheel in rear-drive axles, or a helical gear pair in transverse front-drive transaxles, with ratios of roughly 3:1 to 4.5:1. Hypoid gears turn the drive through 90° and allow the pinion to sit below the axle centreline but need extreme-pressure gear oil because of the sliding action between teeth.\n\nThe crown wheel is bolted to the differential carrier, which holds two or more planet (spider) gears on a cross-pin. These mesh with side gears splined to each half-shaft. Kinematically the carrier speed is the average of the wheel speeds: ω_c = (ω_L + ω_R) / 2. On a 10 m radius turn with a 1.5 m track, the outer wheel covers about 16% more distance than the inner one. Because the planet gears are free to spin, an ideal open differential transmits equal torque to each side: T_L = T_R = T_c / 2 (ignoring internal friction).\n\nTotal tractive torque is therefore limited to twice what the lower-grip wheel can support. Limited-slip differentials add a torque bias: clutch-pack (preloaded and ramp-loaded plates), gear-type torque-sensing designs (e.g. worm-gear Torsen type) with a fixed bias ratio, viscous couplings, or electronically controlled clutches that can actively send torque across an axle (torque vectoring). Many cars instead use an open differential plus brake-based traction control that brakes the spinning wheel, creating a reaction torque that the differential then passes to the gripping side. Four-wheel-drive vehicles add a centre differential or coupling between axles, and off-road vehicles may have selectable lockers that join both sides solidly.",
+  "steps": [
+    {
+      "id": "corner-geometry",
+      "title": "Wheels travel different distances",
+      "beginner": "In a corner the outside wheel follows a larger circle than the inside wheel, so it must turn faster.",
+      "technical": "For turn radius r and track t: outer/inner distance ratio = (r + t/2) / (r − t/2); at r = 10 m, t = 1.5 m that is ≈ 1.16."
+    },
+    {
+      "id": "final-drive",
+      "title": "Final drive reduction",
+      "beginner": "The pinion gear from the propshaft or gearbox drives the much larger crown wheel, slowing the speed and multiplying torque.",
+      "technical": "A final drive ratio i_fd multiplies torque by i_fd × η; hypoid sets also turn the drive through 90°."
+    },
+    {
+      "id": "planets-split",
+      "title": "Planet gears split the drive",
+      "beginner": "Small gears inside the case push on both wheel shafts. Going straight they do not spin; in a corner they rotate and let the wheels differ.",
+      "technical": "ω_c = (ω_L + ω_R) / 2: any speed one side gains, the other loses, while the spider gears spin on their pin."
+    },
+    {
+      "id": "equal-torque",
+      "title": "Torque is shared equally",
+      "beginner": "An open differential always gives both wheels the same torque, even if one has much less grip.",
+      "technical": "T_L = T_R; total drive is limited to 2 × the torque the lower-μ wheel can support, which is why one wheel spins on ice."
+    },
+    {
+      "id": "limit-slip",
+      "title": "Limiting the slip",
+      "beginner": "Limited-slip differentials and traction control send more torque to the wheel that has grip.",
+      "technical": "Clutch-type, torque-sensing gear and viscous LSDs bias torque toward the slower wheel; brake-based traction control mimics this by braking the spinning wheel."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "input", "label": "Gearbox output", "detail": "Propshaft or transaxle", "topicId": "automatic-transmission" },
+      { "id": "pinion", "label": "Pinion & crown wheel", "detail": "Final drive ≈ 3–4.5 : 1" },
+      { "id": "carrier", "label": "Carrier & planets", "detail": "ω_c = (ω_L + ω_R) / 2" },
+      { "id": "left", "label": "Left half-shaft", "topicId": "driveshafts-and-cv-joints" },
+      { "id": "right", "label": "Right half-shaft", "topicId": "driveshafts-and-cv-joints" },
+      { "id": "tyres", "label": "Tyres", "detail": "Grip limits torque", "topicId": "tyres-and-grip" }
+    ],
+    "edges": [
+      { "from": "input", "to": "pinion" },
+      { "from": "pinion", "to": "carrier" },
+      { "from": "carrier", "to": "left", "label": "T / 2" },
+      { "from": "carrier", "to": "right", "label": "T / 2" },
+      { "from": "left", "to": "tyres" },
+      { "from": "right", "to": "tyres" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Differential speed rule", "definition": "The carrier (crown wheel) speed is always the average of the two output speeds.", "equation": "ω_c = (ω_L + ω_R) / 2" },
+    { "term": "Open-differential torque split", "definition": "An ideal open differential gives each side half the input torque regardless of grip.", "equation": "T_L = T_R = T_c / 2" },
+    { "term": "Final drive ratio", "definition": "The fixed reduction between gearbox output and wheels, applied in every gear." },
+    { "term": "Limited-slip differential", "definition": "A differential that resists speed difference between its outputs, biasing torque towards the wheel with more grip." }
+  ],
+  "misconceptions": [
+    { "myth": "An open differential sends all the power to the wheel that is spinning.", "reality": "It sends equal torque to both. The spinning wheel gets most of the speed, and therefore most of the power, but torque — what pushes the car — is equal and small." },
+    { "myth": "Four-wheel drive never gets stuck.", "reality": "With open differentials, one spinning wheel on each axle can still stop the vehicle. Lockers or traction control are needed to keep driving the wheels that grip." },
+    { "myth": "The differential is only for rear-wheel-drive cars.", "reality": "Every driven axle needs one. In front-drive cars it is built into the transaxle alongside the gearbox." }
+  ],
+  "practicalExamples": [
+    "A car stuck with one wheel on ice and the other on tarmac: the icy wheel spins while the other barely moves — classic open-differential behaviour.",
+    "Jacking up one driven wheel and turning it by hand (car in neutral) makes the opposite wheel turn the other way, showing the planet gears at work.",
+    "Track cars use limited-slip differentials so the inside wheel does not spin away power when accelerating out of tight corners."
+  ],
+  "relatedTopicIds": ["drivetrain-layouts", "driveshafts-and-cv-joints", "tyres-and-grip", "torque-and-power"],
+  "prerequisiteTopicIds": ["torque-and-power"],
+  "quiz": [
+    {
+      "id": "why-diff",
+      "prompt": "Why do driven wheels need a differential?",
+      "options": ["To change gear automatically", "Because the outer wheel travels further than the inner wheel in a corner", "To reduce engine vibration", "To cool the axle oil"],
+      "answerIndex": 1,
+      "explanation": "Different path lengths in a corner require different wheel speeds; a solid axle would scrub the tyres."
+    },
+    {
+      "id": "carrier-speed",
+      "prompt": "The left wheel turns at 600 rpm and the right at 700 rpm. How fast does the differential carrier turn?",
+      "options": ["100 rpm", "600 rpm", "650 rpm", "1,300 rpm"],
+      "answerIndex": 2,
+      "explanation": "ω_c = (600 + 700) / 2 = 650 rpm."
+    },
+    {
+      "id": "ice",
+      "prompt": "One driven wheel is on ice. Why does the car barely move with an open differential?",
+      "options": ["The differential locks up", "Both wheels get the same small torque the icy wheel can support", "All torque goes to the gripping wheel", "The engine stalls"],
+      "answerIndex": 1,
+      "explanation": "Torque is split equally, so the gripping wheel is limited to the tiny torque the icy wheel can resist."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"How the transmission works","url":"https://www.howacarworks.com/basics/how-the-transmission-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

@@ -1,0 +1,17 @@
+[
+  { "id": "basics", "slug": "basics", "title": "Basics & Fundamentals", "summary": "How the major systems of a car fit together, and the physics vocabulary used everywhere else.", "icon": "BookOpen", "order": 1, "systemId": "vehicle" },
+  { "id": "engine", "slug": "engine", "title": "Engine", "summary": "Four-stroke operation, pistons, crankshafts, valves, camshafts and engine layouts.", "icon": "Cog", "order": 2, "systemId": "engine" },
+  { "id": "fuel-ignition", "slug": "fuel-and-ignition", "title": "Fuel & Ignition", "summary": "Fuel delivery, injection, petrol and diesel combustion, spark and compression ignition.", "icon": "Flame", "order": 3, "systemId": "engine" },
+  { "id": "cooling-lubrication", "slug": "cooling-and-lubrication", "title": "Cooling & Lubrication", "summary": "How engines shed heat and keep metal surfaces separated by oil films.", "icon": "Thermometer", "order": 4, "systemId": "engine" },
+  { "id": "transmission", "slug": "transmission", "title": "Transmission & Clutch", "summary": "Clutches, manual and automatic gearboxes, gear ratios and torque multiplication.", "icon": "Settings2", "order": 5, "systemId": "transmission" },
+  { "id": "drivetrain", "slug": "drivetrain", "title": "Drivetrain & Differentials", "summary": "Driveshafts, differentials and the layouts that carry power to the wheels.", "icon": "GitBranch", "order": 6, "systemId": "drivetrain" },
+  { "id": "brakes", "slug": "brakes", "title": "Brakes", "summary": "Hydraulic brakes, discs, drums, pads and anti-lock braking.", "icon": "Disc3", "order": 7, "systemId": "braking" },
+  { "id": "suspension-steering", "slug": "suspension-and-steering", "title": "Suspension & Steering", "summary": "Springs, dampers, linkages and steering geometry that keep tyres in contact with the road.", "icon": "Waves", "order": 8, "systemId": "suspension" },
+  { "id": "wheels-tyres", "slug": "wheels-and-tyres", "title": "Wheels & Tyres", "summary": "Tyre construction, grip, slip and the contact patch.", "icon": "CircleDot", "order": 9, "systemId": "wheels" },
+  { "id": "electrical", "slug": "electrical", "title": "Electrical Systems", "summary": "Battery, starter motor, alternator, charging and vehicle electrics.", "icon": "Zap", "order": 10, "systemId": "electrical" },
+  { "id": "hvac", "slug": "heating-and-air-conditioning", "title": "Heating & Air Conditioning", "summary": "Cabin heating, ventilation and the refrigeration cycle.", "icon": "Fan", "order": 11, "systemId": "hvac" },
+  { "id": "body-chassis", "slug": "body-and-chassis", "title": "Bodywork & Chassis", "summary": "Monocoque and ladder frames, crash structures and materials.", "icon": "Car", "order": 12, "systemId": "body" },
+  { "id": "aero-technology", "slug": "aerodynamics-and-technology", "title": "Aerodynamics & Technology", "summary": "Drag, downforce and modern automotive technology.", "icon": "Wind", "order": 13, "systemId": "body" },
+  { "id": "maintenance", "slug": "maintenance", "title": "Maintenance & Troubleshooting", "summary": "Servicing, diagnosing common faults and sensible modifications.", "icon": "Wrench", "order": 14 },
+  { "id": "driving", "slug": "driving", "title": "Driving Technique", "summary": "How mechanical understanding translates into smoother, safer driving.", "icon": "Gauge", "order": 15 }
+]

@@ -1,0 +1,114 @@
+{
+  "id": "fuel-injection",
+  "slug": "fuel-injection",
+  "title": "Fuel Injection",
+  "summary": "Modern petrol engines meter fuel electronically: the ECU measures the air going in, works out how much fuel will burn cleanly with it, and opens the injectors for precisely timed pulses. Learn port and direct injection and closed-loop mixture control.",
+  "categoryId": "fuel-ignition",
+  "difficulty": "intermediate",
+  "estimatedDuration": 14,
+  "tags": ["fuel", "injection", "ecu", "air-fuel ratio", "lambda", "emissions", "petrol"],
+  "learningObjectives": [
+    "Explain why the air-fuel ratio must be controlled and what λ = 1 means",
+    "Name the main parts of an injection system and what each one measures or does",
+    "Compare port fuel injection with direct injection",
+    "Describe how the oxygen sensor closes the loop on mixture control"
+  ],
+  "beginnerExplanation": "A petrol engine burns a mixture of air and fuel, and the proportions matter. Too much fuel wastes it, fouls spark plugs and makes smoke; too little makes the engine hesitate and run hot. For good economy and low emissions the mixture has to be just right, all the time, from a cold start on a winter morning to full throttle on a motorway.\n\nFuel injection does this job with electronics. A pump in the tank pushes fuel at pressure to the injectors: small electrically operated valves that spray a fine mist. The engine computer (ECU) reads sensors that tell it how much air the engine is drawing in, how warm it is and how hard the driver is pressing the accelerator. It then decides how long each injector stays open — typically a few thousandths of a second per cycle.\n\nAn oxygen sensor in the exhaust reports whether the last mixture was slightly rich or slightly lean, and the ECU nudges the next injection to correct it. This feedback happens many times a second, which is why an injected engine starts easily, idles smoothly and stays clean as it wears.",
+  "technicalExplanation": "Complete combustion of petrol needs about 14.7 kg of air per kilogram of fuel (the stoichiometric ratio). Engineers describe mixture with λ = actual AFR ÷ stoichiometric AFR: λ < 1 is rich, λ > 1 is lean. A three-way catalytic converter can only oxidise CO and HC while reducing NOx when λ is held in a narrow window around 1, so closed-loop control is fundamental to modern emissions compliance.\n\nThe ECU determines the air mass per cylinder per cycle either directly from a hot-film mass-air-flow (MAF) sensor or indirectly from manifold absolute pressure, intake air temperature and engine speed (speed-density). Dividing by the target AFR gives the fuel mass required. An injector at a fixed pressure difference flows at a nearly constant rate, so fuel delivered is roughly proportional to the pulse width minus a dead time (the opening delay, which grows as battery voltage falls and is compensated in software).\n\nPort fuel injection (PFI) sprays at roughly 3–5 bar onto the back of the intake valve, giving time for the fuel to evaporate and mix. Gasoline direct injection (GDI) sprays straight into the cylinder at roughly 100–350 bar. Evaporating fuel inside the cylinder cools the charge, allowing a higher compression ratio before knock, and gives precise control of injection timing; the trade-offs are higher particulate emissions (hence gasoline particulate filters) and carbon build-up on intake valves that are no longer washed by fuel. Some engines combine both. The ECU runs open loop when the oxygen sensor cannot be trusted or a different target is needed: cold-start enrichment, full-load enrichment to protect the catalyst and exhaust valves, and fuel cut-off on the overrun.",
+  "steps": [
+    {
+      "id": "measure-air",
+      "title": "Measure the air",
+      "beginner": "Sensors tell the computer how much air is flowing into the engine right now.",
+      "technical": "Air mass per cycle comes from a MAF sensor, or is inferred from MAP, intake temperature, engine speed and a volumetric-efficiency map (speed-density)."
+    },
+    {
+      "id": "calculate-fuel",
+      "title": "Calculate the fuel",
+      "beginner": "The computer works out how much fuel matches that air, adding a little extra when the engine is cold or working hard.",
+      "technical": "m_fuel = m_air ÷ (λ_target × 14.7), then corrected for coolant temperature, transient wall-wetting, and short- and long-term fuel trims."
+    },
+    {
+      "id": "pressurise",
+      "title": "Pressurise the fuel",
+      "beginner": "A pump keeps fuel waiting in a rail at steady pressure so every injector sprays the same way.",
+      "technical": "An in-tank electric pump supplies the rail (PFI) or feeds a cam-driven high-pressure pump (GDI) whose output is regulated by a solenoid valve against a rail pressure sensor."
+    },
+    {
+      "id": "inject",
+      "title": "Open the injector",
+      "beginner": "Each injector opens for a few milliseconds at exactly the right moment, spraying a fine mist.",
+      "technical": "Pulse width ≈ dead time + m_fuel ÷ static flow rate. PFI is usually timed sequentially on a closed intake valve; GDI may split the charge into several injections per cycle."
+    },
+    {
+      "id": "check-exhaust",
+      "title": "Check the exhaust and correct",
+      "beginner": "An oxygen sensor in the exhaust tells the computer whether the mixture was rich or lean, and it adjusts the next squirt.",
+      "technical": "An upstream wideband or switching λ sensor drives short-term trim; persistent corrections are learned into long-term trim. A downstream sensor monitors catalyst oxygen storage."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "sensors", "label": "Air & engine sensors", "detail": "MAF / MAP, temperature, throttle, rpm" },
+      { "id": "ecu", "label": "ECU", "detail": "Fuel mass → pulse width" },
+      { "id": "pump", "label": "Pump & rail", "detail": "Fuel held at pressure" },
+      { "id": "injector", "label": "Injector", "detail": "Timed spray" },
+      { "id": "cylinder", "label": "Combustion", "detail": "Air + fuel + spark", "topicId": "four-stroke-cycle" },
+      { "id": "lambda", "label": "Oxygen sensor", "detail": "Rich or lean?" }
+    ],
+    "edges": [
+      { "from": "sensors", "to": "ecu" },
+      { "from": "ecu", "to": "injector", "label": "pulse" },
+      { "from": "pump", "to": "injector", "label": "pressure" },
+      { "from": "injector", "to": "cylinder" },
+      { "from": "cylinder", "to": "lambda", "label": "exhaust" },
+      { "from": "lambda", "to": "ecu", "label": "feedback" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Stoichiometric ratio", "definition": "The air-fuel mass ratio at which all fuel and all oxygen can react; about 14.7:1 for petrol.", "equation": "AFR_stoich ≈ 14.7" },
+    { "term": "Lambda (λ)", "definition": "Actual air-fuel ratio divided by the stoichiometric ratio. Below 1 is rich, above 1 is lean.", "equation": "λ = AFR_actual / AFR_stoich" },
+    { "term": "Injector pulse width", "definition": "How long the injector is held open each cycle; fuel delivered is roughly proportional to it once the opening delay is subtracted.", "equation": "m_fuel ≈ q × (t_pulse − t_dead)" },
+    { "term": "Fuel trim", "definition": "The ECU's percentage correction to its calculated fuel quantity, based on oxygen-sensor feedback. Short-term trim reacts quickly; long-term trim learns slowly." }
+  ],
+  "misconceptions": [
+    { "myth": "Adding more fuel always makes more power.", "reality": "Power is limited by how much air the engine can burn. Best power occurs slightly rich of stoichiometric; beyond that, extra fuel only cools the charge and wastes fuel." },
+    { "myth": "The oxygen sensor measures how much fuel is in the exhaust.", "reality": "It measures leftover oxygen. Little oxygen means the mixture was rich; plenty of oxygen means it was lean." },
+    { "myth": "Direct injection is simply a better version of port injection.", "reality": "It enables higher efficiency and power, but brings higher particulate emissions and intake-valve deposits, which is why some engines use both systems." }
+  ],
+  "practicalExamples": [
+    "A trip computer showing zero consumption while coasting downhill in gear is the ECU's overrun fuel cut-off at work.",
+    "A split intake hose after the airflow sensor lets in unmeasured air, so the engine runs lean and often logs a 'system too lean' fault code.",
+    "Cold engines idle faster and use more fuel for the first minutes because the ECU enriches the mixture until fuel evaporates properly."
+  ],
+  "relatedTopicIds": ["spark-ignition", "four-stroke-cycle", "diesel-engines", "diagnosing-warning-signs"],
+  "prerequisiteTopicIds": ["four-stroke-cycle"],
+  "quiz": [
+    {
+      "id": "stoich-ratio",
+      "prompt": "Roughly how many kilograms of air are needed to burn one kilogram of petrol completely?",
+      "options": ["About 1.5", "About 7", "About 14.7", "About 50"],
+      "answerIndex": 2,
+      "explanation": "The stoichiometric air-fuel ratio for petrol is about 14.7:1 by mass, which defines λ = 1."
+    },
+    {
+      "id": "lambda-meaning",
+      "prompt": "The oxygen sensor reports very little oxygen in the exhaust. What does the ECU conclude?",
+      "options": ["The mixture was rich, so it reduces fuel", "The mixture was lean, so it adds fuel", "The catalyst has failed", "The spark is too early"],
+      "answerIndex": 0,
+      "explanation": "Little leftover oxygen means there was more fuel than the air could burn, so the ECU trims fuel down."
+    },
+    {
+      "id": "gdi-benefit",
+      "prompt": "Why can a direct-injection engine often run a higher compression ratio?",
+      "options": ["Its injectors make a stronger spark", "Fuel evaporating inside the cylinder cools the charge and resists knock", "It needs no throttle", "Its pistons are lighter"],
+      "answerIndex": 1,
+      "explanation": "Evaporation absorbs heat from the trapped air, lowering its temperature and making knock less likely."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"How a fuel pump works","url":"https://www.howacarworks.com/basics/how-a-fuel-pump-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

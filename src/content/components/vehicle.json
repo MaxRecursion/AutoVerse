@@ -1,0 +1,418 @@
+[
+  {
+    "id": "body-shell",
+    "name": "Body shell",
+    "systemId": "body",
+    "description": "The main structure of the car: floor, sills, pillars and roof joined into one strong shell. It carries the loads from the wheels and protects the people inside.",
+    "technical": "A unitary (monocoque) body uses the skin, floor pan and pillars as the load-bearing structure instead of a separate frame. Torsional stiffness keeps the suspension mounts in place so the wheels follow their intended geometry, and crumple zones ahead of and behind the cabin absorb crash energy while the cabin itself resists intrusion.",
+    "relatedTopicIds": ["chassis-construction", "aerodynamics"],
+    "annotations": [
+      { "label": "Geometry", "text": "Car Concept model panels, roof, pillars and floor pan." },
+      { "label": "Load path", "text": "Wheel loads enter at the suspension mounts and spread through sills and pillars." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "front-clamshell",
+    "name": "Front clamshell",
+    "systemId": "body",
+    "description": "The whole front of this concept car — bonnet, wings and headlights — is one panel that tilts forward to open, giving wide access to the engine bay.",
+    "technical": "A clamshell trades the usual separate bonnet and wings for one large moulding hinged at its leading lower edge. It gives excellent service access but must be stiff and light; on most road cars the bonnet alone is hinged at the windscreen end. The explorer opens it about its measured hinge line.",
+    "modelObjectName": "BodyHood",
+    "relatedTopicIds": ["chassis-construction", "routine-maintenance"],
+    "annotations": [
+      { "label": "Hinge", "text": "Front lower edge; tilts forward about the car's cross axis." },
+      { "label": "Includes", "text": "Headlights, top grille and inner panels." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "rear-clamshell",
+    "name": "Rear clamshell",
+    "systemId": "body",
+    "description": "The rear deck, rear window and tail lights form one panel that lifts from its back edge, opening up the rear of the car.",
+    "technical": "Like the front clamshell it is hinged at its outer lower edge, so it rises nose-up. It carries the rear glazing and lamps, which is why the whole assembly highlights together.",
+    "modelObjectName": "BodyRearPanelsColor1",
+    "relatedTopicIds": ["chassis-construction"],
+    "annotations": [{ "label": "Hinge", "text": "Rear lower edge; lifts from the back." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "side-doors",
+    "name": "Doors",
+    "systemId": "body",
+    "description": "Two doors hinged at their front edges. Each carries its window, mirror and an inner trim panel.",
+    "technical": "Front-hinged doors are held shut by latches on the rear pillar and contain a side-impact beam on most road cars. Hinging at the front means airflow pushes an opening door shut rather than wrenching it open while moving.",
+    "relatedTopicIds": ["chassis-construction"],
+    "annotations": [{ "label": "Hinge", "text": "Front edge, about a vertical axis." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "windscreen",
+    "name": "Windscreen",
+    "systemId": "body",
+    "description": "The front glass, its seal and the wipers. It keeps wind and rain out and is part of the body's strength.",
+    "technical": "Windscreens are laminated: two layers of glass bonded to a plastic interlayer, so a stone chip cracks rather than shatters. Bonded into the aperture with structural adhesive, the screen adds noticeably to the stiffness of the body and supports the roof in a rollover. Its rake strongly affects aerodynamic drag.",
+    "modelObjectName": "BodyWindshield",
+    "relatedTopicIds": ["chassis-construction", "aerodynamics"],
+    "annotations": [{ "label": "Construction", "text": "Laminated safety glass, bonded in place." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "cabin-interior",
+    "name": "Cabin",
+    "systemId": "body",
+    "description": "The seats, dashboard, floor trim and roll cage — the space the driver and passenger sit in.",
+    "technical": "The cabin is the protected 'survival cell' of the body. Seats are bolted to reinforced floor cross-members and the dashboard hides the heater, wiring and the bulkhead that separates people from the engine bay.",
+    "relatedTopicIds": ["chassis-construction", "air-conditioning"],
+    "annotations": [{ "label": "Geometry", "text": "Car Concept interior meshes." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "engine-unit",
+    "name": "Engine",
+    "systemId": "engine",
+    "description": "Burns fuel with air to turn the crankshaft. In this car it sits across the engine bay, ahead of the front wheels.",
+    "technical": "Mounted transversely, the crankshaft runs side to side and drives the transaxle at its left-hand end; the accessory belt for the alternator is at the right-hand end. The model's engine is a single placeholder block with no internals, resized here to an inline engine's footprint — the Engine Lab shows what happens inside one cylinder.",
+    "modelObjectName": "Engine",
+    "relatedTopicIds": ["four-stroke-cycle", "engine-layouts", "torque-and-power"],
+    "annotations": [
+      { "label": "Mounting", "text": "Transverse, ahead of the front axle." },
+      { "label": "Geometry", "text": "Car Concept placeholder block, scaled to fit the added drivetrain." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "accelerator-pedal",
+    "name": "Accelerator pedal",
+    "systemId": "engine",
+    "description": "The right-hand pedal. Pressing it asks the engine for more power by letting more air and fuel in.",
+    "technical": "On modern cars the pedal is a position sensor: the engine control unit reads it and opens an electronically driven throttle, adjusting fuel and ignition to suit. Older cars used a cable straight to the throttle.",
+    "relatedTopicIds": ["fuel-injection", "torque-and-power"],
+    "annotations": [{ "label": "Signal", "text": "Usually two independent sensors for safety." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "fuel-tank",
+    "name": "Fuel tank and line",
+    "systemId": "engine",
+    "description": "Stores the car's petrol or diesel low in the middle of the car. A pipe carries fuel forward to the engine.",
+    "technical": "Tanks are moulded plastic or steel, shaped around the floor and placed ahead of the rear axle where they are well protected. An in-tank pump feeds the line to the engine; a filler neck runs up to the filler cap and vapour is collected in a charcoal canister rather than vented.",
+    "relatedTopicIds": ["fuel-injection", "diesel-engines"],
+    "annotations": [
+      { "label": "Geometry", "text": "Original AutoVerse model; position is typical, not measured." },
+      { "label": "Filler", "text": "Neck to the right rear quarter." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "clutch-bellhousing",
+    "name": "Clutch and bellhousing",
+    "systemId": "drivetrain",
+    "description": "Between the engine and the gearbox. The clutch inside lets you connect and disconnect the engine from the wheels smoothly.",
+    "technical": "The bell-shaped casing bolts the transaxle to the end of the engine and encloses the flywheel, friction disc and pressure plate. Pressing the clutch pedal moves the release bearing, which lifts the pressure plate's clamp so the disc can slip or free-wheel.",
+    "relatedTopicIds": ["clutch", "manual-gearbox", "drivetrain-layouts"],
+    "annotations": [{ "label": "Geometry", "text": "Original AutoVerse model." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "transaxle",
+    "name": "Transaxle (gearbox)",
+    "systemId": "drivetrain",
+    "description": "A gearbox and differential in one casing. Its gears let the engine stay in a useful speed range from a standstill to motorway speed.",
+    "technical": "In a transverse front-drive car the gearbox shafts run parallel to the crankshaft, and the output pinion drives the final-drive gear directly — no propeller shaft is needed. Each ratio trades wheel speed for torque; the Transmission Lab shows how the gear pairs and selectors work.",
+    "relatedTopicIds": ["manual-gearbox", "drivetrain-layouts", "torque-and-power"],
+    "annotations": [
+      { "label": "Layout", "text": "Gearbox and final drive share one casing." },
+      { "label": "Geometry", "text": "Original AutoVerse model." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "final-drive",
+    "name": "Final drive and differential",
+    "systemId": "drivetrain",
+    "description": "The last gear reduction before the wheels, plus the differential that lets the left and right wheels turn at different speeds in a corner.",
+    "technical": "The final-drive ratio multiplies every gearbox ratio. Inside the crown wheel, planet and side gears split torque equally between the two driveshafts while allowing a speed difference — the outer wheel travels further in a turn.",
+    "relatedTopicIds": ["differential", "drivetrain-layouts"],
+    "annotations": [{ "label": "Position", "text": "On the front axle line, at the back of the transaxle." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "driveshafts",
+    "name": "Driveshafts",
+    "systemId": "drivetrain",
+    "description": "Two shafts that carry drive from the differential out to the front wheels, with flexible joints so the wheels can steer and move up and down.",
+    "technical": "Because the transaxle sits to one side, the shafts are of unequal length. Constant-velocity (CV) joints at each end, sealed by rubber boots, transmit torque at a steady speed through changing angles. The hub stubs come from the model; the shafts, joints and boots are added.",
+    "relatedTopicIds": ["driveshafts-and-cv-joints", "drivetrain-layouts"],
+    "annotations": [
+      { "label": "Joints", "text": "Plunging inner CV joint, fixed outer CV joint." },
+      { "label": "Geometry", "text": "Car Concept hub stubs plus original shafts and boots." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "brake-discs",
+    "name": "Brake discs",
+    "systemId": "braking",
+    "description": "Steel discs that spin with each wheel. The brake pads squeeze them to slow the car, and they get very hot doing it.",
+    "technical": "Braking turns the car's kinetic energy into heat in the discs, so they need mass to absorb it and surface area (often internal vanes) to shed it. Most front discs are ventilated because the front wheels do most of the braking as weight shifts forward.",
+    "relatedTopicIds": ["disc-brakes", "brake-hydraulics"],
+    "annotations": [{ "label": "Geometry", "text": "Car Concept brake discs, one per wheel." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "brake-calipers",
+    "name": "Brake calipers",
+    "systemId": "braking",
+    "description": "The clamps around each disc. Fluid pressure pushes pistons inside them, pressing the pads against the disc.",
+    "technical": "A sliding caliper has piston(s) on one side and slides to pull the outer pad in; fixed calipers have opposed pistons on both sides. Clamping force is line pressure multiplied by total piston area, which is why a small pedal force can create a large force at the disc.",
+    "relatedTopicIds": ["disc-brakes", "brake-hydraulics"],
+    "annotations": [{ "label": "Geometry", "text": "Car Concept caliper (\"brake pad\") meshes." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "footbrake-pedal",
+    "name": "Brake pedal",
+    "systemId": "braking",
+    "description": "The pedal you press to slow down. It works as a lever, multiplying the force from your foot.",
+    "technical": "The pedal ratio (typically about 3–4:1) gives the first mechanical advantage. Its pushrod then acts on the servo and master cylinder, and a switch on the pedal turns the brake lights on.",
+    "relatedTopicIds": ["brake-hydraulics"],
+    "annotations": [{ "label": "Geometry", "text": "Car Concept pedal and arm." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "servo-and-master-cylinder",
+    "name": "Brake servo and master cylinder",
+    "systemId": "braking",
+    "description": "The servo boosts the push from the pedal, and the master cylinder turns that push into fluid pressure for all four brakes.",
+    "technical": "A vacuum servo uses the pressure difference across a large diaphragm to add force to the pushrod. The tandem master cylinder feeds two separate hydraulic circuits, so a leak in one still leaves braking on two wheels. A reservoir on top keeps it topped up with fluid.",
+    "relatedTopicIds": ["brake-hydraulics"],
+    "annotations": [
+      { "label": "Circuits", "text": "Two independent circuits for safety." },
+      { "label": "Geometry", "text": "Original AutoVerse model." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "brake-pipes",
+    "name": "Brake pipes",
+    "systemId": "braking",
+    "description": "Thin metal pipes that carry brake fluid from the master cylinder to every wheel.",
+    "technical": "Rigid steel or copper-alloy pipes run along the body, and short flexible hoses at each corner let the wheels move and steer. Brake fluid is nearly incompressible, so pressure applied at the master cylinder arrives almost instantly at each caliper. The fluid absorbs water over time, which is why it is changed periodically.",
+    "relatedTopicIds": ["brake-hydraulics", "routine-maintenance"],
+    "annotations": [{ "label": "Geometry", "text": "Original AutoVerse model; route is illustrative." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "road-wheels",
+    "name": "Wheels",
+    "systemId": "suspension",
+    "description": "The metal wheels the tyres are mounted on. They bolt to the hubs and carry the car's weight.",
+    "technical": "Alloy wheels are light and stiff, reducing unsprung mass so the suspension can keep the tyre in contact with the road. Their open spokes also let air reach the brakes.",
+    "relatedTopicIds": ["tyres-and-grip", "suspension-basics"],
+    "annotations": [{ "label": "Geometry", "text": "Car Concept rims." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "tyres",
+    "name": "Tyres",
+    "systemId": "suspension",
+    "description": "The only parts of the car that touch the road. Every force for driving, braking and steering passes through four small contact patches.",
+    "technical": "Grip comes from the rubber deforming against the road surface and from a small amount of slip. Inflation pressure sets the size and shape of the contact patch; the tread clears water to prevent aquaplaning.",
+    "relatedTopicIds": ["tyres-and-grip", "routine-maintenance"],
+    "annotations": [{ "label": "Contact patch", "text": "Roughly the size of a hand per tyre." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "coil-springs",
+    "name": "Coil springs",
+    "systemId": "suspension",
+    "description": "Springs at each corner carry the weight of the car and soak up bumps by compressing.",
+    "technical": "Spring rate (force per millimetre of compression) sets ride height and how quickly the body moves over bumps. A softer rate improves comfort; a stiffer one reduces body roll and pitch. At the front each spring sits around the strut.",
+    "relatedTopicIds": ["springs-and-dampers", "suspension-basics"],
+    "annotations": [{ "label": "Geometry", "text": "Original AutoVerse model (the car model has no suspension)." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "dampers",
+    "name": "Dampers (shock absorbers)",
+    "systemId": "suspension",
+    "description": "Oil-filled tubes that stop the car bouncing on its springs after a bump.",
+    "technical": "Forcing oil through small valves turns the energy stored in the spring into heat. Damping resists motion in proportion to speed, so it controls oscillation without adding stiffness at rest. At the front the damper forms the structural MacPherson strut that also locates the wheel.",
+    "relatedTopicIds": ["springs-and-dampers", "suspension-basics"],
+    "annotations": [{ "label": "Front", "text": "MacPherson strut." }, { "label": "Rear", "text": "Coil-over damper." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "control-arms",
+    "name": "Control arms",
+    "systemId": "suspension",
+    "description": "Arms that join each wheel to the body and guide it up and down in a controlled path.",
+    "technical": "Wishbone-shaped lower arms pivot on rubber bushes at the body and a ball joint at the wheel. They take braking and cornering forces into the structure and, with the strut or upper link, set the camber change as the wheel moves.",
+    "relatedTopicIds": ["suspension-basics", "steering-systems"],
+    "annotations": [{ "label": "Geometry", "text": "Original AutoVerse model." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "rear-stub-axles",
+    "name": "Rear hubs and stub axles",
+    "systemId": "suspension",
+    "description": "The short axles the rear wheels turn on. In a front-drive car they carry the wheels but are not driven.",
+    "technical": "Each stub axle runs in a sealed wheel bearing on the rear hub carrier. With front-wheel drive the rear axle only supports and locates the wheels and carries the rear brakes.",
+    "relatedTopicIds": ["drivetrain-layouts", "suspension-basics"],
+    "annotations": [{ "label": "Geometry", "text": "Rear half of the Car Concept's axle mesh." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "steering-wheel",
+    "name": "Steering wheel",
+    "systemId": "steering",
+    "description": "Turning it steers the front wheels. In this concept car it is mounted in the centre of the cabin.",
+    "technical": "Around one and a half turns from the straight-ahead to full lock is typical with power assistance. The wheel also carries the driver's airbag and switches on most road cars.",
+    "modelObjectName": "InteriorSteeringCylinder",
+    "relatedTopicIds": ["steering-systems"],
+    "annotations": [{ "label": "Position", "text": "Central driving position." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "steering-column",
+    "name": "Steering column",
+    "systemId": "steering",
+    "description": "The shaft that carries your turning of the wheel down to the steering gear.",
+    "technical": "The column collapses in a frontal crash so it is not pushed towards the driver, and universal joints on the intermediate shaft let it bend around the pedals and bulkhead. Electric power steering often places its assist motor on the column.",
+    "relatedTopicIds": ["steering-systems"],
+    "annotations": [{ "label": "Geometry", "text": "Car Concept column plus an original intermediate shaft." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "steering-gear",
+    "name": "Rack-and-pinion steering gear",
+    "systemId": "steering",
+    "description": "A small gear (the pinion) on the end of the column moves a toothed bar (the rack) left or right across the car.",
+    "technical": "Rack travel per pinion revolution sets the steering ratio. The rack is mounted to the subframe behind the axle line here; rubber gaiters keep dirt off the rack ends and inner joints.",
+    "relatedTopicIds": ["steering-systems"],
+    "annotations": [{ "label": "Geometry", "text": "Original AutoVerse model." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "tie-rods",
+    "name": "Tie rods",
+    "systemId": "steering",
+    "description": "Rods that join each end of the rack to the front hubs, so moving the rack swivels the wheels.",
+    "technical": "Ball joints at both ends let the rods follow the wheel as it rises and falls. Their length is adjusted to set the toe angle during a wheel alignment, and their geometry makes the inner wheel turn more sharply than the outer one.",
+    "relatedTopicIds": ["steering-systems", "tyres-and-grip"],
+    "annotations": [{ "label": "Adjustment", "text": "Sets the toe angle." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "battery",
+    "name": "12 V battery",
+    "systemId": "electrical",
+    "description": "Stores electricity to start the engine and to power the car's electrics when the engine is off.",
+    "technical": "A lead-acid starter battery is six 2-volt cells in series. It is built to deliver a very high current for a few seconds, and the charging system keeps it at around full charge while driving.",
+    "relatedTopicIds": ["battery-and-starter", "alternator-and-charging"],
+    "annotations": [{ "label": "Position", "text": "Front right corner of the engine bay (typical, not measured)." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "alternator",
+    "name": "Alternator",
+    "systemId": "electrical",
+    "description": "A generator driven by a belt from the engine. It powers the electrics and recharges the battery while the engine runs.",
+    "technical": "A spinning electromagnet induces alternating current in the stator windings; diodes rectify it and a regulator holds the output near 14 volts. Its belt runs from the crankshaft pulley at the engine's accessory end.",
+    "relatedTopicIds": ["alternator-and-charging"],
+    "annotations": [{ "label": "Drive", "text": "Belt from the crankshaft pulley." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "starter-motor",
+    "name": "Starter motor",
+    "systemId": "electrical",
+    "description": "A powerful electric motor that turns the engine over until it starts running by itself.",
+    "technical": "A solenoid pushes a small pinion into mesh with the ring gear on the flywheel and closes the heavy contacts. The high gear ratio lets a compact motor crank the engine at a couple of hundred rpm.",
+    "relatedTopicIds": ["battery-and-starter"],
+    "annotations": [{ "label": "Mounting", "text": "On the bellhousing, meshing with the flywheel." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "battery-cables",
+    "name": "Battery cables",
+    "systemId": "electrical",
+    "description": "Thick cables that connect the battery to the starter, the alternator and the car's body (the earth return).",
+    "technical": "Starter current can exceed 100 amps, so the main cables are short and heavy to keep voltage drop low. The body serves as the negative return path through an earth strap. The rest of the wiring harness is not shown.",
+    "relatedTopicIds": ["battery-and-starter", "diagnosing-warning-signs"],
+    "annotations": [{ "label": "Not shown", "text": "Fuses and the wiring harness." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "radiator",
+    "name": "Radiator",
+    "systemId": "cooling",
+    "description": "A thin panel of tubes and fins at the front of the car. Air passing through it carries heat away from the engine's coolant.",
+    "technical": "Hot coolant flows through flat tubes between side tanks; thin folded fins between the tubes multiply the surface area exposed to the airflow from the grille. A pressure cap raises the coolant's boiling point.",
+    "relatedTopicIds": ["cooling-system"],
+    "annotations": [{ "label": "Geometry", "text": "Original AutoVerse model, ahead of the engine." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "radiator-fan",
+    "name": "Cooling fan",
+    "systemId": "cooling",
+    "description": "An electric fan behind the radiator that pulls air through it when the car is slow or stopped.",
+    "technical": "At speed, ram air is enough; the fan is switched on by a temperature sensor when it is not. The shroud makes sure the fan draws air through the whole radiator core rather than around it.",
+    "relatedTopicIds": ["cooling-system"],
+    "annotations": [{ "label": "Control", "text": "Switched by coolant temperature." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "coolant-hoses",
+    "name": "Coolant hoses",
+    "systemId": "cooling",
+    "description": "Rubber hoses carrying coolant between the engine, the radiator and the cabin heater.",
+    "technical": "The top hose takes hot coolant from the thermostat housing to the radiator; the bottom hose returns it to the water pump. Two smaller hoses feed the heater matrix behind the dashboard, which is how the cabin is warmed.",
+    "relatedTopicIds": ["cooling-system", "air-conditioning", "routine-maintenance"],
+    "annotations": [{ "label": "Top hose", "text": "Hot, from the thermostat." }, { "label": "Bottom hose", "text": "Cooled, back to the pump." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "exhaust-manifold",
+    "name": "Exhaust manifold",
+    "systemId": "exhaust",
+    "description": "Pipes bolted to the engine that collect the hot exhaust gas from each cylinder into one outlet.",
+    "technical": "Runner lengths and the collector shape affect how pressure pulses help or hinder each cylinder's exhaust stroke. The manifold reaches several hundred degrees Celsius, so it is usually cast iron or thin-wall stainless steel with heat shields.",
+    "relatedTopicIds": ["four-stroke-cycle", "valves-and-camshaft"],
+    "annotations": [{ "label": "Position", "text": "On the engine's rear face." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "catalytic-converter",
+    "name": "Catalytic converter",
+    "systemId": "exhaust",
+    "description": "Cleans the exhaust gas, turning the most harmful gases into less harmful ones.",
+    "technical": "A ceramic honeycomb coated with precious metals converts carbon monoxide and hydrocarbons to carbon dioxide and water and reduces nitrogen oxides to nitrogen. It only works when hot and when the mixture is kept close to the chemically correct ratio, so it sits close to the engine.",
+    "relatedTopicIds": ["fuel-injection", "diagnosing-warning-signs"],
+    "annotations": [{ "label": "Works above", "text": "Roughly 250–300 °C (light-off)." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "exhaust-pipework",
+    "name": "Exhaust pipework",
+    "systemId": "exhaust",
+    "description": "The pipes that carry exhaust gas from the engine, under the floor, to the back of the car.",
+    "technical": "The system hangs on rubber mounts so engine movement and vibration are not passed into the body, and flexible sections absorb the engine rocking on its mounts.",
+    "relatedTopicIds": ["routine-maintenance", "diagnosing-warning-signs"],
+    "annotations": [{ "label": "Geometry", "text": "Original AutoVerse model; route is illustrative." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "rear-silencer",
+    "name": "Rear silencer",
+    "systemId": "exhaust",
+    "description": "A box near the back of the car that makes the exhaust much quieter before the gas leaves the tailpipe.",
+    "technical": "Inside, perforated tubes, chambers and sound-absorbing packing break up the pressure pulses and cancel some frequencies by reflection, reducing noise with as little back-pressure as possible.",
+    "relatedTopicIds": ["routine-maintenance"],
+    "annotations": [{ "label": "Position", "text": "Across the car, behind the rear axle." }],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  }
+]

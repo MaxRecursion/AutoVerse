@@ -1,0 +1,152 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/jetbrains-mono';
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * AutoVerse design tokens — graphite surfaces, warm-white type,
+ * electric cyan for interaction, amber for motion paths / energy,
+ * red/green reserved for technical states.
+ */
+:root {
+  --radius: 0.625rem;
+
+  --ink: #08090b;
+  --graphite-950: #0b0c0f;
+  --graphite-900: #101216;
+  --graphite-850: #15181d;
+  --graphite-800: #1b1f25;
+  --graphite-700: #252a32;
+  --graphite-600: #343a44;
+  --steel-500: #5b6472;
+  --steel-400: #8a93a0;
+  --steel-300: #b3bbc6;
+  --paper: #f3efe6;
+
+  --cyan: #38d7f2;
+  --cyan-dim: #1b8fa3;
+  --amber: #f6a63a;
+  --danger: #ff5c4d;
+  --ok: #4fd58a;
+
+  /* shadcn semantic tokens (dark-first app) */
+  --background: var(--graphite-950);
+  --foreground: var(--paper);
+  --card: var(--graphite-900);
+  --card-foreground: var(--paper);
+  --popover: var(--graphite-850);
+  --popover-foreground: var(--paper);
+  --primary: var(--cyan);
+  --primary-foreground: #031216;
+  --secondary: var(--graphite-800);
+  --secondary-foreground: var(--paper);
+  --muted: var(--graphite-800);
+  --muted-foreground: var(--steel-400);
+  --accent: var(--graphite-700);
+  --accent-foreground: var(--paper);
+  --destructive: var(--danger);
+  --border: rgb(255 255 255 / 0.08);
+  --input: rgb(255 255 255 / 0.12);
+  --ring: var(--cyan);
+}
+
+@theme inline {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  --color-ink: var(--ink);
+  --color-graphite-950: var(--graphite-950);
+  --color-graphite-900: var(--graphite-900);
+  --color-graphite-850: var(--graphite-850);
+  --color-graphite-800: var(--graphite-800);
+  --color-graphite-700: var(--graphite-700);
+  --color-graphite-600: var(--graphite-600);
+  --color-steel-500: var(--steel-500);
+  --color-steel-400: var(--steel-400);
+  --color-steel-300: var(--steel-300);
+  --color-paper: var(--paper);
+  --color-cyan: var(--cyan);
+  --color-cyan-dim: var(--cyan-dim);
+  --color-amber: var(--amber);
+  --color-danger: var(--danger);
+  --color-ok: var(--ok);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/60;
+  }
+  html {
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-cyan;
+  }
+}
+
+@layer components {
+  /* Fine engineering grid used behind hero / scene panels */
+  .bg-blueprint {
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+      linear-gradient(rgb(255 255 255 / 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.018) 1px, transparent 1px);
+    background-size: 96px 96px, 96px 96px, 16px 16px, 16px 16px;
+  }
+  /* Restrained metallic panel */
+  .panel {
+    @apply rounded-xl border border-white/[0.07] bg-graphite-900/80 backdrop-blur-md;
+    box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 20px 40px -24px rgb(0 0 0 / 0.8);
+  }
+  .eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-steel-400;
+  }
+  .annotation {
+    @apply font-mono text-[11px] tracking-wide text-steel-300;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,225 @@
+{
+  "id": "suspension-basics",
+  "slug": "suspension-basics",
+  "title": "Suspension Basics",
+  "summary": "The suspension lets each wheel rise and fall over the road while the body glides along and the tyre stays pressed onto the surface. Drive a double-wishbone corner over a bump and a pothole and see how the arms, spring and damper share the work.",
+  "categoryId": "suspension-steering",
+  "difficulty": "beginner",
+  "estimatedDuration": 14,
+  "tags": ["suspension", "double wishbone", "control arms", "coil spring", "damper", "sprung mass", "unsprung mass", "ride", "handling"],
+  "learningObjectives": [
+    "Explain the suspension's two jobs: isolating the body from the road and keeping the tyre loaded on the road",
+    "Name the parts of a double-wishbone corner and say what each one does",
+    "Tell sprung mass from unsprung mass and describe suspension travel in bump and rebound",
+    "Describe what happens to the wheel, spring, damper and body as a car drives over a bump",
+    "Explain why a tyre can leave the road in a pothole and why that matters for steering and braking"
+  ],
+  "beginnerExplanation": "Roads are never perfectly flat. Without suspension every bump would jolt straight into the car, and the wheels would bounce off the surface. The suspension sits between each wheel and the body so that the wheel can move up and down by itself while the body carries on smoothly.\n\nEach corner has three kinds of part. Links — here an upper and a lower control arm, often called wishbones — guide the wheel along a controlled path and hold it in place against braking and cornering forces. A spring carries the weight of the car and gives way when the wheel is pushed up. A damper (shock absorber) slows the movement down so the car does not keep bouncing after the bump.\n\nEngineers split the car into two parts. Everything above the springs — body, engine, passengers — is the sprung mass. The wheel, tyre, hub and knuckle that move with the road are the unsprung mass. Good suspension keeps the sprung mass calm and the unsprung mass following the road, because a tyre can only grip while it is pressed onto the surface.",
+  "technicalExplanation": "A suspension has two partly competing tasks. Ride: isolate the sprung mass m_s from road inputs, which calls for a low body natural frequency (soft springs) and enough damping to stop it oscillating. Road holding: keep the vertical tyre load F_t as steady as possible, because the tyre's available longitudinal and lateral force scales with it. The classic way to study both is the quarter-car model: m_s on the suspension spring k and damper c, above the unsprung mass m_u, which sits on the tyre spring k_t. Displacements z_s and z_u are measured from static equilibrium, and the suspension travel is s = z_u − z_s (positive in bump/compression, negative in rebound/extension).\n\nThe linkage sets the path of the wheel. In a double wishbone the two arms pivot on body-mounted bushes and carry ball joints on a rigid knuckle; together they form a four-bar linkage in front view. A shorter upper arm (short–long arm, SLA) makes the knuckle tilt inward as it rises, giving negative camber gain that offsets body roll in corners; arm lengths and angles also set the roll-centre height and keep the lateral scrub of the tyre small. The coil-over usually acts on the lower arm, so it moves less than the wheel: with motion ratio MR = Δspring/Δwheel ≈ 0.55 here, the wheel rate is k_wheel = k_spring × MR², so the spring itself must be about 3.3× stiffer than the wheel rate it provides.\n\nIn this lab the corner drives over a looping test road at 18 km/h. The quarter-car equations are integrated with a fixed-step fourth-order Runge–Kutta scheme until the response repeats every lap, and the 3D linkage is solved for the resulting travel at every frame, so the arms, ball joints, coil-over, tie rod and anti-roll-bar link always close exactly. All masses, rates and hard points are illustrative teaching values, not data for a real car.",
+  "steps": [
+    {
+      "id": "at-rest",
+      "title": "Cruising: the car rests on its springs",
+      "beginner": "On a smooth road, once the last bump's bouncing has died away, nothing moves. The coil spring holds the body up at its ride height and the tyre carries a steady share of the car's weight. Everything above the spring is 'sprung'; the wheel, hub and knuckle below it are 'unsprung'.",
+      "technical": "Static equilibrium: the spring's preload balances the sprung weight m_s·g (300 kg here, about 2.9 kN) and the tyre carries (m_s + m_u)·g ≈ 3.3 kN, squashed by about 17 mm. The model measures every displacement from this state, so with a balanced or firm damper body, wheel and travel read within about a millimetre of 0 mm and the tyre load about 1.00 × static. The test road loops, so with the worn (too soft) damper the body is still bobbing from the previous lap when the bump comes round again.",
+      "cue": "approach",
+      "componentIds": ["coil-spring", "chassis-mounts", "wheel-and-tyre"]
+    },
+    {
+      "id": "bump",
+      "title": "Bump: the road pushes the wheel up",
+      "beginner": "As the tyre climbs the 60 mm hump, the road shoves the wheel upward. Both control arms swing up on their pivots, the spring gets shorter and the damper rod slides into its body. Because the spring gives way, the body hardly moves at first.",
+      "technical": "Suspension travel s = z_u − z_s goes positive (compression, or 'bump'). At 0.45 s the wheel has risen about 22 mm while the body has moved about 1 mm, and the tyre load peaks near 1.8 × static as the tyre accelerates the unsprung mass upward. The damper force opposes the travel velocity, so it adds to the spring force lifting the body.",
+      "cue": "compression",
+      "componentIds": ["wheel-and-tyre", "lower-control-arm", "upper-control-arm", "coil-spring", "damper"]
+    },
+    {
+      "id": "full-bump",
+      "title": "Full bump: the most compressed moment",
+      "beginner": "At the top of the hump the wheel is about 55 mm closer to the body than at rest. Look at the spring: the gaps between its coils have closed up. The top of the wheel also leans in a little, because the upper arm is shorter than the lower one.",
+      "technical": "With the default setup peak travel is about 55 mm, just short of the bump stop at 58 mm. The short–long arms give about −2.1° of camber change here, and the coil-over has shortened by roughly 30 mm (motion ratio ≈ 0.55). The ball joints stay on the knuckle because the linkage is solved every frame with each arm held at its length.",
+      "cue": "full-bump",
+      "componentIds": ["coil-spring", "upper-control-arm", "lower-control-arm", "ball-joints", "knuckle-upright"]
+    },
+    {
+      "id": "rebound",
+      "title": "Rebound: the spring pushes back",
+      "beginner": "Past the crest the road falls away and the squeezed spring pushes the wheel back down and the body up. The damper slows this rebound, so the body rises gently instead of leaping off its springs.",
+      "technical": "Travel velocity turns negative (extension, or 'rebound'). The energy stored in the spring now accelerates the body upward — with the balanced damper it overshoots to about +40 mm — while the damper removes energy at a rate F_d·v. The tyre load falls to about 0.7 × static as the wheel follows the road's falling slope.",
+      "cue": "rebound",
+      "componentIds": ["coil-spring", "damper", "wheel-and-tyre"]
+    },
+    {
+      "id": "settle",
+      "title": "Settling back to ride height",
+      "beginner": "With a well-matched damper the body makes one gentle swing up, a smaller one down, and settles. The energy the bump put in has been turned into a little heat in the damper oil.",
+      "technical": "With a damping ratio of about 0.3 each swing is a fraction of the one before: the body moves at roughly its natural frequency (about 1.4 Hz here) through one visible overshoot (+40 mm, then −17 mm) and is back within about 7 mm of ride height by 1.4 s. The springs and dampers lesson shows what too little and too much damping do.",
+      "cue": "settle",
+      "componentIds": ["damper", "coil-spring", "chassis-mounts"]
+    },
+    {
+      "id": "pothole",
+      "title": "Pothole: the tyre leaves the road",
+      "beginner": "In a 50 mm pothole the road drops away faster than the spring can push the wheel down after it. For a split second the tyre is in the air, and while it is, it cannot steer or brake. Light wheels and well-chosen springs and dampers keep that moment short.",
+      "technical": "The tyre can only push: its force F_t = k_t·(z_r − z_u + δ_static) would go negative, so it is clipped to zero and contact is lost. The wheel's downward acceleration is limited to (spring + damper force) ÷ m_u, and with the default setup the tyre is off the road for about 40 ms in total. That is why unsprung mass matters — a lighter wheel follows a falling road surface more closely.",
+      "cue": "airborne",
+      "componentIds": ["wheel-and-tyre", "coil-spring", "damper", "hub-bearing"]
+    },
+    {
+      "id": "ripples",
+      "title": "Ripples: the wheel works, the body rests",
+      "beginner": "Small, closely spaced ripples make the wheel move up and down quickly, but the heavy body hardly follows: the spring isolates it. Here the tyre and the light wheel assembly do almost all the moving.",
+      "technical": "At 18 km/h the 0.42 m ripples shake the wheel at about 12 Hz — close to the wheel-hop frequency √((k + k_t)/m_u)/2π — and far above the 1.4 Hz body frequency, where the spring passes on little force. With the balanced damper the body moves about 10 mm in total while the wheel moves two to three times as much. Whether the tyre keeps contact now depends on the damper.",
+      "cue": "ripples",
+      "componentIds": ["wheel-and-tyre", "hub-bearing", "damper", "coil-spring"]
+    }
+  ],
+  "componentIds": [
+    "wheel-and-tyre",
+    "hub-bearing",
+    "knuckle-upright",
+    "ball-joints",
+    "upper-control-arm",
+    "lower-control-arm",
+    "coil-spring",
+    "damper",
+    "bump-stop",
+    "anti-roll-bar",
+    "drop-link",
+    "tie-rod",
+    "chassis-mounts"
+  ],
+  "labId": "suspension",
+  "flow": {
+    "nodes": [
+      { "id": "road", "label": "Road surface", "detail": "Bumps, potholes, ripples" },
+      { "id": "tyre", "label": "Tyre", "detail": "Stiff air spring k_t", "componentId": "wheel-and-tyre" },
+      { "id": "unsprung", "label": "Wheel, hub & knuckle", "detail": "Unsprung mass m_u", "componentId": "knuckle-upright" },
+      { "id": "arms", "label": "Control arms", "detail": "Guide the wheel's path", "componentId": "lower-control-arm" },
+      { "id": "spring", "label": "Coil spring", "detail": "Carries weight, stores energy", "componentId": "coil-spring" },
+      { "id": "damper", "label": "Damper", "detail": "Turns motion into heat", "componentId": "damper" },
+      { "id": "body", "label": "Body", "detail": "Sprung mass m_s", "componentId": "chassis-mounts" },
+      { "id": "grip", "label": "Grip", "detail": "Needs a steady tyre load", "topicId": "tyres-and-grip" }
+    ],
+    "edges": [
+      { "from": "road", "to": "tyre", "label": "vertical input" },
+      { "from": "tyre", "to": "unsprung" },
+      { "from": "unsprung", "to": "arms", "label": "ball joints" },
+      { "from": "arms", "to": "spring", "label": "motion ratio" },
+      { "from": "arms", "to": "damper" },
+      { "from": "spring", "to": "body" },
+      { "from": "damper", "to": "body" },
+      { "from": "tyre", "to": "grip", "label": "tyre load" }
+    ]
+  },
+  "keyConcepts": [
+    {
+      "term": "Sprung and unsprung mass",
+      "definition": "Sprung mass is everything carried by the springs (body, engine, occupants). Unsprung mass moves with the road: wheel, tyre, hub, knuckle and brakes, plus part of the arms and springs."
+    },
+    {
+      "term": "Suspension travel",
+      "definition": "How far the wheel has moved relative to the body. Positive is bump (compression), negative is rebound (extension).",
+      "equation": "s = z_u − z_s"
+    },
+    {
+      "term": "Motion ratio and wheel rate",
+      "definition": "When the spring is mounted part-way along an arm it moves less than the wheel, so the stiffness felt at the wheel is lower than the spring's own rate.",
+      "equation": "k_wheel = k_spring × MR²"
+    },
+    {
+      "term": "Body (ride) frequency",
+      "definition": "How fast the body bounces on its springs. Passenger cars are usually tuned to roughly 1–1.5 Hz.",
+      "equation": "f_body ≈ (1 / 2π) × √(k_ride / m_s),  k_ride = k·k_t / (k + k_t)"
+    },
+    {
+      "term": "Camber gain",
+      "definition": "The change in the wheel's lean as it moves up and down. A shorter upper arm tilts the top of the wheel inward in bump, keeping the tyre flatter on the road when the body rolls."
+    },
+    {
+      "term": "Tyre load",
+      "definition": "The vertical force between tyre and road. The tyre behaves as a stiff spring that can push but not pull, so its load drops to zero when the wheel lifts off.",
+      "equation": "F_t = k_t × (z_r − z_u + δ_static),  F_t ≥ 0"
+    }
+  ],
+  "misconceptions": [
+    {
+      "myth": "Suspension is only there to make the ride comfortable.",
+      "reality": "Comfort is half the job. The other half is keeping each tyre pressed onto the road with a steady load, because a tyre can only steer, brake and accelerate the car while it is in firm contact."
+    },
+    {
+      "myth": "The shock absorbers absorb the bump.",
+      "reality": "The springs take the bump by storing its energy. The dampers ('shock absorbers') then control how that energy is released, turning the motion into heat so the car does not keep bouncing."
+    },
+    {
+      "myth": "Stiffer suspension always means more grip.",
+      "reality": "On a smooth track stiffer settings reduce body movement, but on a bumpy road an over-stiff suspension cannot let the wheel follow the surface, so tyre load swings wildly and grip falls. The lab's 'too stiff' damper shows the tyre skipping off a bump."
+    }
+  ],
+  "practicalExamples": [
+    "Crossing a speed hump at about 18 km/h — the lab's single-bump road — takes the wheel through about 55 mm of travel while a well-damped body moves less than the hump is high and settles within one bounce.",
+    "Hitting a deep pothole briefly lifts the tyre off the road. Braking or steering hard at that instant has nothing to work with, which is one reason to slow down before a pothole rather than in it.",
+    "A heavily loaded car sits lower because each spring compresses further under the extra weight; the suspension then has less bump travel left before it reaches the bump stops.",
+    "After a control arm, ball joint or tie-rod end is replaced, the wheel alignment (camber and toe) is checked, because those parts set the wheel's angles."
+  ],
+  "relatedTopicIds": ["springs-and-dampers", "steering-systems", "tyres-and-grip", "chassis-construction", "diagnosing-warning-signs"],
+  "prerequisiteTopicIds": ["how-a-car-works"],
+  "quiz": [
+    {
+      "id": "unsprung-parts",
+      "prompt": "Which of these is part of the unsprung mass?",
+      "options": ["The engine", "The wheel, tyre, hub and knuckle", "The seats and passengers", "The roof panel"],
+      "answerIndex": 1,
+      "explanation": "Unsprung parts move with the road below the springs. The engine, seats, passengers and body panels are carried by the springs, so they are sprung mass."
+    },
+    {
+      "id": "damper-job",
+      "prompt": "What is the damper's main job?",
+      "options": [
+        "To carry the weight of the car",
+        "To turn the suspension's motion energy into heat so the car stops bouncing",
+        "To steer the wheel",
+        "To store energy for the next bump"
+      ],
+      "answerIndex": 1,
+      "explanation": "The spring carries the weight and stores energy; the damper resists motion and dissipates that energy as heat in its oil."
+    },
+    {
+      "id": "camber-gain",
+      "prompt": "In a double wishbone with a shorter upper arm, what happens to the top of the wheel as the wheel moves up into bump?",
+      "options": ["It leans outward", "It leans inward (negative camber)", "It stays perfectly upright", "It steers to the left"],
+      "answerIndex": 1,
+      "explanation": "The short upper arm swings through a tighter arc, pulling the top of the knuckle inward. In the lab this is about −2° at full bump."
+    },
+    {
+      "id": "motion-ratio",
+      "prompt": "A spring is mounted where it moves 0.5 mm for every 1 mm of wheel travel. To get a wheel rate of 25 N/mm, roughly how stiff must the spring be?",
+      "options": ["12.5 N/mm", "25 N/mm", "50 N/mm", "100 N/mm"],
+      "answerIndex": 3,
+      "explanation": "Wheel rate = spring rate × MR². With MR = 0.5, MR² = 0.25, so the spring needs 25 ÷ 0.25 = 100 N/mm."
+    },
+    {
+      "id": "pothole-contact",
+      "prompt": "Why can a tyre lose contact with the road in a pothole?",
+      "options": [
+        "The tyre pulls the wheel down too hard",
+        "The road drops away faster than the spring and damper can push the wheel down after it, and a tyre cannot pull itself onto the road",
+        "The anti-roll bar locks the wheel in place",
+        "The brakes stop the wheel turning"
+      ],
+      "answerIndex": 1,
+      "explanation": "The tyre can only push on the road. If the surface falls faster than the wheel can be accelerated downward, the tyre force drops to zero and the tyre leaves the road until it catches up."
+    }
+  ],
+  "sourceReferences": [
+    {
+      "title": "How car suspension works",
+      "url": "https://www.howacarworks.com/basics/how-car-suspension-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

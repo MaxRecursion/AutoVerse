@@ -1,0 +1,115 @@
+{
+  "id": "diagnosing-warning-signs",
+  "slug": "diagnosing-warning-signs",
+  "title": "Diagnosing Warning Signs",
+  "summary": "Cars announce most problems before they become failures — through warning lights, noises, smells, smoke and changes in feel. Learn what the common signs usually point to, how fault codes help, and a methodical way to narrow down a cause.",
+  "categoryId": "maintenance",
+  "difficulty": "intermediate",
+  "estimatedDuration": 14,
+  "tags": ["diagnosis", "warning lights", "obd", "fault codes", "noises", "troubleshooting", "safety"],
+  "learningObjectives": [
+    "Interpret warning-light colours and decide how urgently to act",
+    "Link common noises, smells, smoke colours and vibrations to likely systems",
+    "Explain what an OBD fault code does and does not tell you",
+    "Apply a structured diagnostic process: observe, reproduce, isolate, test, verify"
+  ],
+  "beginnerExplanation": "Warning lights follow a widely used colour convention. Red means a potentially serious problem — such as low oil pressure, overheating, a brake system fault or no charging — and you should stop safely as soon as you can and investigate. Amber or yellow means something needs attention soon, such as an engine management fault, ABS or a tyre-pressure warning. Green and blue lights just confirm that something is switched on.\n\nYour senses are useful diagnostic tools too. A squeal when braking is often a built-in wear indicator on the pads; grinding means metal on metal. A sweet smell may be coolant; a burning smell after hard braking may be hot brakes. Blue-grey exhaust smoke suggests oil being burned, persistent white smoke with a sweet smell can mean coolant entering the cylinders, and black smoke means too much fuel. Vibration through the steering wheel when braking often points to uneven brake discs.\n\nWhen the engine warning light comes on, the car's computer has stored a fault code. A simple code reader plugged into the diagnostic socket under the dashboard can display it. The code tells you which measurement looked wrong — a starting point, not a final answer.",
+  "technicalExplanation": "Tell-tale symbols and colours are standardised internationally (ISO 2575), with red for danger requiring immediate action, amber/yellow for caution and green/blue for information. A flashing malfunction indicator lamp (MIL) typically signals active misfire severe enough to damage the catalytic converter, so load should be reduced at once. Most warning lamps illuminate briefly at key-on as a bulb and system check; a lamp that never lights may itself hide a fault.\n\nOn-board diagnostics (OBD-II in the USA from 1996; EOBD in the EU for petrol cars from 2001 and diesels from 2004) monitor emissions-related systems and store diagnostic trouble codes (DTCs) with freeze-frame data — engine speed, load, temperature and fuel trims at the moment the fault was detected. Codes such as P0171 ('system too lean, bank 1') describe a symptom: the cause might be an intake air leak, a weak fuel pump, a dirty airflow sensor or an exhaust leak ahead of the oxygen sensor. Live data (fuel trims, sensor voltages, misfire counters) and readiness monitors show whether a repair has been effective. Manufacturer-specific codes cover body, chassis and network systems.\n\nGood diagnosis is a process: gather the symptom precisely (when, at what temperature, speed or load), reproduce it, check the simple things first (fluid levels, connections, fuses, tyre pressures), use the system's operating principle to isolate the subsystem, then test components against specification before replacing parts, and finally verify the fix under the original conditions. Speed-related noises (rising with road speed regardless of gear) point to wheels, tyres, bearings, driveshafts or the final drive; engine-speed-related noises point to the engine and its ancillaries. A humming that changes when weaving left and right suggests a wheel bearing, since loading shifts between sides; clicking on full lock under power suggests an outer CV joint. Symptoms involving brakes, steering, fuel smells or overheating are safety-critical and warrant professional inspection.",
+  "steps": [
+    {
+      "id": "observe",
+      "title": "Observe precisely",
+      "beginner": "Note exactly what happens: which light, what noise, and when — cold or hot, at what speed, turning or straight.",
+      "technical": "Record conditions (temperature, load, speed, gear, steering angle); retrieve DTCs and freeze-frame data before clearing anything."
+    },
+    {
+      "id": "urgency",
+      "title": "Judge the urgency",
+      "beginner": "Red warnings mean stop safely; amber means get it checked soon; changes in braking or steering are always urgent.",
+      "technical": "Oil pressure, coolant temperature, brake and charge lamps indicate conditions that can escalate to major damage within minutes."
+    },
+    {
+      "id": "simple-first",
+      "title": "Check the simple things",
+      "beginner": "Look at fluid levels, tyre pressures, battery terminals and fuses before suspecting expensive parts.",
+      "technical": "Verify supply, ground and connector integrity; many sensor codes are caused by wiring or connector faults rather than failed sensors."
+    },
+    {
+      "id": "isolate",
+      "title": "Isolate the system",
+      "beginner": "Use when the symptom happens to narrow it down — road-speed noises come from wheels and driveline, engine-speed noises from the engine.",
+      "technical": "Compare symptoms against operating principles; use live data and substitution tests to separate cause from effect."
+    },
+    {
+      "id": "verify",
+      "title": "Fix and verify",
+      "beginner": "After a repair, check the problem is really gone under the same conditions.",
+      "technical": "Clear codes only after repair; confirm readiness monitors complete and the fault does not return on a road test."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "symptom", "label": "Symptom", "detail": "Light, noise, smell, feel" },
+      { "id": "codes", "label": "Fault codes & live data", "detail": "OBD socket" },
+      { "id": "checks", "label": "Basic checks", "detail": "Fluids, tyres, connections", "topicId": "routine-maintenance" },
+      { "id": "isolate", "label": "Isolate system", "detail": "Engine, driveline, brakes…" },
+      { "id": "test", "label": "Test & repair", "detail": "Against specification" },
+      { "id": "verify", "label": "Verify", "detail": "Same conditions" }
+    ],
+    "edges": [
+      { "from": "symptom", "to": "codes" },
+      { "from": "symptom", "to": "checks" },
+      { "from": "codes", "to": "isolate" },
+      { "from": "checks", "to": "isolate" },
+      { "from": "isolate", "to": "test" },
+      { "from": "test", "to": "verify" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Warning-light colours", "definition": "Red: stop safely and investigate. Amber/yellow: attention needed soon. Green/blue: information only." },
+    { "term": "Diagnostic trouble code (DTC)", "definition": "A stored code identifying which monitored signal went out of range — a symptom, not necessarily the failed part." },
+    { "term": "Freeze-frame data", "definition": "A snapshot of key engine parameters recorded when a fault code was set." },
+    { "term": "Road-speed vs engine-speed symptoms", "definition": "Whether a noise or vibration follows road speed or engine speed points to the driveline/wheels or the engine respectively." }
+  ],
+  "misconceptions": [
+    { "myth": "A fault code tells you exactly which part to replace.", "reality": "It tells you what the computer measured as abnormal. Wiring, connectors or a different component upstream are often the real cause." },
+    { "myth": "Clearing the code fixes the problem.", "reality": "Clearing only erases the record. If the cause remains, the light returns — and useful freeze-frame data has been lost." },
+    { "myth": "An amber engine light can be ignored if the car drives normally.", "reality": "The car may be running in a protective mode or with higher emissions; some faults, such as misfires, can damage the catalytic converter if ignored." }
+  ],
+  "practicalExamples": [
+    "A humming that rises with road speed and changes when gently weaving left and right is characteristic of a worn wheel bearing.",
+    "A sweet smell inside the cabin with misting windows can indicate a leaking heater core.",
+    "A steering-wheel shimmy only when braking from speed usually points to uneven brake discs rather than wheel balance."
+  ],
+  "relatedTopicIds": ["routine-maintenance", "cooling-system", "lubrication-system", "alternator-and-charging"],
+  "prerequisiteTopicIds": ["routine-maintenance"],
+  "quiz": [
+    {
+      "id": "red-light",
+      "prompt": "The red oil-pressure warning light comes on while driving. What is the right response?",
+      "options": ["Continue and check at the next service", "Stop safely as soon as possible and switch off the engine", "Rev the engine to raise pressure", "Ignore it if it flickers"],
+      "answerIndex": 1,
+      "explanation": "Red warnings indicate potentially serious damage; without oil pressure, bearings can fail within minutes."
+    },
+    {
+      "id": "dtc-meaning",
+      "prompt": "A scanner shows P0171 'system too lean'. What does that mean?",
+      "options": ["The oxygen sensor must be replaced", "The engine computer has been adding unusually large amounts of fuel to correct a lean mixture", "The fuel tank is empty", "The catalytic converter is missing"],
+      "answerIndex": 1,
+      "explanation": "The code reports a symptom — excessive positive fuel trim — whose cause could be an air leak, fuel delivery or a sensor issue."
+    },
+    {
+      "id": "noise-source",
+      "prompt": "A noise changes with road speed but not when you change gear at the same speed. Where is it most likely coming from?",
+      "options": ["The engine", "The wheels, tyres, bearings or driveline", "The alternator", "The exhaust manifold"],
+      "answerIndex": 1,
+      "explanation": "Changing gear changes engine speed but not road speed, so a noise that ignores gear changes is road-speed related."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"Checking the instruments","url":"https://www.howacarworks.com/accessories/checking-the-instruments","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
+    {"title":"Diagnosing faults in automatic transmission","url":"https://www.howacarworks.com/transmission/diagnosing-faults-in-automatic-transmission","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

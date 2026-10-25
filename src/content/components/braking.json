@@ -1,0 +1,170 @@
+[
+  {
+    "id": "brake-pedal",
+    "name": "Brake pedal",
+    "systemId": "braking",
+    "description": "The pedal the driver presses. It is a lever: the foot pad is far from the pivot and the pushrod is close to it, so a modest push from the foot becomes a much stronger push on the pushrod.",
+    "technical": "Pedal ratio is the foot-pad distance divided by the pushrod-pin distance from the pivot, typically about 3:1 to 4:1 (3.5:1 in this lab). The price of the force gain is travel: the foot moves 3.5 times further than the pushrod. A brake-light switch at the pedal turns the stop lamps on as soon as the pedal leaves its rest position.",
+    "relatedTopicIds": ["brake-hydraulics", "disc-brakes"],
+    "annotations": [
+      { "label": "Pivot", "text": "The pedal swings about a pin at the top of its arm." },
+      { "label": "Pushrod pin", "text": "Sits about 1/3.5 of the way down the arm, which sets the lever ratio." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "brake-servo",
+    "name": "Brake servo (booster)",
+    "systemId": "braking",
+    "description": "A large round canister between the pedal and the master cylinder. It adds its own push to the driver’s, so a normal stop needs only a gentle press on the pedal.",
+    "technical": "A vacuum servo has a diaphragm with engine vacuum (or a pump’s vacuum) on both sides at rest. Pressing the pedal lets atmospheric air into the rear chamber; the pressure difference across the diaphragm adds force to the pushrod in proportion to the driver’s input. Electrically boosted systems do the same job with a motor. The lab uses an illustrative assistance factor of 3.",
+    "relatedTopicIds": ["brake-hydraulics"],
+    "annotations": [
+      { "label": "Assistance", "text": "Output force ≈ 3 × input force in this illustrative model." },
+      { "label": "Engine off", "text": "With no vacuum the brakes still work, but the pedal feels far heavier." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "master-cylinder",
+    "name": "Master cylinder",
+    "systemId": "braking",
+    "description": "A small cylinder full of brake fluid. The pushrod drives its piston forward, which pressurises the fluid in the brake lines. The translucent reservoir on top keeps it topped up.",
+    "technical": "Pressure p = F / A, where F is the force on the piston and A its area. A small bore (22 mm here) turns the boosted pushrod force into tens of bar. Real master cylinders are tandem units with two pistons feeding two separate circuits, so a leak in one circuit leaves the other working. Shown sectioned, with a single piston for clarity.",
+    "relatedTopicIds": ["brake-hydraulics", "routine-maintenance"],
+    "annotations": [
+      { "label": "Bore", "text": "22.2 mm diameter in this illustrative model." },
+      { "label": "Reservoir", "text": "The level drops slowly as the pads wear and the caliper pistons sit further out." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "abs-modulator",
+    "name": "ABS modulator",
+    "systemId": "braking",
+    "description": "The anti-lock braking unit: a block of valves, a small pump and a control computer in the line between the master cylinder and the wheels. Normally fluid passes straight through. When a wheel starts to lock, it briefly holds, lowers and restores that wheel’s pressure.",
+    "technical": "Each wheel circuit has a normally-open inlet valve and a normally-closed outlet valve. Hold: inlet closes, trapping the pressure. Release: the outlet opens and fluid flows to a low-pressure accumulator, so caliper pressure falls. Reapply: the outlet closes and the inlet opens (often pulsed) to rebuild pressure; the pump returns released fluid to the master side, which is why the pedal pulses. The two lamps on the model show the inlet (cyan) and outlet (amber) valves; the cycle in this lab is conceptual.",
+    "relatedTopicIds": ["anti-lock-braking", "brake-hydraulics", "diagnosing-warning-signs"],
+    "annotations": [
+      { "label": "Inlet valve (cyan lamp)", "text": "Open during normal braking and reapply." },
+      { "label": "Outlet valve (amber lamp)", "text": "Opens only to release pressure." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "brake-line",
+    "name": "Brake line",
+    "systemId": "braking",
+    "description": "Steel pipes and flexible hoses that carry brake fluid from the master cylinder, through the ABS unit, to each caliper. Because the fluid barely compresses, pressure made at the pedal end arrives at the wheel almost instantly.",
+    "technical": "By Pascal’s principle the static pressure is the same throughout the connected fluid, so line length and diameter do not change the clamp force — only how quickly fluid can move. In the lab the glow before the ABS unit shows master-cylinder pressure and the glow after it shows caliper pressure; they differ only while ABS is modulating. Air in the line compresses, which is why air makes a spongy pedal.",
+    "relatedTopicIds": ["brake-hydraulics", "routine-maintenance"],
+    "annotations": [
+      { "label": "Before the ABS unit", "text": "Master-cylinder pressure." },
+      { "label": "After the ABS unit", "text": "Caliper pressure — lower than the master side while ABS releases." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "brake-caliper",
+    "name": "Brake caliper",
+    "systemId": "braking",
+    "description": "The clamp that straddles the edge of the disc. Fluid pressure pushes its piston, which squeezes the brake pads onto both faces of the disc.",
+    "technical": "This is a floating (sliding) single-piston caliper: the body slides on two guide pins in a bracket bolted to the steering knuckle. The piston pushes the inner pad onto the disc; the reaction pushes the body the other way, so its fingers pull the outer pad on with equal force. The bracket’s abutments take the pad drag force, not the slide pins. The cylinder housing is drawn sectioned to show the piston and fluid.",
+    "relatedTopicIds": ["disc-brakes", "brake-hydraulics", "routine-maintenance"],
+    "annotations": [
+      { "label": "Slide pins", "text": "Let the body float so one piston can clamp both pads." },
+      { "label": "Bracket", "text": "Stays fixed and carries the pads’ braking drag into the knuckle." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "caliper-piston",
+    "name": "Caliper piston",
+    "systemId": "braking",
+    "description": "A large round piston inside the caliper. Brake-fluid pressure pushes on its back face and it pushes the inner pad onto the disc.",
+    "technical": "Clamp force F = p × A. With a 57 mm piston (about 2,550 mm²), every bar of pressure gives about 255 N of clamp. Because its area is roughly 6.6 times the master-cylinder piston’s, the same pressure produces 6.6 times the force — the hydraulic force multiplication. A square-section seal in the bore deflects as the piston moves and springs it back a fraction of a millimetre on release, setting the pad clearance.",
+    "relatedTopicIds": ["disc-brakes", "brake-hydraulics"],
+    "annotations": [
+      { "label": "Area ratio", "text": "Caliper piston area ÷ master piston area ≈ 6.6 in this model." },
+      { "label": "Seal rollback", "text": "Pulls the piston back slightly when the pressure drops." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "inner-brake-pad",
+    "name": "Inner brake pad",
+    "systemId": "braking",
+    "description": "The pad on the piston side of the disc. A steel backing plate carries a block of friction material that rubs on the disc when the piston pushes it.",
+    "technical": "Pad friction coefficient μ is typically 0.3–0.5 (0.4 here). Each pad makes a friction force μ × clamp force, so two pads give 2μF. Friction material wears in use; most pads have an audible or electrical wear indicator. Clearance to the disc is drawn about 200 times real size so the clamping is visible.",
+    "relatedTopicIds": ["disc-brakes", "routine-maintenance"],
+    "annotations": [
+      { "label": "Friction material", "text": "Rubs on the disc and slowly wears away." },
+      { "label": "Backing plate", "text": "Steel plate the piston pushes on." }
+    ],
+    "highlight": { "color": "#f6a63a", "emphasis": "glow" }
+  },
+  {
+    "id": "outer-brake-pad",
+    "name": "Outer brake pad",
+    "systemId": "braking",
+    "description": "The pad on the wheel side of the disc. On a floating caliper it is pulled onto the disc by the caliper body’s fingers as the body slides inwards.",
+    "technical": "Because the floating body reacts the piston force, the outer pad’s clamp force equals the inner pad’s. Sticky slide pins break that balance and cause uneven pad wear — a common inspection point. Shares the pad friction coefficient and wear behaviour of the inner pad.",
+    "relatedTopicIds": ["disc-brakes", "routine-maintenance"],
+    "annotations": [
+      { "label": "Caliper fingers", "text": "Pull the outer pad on as the body slides inboard." }
+    ],
+    "highlight": { "color": "#f6a63a", "emphasis": "glow" }
+  },
+  {
+    "id": "brake-disc",
+    "name": "Brake disc (rotor)",
+    "systemId": "braking",
+    "description": "The iron disc that spins with the wheel. The pads grip it to slow the wheel, and it soaks up most of the heat that braking makes. Two plates joined by vanes let air pump through the middle to cool it.",
+    "technical": "Brake torque T = 2μF × r_eff, with r_eff the radius where the pad force acts (0.12 m here). Kinetic energy ½mv² ends up as heat; the bulk temperature rise is ΔT ≈ E / (m c) with c ≈ 460 J/(kg·K) for grey cast iron. The vanes act as a centrifugal fan. The glow in the lab is a conceptual heat map, not incandescence: a real disc only glows visibly above roughly 500 °C.",
+    "relatedTopicIds": ["disc-brakes", "brake-hydraulics", "routine-maintenance"],
+    "annotations": [
+      { "label": "Ventilation vanes", "text": "Pump air between the two friction plates as the disc spins." },
+      { "label": "Hat", "text": "The centre section that bolts between the hub and the wheel." }
+    ],
+    "highlight": { "color": "#f6a63a", "emphasis": "glow" }
+  },
+  {
+    "id": "hub-flange",
+    "name": "Wheel hub and bearing",
+    "systemId": "braking",
+    "description": "The rotating flange the disc and wheel bolt to, running in a bearing held by the steering knuckle. The knuckle also carries the caliper bracket, so the brake’s torque goes into the suspension.",
+    "technical": "The disc hat is clamped between the hub flange and the wheel by the wheel nuts, so disc, hub and wheel turn as one. Braking torque passes from the pads through the caliper bracket into the knuckle, and from the tyre’s contact patch back through the wheel and hub.",
+    "relatedTopicIds": ["disc-brakes", "routine-maintenance"],
+    "annotations": [
+      { "label": "Wheel studs", "text": "Clamp wheel, disc hat and hub flange together." },
+      { "label": "Knuckle", "text": "Holds the bearing and the caliper bracket; it does not rotate." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "wheel-speed-sensor",
+    "name": "Wheel-speed sensor",
+    "systemId": "braking",
+    "description": "A small sensor aimed at a toothed ring that turns with the wheel. Each tooth passing makes a pulse, so the ABS computer always knows how fast every wheel is turning.",
+    "technical": "Passive (inductive) or active (Hall / magnetoresistive) sensors read a tone ring or a magnetic encoder in the bearing. Comparing each wheel’s speed with an estimate of vehicle speed gives the wheel slip, and a sharp drop in wheel speed (high deceleration) warns that a lock is starting. The same signals feed traction control and stability control.",
+    "relatedTopicIds": ["anti-lock-braking", "diagnosing-warning-signs"],
+    "annotations": [
+      { "label": "Tone ring", "text": "32 teeth here; turns with the hub." },
+      { "label": "Wire", "text": "Carries the pulse train to the ABS unit." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  },
+  {
+    "id": "braked-wheel",
+    "name": "Wheel and tyre",
+    "systemId": "braking",
+    "description": "The road wheel and tyre. The brake only slows the wheel; it is the grip between the tyre and the road that actually slows the car. That grip sets the hardest possible stop.",
+    "technical": "Tyre braking force = brake torque ÷ rolling radius (0.31 m here), but it cannot exceed μ_road × the load on the tyre. Peak grip occurs at a small amount of slip (roughly 10–20 % in this illustrative model); a fully locked, sliding tyre grips less and cannot steer. The orange sidewall mark makes rolling versus locking easy to see.",
+    "relatedTopicIds": ["tyres-and-grip", "anti-lock-braking", "disc-brakes"],
+    "annotations": [
+      { "label": "Contact patch", "text": "Roughly a hand-sized area that carries all the braking force." },
+      { "label": "Sidewall mark", "text": "Stops turning the moment the wheel locks." }
+    ],
+    "highlight": { "color": "#38d7f2", "emphasis": "glow" }
+  }
+]

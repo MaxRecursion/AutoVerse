@@ -1,0 +1,112 @@
+{
+  "id": "aerodynamics",
+  "slug": "aerodynamics",
+  "title": "Car Aerodynamics",
+  "summary": "Above town speeds, pushing air aside becomes the biggest load on a car. Learn the drag equation, why drag power rises with the cube of speed, what drag coefficient and frontal area mean, and how spoilers, diffusers and smooth underbodies manage lift and drag.",
+  "categoryId": "aero-technology",
+  "difficulty": "intermediate",
+  "estimatedDuration": 12,
+  "tags": ["aerodynamics", "drag", "downforce", "efficiency", "cd", "physics"],
+  "learningObjectives": [
+    "Use the drag equation to estimate aerodynamic force and power",
+    "Explain why drag power rises with the cube of speed",
+    "Distinguish drag coefficient from frontal area and how each is reduced",
+    "Explain lift, downforce and the role of spoilers, diffusers and underbody panels"
+  ],
+  "beginnerExplanation": "A moving car has to shove a huge amount of air out of its way. At walking pace that is trivial, but the force grows with the square of speed: going twice as fast means four times the air resistance. On the motorway, air resistance usually takes more of the engine's effort than anything else.\n\nTwo things decide how much drag a car makes. One is its size seen from the front (frontal area) — a tall van pushes more air than a low saloon. The other is how cleanly it lets the air flow around and close up behind it, measured by the drag coefficient. Smooth shapes, gently tapering tails and covered underbodies let the air rejoin behind the car with less turbulence.\n\nAir also pushes up or down on a car. Some shapes generate lift at speed, which makes the steering feel light. Spoilers, wings and shaped undersides can reduce lift or even press the car down (downforce) for more grip — but usually at the cost of extra drag.",
+  "technicalExplanation": "Aerodynamic drag is F_d = ½ ρ v² C_d A, where ρ is air density (≈ 1.2 kg/m³ at sea level), v the speed relative to the air, C_d the drag coefficient and A the frontal area. The product C_d A (drag area) is what really matters: a modern saloon might have C_d ≈ 0.25–0.30 and A ≈ 2.2 m², while an SUV may have both a higher C_d and a larger area. Because power is force times speed, drag power is P = ½ ρ C_d A v³. For C_d = 0.30 and A = 2.2 m² at 120 km/h (33.3 m/s) the drag force is about 450 N and the power about 15 kW — roughly three times the rolling resistance of a 1,500 kg car with a rolling-resistance coefficient of 0.01. Doubling speed raises drag power eightfold.\n\nMost passenger-car drag is pressure drag from the low-pressure wake behind the car, not skin friction. Designers reduce it by delaying flow separation and shrinking the wake: rounded front corners, a gently sloping or tapered tail ending in a sharp cut-off (the Kammback principle), tight panel gaps, flush glazing, wheel-arch air curtains and smooth underbody trays. Cooling airflow through the radiator and engine bay adds drag, so active grille shutters close when cooling demand is low. Mirrors, wheels and tyres contribute disproportionately.\n\nLift arises from pressure differences between the upper and lower surfaces. A rear spoiler trips the flow to reduce rear lift; a wing generates downforce like an inverted aerofoil; a rear diffuser expands the underbody flow gradually, lowering pressure under the car to create downforce with relatively little drag. Downforce raises tyre normal load and therefore grip without adding mass, but the associated induced drag costs efficiency. Crosswind stability depends on the relationship between the centre of pressure and the centre of gravity.",
+  "steps": [
+    {
+      "id": "pushing-air",
+      "title": "Pushing air aside",
+      "beginner": "A moving car must push air out of the way, and the faster it goes the harder that becomes.",
+      "technical": "Dynamic pressure q = ½ ρ v² rises with the square of speed and scales all aerodynamic forces."
+    },
+    {
+      "id": "drag-equation",
+      "title": "The drag equation",
+      "beginner": "Drag depends on speed, the car's size from the front and how smooth its shape is.",
+      "technical": "F_d = q × C_d × A; C_d A is the drag area. At 120 km/h with C_d A = 0.66 m², F_d ≈ 450 N."
+    },
+    {
+      "id": "cube-law",
+      "title": "Power rises with the cube",
+      "beginner": "Going a little faster costs a lot more energy: double the speed takes eight times the power to beat air resistance.",
+      "technical": "P_d = ½ ρ C_d A v³ ≈ 15 kW at 120 km/h for the example car, versus ≈ 2 kW at 60 km/h."
+    },
+    {
+      "id": "shape",
+      "title": "Shape the wake",
+      "beginner": "Smooth shapes and tidy tails let air close up gently behind the car, making less turbulence.",
+      "technical": "Pressure drag dominates; tapered tails, Kamm cut-offs, underbody trays and air curtains shrink the wake."
+    },
+    {
+      "id": "lift-downforce",
+      "title": "Manage lift",
+      "beginner": "Spoilers and shaped undersides stop the car feeling light at speed, or press it down for grip.",
+      "technical": "Spoilers spoil rear lift; diffusers and wings create downforce, increasing F_z (and grip) with some drag penalty."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "speed", "label": "Road speed", "detail": "q = ½ ρ v²" },
+      { "id": "shape", "label": "Shape & size", "detail": "C_d × A" },
+      { "id": "drag", "label": "Drag force", "detail": "F = q C_d A" },
+      { "id": "power", "label": "Engine / motor power", "detail": "P = F v", "topicId": "torque-and-power" },
+      { "id": "downforce", "label": "Lift / downforce", "detail": "Changes tyre load", "topicId": "tyres-and-grip" }
+    ],
+    "edges": [
+      { "from": "speed", "to": "drag" },
+      { "from": "shape", "to": "drag" },
+      { "from": "drag", "to": "power", "label": "∝ v³" },
+      { "from": "speed", "to": "downforce" },
+      { "from": "shape", "to": "downforce" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Drag force", "definition": "Aerodynamic resistance opposing motion.", "equation": "F_d = ½ ρ v² C_d A" },
+    { "term": "Drag power", "definition": "Power needed to overcome drag; it grows with the cube of speed.", "equation": "P_d = ½ ρ C_d A v³" },
+    { "term": "Drag coefficient (C_d)", "definition": "A dimensionless measure of how efficiently a shape moves through air, independent of size." },
+    { "term": "Downforce", "definition": "Negative lift that pushes the tyres onto the road, increasing grip without adding mass." }
+  ],
+  "misconceptions": [
+    { "myth": "A low drag coefficient means a car has low drag.", "reality": "Drag depends on C_d multiplied by frontal area. A large vehicle with a good C_d can still have more drag than a small car with a worse one." },
+    { "myth": "A rear wing on a road car always improves performance.", "reality": "Wings add downforce but also drag. Poorly designed add-ons often increase drag and fuel use with no useful grip at legal speeds." },
+    { "myth": "Opening the windows is always more efficient than using the air conditioning.", "reality": "At low speeds it often is, but at motorway speeds open windows can add enough drag to rival the A/C's energy use." }
+  ],
+  "practicalExamples": [
+    "Driving at 110 km/h instead of 130 km/h cuts the power needed to overcome drag by around 40%.",
+    "A roof box can raise motorway fuel consumption noticeably because it increases both frontal area and turbulence.",
+    "Electric cars often use smooth aero wheel covers and flat underbodies because range is so sensitive to drag."
+  ],
+  "relatedTopicIds": ["torque-and-power", "chassis-construction", "hybrid-and-electric-drives", "mechanical-sympathy"],
+  "prerequisiteTopicIds": ["torque-and-power"],
+  "quiz": [
+    {
+      "id": "double-speed",
+      "prompt": "If speed doubles, what happens to the power needed to overcome aerodynamic drag?",
+      "options": ["It doubles", "It quadruples", "It rises eightfold", "It stays the same"],
+      "answerIndex": 2,
+      "explanation": "Drag power is proportional to v³, so 2³ = 8."
+    },
+    {
+      "id": "drag-calc",
+      "prompt": "With ρ = 1.2 kg/m³, C_d = 0.3 and A = 2 m², roughly what is the drag force at 30 m/s?",
+      "options": ["32 N", "324 N", "3,240 N", "32,400 N"],
+      "answerIndex": 1,
+      "explanation": "F = ½ × 1.2 × 30² × 0.3 × 2 = 0.6 × 900 × 0.6 = 324 N."
+    },
+    {
+      "id": "diffuser",
+      "prompt": "How does a rear diffuser create downforce?",
+      "options": ["By blowing air upwards", "By expanding underbody flow so pressure under the car is lower", "By adding weight", "By cooling the brakes"],
+      "answerIndex": 1,
+      "explanation": "The diffuser slows and expands the air leaving the underbody, which lowers pressure beneath the car relative to above it."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"Car aerodynamics","url":"https://www.howacarworks.com/technology/car-aerodynamics","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

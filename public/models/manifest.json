@@ -1,0 +1,1832 @@
+{
+  "version": 1,
+  "generatedAt": "2026-10-21",
+  "assets": [
+    {
+      "id": "khronos-carconcept",
+      "name": "Car Concept (glTF-Sample-Assets), logo-free",
+      "system": "vehicle",
+      "status": "ready",
+      "source": {
+        "site": "GitHub KhronosGroup/glTF-Sample-Assets",
+        "modelPageUrl": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept",
+        "downloadUrl": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CarConcept/glTF-Binary/CarConcept.glb"
+      },
+      "author": "Eric Chadwick (artist); owner Darmstadt Graphics Group GmbH, 2024; derived from \"FREE Concept Car 004 - public domain (CC0)\" by Unity Fan",
+      "license": {
+        "name": "CC BY 4.0 (Khronos and 3D Commerce logos excluded from the licence)",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Car Concept\" © 2024 Darmstadt Graphics Group GmbH, artist Eric Chadwick, licensed CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/), from KhronosGroup glTF-Sample-Assets (https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept); derived from \"FREE Concept Car 004 - public domain (CC0)\" by Unity Fan. Modified for AutoVerse: Khronos and 3D Commerce logo textures removed, geometry simplified and meshopt-compressed, textures converted to WebP."
+      },
+      "originalFormat": "GLB (glTF-Binary, generator RapidPipeline 3D Processor v7.1.0)",
+      "localPath": "/models/vehicle/khronos-carconcept.glb",
+      "processing": [
+        "Downloaded glTF-Binary/CarConcept.glb from glTF-Sample-Assets (11,778,688 bytes) to .asset-staging/khronos-carconcept/.",
+        "Unpacked to glTF + external PNGs with `gltf-transform copy` (CLI 4.5.1) in .asset-staging/khronos-carconcept/work/.",
+        "Trademark removal (logos are excluded from CC BY): emissive_1.png (Khronos logo; License Plate base colour and emissive map of the Hardware, Mirror, Brake, Rim1, Rim2 and one unnamed material) replaced with solid black; baseColor_2.png (Tireside base colour carrying Khronos and 3D Commerce logos) replaced with solid RGB(29,29,29), its own background colour; normal_6.png (Tireside normal map) had the embossed Khronos and 3D Commerce logos flattened to a neutral normal (annulus r 451-503 px at 158-205 deg and -15..15 deg), keeping the generic sidewall markings. Originals kept in .asset-staging/khronos-carconcept/work/original-logo-textures/.",
+        "`gltf-transform optimize --join false --flatten false --instance false --palette false --compress meshopt --texture-compress webp --texture-size 2048` (other defaults kept: dedup, weld, simplify error 0.0001, prune incl. solid textures to factors, sparse).",
+        "meshopt quantization moved the meshes of 6 parent nodes (BodyUnderside, BodyHood, BodyDoorLColor1, BodyDoorRColor1, BodyRearPanelsColor1, InteriorSteeringCylinder) into new unnamed child nodes; the named parents keep their transforms/pivots and are now groups.",
+        "Re-inspected output: all 97 original node names present, hierarchy otherwise unchanged; 12 WebP images extracted and viewed, no logo remains; 213,347 -> 148,222 triangles; 11,778,688 -> 2,336,460 bytes."
+      ],
+      "optimization": "optimized",
+      "stats": {
+        "triangles": 148222,
+        "meshes": 97,
+        "nodes": 107,
+        "animations": 0,
+        "bytes": 2336460
+      },
+      "readyForInteractiveUse": true,
+      "componentMap": {
+        "BodyHood": "bonnet",
+        "BodyDoorLColor1": "door",
+        "BodyDoorRColor1": "door",
+        "BodyRearPanelsColor1": "boot-lid",
+        "BodyPanelsColor2": "body",
+        "BodyRoofPanel": "body",
+        "BodyPillars": "body",
+        "WheelFrontLRim": "wheel",
+        "WheelFrontRRim": "wheel",
+        "WheelRearLRim": "wheel",
+        "WheelRearRRim": "wheel",
+        "WheelFrontLBrakeDisc": "brake-disc",
+        "WheelFrontRBrakeDisc": "brake-disc",
+        "WheelRearLBrakeDisc": "brake-disc",
+        "WheelRearRBrakeDisc": "brake-disc",
+        "WheelFrontLBrakePad": "brake-caliper",
+        "WheelFrontRBrakePad": "brake-caliper",
+        "WheelRearLBrakePad": "brake-caliper",
+        "WheelRearRBrakePad": "brake-caliper",
+        "Engine": "engine-block"
+      },
+      "framing": {
+        "upAxis": "+Y (root node BodyUnderside rotates the Z-up source -90 deg about X)",
+        "approxSize": "2.54 x 1.15 x 4.36 m (X x Y x Z); bbox min [-1.271, -0.0003, -1.940], max [1.271, 1.149, 2.417]",
+        "notes": "Metres. Wheels sit on y = 0. Front faces +Z (Engine and BodyHood are at +Z). Not centred on Z (centre about z = +0.24): centre with Box3 before framing. Pivots, measured in world space from the source file: BodyDoorLColor1/RColor1 pivot at the door's front edge (x +/-1.09, y 0.64, z 1.00), so rotate about Y to open. BodyHood is a front clamshell (mesh z 1.17..2.42, includes headlights) pivoting at its front lower edge (y 0.18, z 2.38): rotate about X to tilt it forward. It is not a windscreen-side bonnet hinge. BodyRearPanelsColor1 is a rear clamshell (mesh z -1.94..-0.46, includes rear hatch, rear window, taillights) pivoting at its rear lower edge (y 0.42, z -1.93). WheelFrontL/FrontR/RearL/RearR are hub-centred groups at y 0.384 (wheel radius about 0.38 m), front axle z 1.49, rear z -1.31. The steering wheel is centrally mounted (x about 0)."
+      },
+      "notes": "Best vehicle-shell asset. Exterior panels are separate, named and have usable pivots (see framing), so the doors can swing open and the front and rear clamshells can tilt open in code. Note that 'bonnet' and 'boot-lid' here are concept-car clamshells (front and rear body sections), not conventional panels. Caveats: (1) Engine is a single fused placeholder mesh with no internals. (2) WheelXxBrakePad (red caliper) is a child of the wheel group, so spinning WheelXx spins the caliper too; re-parent the caliper to the car or spin only the Rim, tyre and disc. (3) Each tyre is an unnamed sibling mesh of WheelXxRim inside WheelXx (materials Tireside/Tiretread), so it cannot be keyed by name; reach it as the unnamed child of WheelXx. (4) BodyHood also contains BodyHeadlights, BodyHoodTopgrill and the hood interior pieces, and BodyRearPanelsColor1 contains the rear hatch, rear window and taillights. Highlighting the group highlights all of them. (5) BodyUnderside is the scene root (a group containing the whole car), so it is deliberately not mapped. (6) Other usable named nodes not mapped (no canonical id yet): Axles (one fused mesh for both axles), InteriorSteeringCylinder (steering wheel group), InteriorSteeringDashColumn, InteriorPedalBrake, InteriorPedalAccel, InteriorSeatsColor1, BodyWindshield, BodyHeadlights, BodyTaillights. (7) No suspension parts. (8) Needs a loader with MeshoptDecoder (drei useGLTF enables it by default) and EXT_texture_webp support (three.js GLTFLoader has it). Material variants (KHR_materials_variants: Carmine Candy, Pearly Swirly, Torched Graphite) are kept but need a variants plugin to switch. Canonical ids follow the research naming; they must exist in src/content/components/<system>.json before <Part> uses them. Not yet rendered in the app."
+    },
+    {
+      "id": "kenney-car-kit",
+      "name": "Kenney Car Kit 3.1: sedan",
+      "system": "vehicle",
+      "status": "ready",
+      "source": {
+        "site": "kenney.nl",
+        "modelPageUrl": "https://kenney.nl/assets/car-kit",
+        "downloadUrl": "https://kenney.nl/media/pages/assets/car-kit/1a312ec241-1775131960/kenney_car-kit.zip"
+      },
+      "author": "Kenney (www.kenney.nl)",
+      "license": {
+        "name": "CC0 1.0",
+        "url": "http://creativecommons.org/publicdomain/zero/1.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": false,
+        "attributionText": "Not required (CC0). Optional: \"Car Kit by Kenney (www.kenney.nl), CC0\"."
+      },
+      "originalFormat": "GLB with external texture Textures/colormap.png (kit also ships FBX and OBJ)",
+      "localPath": "/models/vehicle/kenney-car-kit.glb",
+      "processing": [
+        "Downloaded kenney_car-kit.zip (4,814,237 bytes) and extracted it to .asset-staging/kenney-car-kit/extracted/; License.txt states CC0.",
+        "Selected Models/GLB format/sedan.glb (172,216 bytes) plus its external Textures/colormap.png (12,371 bytes).",
+        "`gltf-transform copy` to embed the texture into one GLB (.asset-staging/kenney-car-kit/work/sedan-embedded.glb, 182,288 bytes).",
+        "`gltf-transform optimize --join false --flatten false --instance false --palette false --compress meshopt --texture-compress webp --texture-size 2048`.",
+        "dedup merged identical wheel geometry: nodes wheel-back-right and wheel-front-left now reuse the meshes named wheel-front-right and wheel-back-left. Node names are unchanged; mesh names no longer match node names.",
+        "Re-inspected output: 5 named nodes kept; 2,032 -> 2,027 triangles; 184,587 -> 24,832 bytes."
+      ],
+      "optimization": "optimized",
+      "stats": {
+        "triangles": 2027,
+        "meshes": 3,
+        "nodes": 5,
+        "animations": 0,
+        "bytes": 24832
+      },
+      "readyForInteractiveUse": true,
+      "componentMap": {
+        "body": "body",
+        "wheel-front-left": "wheel",
+        "wheel-front-right": "wheel",
+        "wheel-back-left": "wheel",
+        "wheel-back-right": "wheel"
+      },
+      "framing": {
+        "upAxis": "+Y",
+        "approxSize": "1.50 x 1.30 x 2.55 units (X x Y x Z); bbox min [-0.75, 0, -1.30], max [0.75, 1.30, 1.25]",
+        "notes": "Stylised toy proportions: about 2.55 units long, so scale it about 1.7x to sit beside the CarConcept (4.36 m). Wheels on y = 0. Front faces +Z (wheel-front-* at z = +0.66). All five nodes are scene roots, not children of body, and each wheel node is centred on its hub (y = 0.3), so it can be spun in place."
+      },
+      "notes": "Very light low-poly overview car for the mobile quality tier, how-a-car-moves or wheel-rotation demos. The body is one fused mesh: there are no separate doors, bonnet or boot. Same CC0 kit has standalone debris-door, debris-bumper, debris-drivetrain, debris-drivetrain-axle and debris-tire GLBs in staging if crude stand-ins are needed. Needs MeshoptDecoder and EXT_texture_webp support. Not yet rendered in the app."
+    },
+    {
+      "id": "polyhaven-old-tyre",
+      "name": "Old Tyre (Poly Haven)",
+      "system": "other",
+      "status": "ready",
+      "source": {
+        "site": "Poly Haven",
+        "modelPageUrl": "https://polyhaven.com/a/old_tyre",
+        "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/old_tyre/old_tyre_1k.gltf"
+      },
+      "author": "MP",
+      "license": {
+        "name": "CC0",
+        "url": "https://polyhaven.com/license",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": false,
+        "attributionText": "Not required (CC0). Optional: \"Old Tyre by MP, Poly Haven (CC0)\"."
+      },
+      "originalFormat": "glTF + .bin + three 1k JPG textures (diffuse, normal, ARM)",
+      "localPath": "/models/other/polyhaven-old-tyre.glb",
+      "processing": [
+        "Downloaded the 1k glTF set to .asset-staging/polyhaven-old_tyre/ (gltf 2,734 + bin 84,160 + JPGs 2,150,309 = 2,237,203 bytes).",
+        "`gltf-transform copy old_tyre_1k.gltf old_tyre_1k.glb` -> single GLB (2,236,192 bytes) in .asset-staging/polyhaven-old_tyre/work/.",
+        "`gltf-transform optimize --join false --flatten false --instance false --palette false --compress meshopt --texture-compress webp --texture-size 2048`.",
+        "Re-inspected output: node old_tyre kept, 2,880 triangles; 2,237,203 -> 365,512 bytes."
+      ],
+      "optimization": "optimized",
+      "stats": {
+        "triangles": 2880,
+        "meshes": 1,
+        "nodes": 1,
+        "animations": 0,
+        "bytes": 365512
+      },
+      "readyForInteractiveUse": true,
+      "componentMap": {
+        "old_tyre": "tyre"
+      },
+      "framing": {
+        "upAxis": "+Y",
+        "approxSize": "0.60 x 0.60 x 0.165 m; bbox min [-0.3, -0.3, -0.083], max [0.3, 0.3, 0.082]",
+        "notes": "Centred on the origin, standing upright; the rolling axis is Z. Worn tread, so it can illustrate tyre wear."
+      },
+      "notes": "Single-part tyre prop for a wheels-tyres close-up or an exploded wheel (pair it with CarConcept rims). Category in the app: wheels-tyres. Needs MeshoptDecoder and EXT_texture_webp support. Not yet rendered in the app."
+    },
+    {
+      "id": "sf-chevette-engine-1977",
+      "name": "Engine Chevy Chevette 1977",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/engine-chevy-chevette-1977-ef123ab4b01140179745751dab5d7864",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/ef123ab4b01140179745751dab5d7864/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "flow3d",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Engine Chevy Chevette 1977\" (https://sketchfab.com/3d-models/engine-chevy-chevette-1977-ef123ab4b01140179745751dab5d7864) by flow3d is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "Blender 2.83 (per description); Sketchfab archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 224,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/ef123ab4b01140179745751dab5d7864 (CC BY 4.0, commercial use allowed). Most complete ICE assembly found: valve timing, crankshaft, pistons, pulleys, alternator, water pump, carburettor and air filter are modelled (per description). 224 animation clips suggest separately animated parts, but node names are unverified. Sketchfab API: 439,893 faces, 27 materials, no textures, glb archive about 18.1 MB, so it needs decimation and meshopt. Replica of a GM engine: use the brand name only descriptively and add a modification notice if changed. Recommended for a later full-engine tour."
+    },
+    {
+      "id": "sf-animated-engine-v8",
+      "name": "Animated Engine V8",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/animated-engine-v8-b0dbf778b81e4afba4edf11336e2a099",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/b0dbf778b81e4afba4edf11336e2a099/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "meeww",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Animated Engine V8\" (https://sketchfab.com/3d-models/animated-engine-v8-b0dbf778b81e4afba4edf11336e2a099) by meeww is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "Blender, uploaded as Alembic .abc (per description); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 1,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/b0dbf778b81e4afba4edf11336e2a099 (CC BY 4.0, commercial use allowed). Running V8 with piston, crankshaft, belt and battery tags. 94 materials suggest many separate objects. The Alembic origin means the glTF animation may be baked; check that pistons and the crank are separate nodes. API: 157,680 faces, glb archive about 7.9 MB. The author waives credit informally, but credit anyway under CC BY."
+    },
+    {
+      "id": "sf-lowpoly-animated-engines",
+      "name": "Low-poly animated engines",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/low-poly-animated-engines-243837fb3a40440485c8f8c39b6742ba",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/243837fb3a40440485c8f8c39b6742ba/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "Savalon (savalon)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Low-poly animated engines\" (https://sketchfab.com/3d-models/low-poly-animated-engines-243837fb3a40440485c8f8c39b6742ba) by Savalon is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 1,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/243837fb3a40440485c8f8c39b6742ba (CC BY 4.0, commercial use allowed). Best four-stroke lead: boxer four, inline four and a single-piston unit (1,089 faces) with rigged pistons (per description). API: 20,818 faces, glb archive about 1.1 MB. Simplified geometry, no head or valves expected. Rigged, so confirm the meshes are separate and not skinned to one mesh."
+    },
+    {
+      "id": "sf-4stroke-piston-crank",
+      "name": "4 stroke engine working piston and crank shaft",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/4-stroke-engine-working-piston-and-crank-shaft-624939477a4c4e368ba44d481a98792f",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/624939477a4c4e368ba44d481a98792f/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "ujjavalchauhan",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"4 stroke engine working piston and crank shaft\" (https://sketchfab.com/3d-models/4-stroke-engine-working-piston-and-crank-shaft-624939477a4c4e368ba44d481a98792f) by ujjavalchauhan is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "Blender (tags blender3d, bones); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 1,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/624939477a4c4e368ba44d481a98792f (CC BY 4.0, commercial use allowed). Single-cylinder slider-crank with an armature (piston, connecting rod, crankshaft). API: 52,849 faces, glb archive about 1.3 MB. Little community validation. Provenance note from the verifier: the description does not clearly state the mesh is original work."
+    },
+    {
+      "id": "sf-rigged-4cyl-engine",
+      "name": "Rigged 4-Cylinder Engine (FREE)",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/rigged-4-cylinder-engine-free-e14ebe68273d49a3becda6802270b4b0",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/e14ebe68273d49a3becda6802270b4b0/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "david.gnzlv",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Rigged 4-Cylinder Engine (FREE)\" (https://sketchfab.com/3d-models/rigged-4-cylinder-engine-free-e14ebe68273d49a3becda6802270b4b0) by david.gnzlv is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "Blender armature rig (per description); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 1,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/e14ebe68273d49a3becda6802270b4b0 (CC BY 4.0, commercial use allowed). Inline-4 crank, piston and rod animation driven by one bone. API: 78,832 faces, 1 material, glb archive about 3.3 MB. Risk that parts are skinned to one mesh. No head or valvetrain mentioned."
+    },
+    {
+      "id": "sf-inline4-rigging-study",
+      "name": "Inline-4 Engine Modelling & Rigging Study",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/inline-4-engine-modelling-rigging-study-652cf3def1ae40b7a6e546e62ed19778",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/652cf3def1ae40b7a6e546e62ed19778/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "s1d.fx0",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Inline-4 Engine Modelling & Rigging Study\" (https://sketchfab.com/3d-models/inline-4-engine-modelling-rigging-study-652cf3def1ae40b7a6e546e62ed19778) by s1d.fx0 is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "Blender (tags); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 4,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/652cf3def1ae40b7a6e546e62ed19778 (CC BY 4.0, commercial use allowed). Pistons, crankshaft and connecting rods rigged with constraints and parenting (per description), which suggests separate objects. API: 27,864 faces, glb archive about 1.1 MB. Rotating assembly only. New upload (2026-01-20) with no community feedback."
+    },
+    {
+      "id": "sf-engine-exploded-view",
+      "name": "engine exploded view",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/engine-exploded-view-0a740cd20bfd4107a1e3c9fbcc5fe70b",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/0a740cd20bfd4107a1e3c9fbcc5fe70b/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "rondinellisophia",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"engine exploded view\" (https://sketchfab.com/3d-models/engine-exploded-view-0a740cd20bfd4107a1e3c9fbcc5fe70b) by rondinellisophia is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 1,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/0a740cd20bfd4107a1e3c9fbcc5fe70b (CC BY 4.0, commercial use allowed). No description. The exploded animation and 94 materials imply many separate parts. Engine type and part names unknown. API: 156,509 faces, 69 textures, glb archive about 11.9 MB. Weaker provenance (empty description)."
+    },
+    {
+      "id": "sf-juang3d-engine",
+      "name": "Engine",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/engine-36c1f32d649c46df9f2f8b4d34cf32c7",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/36c1f32d649c46df9f2f8b4d34cf32c7/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "JuanG3D (juang3d)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Engine\" (https://sketchfab.com/3d-models/engine-36c1f32d649c46df9f2f8b4d34cf32c7) by JuanG3D is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "Moment of Inspiration 2, NURBS (per description); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/36c1f32d649c46df9f2f8b4d34cf32c7 (CC BY 4.0, commercial use allowed). 4 pistons, 4 connecting rods, crankshaft and flywheel (per description). NURBS-tessellated, so heavy for what it is (API: 195,285 faces). No animation, one material."
+    },
+    {
+      "id": "sf-piston-connecting-rod",
+      "name": "Piston and connecting rod",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/piston-and-connecting-rod-940d24ffb7864be898963391665fcc9f",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/940d24ffb7864be898963391665fcc9f/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "francobravo",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Piston and connecting rod\" (https://sketchfab.com/3d-models/piston-and-connecting-rod-940d24ffb7864be898963391665fcc9f) by francobravo is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/940d24ffb7864be898963391665fcc9f (CC BY 4.0, commercial use allowed). 86 mm piston with connecting rod; 7 materials hint at sub-parts (piston, rings, pin, rod, bolts), unverified. API: 11,608 faces, glb archive about 0.5 MB. Good for piston and connecting-rod close-ups."
+    },
+    {
+      "id": "sf-spark-plug-staehr",
+      "name": "Spark Plug",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/spark-plug-306c0031ba8445a79897fa060791758a",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/306c0031ba8445a79897fa060791758a/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "Vaughan.Staehr",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Spark Plug\" (https://sketchfab.com/3d-models/spark-plug-306c0031ba8445a79897fa060791758a) by Vaughan.Staehr is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/306c0031ba8445a79897fa060791758a (CC BY 4.0, commercial use allowed). Low-poly textured game collectable (API: 1,877 faces, glb archive about 1.3 MB). A single part is fine for spark-plug identification."
+    },
+    {
+      "id": "sf-camshaft-iui",
+      "name": "Camshaft",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/camshaft-1f1c66b214834f9887aab1ecb3111149",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/1f1c66b214834f9887aab1ecb3111149/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "IU Indianapolis University Library (IUI-UniversityLibrary)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Camshaft\" (https://sketchfab.com/3d-models/camshaft-1f1c66b214834f9887aab1ecb3111149) by IU Indianapolis University Library is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "3D scan (Creaform Go Scan 50), reverse-engineered in SolidWorks, edited in Maya (per description); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence taken from the research pass (https://api.sketchfab.com/v3/models/1f1c66b214834f9887aab1ecb3111149, slug 'by'); NOT re-checked by the independent verifier. Real camshaft from a university museum project; single part. glb archive about 60.6 MB (texture-heavy), so re-texture or compress. Use only if no lighter camshaft is found."
+    },
+    {
+      "id": "sf-car-disc-brake-jokop",
+      "name": "Car Disc Brake",
+      "system": "braking",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/car-disc-brake-9e2440a2fa624b31abd0963902217407",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/9e2440a2fa624b31abd0963902217407/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "Joko_P (joko_p)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Car Disc Brake\" (https://sketchfab.com/3d-models/car-disc-brake-9e2440a2fa624b31abd0963902217407) by Joko_P is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/9e2440a2fa624b31abd0963902217407 (CC BY 4.0, commercial use allowed). Best brake lead: vented disc, pads and caliper (per description), mapping to brake-disc, brake-caliper and brake-pads; 6 materials suggest separate components. API: 16,896 faces, glb archive about 3.1 MB. Tagged 'noai': do not use it as AI training data."
+    },
+    {
+      "id": "sf-brake-disk-caliper-vladi",
+      "name": "Brake Disk and Caliper",
+      "system": "braking",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/brake-disk-and-caliper-5feda9dbf20a49cf9fd29d550e55e4b9",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/5feda9dbf20a49cf9fd29d550e55e4b9/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "Vladi (vladivpg)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Brake Disk and Caliper\" (https://sketchfab.com/3d-models/brake-disk-and-caliper-5feda9dbf20a49cf9fd29d550e55e4b9) by Vladi is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/5feda9dbf20a49cf9fd29d550e55e4b9 (CC BY 4.0, commercial use allowed). Popular low-poly disc and caliper (API: 6,204 faces; 3 materials). Pads are probably not separate. Texture-heavy glb (about 8.8 MB), so compress textures. Lightweight fallback."
+    },
+    {
+      "id": "sf-brake-assembly-niev",
+      "name": "Brake Assembly",
+      "system": "braking",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/brake-assembly-d36d43ad176a45a18095c04b1754ea79",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/d36d43ad176a45a18095c04b1754ea79/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "Nieve5677 (niev)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Brake Assembly\" (https://sketchfab.com/3d-models/brake-assembly-d36d43ad176a45a18095c04b1754ea79) by Nieve5677 is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence taken from the research pass (https://api.sketchfab.com/v3/models/d36d43ad176a45a18095c04b1754ea79, slug 'by'); NOT re-checked by the independent verifier. No description; the title suggests a full assembly, unverified. 244,688 faces, glb archive about 7.9 MB: heavy for one brake. Backup only."
+    },
+    {
+      "id": "sf-coilover-damper",
+      "name": "[Free] Coilover Shock Absorber Damper",
+      "system": "suspension",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/free-coilover-shock-absorber-damper-92e61757780840a683abdd38c4e8a700",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/92e61757780840a683abdd38c4e8a700/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "Robert Prispilović (rprispil)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"[Free] Coilover Shock Absorber Damper\" (https://sketchfab.com/3d-models/free-coilover-shock-absorber-damper-92e61757780840a683abdd38c4e8a700) by Robert Prispilović is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "3ds Max + Substance Painter, 2K PBR (per description); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 1,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/92e61757780840a683abdd38c4e8a700 (CC BY 4.0, commercial use allowed). Coil spring plus damper with one animation (probably compression). API: 15,790 faces, glb archive about 5.6 MB. The author notes normal-map issues."
+    },
+    {
+      "id": "sf-macpherson-strut-vrdesigner",
+      "name": "MACHPERSON SUSPENSION (STRUD)",
+      "system": "suspension",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/machperson-suspension-strud-bd202ee134454402bf398ca906c8e2f5",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/bd202ee134454402bf398ca906c8e2f5/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "VR DESIGNER (vr.designer_09)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"MACHPERSON SUSPENSION (STRUD)\" (https://sketchfab.com/3d-models/machperson-suspension-strud-bd202ee134454402bf398ca906c8e2f5) by VR DESIGNER is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "CAD-derived (tag cad); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/bd202ee134454402bf398ca906c8e2f5 (CC BY 4.0, commercial use allowed). Detailed CAD-style MacPherson strut (API: 97,694 faces, 1 material). Parts possibly include spring, damper, knuckle and lower arm, unverified. The same author has a consistent CC BY CAD part series (piston, conrod, crankshaft, caliper, coil spring, wishbone, hub, crown gear)."
+    },
+    {
+      "id": "sf-double-wishbone-live-axle",
+      "name": "Double Wishbone and Live Axle Suspension",
+      "system": "suspension",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/double-wishbone-and-live-axle-suspension-5cf0120b9bca4fd6a20c9357f7e5efaf",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/5cf0120b9bca4fd6a20c9357f7e5efaf/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "BlackWΛVΞ (_BlackWAVE_)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Double Wishbone and Live Axle Suspension\" (https://sketchfab.com/3d-models/double-wishbone-and-live-axle-suspension-5cf0120b9bca4fd6a20c9357f7e5efaf) by BlackWΛVΞ is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence taken from the research pass (https://api.sketchfab.com/v3/models/5cf0120b9bca4fd6a20c9357f7e5efaf, slug 'by'); NOT re-checked by the independent verifier. Off-road concept; the author says it is a work in progress and 'not all parts are correct'. 2,529,306 faces, glb archive about 82 MB. Low priority."
+    },
+    {
+      "id": "sf-chevy-impala-rigged",
+      "name": "Chevy Impala *Rigged* By Frigon Tech",
+      "system": "vehicle",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/chevy-impala-rigged-by-frigon-tech-e1c7974b8cd34697a7d651fa73d02065",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/e1c7974b8cd34697a7d651fa73d02065/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "Frigon Tech (frigontech), based on a model by Eques_inferno",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Chevy Impala *Rigged* By Frigon Tech\" (https://sketchfab.com/3d-models/chevy-impala-rigged-by-frigon-tech-e1c7974b8cd34697a7d651fa73d02065) by Frigon Tech, based on \"Chevrolet Impala 1967\" (https://sketchfab.com/3d-models/chevrolet-impala-1967-bce35ef0c10d41fdb3f7d8c4225144d2) by Eques_inferno; both licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/e1c7974b8cd34697a7d651fa73d02065 (CC BY 4.0, commercial use allowed). Hood, trunk, 4 doors, wheels, steering wheel and gear lever are bone-rigged (per description); it is unknown whether panels are separate meshes. Attribution corrected by the verifier to credit both authors. Chevrolet/Impala trademark: remove badges and keep brand names out of the UI. glb archive about 30.7 MB."
+    },
+    {
+      "id": "sf-mustang-1965-rigged-engine",
+      "name": "Rigged Car Mustang 1965 With Engine 3d model",
+      "system": "vehicle",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/rigged-car-mustang-1965-with-engine-3d-model-c2d4f0a6170d43f4a5a8303373ebb81a",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/c2d4f0a6170d43f4a5a8303373ebb81a/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "Godspeed (godspeedx14)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Rigged Car Mustang 1965 With Engine 3d model\" (https://sketchfab.com/3d-models/rigged-car-mustang-1965-with-engine-3d-model-c2d4f0a6170d43f4a5a8303373ebb81a) by Godspeed is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 1,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/c2d4f0a6170d43f4a5a8303373ebb81a (CC BY 4.0, commercial use allowed). Car with an engine bay; parts are separated by vertex groups (per description), suggesting one skinned mesh, so splitting in Blender may be needed. No textures. Ford Mustang trademark and trade dress: debadge and avoid brand names."
+    },
+    {
+      "id": "sf-generic-passenger-car-pack",
+      "name": "Generic passenger car pack",
+      "system": "vehicle",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/generic-passenger-car-pack-20f9af9b8a404d5cb022ac6fe87f21f5",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/20f9af9b8a404d5cb022ac6fe87f21f5/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "Comrade1280 (comrade1280)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Generic passenger car pack\" (https://sketchfab.com/3d-models/generic-passenger-car-pack-20f9af9b8a404d5cb022ac6fe87f21f5) by Comrade1280 is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/20f9af9b8a404d5cb022ac6fe87f21f5 (CC BY 4.0, commercial use allowed). Ten trademark-free generic cars (sedan, wagon, hatchback, compact, coupe, minivan, sport, pickup, SUV, offroad), about 6-8k triangles each. Panel separation not stated; probably body plus wheels only. glb archive about 25.4 MB."
+    },
+    {
+      "id": "sf-dubina-evo-construct",
+      "name": "Construct of the electric car Dubina Evo",
+      "system": "vehicle",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/construct-of-the-electric-car-dubina-evo-e27f1032f759436b95fbc851f9f68268",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/e27f1032f759436b95fbc851f9f68268/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "Dubina (anton.dubina)",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Construct of the electric car Dubina Evo\" (https://sketchfab.com/3d-models/construct-of-the-electric-car-dubina-evo-e27f1032f759436b95fbc851f9f68268) by Dubina is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "Blender, scale 1.0 (per description); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/e27f1032f759436b95fbc851f9f68268 (CC BY 4.0, commercial use allowed). Rolling-chassis structure: monocoque, tube frames, double-wishbone suspension, electric power steering, 4 motors (per description). Useful for chassis, control arms, steering rack and hub. EV, not ICE. API: 84,810 faces, glb archive about 3.9 MB. The same author has separate CC BY part uploads. Avoid the 'Dubina' brand beyond attribution."
+    },
+    {
+      "id": "sf-driveshaft-polyphantom",
+      "name": "Driveshaft",
+      "system": "drivetrain",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/driveshaft-09b38796c78e49d6bbaf6b7fa63b856f",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/09b38796c78e49d6bbaf6b7fa63b856f/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "PolyPhantom",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Driveshaft\" (https://sketchfab.com/3d-models/driveshaft-09b38796c78e49d6bbaf6b7fa63b856f) by PolyPhantom is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence re-checked by the independent verifier against https://api.sketchfab.com/v3/models/09b38796c78e49d6bbaf6b7fa63b856f (CC BY 4.0, commercial use allowed). ZIL-157 truck cardan shaft; the description says 'Objects: 5' (possibly shaft, yokes and U-joints). Truck scale. API: 17,330 faces; textures make the glb about 13.7 MB."
+    },
+    {
+      "id": "sf-rack-and-pinion",
+      "name": "rack and pinion",
+      "system": "steering",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/rack-and-pinion-9b199b652a874321980e0d2c19d5fd96",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/9b199b652a874321980e0d2c19d5fd96/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "ravindra.mohan09",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"rack and pinion\" (https://sketchfab.com/3d-models/rack-and-pinion-9b199b652a874321980e0d2c19d5fd96) by ravindra.mohan09 is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 1,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence taken from the research pass (https://api.sketchfab.com/v3/models/9b199b652a874321980e0d2c19d5fd96, slug 'by'); NOT re-checked by the independent verifier. Generic animated rack-and-pinion mechanism, not an automotive steering rack housing. Tiny (2,186 faces, about 0.1 MB). Good for explaining the principle."
+    },
+    {
+      "id": "bk-mazda-787b-cc0",
+      "name": "Mazda 787b",
+      "system": "vehicle",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "BlenderKit (now 'Blendkit')",
+        "modelPageUrl": "https://www.blendkit.com/asset-gallery-detail/8afbb4b8-2406-4202-aea3-c4b463b3ab6d/",
+        "downloadUrl": null
+      },
+      "author": "Seatla Morake",
+      "license": {
+        "name": "CC0 1.0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": false,
+        "attributionText": "Not required (CC0). Courtesy: \"Mazda 787b\" by Seatla Morake via BlenderKit/Blendkit."
+      },
+      "originalFormat": "Blender .blend (Cycles; unapplied modifiers: mirror, subsurf, solidify, wireframe, boolean, shrinkwrap); BlenderKit-generated glTF exists",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence confirmed by the verifier (BlenderKit API: cc_zero, validated). Download needs a BlenderKit account and the Blender add-on. BlenderKit API: 71 objects, faceCount 68,853 (2,228,302 with modifiers), 32 textures, not rigged or animated. Le Mans race car: CC0 grants no rights in the Mazda trademark. Modifiers must be applied and textures cut down for the web. Exterior/body only. CarConcept covers this need, so this is low priority."
+    },
+    {
+      "id": "github-huggedd-fourcylinderengine",
+      "name": "FourCylinderEngine (Fusion 360 CAD, per-part files)",
+      "system": "engine",
+      "status": "candidate-requires-auth",
+      "source": {
+        "site": "GitHub huggedd/FourCylinderEngine",
+        "modelPageUrl": "https://github.com/huggedd/FourCylinderEngine",
+        "downloadUrl": "https://github.com/huggedd/FourCylinderEngine/tree/main/Models"
+      },
+      "author": "Serhii Studenets",
+      "license": {
+        "name": "MIT",
+        "url": "https://raw.githubusercontent.com/huggedd/FourCylinderEngine/main/LICENSE",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "Copyright (c) 2025 Serhii Studenets. MIT License: include the copyright line and the MIT permission notice."
+      },
+      "originalFormat": "Autodesk Fusion 360 .f3d/.f3z (no glTF, STL or STEP); PDF drawings, PNG renders",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": null,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence from the repo LICENSE and the GitHub API (research pass); not re-checked by the independent verifier. The files are public, but the .f3d parts can only be opened and exported (to STEP or OBJ, then glTF via Blender) in Autodesk Fusion, which needs an Autodesk account; hence the 'requires-auth' status. Bottom end only, one part per file: Engine Block, Piston, Piston Pin, Connecting Rod, Rod Cap, Crankshaft, Rivet. No head, valves or camshaft. Not downloaded."
+    },
+    {
+      "id": "sf-hypoid-gear",
+      "name": "Hypoid Gear",
+      "system": "drivetrain",
+      "status": "rejected",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/hypoid-gear-6592b808326541dd8b887bcf3da44619",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/6592b808326541dd8b887bcf3da44619/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "C. Yamahata (cyamahat); CAD model by Dr Lunin (GrabCAD)",
+      "license": {
+        "name": "Labelled CC BY 4.0 on Sketchfab; underlying CAD licence unverified",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": null,
+        "modification": null,
+        "redistribution": null,
+        "attributionRequired": true,
+        "attributionText": "\"Hypoid Gear\" (https://sketchfab.com/3d-models/hypoid-gear-6592b808326541dd8b887bcf3da44619) by C. Yamahata, CC BY 4.0; CAD model by Dr Lunin (https://grabcad.com/library/35-7-ratio-hypoid-gear-set-with-tooth-contact-localization-1), licence unverified"
+      },
+      "originalFormat": "Blender animation of a GrabCAD CAD model by 'Dr Lunin' (per description); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 1,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence taken from the research pass (https://api.sketchfab.com/v3/models/6592b808326541dd8b887bcf3da44619, slug 'by'); checked by the independent verifier, who rejected it. REJECTED: the verifier found a broken chain of title. The geometry comes from GrabCAD user Dr Lunin (https://grabcad.com/library/35-7-ratio-hypoid-gear-set-with-tooth-contact-localization-1), and GrabCAD requires the designer's explicit permission for commercial use; the uploader cannot relicense it. Reconsider only with Dr Lunin's written permission. Otherwise a good animated 35:7 ring and pinion (76,442 faces)."
+    },
+    {
+      "id": "sf-manual-transmission-nc",
+      "name": "Manual Transmission/ gear box",
+      "system": "transmission",
+      "status": "rejected",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/manual-transmission-gear-box-811ce409dda746099924ac0b39d34140",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/811ce409dda746099924ac0b39d34140/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "UnforgettableName",
+      "license": {
+        "name": "CC BY-NC 4.0",
+        "url": "http://creativecommons.org/licenses/by-nc/4.0/",
+        "commercialUse": false,
+        "modification": true,
+        "redistribution": null,
+        "attributionRequired": true,
+        "attributionText": "\"Manual Transmission/ gear box\" (https://sketchfab.com/3d-models/manual-transmission-gear-box-811ce409dda746099924ac0b39d34140) by UnforgettableName is licensed under CC BY-NC 4.0 (http://creativecommons.org/licenses/by-nc/4.0/)"
+      },
+      "originalFormat": "unverified; archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence taken from the research pass (https://api.sketchfab.com/v3/models/811ce409dda746099924ac0b39d34140, slug 'by'); NOT re-checked by the independent verifier. REJECTED for bundling: CC BY-NC 4.0 (non-commercial). It can only be used if AutoVerse is and stays strictly non-commercial, with attribution. The only manual gearbox found with a downloadable licence. 63 materials and the gears/bearings/shaft tags suggest separable gears and shafts, unverified. 52,758 faces, glb archive about 4.8 MB."
+    },
+    {
+      "id": "sf-rwd-chassis-free-standard",
+      "name": "RWD car suspension/chassis",
+      "system": "suspension",
+      "status": "rejected",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/rwd-car-suspensionchassis-108faf69976747c09a21968727a13255",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/108faf69976747c09a21968727a13255/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "UnforgettableName",
+      "license": {
+        "name": "Sketchfab Free Standard",
+        "url": "https://sketchfab.com/licenses",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": null,
+        "attributionRequired": false,
+        "attributionText": "Not required under the Standard licence (help.sketchfab.com/en/articles/16152217); courtesy credit: \"RWD car suspension/chassis\" by UnforgettableName (Sketchfab)"
+      },
+      "originalFormat": "made with '3D Modeling App' (per description); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence taken from the research pass (https://api.sketchfab.com/v3/models/108faf69976747c09a21968727a13255, slug 'by'); NOT re-checked by the independent verifier. REJECTED for bundling: Sketchfab 'Free Standard' licence. Commercial and derivative use are allowed, but redistributing raw model files in a public web bundle could not be verified (sketchfab.com/licenses and /terms returned an empty bot-check response). RWD layout with independent front and rear suspension; one material suggests limited separation. 66,013 faces."
+    },
+    {
+      "id": "sf-alternator-b0bik",
+      "name": "Alternator",
+      "system": "electrical",
+      "status": "rejected",
+      "source": {
+        "site": "Sketchfab",
+        "modelPageUrl": "https://sketchfab.com/3d-models/alternator-e94842c63e6b4557a20f5751779c7e7f",
+        "downloadUrl": "https://api.sketchfab.com/v3/models/e94842c63e6b4557a20f5751779c7e7f/download (needs a Sketchfab OAuth access token; not attempted)"
+      },
+      "author": "B0bik",
+      "license": {
+        "name": "CC BY 4.0",
+        "url": "http://creativecommons.org/licenses/by/4.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Alternator\" (https://sketchfab.com/3d-models/alternator-e94842c63e6b4557a20f5751779c7e7f) by B0bik is licensed under CC BY 4.0 (http://creativecommons.org/licenses/by/4.0/)"
+      },
+      "originalFormat": "Photogrammetry, RealityCapture, 200 photos (per description); archives glb/gltf/usdz/source",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "Licence taken from the research pass (https://api.sketchfab.com/v3/models/e94842c63e6b4557a20f5751779c7e7f, slug 'by'); NOT re-checked by the independent verifier. REJECTED for interactive use: a single fused photoscan mesh of a rusty branded (Hitachi) alternator with heavy textures (147,482 faces, glb archive about 33.9 MB). Only usable as a static exterior prop."
+    },
+    {
+      "id": "bk-car-radiator-pl",
+      "name": "Car Radiator PL",
+      "system": "cooling",
+      "status": "rejected",
+      "source": {
+        "site": "BlenderKit (now 'Blendkit')",
+        "modelPageUrl": "https://www.blenderkit.com/api/v1/search/?query=car+radiator+asset_type:model (asset id ed9a3b4c-37f1-4053-8afa-772d5ce11d7b; gallery page URL not verified)",
+        "downloadUrl": null
+      },
+      "author": "Pierre-Louis Baril",
+      "license": {
+        "name": "BlenderKit Royalty Free",
+        "url": "https://www.blendkit.com/docs/licenses/licensing-faq/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": false,
+        "attributionRequired": false,
+        "attributionText": "Not formally required (the FAQ recommends crediting authors)."
+      },
+      "originalFormat": "Blender .blend",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": 0,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "REJECTED: the Royalty Free FAQ says assets 'shouldn't be directly extractable in the distribution', which conflicts with serving a raw GLB from a static web app. Otherwise relevant (14 objects, faceCount 11,744). Not re-checked by the independent verifier; download needs a BlenderKit account."
+    },
+    {
+      "id": "khronos-legacy-2cylinderengine",
+      "name": "2 Cylinder Engine (legacy glTF-Sample-Models)",
+      "system": "engine",
+      "status": "rejected",
+      "source": {
+        "site": "GitHub KhronosGroupArchives/glTF-Sample-Models (archived)",
+        "modelPageUrl": "https://github.com/KhronosGroupArchives/glTF-Sample-Models/tree/main/2.0/2CylinderEngine",
+        "downloadUrl": "https://raw.githubusercontent.com/KhronosGroupArchives/glTF-Sample-Models/main/2.0/2CylinderEngine/glTF-Binary/2CylinderEngine.glb"
+      },
+      "author": "Unknown (original JT CAD source not stated; conversion credited to Okino Computer Graphics)",
+      "license": {
+        "name": "None stated: all rights reserved by default",
+        "url": null,
+        "commercialUse": false,
+        "modification": false,
+        "redistribution": false,
+        "attributionRequired": false,
+        "attributionText": null
+      },
+      "originalFormat": "GLB (JT -> COLLADA -> glTF; COLLADA2GLTF)",
+      "localPath": null,
+      "processing": [
+        "Downloaded to .asset-staging for read-only inspection only."
+      ],
+      "optimization": "none",
+      "stats": {
+        "triangles": 121496,
+        "meshes": 29,
+        "nodes": 82,
+        "animations": 0,
+        "bytes": 1838084
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not normalised; not for use."
+      },
+      "notes": "REJECTED: no licence. The per-model README only credits Okino for the conversion, the archived repo has no root LICENSE, and KhronosGroup/glTF-Sample-Assets removed it as an asset 'without licenses or licenses that were not suitable'. Do not ship. Structurally ideal (separate Piston, rod, Lifter and Spring_Link mesh instances in a CAD hierarchy; no node names), so it is useful only as an internal reference for hierarchy and animation design."
+    },
+    {
+      "id": "khronos-legacy-gearboxassy",
+      "name": "Gearbox Assy (legacy glTF-Sample-Models)",
+      "system": "transmission",
+      "status": "rejected",
+      "source": {
+        "site": "GitHub KhronosGroupArchives/glTF-Sample-Models (archived)",
+        "modelPageUrl": "https://github.com/KhronosGroupArchives/glTF-Sample-Models/tree/main/2.0/GearboxAssy",
+        "downloadUrl": "https://raw.githubusercontent.com/KhronosGroupArchives/glTF-Sample-Models/main/2.0/GearboxAssy/glTF-Binary/GearboxAssy.glb"
+      },
+      "author": "Unknown (original JT CAD source not stated; conversion credited to Okino Computer Graphics)",
+      "license": {
+        "name": "None stated: all rights reserved by default",
+        "url": null,
+        "commercialUse": false,
+        "modification": false,
+        "redistribution": false,
+        "attributionRequired": false,
+        "attributionText": null
+      },
+      "originalFormat": "GLB (JT -> COLLADA -> glTF)",
+      "localPath": null,
+      "processing": [
+        "Downloaded to .asset-staging for read-only inspection only."
+      ],
+      "optimization": "none",
+      "stats": {
+        "triangles": 646064,
+        "meshes": 42,
+        "nodes": 118,
+        "animations": 0,
+        "bytes": 4958788
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not normalised; not for use."
+      },
+      "notes": "REJECTED: no licence. The per-model README only credits Okino for the conversion, the archived repo has no root LICENSE, and KhronosGroup/glTF-Sample-Assets removed it as an asset 'without licenses or licenses that were not suitable'. Do not ship. Separate but generically named parts (body, body_1 ...); an industrial reduction gearbox, not clearly an automotive manual gearbox."
+    },
+    {
+      "id": "khronos-legacy-buggy",
+      "name": "Buggy (legacy glTF-Sample-Models)",
+      "system": "vehicle",
+      "status": "rejected",
+      "source": {
+        "site": "GitHub KhronosGroupArchives/glTF-Sample-Models (archived)",
+        "modelPageUrl": "https://github.com/KhronosGroupArchives/glTF-Sample-Models/tree/main/2.0/Buggy",
+        "downloadUrl": "https://raw.githubusercontent.com/KhronosGroupArchives/glTF-Sample-Models/main/2.0/Buggy/glTF-Binary/Buggy.glb"
+      },
+      "author": "Unknown (original JT CAD source not stated; conversion credited to Okino Computer Graphics)",
+      "license": {
+        "name": "None stated: all rights reserved by default",
+        "url": null,
+        "commercialUse": false,
+        "modification": false,
+        "redistribution": false,
+        "attributionRequired": false,
+        "attributionText": null
+      },
+      "originalFormat": "GLB (JT -> COLLADA -> glTF)",
+      "localPath": null,
+      "processing": [
+        "Downloaded to .asset-staging for read-only inspection only."
+      ],
+      "optimization": "none",
+      "stats": {
+        "triangles": 531955,
+        "meshes": 109,
+        "nodes": 205,
+        "animations": 0,
+        "bytes": 7885636
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not normalised; not for use."
+      },
+      "notes": "REJECTED: no licence. The per-model README only credits Okino for the conversion, the archived repo has no root LICENSE, and KhronosGroup/glTF-Sample-Assets removed it as an asset 'without licenses or licenses that were not suitable'. Do not ship. Many separate but unnamed CAD parts."
+    },
+    {
+      "id": "khronos-cesiummilktruck",
+      "name": "Cesium Milk Truck",
+      "system": "vehicle",
+      "status": "rejected",
+      "source": {
+        "site": "GitHub KhronosGroup/glTF-Sample-Assets",
+        "modelPageUrl": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CesiumMilkTruck",
+        "downloadUrl": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/CesiumMilkTruck/glTF-Binary/CesiumMilkTruck.glb"
+      },
+      "author": "Cesium",
+      "license": {
+        "name": "CC BY 4.0 (Cesium logo trademark excluded)",
+        "url": "https://creativecommons.org/licenses/by/4.0/legalcode",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "\"Cesium Milk Truck\" © 2017 Cesium, CC BY 4.0. The Cesium logo is a trademark of Cesium."
+      },
+      "originalFormat": "GLB",
+      "localPath": null,
+      "processing": [
+        "Downloaded to .asset-staging for inspection only."
+      ],
+      "optimization": "none",
+      "stats": {
+        "triangles": 3624,
+        "meshes": 2,
+        "nodes": 6,
+        "animations": 1,
+        "bytes": 369980
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not normalised; not selected."
+      },
+      "notes": "REJECTED (not selected; licence is fine): the body is fused and only the two wheel-pair meshes are separate. It carries a trademarked Cesium logo texture, and Khronos tags it 'issues'. Little teaching value beyond wheel spin, which Kenney and CarConcept already cover."
+    },
+    {
+      "id": "khronos-toycar",
+      "name": "Toy Car",
+      "system": "vehicle",
+      "status": "rejected",
+      "source": {
+        "site": "GitHub KhronosGroup/glTF-Sample-Assets",
+        "modelPageUrl": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/ToyCar",
+        "downloadUrl": "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/ToyCar/glTF-Binary/ToyCar.glb"
+      },
+      "author": "Guido Odendahl (initial model, 2020); Eric Chadwick (extensions and scene composition, 2020)",
+      "license": {
+        "name": "CC0 1.0",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": false,
+        "attributionText": "Not required (CC0)."
+      },
+      "originalFormat": "GLB",
+      "localPath": null,
+      "processing": [
+        "Downloaded to .asset-staging for inspection only."
+      ],
+      "optimization": "none",
+      "stats": {
+        "triangles": 108936,
+        "meshes": 3,
+        "nodes": 11,
+        "animations": 0,
+        "bytes": 5422412
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not normalised; not selected."
+      },
+      "notes": "REJECTED (not selected; licence is fine): the whole car is one mesh (plus Fabric and Glass), so it is useless for component education."
+    },
+    {
+      "id": "threejs-ferrari",
+      "name": "ferrari.glb (three.js car materials example)",
+      "system": "vehicle",
+      "status": "rejected",
+      "source": {
+        "site": "GitHub mrdoob/three.js examples/models/gltf",
+        "modelPageUrl": "https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/ferrari.glb",
+        "downloadUrl": "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/gltf/ferrari.glb"
+      },
+      "author": "vicent091036 (per the three.js credit line)",
+      "license": {
+        "name": "Unknown/unverifiable (third-party model; not covered by the three.js MIT licence)",
+        "url": null,
+        "commercialUse": null,
+        "modification": null,
+        "redistribution": null,
+        "attributionRequired": true,
+        "attributionText": "three.js credits it as: Ferrari 458 Italia model by vicent091036"
+      },
+      "originalFormat": "GLB (Draco-compressed; FBX2glTF)",
+      "localPath": null,
+      "processing": [
+        "Downloaded to .asset-staging for inspection only."
+      ],
+      "optimization": "none",
+      "stats": {
+        "triangles": 358788,
+        "meshes": 51,
+        "nodes": 58,
+        "animations": 0,
+        "bytes": 1681572
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not normalised; not for use."
+      },
+      "notes": "REJECTED: the credited Sketchfab model (uid 57bf6cc56931426e87494f554df1dab6) returns HTTP 404, so the licence cannot be confirmed, and a committer cannot relicense a third-party model under MIT. Ferrari trademark and trade dress. Meshes are split by material, not by panel."
+    },
+    {
+      "id": "threejs-gears",
+      "name": "gears.glb (three.js TSL angular slicing example)",
+      "system": "other",
+      "status": "rejected",
+      "source": {
+        "site": "GitHub mrdoob/three.js examples/models/gltf",
+        "modelPageUrl": "https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/gears.glb",
+        "downloadUrl": "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/models/gltf/gears.glb"
+      },
+      "author": "Bruno Simon",
+      "license": {
+        "name": "MIT (three.js repository licence; per the verifier's correction)",
+        "url": "https://raw.githubusercontent.com/mrdoob/three.js/dev/LICENSE",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": true,
+        "attributionText": "gears.glb by Bruno Simon, from three.js (https://github.com/mrdoob/three.js), MIT License, Copyright © 2010-2026 three.js authors. Include the MIT permission notice."
+      },
+      "originalFormat": "GLB (Draco)",
+      "localPath": null,
+      "processing": [
+        "Downloaded to .asset-staging for inspection only."
+      ],
+      "optimization": "none",
+      "stats": {
+        "triangles": 21696,
+        "meshes": 3,
+        "nodes": 3,
+        "animations": 0,
+        "bytes": 78312
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not normalised; not selected."
+      },
+      "notes": "REJECTED (not selected): a decorative gear set with all gears fused into one 'gears' mesh (nodes outerHull, axle, gears); not a gearbox. The research pass recorded the licence as unverified; the verifier corrected it to MIT (PR #29007 author statement 'Crappy gears model by me, so no credit issue.'). Because the claim as given was not confirmed, it is not counted as eligible."
+    },
+    {
+      "id": "polyhaven-rusted-wheel-rim-01",
+      "name": "Rusted Wheel Rim 01 (Poly Haven)",
+      "system": "other",
+      "status": "rejected",
+      "source": {
+        "site": "Poly Haven",
+        "modelPageUrl": "https://polyhaven.com/a/rusted_wheel_rim_01",
+        "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/rusted_wheel_rim_01/rusted_wheel_rim_01_1k.gltf"
+      },
+      "author": "John Hutcheson",
+      "license": {
+        "name": "CC0",
+        "url": "https://polyhaven.com/license",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": false,
+        "attributionText": "Not required (CC0)."
+      },
+      "originalFormat": "glTF + .bin + 1k JPG textures",
+      "localPath": null,
+      "processing": [
+        "Downloaded the 1k glTF set to .asset-staging for inspection only (2,597,489 bytes in total)."
+      ],
+      "optimization": "none",
+      "stats": {
+        "triangles": 16440,
+        "meshes": 1,
+        "nodes": 1,
+        "animations": 0,
+        "bytes": 2597489
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not normalised; not selected."
+      },
+      "notes": "NOT SELECTED (eligible: CC0, downloaded): a single-mesh rusty steel rim (node rusted_wheel_rim_01). It suits a junkyard better than a teaching scene, and CarConcept already has rims. It can be promoted to ready later with the same convert and optimise steps."
+    },
+    {
+      "id": "polyhaven-portable-generator",
+      "name": "Portable Generator (Poly Haven)",
+      "system": "engine",
+      "status": "rejected",
+      "source": {
+        "site": "Poly Haven",
+        "modelPageUrl": "https://polyhaven.com/a/portable_generator",
+        "downloadUrl": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/portable_generator/portable_generator_1k.gltf"
+      },
+      "author": "James Ray Cock",
+      "license": {
+        "name": "CC0",
+        "url": "https://polyhaven.com/license",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": false,
+        "attributionText": "Not required (CC0)."
+      },
+      "originalFormat": "glTF + .bin + 1k JPG textures",
+      "localPath": null,
+      "processing": [
+        "Downloaded the 1k glTF set to .asset-staging for inspection only (3,434,440 bytes in total)."
+      ],
+      "optimization": "none",
+      "stats": {
+        "triangles": 26419,
+        "meshes": 4,
+        "nodes": 4,
+        "animations": 0,
+        "bytes": 3434440
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not normalised; not selected."
+      },
+      "notes": "NOT SELECTED (eligible: CC0, downloaded): the small engine is fused into the main generator mesh; only the dial, switch and toggle are separate. No engine internals."
+    },
+    {
+      "id": "github-fouz-u-crankshaft-cad",
+      "name": "crankshaft_cad (FreeCAD crankshaft)",
+      "system": "engine",
+      "status": "rejected",
+      "source": {
+        "site": "GitHub Fouz-u/crankshaft_cad",
+        "modelPageUrl": "https://github.com/Fouz-u/crankshaft_cad",
+        "downloadUrl": null
+      },
+      "author": "Fouz-u (GitHub user)",
+      "license": {
+        "name": "GPL-3.0",
+        "url": "https://github.com/Fouz-u/crankshaft_cad/blob/main/LICENSE",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": null,
+        "attributionRequired": true,
+        "attributionText": "GPL-3.0: keep the copyright and licence notices; derivatives must also be distributed under GPL-3.0."
+      },
+      "originalFormat": "FreeCAD .FCStd (crank shaft.FCStd, 154,477 bytes)",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": null,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "REJECTED: GPL-3.0 copyleft is awkward for an asset bundled in a web app. A single crankshaft needing FreeCAD-to-glTF conversion. Marginal. Not downloaded; licence from the GitHub API (research pass), not re-checked by the verifier."
+    },
+    {
+      "id": "quaternius-cars-pack",
+      "name": "Quaternius Cars Pack (8 cars)",
+      "system": "vehicle",
+      "status": "rejected",
+      "source": {
+        "site": "quaternius.com",
+        "modelPageUrl": "https://quaternius.com/packs/cars.html",
+        "downloadUrl": null
+      },
+      "author": "Quaternius",
+      "license": {
+        "name": "CC0 (as stated on the pack page)",
+        "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "commercialUse": true,
+        "modification": true,
+        "redistribution": true,
+        "attributionRequired": false,
+        "attributionText": "Not required (CC0)."
+      },
+      "originalFormat": "FBX, OBJ, Blend (no glTF listed)",
+      "localPath": null,
+      "processing": [],
+      "optimization": "n/a",
+      "stats": {
+        "triangles": null,
+        "meshes": null,
+        "nodes": null,
+        "animations": null,
+        "bytes": null
+      },
+      "readyForInteractiveUse": false,
+      "componentMap": {},
+      "framing": {
+        "upAxis": null,
+        "approxSize": null,
+        "notes": "Not inspected: the file has not been downloaded."
+      },
+      "notes": "REJECTED for now: the actual download host could not be located from the fetched page (the button is an on-page '#inline' anchor), so nothing was downloaded. Probably body plus wheels at best, like the Kenney kit, which already covers this need. Licence not re-checked by the verifier."
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "generatedAt": "2026-10-21T18:48:41.639Z",
+  "durationSeconds": 238,
+  "userAgent": "AutoVerseContentDiscovery/0.1 (+educational project; contact: repo owner)",
+  "source": {
+    "name": "How a Car Works",
+    "origin": "https://www.howacarworks.com",
+    "startUrl": "https://www.howacarworks.com/index.amp"
+  },
+  "robots": {
+    "url": "https://www.howacarworks.com/robots.txt",
+    "httpStatus": 200,
+    "retrievedAt": "2026-10-21T18:40:32.315Z",
+    "groupsApplyingToUs": "none (no \"*\" group and no group naming our product token)",
+    "crawlDelaySeconds": null,
+    "effectiveDelayMs": 2000,
+    "sitemaps": [],
+    "disallowRulesForUs": [],
+    "note": "robots.txt fetched and parsed."
+  },
+  "limits": {
+    "maxRequests": 120,
+    "maxRetries": 3,
+    "timeoutMs": 20000,
+    "cacheTtlHours": 168
+  },
+  "requests": {
+    "network": 120,
+    "retries": 0,
+    "servedFromCache": 120,
+    "byStatus": {
+      "200": 120
+    },
+    "budgetExhausted": true
+  },
+  "counts": {
+    "categories": 16,
+    "articles": 279,
+    "articlesFetched": 219,
+    "articlesListedOnly": 60,
+    "robotsBlocked": 0,
+    "inaccessible": 0
+  },
+  "robotsBlocked": [],
+  "inaccessible": [],
+  "failures": [],
+  "terms": {
+    "checked": [
+      {
+        "url": "https://www.howacarworks.com/",
+        "httpStatus": 200,
+        "signals": {
+          "mentionsCopyright": false,
+          "mentionsAllRightsReserved": false,
+          "mentionsCreativeCommons": false,
+          "mentionsPermissionRequired": false,
+          "mentionsOpenLicence": false
+        }
+      },
+      {
+        "url": "https://www.howacarworks.com/about",
+        "httpStatus": 200,
+        "linkText": "About",
+        "signals": {
+          "mentionsCopyright": false,
+          "mentionsAllRightsReserved": false,
+          "mentionsCreativeCommons": false,
+          "mentionsPermissionRequired": false,
+          "mentionsOpenLicence": false
+        }
+      }
+    ],
+    "explicitLicenceFound": false,
+    "conclusion": "metadata-only",
+    "summary": "No terms-of-use page or open-content licence was found (checked: https://www.howacarworks.com/, https://www.howacarworks.com/about). Without an explicit licence or written permission the articles are treated as all-rights-reserved: AutoVerse records titles and links only (\"metadata-only\") and writes all lesson text independently."
+  },
+  "notes": [
+    "Request cap (120) reached: 60 article(s) are recorded from category listings only. Rerun the script to continue — cached pages are not refetched.",
+    "Only URLs, titles, categories, HTTP statuses and timestamps are stored. No article text or images are stored or reproduced.",
+    "Teaser paragraphs inside listing cards are discarded at extraction time; only card headings are kept as titles."
+  ]
+}

@@ -1,0 +1,392 @@
+{
+  "id": "manual-gearbox",
+  "slug": "manual-gearbox",
+  "title": "The Manual Gearbox",
+  "summary": "How a five-speed manual gearbox gives the engine a choice of ratios: gears that are always in mesh, a layshaft that drives them all, and synchronisers that pick which one drives the output — plus direct drive, overdrive and reverse.",
+  "categoryId": "transmission",
+  "difficulty": "intermediate",
+  "estimatedDuration": 18,
+  "tags": [
+    "gearbox",
+    "manual transmission",
+    "layshaft",
+    "synchromesh",
+    "gears",
+    "reverse idler",
+    "constant mesh"
+  ],
+  "learningObjectives": [
+    "Trace the power path from the input shaft through the constant-mesh pair, the layshaft and a speed pair to the mainshaft",
+    "Explain why every forward gear is always in mesh and how a synchroniser decides which one drives",
+    "Work out an indirect gear ratio from tooth counts",
+    "Explain direct drive, overdrive and how the reverse idler reverses the output",
+    "Describe why the clutch must be pressed to change gear"
+  ],
+  "beginnerExplanation": "An engine only works well across a fairly narrow band of speeds, roughly from just above idle to its rev limit. The car, though, has to crawl away from rest, climb hills, and cruise on the motorway. The gearbox bridges that gap by offering several ratios between how fast the engine turns and how fast the wheels turn.\n\nInside a classic manual gearbox there are three shafts. The input shaft comes from the clutch and carries a small gear. That gear is always meshed with a larger gear on the layshaft, a second shaft underneath, so the layshaft spins whenever the engine is driving the gearbox. The layshaft carries a row of gears of different sizes, and each one is permanently meshed with a partner on the third shaft, the mainshaft, which leads out to the wheels.\n\nHere is the clever part: the gears on the mainshaft are not fixed to it. They spin freely on bearings, all turning at their own speeds, all the time. Between them sit synchronisers, toothed collars fixed to the mainshaft that can slide sideways. When you move the gear lever, a fork pushes one collar against the side of one gear and locks that gear to the mainshaft. Now that gear, and only that gear, drives the output.\n\nIn 1st gear a small layshaft gear drives a big mainshaft gear, so the output turns slowly but with a lot of turning force, which is what you need to pull away. Higher gears use pairs that are closer in size, so the output turns faster with less force. In 4th of this gearbox the collar locks the input shaft straight to the mainshaft: one turn in, one turn out. 5th is an overdrive, where the output actually turns faster than the engine for relaxed cruising. Reverse slides an extra small gear, the idler, into the train, which makes the output turn the other way.\n\nIn neutral every collar sits in the middle. The input shaft, the layshaft and all the free gears still spin, but nothing is locked to the mainshaft, so no power reaches the wheels. You press the clutch before changing gear so the collars are not trying to slide while the full force of the engine is pushing on them.",
+  "technicalExplanation": "The layout shown is the in-line layshaft (countershaft) gearbox used in many rear-wheel-drive cars. The input shaft and mainshaft are coaxial: the mainshaft's front end runs in a pilot bearing inside the input pinion, so the two can turn at different speeds. A constant-mesh head pair (20 driving 34 teeth here, 1.70 : 1) drives the layshaft cluster, which is one rigid piece. Each layshaft gear is permanently meshed with a free-running gear on the mainshaft. Front-wheel-drive transaxles usually omit the layshaft: their input shaft carries the driving gears and a parallel output shaft carries the free gears and drives the final drive directly, but the selection principle is identical.\n\nAn indirect ratio is the product of two reductions: i = (z_head,driven / z_pinion) × (z_main / z_lay). With the illustrative tooth counts, 1st is 34/20 × 37/17 = 3.70 : 1 and 2nd is 34/20 × 30/24 = 2.13 : 1. Every head and speed pair has the same tooth sum (54) and the same module, so all pairs share one centre distance; real gearboxes achieve the same thing with profile shift and slightly different modules. Forward gears are helical (18° helix here) for smooth, quiet tooth engagement; the axial thrust this creates is taken by the shaft bearings.\n\nSelection is by synchronisers. Each hub is splined to the mainshaft and carries a sliding sleeve (collar). As the selector fork moves the sleeve towards a gear, spring-loaded struts push a brass baulk ring onto a friction cone on that gear. Cone friction accelerates or slows the gear and everything geared to it (the layshaft, the clutch disc and input shaft) until it matches mainshaft speed. Until then, chamfered blocking teeth on the ring stop the sleeve going further. Once speeds match the ring indexes, the sleeve's internal splines slide over the gear's dog teeth, and torque passes through those dogs, not through the cone. With the clutch released, only the disc, input shaft and layshaft inertia has to be synchronised, which is why gear changes need the pedal pressed.\n\n4th here is direct drive: the 3–4 sleeve locks the input pinion's dog teeth straight to the mainshaft, so no tooth mesh carries load and the ratio is exactly 1 : 1, which is also the most efficient path. 5th is an overdrive (34/20 × 17/37 = 0.78 : 1) for lower engine speed when cruising. Reverse uses a straight-cut idler that slides into mesh between a layshaft gear and a gear on the mainshaft. The third external mesh reverses the direction, and the idler's own tooth count cancels out of the ratio (34/20 × 33/16 = 3.51 : 1). Reverse is commonly unsynchronised, so the shafts should be stationary before it is selected.\n\nThe selector mechanism converts lever movement into rail movement: sideways movement chooses a rail, fore-aft movement slides it. Detents hold each rail in place and an interlock prevents two rails moving at once, so two ratios can never be engaged together, which would lock the gearbox. All tooth counts, ratios and efficiencies in the lab are illustrative values chosen for teaching, not the data of a production gearbox.",
+  "steps": [
+    {
+      "id": "neutral",
+      "title": "Neutral: everything spins, nothing drives",
+      "beginner": "All three synchro collars sit in the middle. The input shaft, layshaft and every free gear on the mainshaft still turn, but none is locked to the mainshaft, so the output is free and no power reaches the wheels.",
+      "technical": "With the clutch engaged the head pair drives the layshaft at input ÷ 1.70, and each free mainshaft gear turns at its own speed set by its pair. Only a sleeve on its dog teeth can transfer torque, so with every sleeve centred the mainshaft carries none. In a car the mainshaft simply turns with the wheels (or stands still with them); the lab has no wheels attached, so its mainshaft coasts to rest.",
+      "cue": "neutral",
+      "componentIds": [
+        "layshaft",
+        "constant-mesh-gears",
+        "synchro-1-2",
+        "synchro-3-4",
+        "synchro-5"
+      ]
+    },
+    {
+      "id": "first",
+      "title": "1st gear: two reductions in a row",
+      "beginner": "The 1–2 collar slides back and locks the biggest mainshaft gear. Power goes down the constant-mesh pair, along the layshaft, up through the smallest layshaft gear into the big 1st gear, and through the collar into the mainshaft. The output turns slowly with lots of torque.",
+      "technical": "i = 34/20 × 37/17 = 3.70 : 1. With the illustrative 150 N·m input and about 96% efficiency, output torque is about 533 N·m, and with a 4.10 final drive the wheels turn once per 15.2 engine revolutions. The highlighted path passes through two loaded meshes.",
+      "cue": "first",
+      "componentIds": [
+        "first-gear",
+        "synchro-1-2",
+        "layshaft",
+        "constant-mesh-gears"
+      ]
+    },
+    {
+      "id": "second",
+      "title": "Changing up to 2nd",
+      "beginner": "The same 1–2 collar slides forward, through neutral, onto 2nd gear. The brass synchro ring first rubs on 2nd gear's cone to bring it to the mainshaft's speed, so the collar's teeth slide in without a crunch.",
+      "technical": "i = 34/20 × 30/24 = 2.13 : 1. On an upshift the gear being engaged is turning faster than the mainshaft (it is geared to the input, which was spinning faster in 1st), so the cone has to slow the gear, the layshaft and the released clutch disc. The baulk ring's blocking chamfers hold the sleeve back until the speeds match.",
+      "cue": "second",
+      "componentIds": [
+        "second-gear",
+        "synchro-1-2",
+        "selector-forks"
+      ]
+    },
+    {
+      "id": "third",
+      "title": "3rd gear",
+      "beginner": "Now the front 3–4 collar does the work: it slides back onto 3rd gear. The layshaft gear for 3rd is slightly bigger than its partner, so this pair speeds things up a little, partly cancelling the constant-mesh reduction.",
+      "technical": "i = 34/20 × 25/29 = 1.47 : 1. The selector lever has moved across the gate to a different rail, and the interlock locks the 1–2 rail in neutral so two gears can never engage together.",
+      "cue": "third",
+      "componentIds": [
+        "third-gear",
+        "synchro-3-4",
+        "selector-forks"
+      ]
+    },
+    {
+      "id": "fourth",
+      "title": "4th gear: direct drive",
+      "beginner": "The 3–4 collar slides forward and locks the mainshaft straight to the input shaft. One turn in, one turn out. The layshaft keeps spinning, but it carries no load.",
+      "technical": "i = 1 : 1 exactly. Torque passes from the input pinion's dog teeth through the sleeve and hub to the mainshaft, so no gear mesh is loaded and only bearing and churning losses remain (about 99% in the illustrative model). Many four- and five-speed boxes make their direct gear the main cruising gear for this reason.",
+      "cue": "fourth",
+      "componentIds": [
+        "synchro-3-4",
+        "input-shaft",
+        "mainshaft",
+        "constant-mesh-gears"
+      ]
+    },
+    {
+      "id": "fifth",
+      "title": "5th gear: overdrive",
+      "beginner": "The rear synchro locks 5th, where the largest layshaft gear drives the smallest mainshaft gear. The output now turns faster than the engine, so the engine can turn slowly on the motorway.",
+      "technical": "i = 34/20 × 17/37 = 0.78 : 1. Output speed is 1.28 × input speed and torque is reduced to about 0.75 × input after losses. Overdrive lowers engine speed at a given road speed, cutting pumping and friction losses, at the cost of less pulling power for overtaking.",
+      "cue": "fifth",
+      "componentIds": [
+        "fifth-gear",
+        "synchro-5",
+        "layshaft"
+      ]
+    },
+    {
+      "id": "reverse",
+      "title": "Reverse: the idler gear",
+      "beginner": "Selecting reverse slides a small idler gear into mesh between the layshaft and a gear on the mainshaft. The extra gear makes the output turn the opposite way. Reverse has no synchroniser here, so the car should be stopped first.",
+      "technical": "Each external mesh reverses rotation, so three meshes give a negative ratio. The idler's 18 teeth cancel: i = −(34/20 × 18/16 × 33/18) = −(34/20 × 33/16) = −3.51 : 1. The reverse gears are straight-cut, so they can slide into mesh axially and tend to whine under load.",
+      "cue": "reverse",
+      "componentIds": [
+        "reverse-idler",
+        "mainshaft",
+        "layshaft"
+      ]
+    }
+  ],
+  "componentIds": [
+    "input-shaft",
+    "constant-mesh-gears",
+    "layshaft",
+    "first-gear",
+    "second-gear",
+    "third-gear",
+    "fifth-gear",
+    "synchro-1-2",
+    "synchro-3-4",
+    "synchro-5",
+    "reverse-idler",
+    "mainshaft",
+    "selector-forks",
+    "gearbox-casing",
+    "clutch-disc"
+  ],
+  "labId": "transmission",
+  "flow": {
+    "nodes": [
+      {
+        "id": "engine",
+        "label": "Engine",
+        "detail": "Torque at the crankshaft",
+        "componentId": "clutch-flywheel",
+        "topicId": "torque-and-power"
+      },
+      {
+        "id": "clutch",
+        "label": "Clutch",
+        "detail": "Connects or disconnects",
+        "componentId": "clutch-disc",
+        "topicId": "clutch"
+      },
+      {
+        "id": "input",
+        "label": "Input shaft",
+        "detail": "Carries the input pinion",
+        "componentId": "input-shaft"
+      },
+      {
+        "id": "head",
+        "label": "Constant-mesh pair",
+        "detail": "Always drives the layshaft",
+        "componentId": "constant-mesh-gears"
+      },
+      {
+        "id": "lay",
+        "label": "Layshaft cluster",
+        "detail": "Drives every free gear",
+        "componentId": "layshaft"
+      },
+      {
+        "id": "pair",
+        "label": "Selected speed pair",
+        "detail": "Sets the ratio",
+        "componentId": "first-gear",
+        "topicId": "gear-ratios"
+      },
+      {
+        "id": "synchro",
+        "label": "Synchro collar",
+        "detail": "Locks one gear to the shaft",
+        "componentId": "synchro-1-2"
+      },
+      {
+        "id": "main",
+        "label": "Mainshaft",
+        "detail": "Output of the gearbox",
+        "componentId": "mainshaft"
+      },
+      {
+        "id": "final",
+        "label": "Final drive",
+        "detail": "Further reduction and differential",
+        "topicId": "differential"
+      }
+    ],
+    "edges": [
+      {
+        "from": "engine",
+        "to": "clutch"
+      },
+      {
+        "from": "clutch",
+        "to": "input",
+        "label": "when engaged"
+      },
+      {
+        "from": "input",
+        "to": "head"
+      },
+      {
+        "from": "head",
+        "to": "lay",
+        "label": "1.70 : 1"
+      },
+      {
+        "from": "lay",
+        "to": "pair"
+      },
+      {
+        "from": "pair",
+        "to": "synchro",
+        "label": "dog teeth"
+      },
+      {
+        "from": "synchro",
+        "to": "main"
+      },
+      {
+        "from": "input",
+        "to": "synchro",
+        "label": "4th: direct"
+      },
+      {
+        "from": "main",
+        "to": "final"
+      }
+    ]
+  },
+  "keyConcepts": [
+    {
+      "term": "Gear ratio",
+      "definition": "Teeth on the driven gear divided by teeth on the driver. A ratio above 1 slows the output and multiplies torque.",
+      "equation": "i = z_driven / z_driver"
+    },
+    {
+      "term": "Indirect gear",
+      "definition": "A gear that runs through the layshaft: its ratio is the constant-mesh reduction multiplied by the speed-pair ratio.",
+      "equation": "i = (z_head / z_pinion) × (z_main / z_lay)"
+    },
+    {
+      "term": "Constant mesh",
+      "definition": "Every forward gear pair stays in mesh all the time. Changing gear only changes which free gear is locked to the mainshaft."
+    },
+    {
+      "term": "Synchroniser (synchromesh)",
+      "definition": "A hub, sliding collar and friction cone ring that match a gear's speed to the shaft before dog teeth lock them together."
+    },
+    {
+      "term": "Direct drive",
+      "definition": "The input shaft is locked straight to the mainshaft; no gear mesh carries the load.",
+      "equation": "i = 1"
+    },
+    {
+      "term": "Overdrive",
+      "definition": "A ratio below 1 : 1, so the output turns faster than the engine.",
+      "equation": "i < 1  ⇒  n_out > n_in"
+    }
+  ],
+  "misconceptions": [
+    {
+      "myth": "Changing gear slides gears into and out of mesh.",
+      "reality": "In a synchromesh gearbox every forward pair is always in mesh. Only the synchro collars slide, locking one free gear to the shaft. (Early 'crash' gearboxes and many reverse gears do slide gears.)"
+    },
+    {
+      "myth": "In neutral the gears inside the gearbox stop turning.",
+      "reality": "With the clutch engaged the input shaft, layshaft and all the free gears keep spinning in neutral. It is only the mainshaft that is not driven."
+    },
+    {
+      "myth": "The synchroniser cone transmits the drive.",
+      "reality": "The cone only matches speeds during the shift. Once the collar is engaged the drive goes through the dog teeth."
+    },
+    {
+      "myth": "A lower gear gives the car more power.",
+      "reality": "A gearbox cannot add power. A lower gear multiplies torque and divides speed, so the power stays the same minus small losses. It lets the engine run where it makes more power."
+    },
+    {
+      "myth": "You need to double-declutch in every manual car.",
+      "reality": "Double-declutching matched speeds by hand in unsynchronised gearboxes. Synchronisers do this job automatically in modern cars."
+    }
+  ],
+  "practicalExamples": [
+    "A crunch when selecting reverse while the car is still rolling is the unsynchronised reverse gears meeting at different speeds. Stop first. If reverse then refuses to go in, letting the clutch up briefly in neutral and pressing it again turns the gears to a new position.",
+    "A gearbox that crunches going into 2nd on a quick change, especially when cold, often has worn synchro rings or thick oil; a slower, deliberate shift gives the cone time to work.",
+    "In the lab, 4th is direct drive: with the engine at 2,000 rpm the output also turns at 2,000 rpm, and the layshaft spins but carries no torque.",
+    "Most front-wheel-drive cars use a two-shaft transaxle with the final drive in the same casing. There is no layshaft, but the free gears, synchros and selector forks work exactly as shown.",
+    "Gear oil in a manual gearbox is usually checked at the filler plug on the side of the casing; the correct level is often the bottom of the filler hole."
+  ],
+  "relatedTopicIds": [
+    "clutch",
+    "gear-ratios",
+    "torque-and-power",
+    "automatic-transmission",
+    "differential",
+    "drivetrain-layouts",
+    "mechanical-sympathy"
+  ],
+  "prerequisiteTopicIds": [
+    "how-a-car-works",
+    "clutch"
+  ],
+  "quiz": [
+    {
+      "id": "neutral-spinning",
+      "prompt": "With the engine running, the clutch engaged and the gearbox in neutral, which parts are turning?",
+      "options": [
+        "Nothing inside the gearbox",
+        "Only the input shaft",
+        "The input shaft, layshaft and free mainshaft gears, but not the mainshaft",
+        "Everything, including the mainshaft and wheels"
+      ],
+      "answerIndex": 2,
+      "explanation": "The constant-mesh pair always drives the layshaft, which drives every free gear. With every collar centred, none of them is locked to the mainshaft."
+    },
+    {
+      "id": "synchro-job",
+      "prompt": "What does the synchroniser do before its collar engages a gear?",
+      "options": [
+        "Disconnects the engine from the gearbox",
+        "Uses a friction cone to match the gear's speed to the mainshaft",
+        "Slides the gear into mesh with the layshaft",
+        "Changes the number of teeth in mesh"
+      ],
+      "answerIndex": 1,
+      "explanation": "The baulk ring rubs on the gear's cone until speeds match; only then can the collar's splines slide over the dog teeth."
+    },
+    {
+      "id": "indirect-ratio",
+      "prompt": "The input pinion (20 teeth) drives a 34-tooth layshaft gear, and a 24-tooth layshaft gear drives a 30-tooth mainshaft gear. What is the gearbox ratio?",
+      "options": [
+        "1.25 : 1",
+        "1.70 : 1",
+        "2.13 : 1",
+        "2.95 : 1"
+      ],
+      "answerIndex": 2,
+      "explanation": "Ratios in series multiply: 34/20 × 30/24 = 1.70 × 1.25 = 2.125, about 2.13 : 1."
+    },
+    {
+      "id": "reverse-direction",
+      "prompt": "Why does the output turn backwards in reverse?",
+      "options": [
+        "The layshaft reverses direction",
+        "An idler gear adds a third mesh, and each mesh reverses rotation",
+        "The clutch spins the other way",
+        "The reverse gear has helical teeth of the opposite hand"
+      ],
+      "answerIndex": 1,
+      "explanation": "Two external meshes give the original direction; the idler makes three, so the output reverses. The idler does not change the ratio."
+    },
+    {
+      "id": "direct-drive",
+      "prompt": "In this gearbox's 4th gear (direct drive), which gear teeth carry the engine's torque to the mainshaft?",
+      "options": [
+        "The constant-mesh pair and 4th pair",
+        "None: the collar locks the input pinion straight to the mainshaft",
+        "The reverse idler",
+        "The 5th gear pair"
+      ],
+      "answerIndex": 1,
+      "explanation": "The 3–4 collar engages the input pinion's dog teeth, so the drive goes straight through without any loaded gear mesh, giving exactly 1 : 1."
+    }
+  ],
+  "sourceReferences": [
+    {
+      "title": "How manual gearboxes work",
+      "url": "https://www.howacarworks.com/basics/how-manual-gearboxes-work",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading. AutoVerse text is original."
+    },
+    {
+      "title": "How the transmission works",
+      "url": "https://www.howacarworks.com/basics/how-the-transmission-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading. AutoVerse text is original."
+    }
+  ],
+  "licence": {
+    "name": "AutoVerse original content"
+  },
+  "contentStatus": "complete"
+}

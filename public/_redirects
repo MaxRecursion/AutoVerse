@@ -1,0 +1,10 @@
+# Netlify / Cloudflare Pages routing. Files that exist (including every page
+# prerendered by scripts/prerender) are served directly; the build prepends
+# explicit rewrites for prerendered routes to dist/_redirects.
+
+# Missing static files should 404, not fall back to the app shell.
+/assets/*      /404.html     404
+/models/*      /404.html     404
+
+# Everything else is a client-side route.
+/*             /index.html   200

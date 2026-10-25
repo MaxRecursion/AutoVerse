@@ -1,0 +1,105 @@
+{
+  "id": "engine-layouts",
+  "slug": "engine-layouts",
+  "title": "Engine Layouts: Inline, V and Flat",
+  "summary": "Why engines come as inline-fours, straight-sixes, V8s and boxers: how cylinder arrangement affects size, smoothness, firing order and where the engine fits in the car.",
+  "categoryId": "engine",
+  "difficulty": "intermediate",
+  "estimatedDuration": 12,
+  "tags": ["engine", "layout", "balance", "vibration", "packaging"],
+  "learningObjectives": [
+    "Describe inline, V and horizontally opposed (flat) cylinder arrangements",
+    "Calculate the firing interval of a four-stroke engine from its cylinder count",
+    "Explain primary and secondary balance in simple terms and why an inline-four needs balance shafts at larger sizes",
+    "Relate engine layout to packaging: transverse versus longitudinal mounting and centre of gravity"
+  ],
+  "beginnerExplanation": "Most engines have between three and eight cylinders, and designers can line them up in different ways. An inline (or straight) engine puts every cylinder in one row. A V engine splits them into two rows that share one crankshaft, making a shorter engine. A flat or boxer engine lays the two rows horizontally, opposite each other, which keeps the engine low.\n\nThe layout affects how smooth the engine feels, how much space it needs and how it sounds. A straight-six is naturally very smooth. A four-cylinder is compact and cheap but has a slight buzz at high revs. A V8 packs lots of cylinders into a short block.\n\nLayout also decides where the engine can go. Small cars usually mount an inline-four sideways (transversely) to drive the front wheels, while larger rear-drive cars often mount the engine front-to-back (longitudinally).",
+  "technicalExplanation": "In a four-stroke engine each cylinder fires once every 720° of crankshaft rotation, so evenly spaced firing gives an interval of 720° / n: 180° for four cylinders, 120° for six, 90° for eight. Shorter intervals mean overlapping power strokes and smoother torque delivery.\n\nBalance is about the inertial forces of the reciprocating parts. Primary forces vary once per crank revolution; secondary forces vary at twice crank speed because the connecting rod's angularity makes the piston move faster in the top half of its stroke than in the bottom half. An inline-four cancels primary forces and couples, but its secondary forces add up, giving a vertical shake at twice engine speed that grows with displacement and the square of rpm; larger fours often use twin contra-rotating balance shafts. An inline-six is inherently balanced in both primary and secondary forces and couples. A flat-four cancels the primary forces between opposed pistons, but leaves small rocking couples because the cylinders are offset along the crank.\n\nV engines are pairs of inline banks on a common crank. Bank angle and crank-pin arrangement set the firing intervals: a 90° V8 with a cross-plane crank fires evenly and can be fully balanced with counterweights, producing its characteristic uneven exhaust pulse per bank; a flat-plane V8 is lighter and revs more freely but has inline-four-like secondary shake. A 60° V6 suits even firing with offset crank pins.\n\nPackaging is the other driver. Transverse inline-fours fit between the front wheels alongside the gearbox for front-wheel drive. Long inline-sixes are usually longitudinal. Flat engines lower the centre of gravity but are wide, which can constrain steering lock and exhaust routing.",
+  "steps": [
+    {
+      "id": "inline",
+      "title": "Inline (straight) engines",
+      "beginner": "All cylinders in one row above a single crankshaft. Simple, cheap and easy to work on.",
+      "technical": "One cylinder head, one exhaust manifold and straightforward valvetrain. Length grows with cylinder count, which limits inline-sixes to longitudinal installations in most cars."
+    },
+    {
+      "id": "vee",
+      "title": "V engines",
+      "beginner": "Two rows of cylinders at an angle share one crankshaft, making a short, compact engine.",
+      "technical": "Two connecting rods often share each crank pin. Common bank angles are 60° (V6/V12) and 90° (V8). Two heads and two exhaust banks add cost and complexity."
+    },
+    {
+      "id": "flat",
+      "title": "Flat (boxer) engines",
+      "beginner": "The two rows lie flat and opposite, like boxers trading punches. The engine sits low in the car.",
+      "technical": "Opposed pistons on separate crank pins move in mirror image, cancelling primary forces. Low height helps centre of gravity; the width can intrude on suspension and steering space."
+    },
+    {
+      "id": "firing-interval",
+      "title": "Firing interval and smoothness",
+      "beginner": "More cylinders means more power pulses per turn of the crank, so the engine feels smoother.",
+      "technical": "Even firing interval = 720° / n for a four-stroke. With six or more cylinders the power strokes overlap, so crankshaft torque never falls to zero between firings."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "cylinders", "label": "Cylinder count", "detail": "3, 4, 5, 6, 8, 10, 12" },
+      { "id": "arrangement", "label": "Arrangement", "detail": "Inline, V or flat" },
+      { "id": "crank", "label": "Crank design", "detail": "Pin layout sets firing order", "topicId": "pistons-and-crankshaft" },
+      { "id": "balance", "label": "Balance & firing", "detail": "Primary/secondary forces, 720°/n interval" },
+      { "id": "installation", "label": "Installation", "detail": "Transverse or longitudinal", "topicId": "drivetrain-layouts" }
+    ],
+    "edges": [
+      { "from": "cylinders", "to": "arrangement" },
+      { "from": "arrangement", "to": "crank" },
+      { "from": "crank", "to": "balance" },
+      { "from": "arrangement", "to": "installation", "label": "length & width" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Firing interval", "definition": "Crank angle between successive power strokes in an evenly firing four-stroke engine.", "equation": "θ = 720° / n" },
+    { "term": "Primary balance", "definition": "Cancellation of inertial forces that vary once per crankshaft revolution." },
+    { "term": "Secondary balance", "definition": "Cancellation of inertial forces at twice crank speed, caused by connecting-rod angularity. Inline-fours are unbalanced here." },
+    { "term": "Balance shaft", "definition": "Counter-rotating weighted shaft(s) that cancel an engine's residual shaking forces, typically turning at twice crank speed in a four-cylinder." }
+  ],
+  "misconceptions": [
+    { "myth": "More cylinders always means more power.", "reality": "Power depends mainly on how much air the engine can burn fuel with each second. Cylinder count mostly affects smoothness, rev potential and packaging." },
+    { "myth": "A boxer engine is perfectly balanced.", "reality": "A flat-four cancels primary forces but still has small rocking couples because opposing cylinders are offset along the crankshaft. A flat-six is much closer to perfect." },
+    { "myth": "V engines are always smoother than inline engines.", "reality": "An inline-six is inherently better balanced than many V6s; smoothness depends on the specific angle, crank and firing order." }
+  ],
+  "practicalExamples": [
+    "A three-cylinder city car idles with a characteristic throb because its 240° firing interval leaves gaps between power strokes.",
+    "Many front-wheel-drive cars use transverse inline-fours so the engine and gearbox fit side by side between the front wheels.",
+    "Sports cars with flat engines mount them low to reduce body roll and weight transfer."
+  ],
+  "relatedTopicIds": ["pistons-and-crankshaft", "four-stroke-cycle", "drivetrain-layouts", "valves-and-camshaft"],
+  "prerequisiteTopicIds": ["four-stroke-cycle", "pistons-and-crankshaft"],
+  "quiz": [
+    {
+      "id": "interval-six",
+      "prompt": "What is the even firing interval of a four-stroke six-cylinder engine?",
+      "options": ["60°", "90°", "120°", "180°"],
+      "answerIndex": 2,
+      "explanation": "720° / 6 = 120°."
+    },
+    {
+      "id": "inline-four-shake",
+      "prompt": "Why do larger inline-four engines often use balance shafts?",
+      "options": ["To cancel unbalanced secondary forces at twice crank speed", "To drive the camshafts", "To cool the pistons", "To increase compression"],
+      "answerIndex": 0,
+      "explanation": "The inline-four's secondary forces add rather than cancel; balance shafts at twice crank speed counteract them."
+    },
+    {
+      "id": "boxer-benefit",
+      "prompt": "What is the main packaging benefit of a flat (boxer) engine?",
+      "options": ["It is the narrowest layout", "It lowers the centre of gravity", "It needs no cylinder heads", "It uses fewer pistons"],
+      "answerIndex": 1,
+      "explanation": "Lying the cylinders flat keeps the engine's mass low, at the cost of extra width."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"The engine","url":"https://www.howacarworks.com/basics/the-engine","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

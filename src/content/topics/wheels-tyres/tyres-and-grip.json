@@ -1,0 +1,114 @@
+{
+  "id": "tyres-and-grip",
+  "slug": "tyres-and-grip",
+  "title": "Tyres and Grip",
+  "summary": "Every force that accelerates, brakes or steers a car passes through four tyre contact patches, each roughly the size of a postcard. Learn how grip is generated, why tyres must slip a little to work, and how pressure, tread and the friction circle set the limits.",
+  "categoryId": "wheels-tyres",
+  "difficulty": "beginner",
+  "estimatedDuration": 13,
+  "tags": ["tyres", "grip", "friction", "contact patch", "slip angle", "aquaplaning", "tread"],
+  "learningObjectives": [
+    "Estimate the size of a tyre contact patch from load and pressure",
+    "Explain the friction circle: braking and cornering share one grip budget",
+    "Describe slip ratio and slip angle and why peak grip needs some slip",
+    "Read a tyre size marking and explain the role of tread depth in the wet"
+  ],
+  "beginnerExplanation": "However powerful the engine or big the brakes, a car can only accelerate, stop and turn as hard as its tyres allow. Each tyre touches the road over a patch roughly the size of a postcard or the palm of your hand, and all the car's control forces pass through those four small areas.\n\nGrip comes from the rubber gripping tiny bumps in the road surface and briefly bonding to it. The amount of grip depends on the tyre, the road and the load pressing the tyre down. On a dry road a good tyre can produce a sideways or braking force almost equal to the weight it carries; on a wet or icy road far less.\n\nImportantly, a tyre has one 'budget' of grip. If you use most of it to brake, there is little left for steering, and vice versa. That is why braking hard in the middle of a bend is risky and why ABS keeps the wheels turning so you can still steer. In the wet, the tread grooves pump water out from under the tyre; with too little tread, the tyre can ride up on a film of water and lose grip altogether.",
+  "technicalExplanation": "The contact patch area is approximately the wheel load divided by inflation pressure (the carcass carries some load, so this is an estimate): 4,000 N on a tyre at 2.3 bar gives about 174 cm². The maximum horizontal force is roughly F_max ≈ μ × F_z, with μ around 0.9–1.1 for road tyres on dry asphalt and considerably lower in the wet. μ itself falls slightly as load increases (load sensitivity), which is why load transfer reduces an axle's total grip and why weight distribution matters.\n\nTyres generate force through deformation, not pure sliding. Longitudinal force rises with slip ratio — the difference between wheel speed and road speed — and typically peaks around 10–15% slip before falling as the patch slides. Lateral force rises with slip angle, the angle between where the wheel points and where it travels, peaking at a few degrees for road tyres. ABS and traction control hold the tyre near these peaks. Combined demands obey the friction circle (strictly an ellipse): √(F_x² + F_y²) ≤ μ F_z, so braking force used leaves less available for cornering.\n\nA marking such as 205/55 R16 91V means 205 mm section width, sidewall height 55% of width (about 113 mm), radial construction, 16-inch rim, load index 91 (615 kg) and speed rating V (240 km/h). Radial construction lets the sidewall flex while steel belts keep the tread flat. Tread grooves evacuate water; when the water cannot escape fast enough, a wedge lifts the tread and the tyre aquaplanes, with the onset speed falling as tread depth decreases and as pressure decreases. Many jurisdictions set a legal minimum tread depth (for example 1.6 mm in the UK and EU), but wet braking performance degrades well before that point. Under-inflation increases flexing, heat build-up and rolling resistance; over-inflation shrinks the patch and reduces grip.",
+  "steps": [
+    {
+      "id": "contact-patch",
+      "title": "A postcard of rubber",
+      "beginner": "Each tyre touches the road over a small patch; all control forces pass through it.",
+      "technical": "A ≈ F_z / p_inflation. 4,000 N at 230 kPa gives ≈ 174 cm²."
+    },
+    {
+      "id": "grip-limit",
+      "title": "Grip scales with load",
+      "beginner": "The harder a tyre is pressed onto the road, the more force it can produce — up to a limit set by rubber and surface.",
+      "technical": "F_max ≈ μ F_z with μ ≈ 0.9–1.1 dry; load sensitivity means μ falls as F_z rises."
+    },
+    {
+      "id": "slip",
+      "title": "Grip needs a little slip",
+      "beginner": "Tyres produce the most grip while stretching and twisting slightly, just before they start to skid.",
+      "technical": "Longitudinal force peaks at roughly 10–15% slip ratio; lateral force peaks at a few degrees of slip angle."
+    },
+    {
+      "id": "friction-circle",
+      "title": "One budget for everything",
+      "beginner": "Braking, accelerating and turning all share the same grip; use more for one and less remains for the others.",
+      "technical": "√(F_x² + F_y²) ≤ μ F_z — the friction circle (ellipse in practice)."
+    },
+    {
+      "id": "water",
+      "title": "Tread clears water",
+      "beginner": "Grooves pump water away so the rubber can touch the road; worn tread makes aquaplaning more likely.",
+      "technical": "Aquaplaning onset speed falls with lower tread depth, lower pressure and deeper standing water."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "load", "label": "Wheel load F_z", "detail": "Weight + load transfer", "topicId": "drivetrain-layouts" },
+      { "id": "patch", "label": "Contact patch", "detail": "≈ F_z / pressure" },
+      { "id": "slip", "label": "Slip", "detail": "Slip ratio · slip angle" },
+      { "id": "force", "label": "Tyre forces", "detail": "√(F_x² + F_y²) ≤ μ F_z" },
+      { "id": "brakes", "label": "Braking", "topicId": "brake-hydraulics" },
+      { "id": "steer", "label": "Steering", "topicId": "steering-systems" }
+    ],
+    "edges": [
+      { "from": "load", "to": "patch" },
+      { "from": "patch", "to": "slip" },
+      { "from": "slip", "to": "force" },
+      { "from": "brakes", "to": "slip", "label": "F_x demand" },
+      { "from": "steer", "to": "slip", "label": "F_y demand" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Coefficient of friction", "definition": "Ratio of maximum horizontal force to vertical load at the tyre.", "equation": "F_max ≈ μ × F_z" },
+    { "term": "Friction circle", "definition": "Combined braking/accelerating and cornering forces cannot exceed the tyre's total grip.", "equation": "√(F_x² + F_y²) ≤ μ F_z" },
+    { "term": "Slip angle", "definition": "Angle between the direction a wheel points and the direction it actually travels; it creates cornering force." },
+    { "term": "Contact patch area", "definition": "Approximately the wheel load divided by inflation pressure.", "equation": "A ≈ F_z / p" }
+  ],
+  "misconceptions": [
+    { "myth": "Wider tyres always give more grip because there is more rubber on the road.", "reality": "For a given load and pressure the patch area is similar; width changes its shape. Wider tyres often help through compound, heat and load sensitivity, but can aquaplane sooner." },
+    { "myth": "A tyre at the legal minimum tread is as safe as a new one in the rain.", "reality": "Wet stopping distances lengthen considerably as tread wears, long before the legal minimum is reached." },
+    { "myth": "Maximum grip happens when the tyre is not slipping at all.", "reality": "Tyres generate force through small amounts of slip; peak grip occurs at a modest slip ratio or slip angle, and falls once the patch slides." }
+  ],
+  "practicalExamples": [
+    "From 100 km/h on dry tarmac with μ ≈ 0.9, the physics limit gives a braking distance of about 44 m — before adding reaction time.",
+    "Tyre pressures should be set cold to the figures on the door pillar or fuel flap, which account for the car's weight and speed.",
+    "On a wet roundabout, braking before the turn rather than during it leaves the tyres' full grip available for steering."
+  ],
+  "relatedTopicIds": ["brake-hydraulics", "steering-systems", "differential", "mechanical-sympathy"],
+  "prerequisiteTopicIds": ["how-a-car-works"],
+  "quiz": [
+    {
+      "id": "patch-calc",
+      "prompt": "A tyre carries 3,500 N at 250 kPa. Roughly how big is its contact patch?",
+      "options": ["14 cm²", "140 cm²", "1,400 cm²", "1.4 m²"],
+      "answerIndex": 1,
+      "explanation": "A ≈ 3,500 / 250,000 = 0.014 m² = 140 cm²."
+    },
+    {
+      "id": "circle",
+      "prompt": "You are braking at the tyres' limit in a straight line and then turn the wheel. What happens?",
+      "options": ["The car turns sharply because braking adds grip", "Little or no cornering force is available, so the car may run wide", "Grip doubles", "Nothing changes"],
+      "answerIndex": 1,
+      "explanation": "The friction circle means all grip is already used for braking; ABS helps by preventing lock-up so some steering remains."
+    },
+    {
+      "id": "size-marking",
+      "prompt": "In the tyre size 205/55 R16, what does 55 represent?",
+      "options": ["Rim diameter in cm", "Sidewall height as a percentage of width", "Maximum speed", "Tread depth"],
+      "answerIndex": 1,
+      "explanation": "55 is the aspect ratio: sidewall height is 55% of the 205 mm section width."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"Avoiding tyre wear","url":"https://www.howacarworks.com/wheels-and-tyres/avoiding-tyre-wear","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
+    {"title":"Tyres","url":"https://www.howacarworks.com/advanced-driving/tyres","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

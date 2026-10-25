@@ -1,0 +1,441 @@
+[
+  {
+    "id": "clutch-flywheel",
+    "name": "Flywheel",
+    "systemId": "transmission",
+    "description": "A heavy steel disc bolted to the end of the crankshaft. It smooths out the engine's power pulses and gives the clutch disc a flat, hard face to be clamped against. A toothed ring round its edge lets the starter motor crank the engine.",
+    "technical": "Its rotating mass stores energy between firing strokes, so crankshaft speed fluctuates less. The machined friction face is the first of the clutch's two clamping surfaces; the starter ring gear is shrunk onto the rim. Many modern cars use a dual-mass flywheel, which adds springs between two halves to filter torsional vibration before it reaches the gearbox.",
+    "relatedTopicIds": [
+      "clutch",
+      "pistons-and-crankshaft",
+      "battery-and-starter"
+    ],
+    "annotations": [
+      {
+        "label": "Turns with",
+        "text": "The crankshaft, always at engine speed"
+      },
+      {
+        "label": "Ring gear",
+        "text": "Teeth for the starter motor pinion"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "clutch-disc",
+    "name": "Clutch disc",
+    "systemId": "transmission",
+    "description": "A thin disc faced on both sides with friction material. It is splined to the gearbox input shaft, so whatever turns the disc turns the gearbox. When it is squeezed between the flywheel and the pressure plate it is dragged round with the engine.",
+    "technical": "The facings are bonded or riveted to cushion segments that let the engagement build smoothly. Coil springs between the hub and the disc plate (torsional dampers) soak up engine vibration and shock loads. Torque capacity is roughly μ × clamp force × mean facing radius × number of friction faces (two). Facings wear with every slipping engagement, which is why clutches are a service item.",
+    "relatedTopicIds": [
+      "clutch",
+      "manual-gearbox"
+    ],
+    "annotations": [
+      {
+        "label": "Friction faces",
+        "text": "Two, one each side"
+      },
+      {
+        "label": "Hub",
+        "text": "Splined to the input shaft; slides along it"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "pressure-plate",
+    "name": "Pressure plate and cover",
+    "systemId": "transmission",
+    "description": "A heavy ring held inside a steel cover bolted to the flywheel. A diaphragm spring pushes it hard against the clutch disc, clamping the disc to the flywheel. Pressing the clutch pedal makes the spring let go, and the plate lifts away.",
+    "technical": "The cover is bolted to the flywheel and turns with it; drive straps connect the plate to the cover so it turns too while still moving a little axially. The diaphragm spring is a slotted conical disc that pivots on a fulcrum ring in the cover: its outer rim presses the plate, and its inner fingers are pushed by the release bearing. Its characteristic is chosen so pedal effort stays moderate even though clamp load is high. In the lab the plate lift-off is drawn larger than real life so you can see it.",
+    "parentComponentId": "clutch-flywheel",
+    "relatedTopicIds": [
+      "clutch"
+    ],
+    "annotations": [
+      {
+        "label": "Spring",
+        "text": "Diaphragm (Belleville) type"
+      },
+      {
+        "label": "Lift at full release",
+        "text": "Exaggerated in the lab"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "release-bearing",
+    "name": "Release bearing",
+    "systemId": "transmission",
+    "description": "A thrust bearing that slides along a guide tube round the input shaft. When you press the clutch pedal, it is pushed against the spinning fingers of the diaphragm spring, which releases the clamp on the disc.",
+    "technical": "Also called the throw-out bearing. It is moved by a release fork worked by a cable or by a hydraulic slave cylinder, or it is itself a concentric slave cylinder. With the pedal up there is a small free-play clearance (or a light preload) so the bearing is not worn constantly. Resting a foot on the pedal keeps it loaded and shortens its life.",
+    "relatedTopicIds": [
+      "clutch",
+      "mechanical-sympathy"
+    ],
+    "annotations": [
+      {
+        "label": "Pedal free play",
+        "text": "Taken up before the clutch starts to release"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "input-shaft",
+    "name": "Input shaft",
+    "systemId": "transmission",
+    "description": "The shaft that carries power into the gearbox. Its front end is splined into the clutch disc; its rear end carries the small constant-mesh gear (the input pinion).",
+    "technical": "Its nose runs in a spigot (pilot) bearing in the centre of the crankshaft or flywheel, and the shaft is supported by a bearing in the gearbox front wall. The pinion is machined on the shaft and has a ring of dog teeth so the 3–4 synchro can lock it straight to the mainshaft for direct drive.",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "clutch"
+    ],
+    "annotations": [
+      {
+        "label": "Speed",
+        "text": "Clutch-disc speed (engine speed when the clutch is engaged)"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "constant-mesh-gears",
+    "name": "Constant-mesh gears",
+    "systemId": "transmission",
+    "description": "The first pair of gears, always in mesh: the input pinion drives a larger gear at the front of the layshaft. Whenever the clutch is engaged, the layshaft spins, whichever gear is selected.",
+    "technical": "In this illustrative box the head pair is 20 teeth driving 34, a 1.70 : 1 reduction that is part of every indirect gear. Like the forward speed gears they are helical (18° helix here) for quiet running; the helix produces axial thrust that the shaft bearings absorb.",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "gear-ratios"
+    ],
+    "annotations": [
+      {
+        "label": "Teeth",
+        "text": "20 (input pinion) → 34 (layshaft)"
+      },
+      {
+        "label": "Ratio",
+        "text": "1.70 : 1 (illustrative)"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "layshaft",
+    "name": "Layshaft (countershaft)",
+    "systemId": "transmission",
+    "description": "A shaft below the main shaft carrying a cluster of gears of different sizes, all fixed to it. Driven by the constant-mesh pair, it in turn drives every free-running gear on the mainshaft at once.",
+    "technical": "Because the cluster is one rigid piece, every layshaft gear turns at input speed ÷ 1.70. Each one meshes permanently with its partner on the mainshaft. Its widest gear drives the reverse idler. Gear sizes are chosen so every pair has the same tooth sum (54 here), so with one tooth size every pair fits the same shaft spacing.",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "gear-ratios"
+    ],
+    "annotations": [
+      {
+        "label": "Teeth",
+        "text": "17 · 24 · 29 · 37 (1st, 2nd, 3rd, 5th) and 16 (reverse)"
+      },
+      {
+        "label": "Speed",
+        "text": "Input speed ÷ 1.70"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "first-gear",
+    "name": "1st gear (mainshaft)",
+    "systemId": "transmission",
+    "description": "The largest gear on the mainshaft. It is driven by the smallest layshaft gear, so it turns slowly and gives the biggest torque multiplication, for pulling away and climbing steep hills.",
+    "technical": "It runs on a needle bearing on the mainshaft and spins freely until the 1–2 synchro collar slides onto its dog teeth. Ratio = 34/20 × 37/17 = 3.70 : 1 in this illustrative set; with a 4.10 final drive the wheels turn once for every 15.2 engine revolutions.",
+    "parentComponentId": "mainshaft",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "gear-ratios"
+    ],
+    "annotations": [
+      {
+        "label": "Teeth",
+        "text": "37 (driven by 17)"
+      },
+      {
+        "label": "Ratio",
+        "text": "3.70 : 1 (illustrative)"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "second-gear",
+    "name": "2nd gear (mainshaft)",
+    "systemId": "transmission",
+    "description": "A free-running mainshaft gear smaller than 1st. Selected by sliding the 1–2 synchro collar towards the engine.",
+    "technical": "Ratio = 34/20 × 30/24 = 2.13 : 1 (illustrative). Like the other free gears it is always turning with the layshaft; only the collar decides whether it drives the shaft.",
+    "parentComponentId": "mainshaft",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "gear-ratios"
+    ],
+    "annotations": [
+      {
+        "label": "Teeth",
+        "text": "30 (driven by 24)"
+      },
+      {
+        "label": "Ratio",
+        "text": "2.13 : 1 (illustrative)"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "third-gear",
+    "name": "3rd gear (mainshaft)",
+    "systemId": "transmission",
+    "description": "A free-running mainshaft gear selected by the 3–4 synchro collar. Its ratio sits between the low gears and direct drive.",
+    "technical": "Ratio = 34/20 × 25/29 = 1.47 : 1 (illustrative). The layshaft gear (29 teeth) is now larger than the mainshaft gear (25), so this pair is a small step-up that partly cancels the constant-mesh reduction.",
+    "parentComponentId": "mainshaft",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "gear-ratios"
+    ],
+    "annotations": [
+      {
+        "label": "Teeth",
+        "text": "25 (driven by 29)"
+      },
+      {
+        "label": "Ratio",
+        "text": "1.47 : 1 (illustrative)"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "fifth-gear",
+    "name": "5th gear (mainshaft)",
+    "systemId": "transmission",
+    "description": "The smallest mainshaft gear, driven by the largest layshaft gear. The mainshaft turns faster than the engine, an overdrive for quiet, economical cruising.",
+    "technical": "Ratio = 34/20 × 17/37 = 0.78 : 1 (illustrative). Its synchroniser sits on its own at the rear of the box. In overdrive the gearbox reduces torque (× 0.75 here after losses) in exchange for lower engine speed at a given road speed.",
+    "parentComponentId": "mainshaft",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "gear-ratios",
+      "mechanical-sympathy"
+    ],
+    "annotations": [
+      {
+        "label": "Teeth",
+        "text": "17 (driven by 37)"
+      },
+      {
+        "label": "Ratio",
+        "text": "0.78 : 1 overdrive (illustrative)"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "synchro-1-2",
+    "name": "1–2 synchroniser",
+    "systemId": "transmission",
+    "description": "A hub fixed to the mainshaft with a sliding collar round it. Sliding the collar one way locks 1st gear to the shaft, the other way locks 2nd. Brass cone rings first match the gear's speed to the shaft so the teeth slide together without a crunch.",
+    "technical": "The hub is splined to the mainshaft; the collar (sleeve) is splined to the hub and slides on it. As the selector fork pushes the collar, it presses a brass baulk ring onto a cone on the gear. Friction on the cone brings the gear to shaft speed, and the ring's blocking teeth stop the collar until the speeds match. Then the collar's internal splines slide over the gear's dog teeth and lock it.",
+    "parentComponentId": "mainshaft",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "mechanical-sympathy"
+    ],
+    "annotations": [
+      {
+        "label": "Collar slides",
+        "text": "Towards the engine → 2nd; towards the output → 1st"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "synchro-3-4",
+    "name": "3–4 synchroniser",
+    "systemId": "transmission",
+    "description": "The front synchro. Sliding its collar back locks 3rd gear; sliding it forward locks the mainshaft straight to the input pinion, which is 4th, direct drive.",
+    "technical": "In direct drive (1 : 1) no tooth pair carries the load: power goes from the input shaft through the collar to the mainshaft, which is why the top direct gear is often the most efficient. The layshaft still spins, unloaded.",
+    "parentComponentId": "mainshaft",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "gear-ratios"
+    ],
+    "annotations": [
+      {
+        "label": "Collar slides",
+        "text": "Towards the engine → 4th (direct); towards the output → 3rd"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "synchro-5",
+    "name": "5th-gear synchroniser",
+    "systemId": "transmission",
+    "description": "A single-sided synchro at the rear of the mainshaft. Sliding its collar forward locks 5th gear (overdrive) to the shaft.",
+    "technical": "Works exactly like the other synchros. Placing 5th outboard of the main bearing is a common way to add an extra ratio to a four-speed design.",
+    "parentComponentId": "mainshaft",
+    "relatedTopicIds": [
+      "manual-gearbox"
+    ],
+    "annotations": [
+      {
+        "label": "Collar slides",
+        "text": "Towards the engine → 5th"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "reverse-idler",
+    "name": "Reverse idler",
+    "systemId": "transmission",
+    "description": "A small extra gear on its own short shaft. Selecting reverse slides it into mesh between the layshaft and a gear on the mainshaft. The extra gear makes the output turn the other way.",
+    "technical": "Two meshing external gears turn in opposite directions, so a train with an odd number of meshes (three, with the idler) reverses the output. The idler's own tooth count cancels out of the ratio: 34/20 × 33/16 = 3.51 : 1 here. Reverse gears are usually straight-cut and often unsynchronised, which is why the car should be stationary before selecting reverse and why it can whine.",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "gear-ratios"
+    ],
+    "annotations": [
+      {
+        "label": "Teeth",
+        "text": "16 (layshaft) → 18 (idler) → 33 (mainshaft)"
+      },
+      {
+        "label": "Ratio",
+        "text": "3.51 : 1, reversed (illustrative)"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "mainshaft",
+    "name": "Mainshaft (output shaft)",
+    "systemId": "transmission",
+    "description": "The shaft that carries power out of the gearbox. It lines up with the input shaft but is not joined to it. The free-running gears ride on it, and the synchro hubs and the reverse gear are fixed to it.",
+    "technical": "Its front end pilots in a bearing inside the input pinion, so the two shafts are coaxial yet free to turn at different speeds. At the rear it drives the propeller shaft (rear-wheel drive, as drawn) or, in a transaxle, a pinion that drives the final drive directly.",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "driveshafts-and-cv-joints",
+      "differential",
+      "drivetrain-layouts"
+    ],
+    "annotations": [
+      {
+        "label": "Speed",
+        "text": "Input speed ÷ gear ratio"
+      },
+      {
+        "label": "Next",
+        "text": "Propeller shaft → final drive → wheels"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "selector-forks",
+    "name": "Selector forks and rails",
+    "systemId": "transmission",
+    "description": "Forks that sit in the groove of each synchro collar. Moving the gear lever slides one rail and its fork, which pushes the collar along the shaft.",
+    "technical": "The gear lever's sideways movement picks a rail (the plane of the H pattern) and its fore-aft movement slides it. Spring-loaded detents hold each rail in position, and an interlock stops two rails moving at once, so two gears can never be engaged together. Fork pads are often bronze or plastic, as they rub on the spinning collar.",
+    "relatedTopicIds": [
+      "manual-gearbox"
+    ],
+    "annotations": [
+      {
+        "label": "Rails",
+        "text": "1–2, 3–4 and 5th (reverse is moved separately)"
+      },
+      {
+        "label": "Interlock",
+        "text": "Only one rail can move at a time"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  },
+  {
+    "id": "gearbox-casing",
+    "name": "Gearbox casing",
+    "systemId": "transmission",
+    "description": "The housing that holds the shafts' bearings in line, keeps the gear oil in and the dirt out. The front part, the bell housing, surrounds the flywheel and clutch and bolts the gearbox to the engine.",
+    "technical": "Usually cast aluminium alloy. It must stay stiff so that shaft centre distances, and so the gear meshes, stay correct under load. In the lab the half nearer you is cut away (cut faces shown in a terracotta colour) so you can see inside.",
+    "relatedTopicIds": [
+      "manual-gearbox",
+      "routine-maintenance"
+    ],
+    "annotations": [
+      {
+        "label": "Contains",
+        "text": "Gear oil, splash-lubricating the gears and bearings"
+      },
+      {
+        "label": "Cutaway",
+        "text": "Near half removed for the lab"
+      }
+    ],
+    "highlight": {
+      "color": "#38d7f2",
+      "emphasis": "glow"
+    }
+  }
+]

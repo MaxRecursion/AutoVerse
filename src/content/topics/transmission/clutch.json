@@ -1,0 +1,302 @@
+{
+  "id": "clutch",
+  "slug": "clutch",
+  "title": "The Clutch",
+  "summary": "How a friction clutch connects and disconnects the engine and gearbox: a disc clamped between the flywheel and a spring-loaded pressure plate, released by the pedal. Covers the bite point, controlled slip and why slipping makes heat.",
+  "categoryId": "transmission",
+  "difficulty": "beginner",
+  "estimatedDuration": 12,
+  "tags": [
+    "clutch",
+    "manual transmission",
+    "pressure plate",
+    "diaphragm spring",
+    "bite point",
+    "flywheel"
+  ],
+  "learningObjectives": [
+    "Name the parts of a single-plate dry clutch and say which turn with the engine and which with the gearbox",
+    "Explain how the diaphragm spring clamps the disc and how pressing the pedal releases it",
+    "Describe what happens at the bite point and while the clutch is slipping",
+    "Explain why slipping the clutch makes heat and wears the friction facings",
+    "Relate a clutch's torque capacity to clamp force, friction and radius"
+  ],
+  "beginnerExplanation": "An engine has to keep turning even when the car is standing still, and it cannot start from zero under load. The clutch solves both problems: it is a switch that connects the spinning engine to the gearbox, or disconnects it, and it can also connect it gradually.\n\nIt works by friction, a bit like pressing your hand on a spinning record to make it turn. Bolted to the end of the engine's crankshaft is the flywheel, a heavy steel disc with a flat face. In front of it sits the clutch disc, a thin plate covered on both sides with tough friction material, which is splined onto the gearbox input shaft. Behind the disc is the pressure plate, held in a cover that is bolted to the flywheel. A powerful, dish-shaped diaphragm spring pushes the pressure plate forward, squeezing the clutch disc tightly between the plate and the flywheel.\n\nWith your foot off the pedal, that clamp is so strong that the disc turns exactly with the engine, and the engine drives the gearbox. When you push the pedal down, a release bearing presses on the middle of the diaphragm spring. The spring flexes like the base of an oil can, its outer edge pulls the pressure plate back, and the disc is freed. The engine keeps turning but the gearbox no longer has to.\n\nAs you lift the pedal again, there is a point where the plate just starts to grip the disc: the bite point. Between the bite point and fully up, the clutch slips. The disc is dragged round, but more slowly than the flywheel. That gentle slip is exactly what lets a car pull away smoothly from rest. Slip also rubs the friction surfaces, which turns energy into heat and slowly wears the disc, so it should last only as long as it needs to.",
+  "technicalExplanation": "The common passenger-car clutch is a single-plate, dry, diaphragm-spring clutch. The flywheel and the pressure-plate cover are bolted together and always turn at engine speed; drive straps let the plate move axially by a millimetre or two while still turning with the cover. The clutch disc sits between them and is splined to the gearbox input shaft, whose nose runs in a pilot bearing in the crankshaft.\n\nThe torque the clutch can carry before it slips is T_c = μ · F · r_m · n, where μ is the friction coefficient of the facings (roughly 0.3–0.4), F the clamp load from the diaphragm spring, r_m the mean facing radius and n = 2 the number of friction faces. Designers give it a margin over the engine's peak torque (the lab uses 1.3×) so it does not slip in normal driving, while keeping pedal effort reasonable. A diaphragm spring helps here: its load–deflection curve falls after a peak, so the effort at the pedal drops as the clutch releases.\n\nPedal travel acts through a cable, or a master and slave cylinder, on the release bearing. The first part of the travel is free play, taking up the clearance to the diaphragm fingers. The fingers then lever the spring about its fulcrum ring in the cover, and the outer rim lifts the plate away. In the lab's illustrative characteristic the clamp load falls smoothly over the take-up, and because of the capacity margin the clutch stays locked until the pedal is about 30% down.\n\nWhen the clutch slips, torque still passes (limited by its momentary capacity) but the disc turns slower than the flywheel. The power entering at engine speed is T·ω_engine, the power leaving at disc speed is T·ω_disc, and the difference, P_heat = T · (ω_engine − ω_disc), becomes heat in the facings, flywheel and plate. A hill start or launch with high slip speed can put several kilowatts into the clutch for a few seconds, which is why prolonged slipping glazes facings and why worn clutches start slipping under full load. Cushion springs under the facings smooth the take-up and torsional damper springs in the hub absorb engine vibration. All lab numbers are illustrative.",
+  "steps": [
+    {
+      "id": "engaged",
+      "title": "Engaged: clamped by the diaphragm spring",
+      "beginner": "Foot off the pedal. The diaphragm spring pushes the pressure plate forward, squeezing the clutch disc against the flywheel. The disc turns exactly with the engine, so all the engine's torque goes into the gearbox.",
+      "technical": "Clamp load F holds the disc with capacity μ·F·r_m·2, above the engine's maximum torque (1.3× in the lab), so there is no slip and engine speed equals input-shaft speed. The release bearing sits just clear of the diaphragm fingers (pedal free play).",
+      "cue": "clutch-engaged",
+      "componentIds": [
+        "pressure-plate",
+        "clutch-disc",
+        "clutch-flywheel"
+      ]
+    },
+    {
+      "id": "pedal-down",
+      "title": "Pedal down: the clamp released",
+      "beginner": "Push the pedal to the floor. The release bearing presses the middle of the diaphragm spring, the spring's outer edge pulls the pressure plate back, and the disc floats free between the faces. The engine keeps spinning, but the gearbox is disconnected, so you can change gear or stop without stalling.",
+      "technical": "Bearing travel deflects the diaphragm fingers about the fulcrum ring, the rim unloads the plate, and drive straps retract it. With clamp load gone the disc's drag torque is close to zero, so the input shaft and layshaft can be synchronised to a new gear. The lab draws the plate lift larger than real life so it is visible.",
+      "cue": "clutch-down",
+      "componentIds": [
+        "release-bearing",
+        "pressure-plate",
+        "clutch-disc"
+      ]
+    },
+    {
+      "id": "bite-point",
+      "title": "The bite point",
+      "beginner": "Lifting the pedal slowly, the plate starts to press the disc again. At the bite point the disc begins to be dragged round and the car starts to strain against its brakes. In the lab only about a seventh of the engine's torque is getting through here.",
+      "technical": "Clamp load is rising from zero, so transmitted torque T = μ·F·r_m·2 is small (about 14% of the illustrative 150 N·m at the lab's bite position). Slip speed is large, so even this small torque produces a few kilowatts of heat. Where the bite point sits in the pedal travel moves as the facings wear.",
+      "cue": "clutch-bite",
+      "componentIds": [
+        "clutch-disc",
+        "pressure-plate"
+      ]
+    },
+    {
+      "id": "slipping",
+      "title": "Controlled slip: pulling away",
+      "beginner": "Further up, the clutch grips harder but is still slipping. The disc turns slower than the flywheel, and the car accelerates smoothly as the gap closes. Once the speeds match, the clutch locks and slip stops.",
+      "technical": "In the lab's slip position about 68% of engine torque passes while the disc turns at about 68% of engine speed. The rest of the engine's power, P = T·(ω_engine − ω_disc), roughly 7 kW at 2,000 rpm, is turned into heat in the friction surfaces. Keep slip short: heat is what glazes and wears clutches.",
+      "cue": "clutch-slip",
+      "componentIds": [
+        "clutch-disc",
+        "clutch-flywheel",
+        "pressure-plate"
+      ]
+    }
+  ],
+  "componentIds": [
+    "clutch-flywheel",
+    "clutch-disc",
+    "pressure-plate",
+    "release-bearing",
+    "input-shaft"
+  ],
+  "labId": "transmission",
+  "flow": {
+    "nodes": [
+      {
+        "id": "pedal",
+        "label": "Clutch pedal",
+        "detail": "Driver's foot"
+      },
+      {
+        "id": "release",
+        "label": "Release bearing",
+        "detail": "Pushes the diaphragm fingers",
+        "componentId": "release-bearing"
+      },
+      {
+        "id": "spring",
+        "label": "Diaphragm spring",
+        "detail": "Pivots on its fulcrum",
+        "componentId": "pressure-plate"
+      },
+      {
+        "id": "plate",
+        "label": "Pressure plate",
+        "detail": "Clamps or releases",
+        "componentId": "pressure-plate"
+      },
+      {
+        "id": "flywheel",
+        "label": "Flywheel",
+        "detail": "Turns at engine speed",
+        "componentId": "clutch-flywheel"
+      },
+      {
+        "id": "disc",
+        "label": "Clutch disc",
+        "detail": "Friction faces both sides",
+        "componentId": "clutch-disc"
+      },
+      {
+        "id": "input",
+        "label": "Gearbox input shaft",
+        "detail": "Splined to the disc",
+        "componentId": "input-shaft",
+        "topicId": "manual-gearbox"
+      }
+    ],
+    "edges": [
+      {
+        "from": "pedal",
+        "to": "release",
+        "label": "cable or hydraulics"
+      },
+      {
+        "from": "release",
+        "to": "spring",
+        "label": "presses"
+      },
+      {
+        "from": "spring",
+        "to": "plate",
+        "label": "lifts or clamps"
+      },
+      {
+        "from": "plate",
+        "to": "disc",
+        "label": "friction"
+      },
+      {
+        "from": "flywheel",
+        "to": "disc",
+        "label": "friction"
+      },
+      {
+        "from": "disc",
+        "to": "input",
+        "label": "torque"
+      }
+    ]
+  },
+  "keyConcepts": [
+    {
+      "term": "Torque capacity",
+      "definition": "The most torque the clutch can carry before it slips: friction coefficient times clamp load times mean facing radius times the number of friction faces.",
+      "equation": "T_c = μ · F · r_m · n  (n = 2)"
+    },
+    {
+      "term": "Bite point",
+      "definition": "The pedal position where the plate first grips the disc and torque starts to flow to the gearbox."
+    },
+    {
+      "term": "Slip speed",
+      "definition": "How much faster the flywheel turns than the clutch disc while the clutch is slipping.",
+      "equation": "Δn = n_engine − n_disc"
+    },
+    {
+      "term": "Slip heat",
+      "definition": "Power lost as heat while slipping: the torque being passed on times the slip speed.",
+      "equation": "P_heat = T · (ω_engine − ω_disc)"
+    },
+    {
+      "term": "Free play",
+      "definition": "The first part of the pedal travel, which only closes the gap between the release bearing and the diaphragm fingers."
+    }
+  ],
+  "misconceptions": [
+    {
+      "myth": "A clutch is either fully on or fully off.",
+      "reality": "Between the bite point and fully engaged it slips by a controlled amount. That partial engagement is exactly how a car pulls away smoothly."
+    },
+    {
+      "myth": "Holding the car on the bite point on a hill does no harm.",
+      "reality": "The clutch is slipping the whole time, turning engine power into heat and wearing the facings. Use the handbrake or footbrake to hold the car."
+    },
+    {
+      "myth": "A slipping clutch is always a worn clutch.",
+      "reality": "Every normal start involves slip. A worn clutch is one that slips when it should be locked, for example engine revs rising without the car speeding up in a high gear."
+    },
+    {
+      "myth": "Resting a foot on the clutch pedal is harmless.",
+      "reality": "Even light pressure can load the release bearing and reduce clamp load, wearing the bearing and letting the clutch slip under heavy load."
+    }
+  ],
+  "practicalExamples": [
+    "If the engine revs rise but the car barely speeds up when accelerating hard in a high gear, the clutch is probably slipping and the facings may be worn.",
+    "A clutch that only bites right at the top of the pedal travel often has worn facings or needs its free play adjusting.",
+    "On a hill start, hold the car on the handbrake, find the bite point, add a little engine speed, and release the brake as the car starts to pull, so the slip lasts only a second or two.",
+    "In the lab, try the Slipping and Bite point pedal positions in 1st gear: the live numbers show how much power is being turned into clutch heat."
+  ],
+  "relatedTopicIds": [
+    "manual-gearbox",
+    "gear-ratios",
+    "torque-and-power",
+    "mechanical-sympathy",
+    "automatic-transmission"
+  ],
+  "prerequisiteTopicIds": [
+    "how-a-car-works"
+  ],
+  "quiz": [
+    {
+      "id": "clamp",
+      "prompt": "With your foot off the pedal, what holds the clutch disc against the flywheel?",
+      "options": [
+        "Oil pressure",
+        "The diaphragm spring pushing the pressure plate",
+        "Magnetism",
+        "The release bearing"
+      ],
+      "answerIndex": 1,
+      "explanation": "The diaphragm spring clamps the pressure plate onto the disc. Pressing the pedal makes the release bearing flex the spring and unload the plate."
+    },
+    {
+      "id": "disc-turns",
+      "prompt": "The clutch disc is splined to which shaft?",
+      "options": [
+        "The crankshaft",
+        "The gearbox input shaft",
+        "The layshaft",
+        "The propeller shaft"
+      ],
+      "answerIndex": 1,
+      "explanation": "The disc drives the gearbox input shaft. The flywheel and pressure plate turn with the crankshaft."
+    },
+    {
+      "id": "slip-heat",
+      "prompt": "While the clutch slips, where does the 'missing' power go?",
+      "options": [
+        "It is stored in the spring",
+        "It is turned into heat in the friction surfaces",
+        "It is sent back to the engine",
+        "It disappears"
+      ],
+      "answerIndex": 1,
+      "explanation": "Power in is T·ω_engine and power out is T·ω_disc; the difference becomes heat in the disc, flywheel and plate."
+    },
+    {
+      "id": "capacity",
+      "prompt": "If the clamp load of a clutch falls by half, its torque capacity…",
+      "options": [
+        "stays the same",
+        "halves",
+        "doubles",
+        "falls to zero"
+      ],
+      "answerIndex": 1,
+      "explanation": "Capacity T = μ·F·r_m·2 is proportional to clamp force F, so halving F halves the torque it can carry before slipping."
+    },
+    {
+      "id": "hill-hold",
+      "prompt": "What is the best way to hold a manual car still on a hill?",
+      "options": [
+        "On the bite point",
+        "With the clutch pedal half down and some throttle",
+        "With the handbrake or footbrake",
+        "In neutral with the clutch up"
+      ],
+      "answerIndex": 2,
+      "explanation": "Holding on the bite point slips the clutch continuously, wearing it. The brakes are designed to hold the car."
+    }
+  ],
+  "sourceReferences": [
+    {
+      "title": "How a car clutch works",
+      "url": "https://www.howacarworks.com/basics/how-a-car-clutch-works",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading. AutoVerse text is original."
+    },
+    {
+      "title": "Adjusting the clutch",
+      "url": "https://www.howacarworks.com/transmission/adjusting-the-clutch",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading. AutoVerse text is original."
+    }
+  ],
+  "licence": {
+    "name": "AutoVerse original content"
+  },
+  "contentStatus": "complete"
+}

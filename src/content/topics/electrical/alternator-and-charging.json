@@ -1,0 +1,115 @@
+{
+  "id": "alternator-and-charging",
+  "slug": "alternator-and-charging",
+  "title": "Alternator and Charging",
+  "summary": "Once the engine runs, a belt-driven alternator powers every electrical load and recharges the battery. Learn how a spinning magnet makes alternating current, how diodes turn it into DC, and how the regulator holds voltage steady from idle to the red line.",
+  "categoryId": "electrical",
+  "difficulty": "intermediate",
+  "estimatedDuration": 12,
+  "tags": ["alternator", "charging", "rectifier", "voltage regulator", "electrical", "smart charging"],
+  "learningObjectives": [
+    "Explain how an alternator generates electricity from rotation",
+    "Describe how the rectifier converts three-phase AC into DC",
+    "Explain how the regulator controls output voltage by adjusting field current",
+    "Interpret the charge warning light and estimate the engine power an alternator absorbs"
+  ],
+  "beginnerExplanation": "The battery's job is mainly to start the engine. After that, almost all of the car's electricity — for lights, fans, wipers, the engine computer and recharging the battery itself — comes from the alternator, a generator driven by a belt from the engine's crankshaft.\n\nInside, a spinning electromagnet (the rotor) sweeps its magnetic field past fixed coils of wire (the stator). A changing magnetic field makes current flow in a wire, so the coils produce electricity. Because the magnet's poles keep passing north-south-north, that current naturally flows back and forth (alternating current). A set of one-way electronic valves called diodes turns it into the steady one-way current the car needs.\n\nA voltage regulator keeps the output at about 14 volts whether the engine is idling or revving, by strengthening or weakening the rotor's magnet. If the alternator stops charging, the battery warning light comes on: the car will keep running on the battery alone, but only until the battery is drained.",
+  "technicalExplanation": "Automotive alternators are claw-pole synchronous machines. Field current, supplied through brushes and slip rings, magnetises interleaved claw poles on the rotor. The rotating field induces three-phase EMF in the star- or delta-connected stator windings according to Faraday's law, with magnitude proportional to rotor speed and field strength (E ∝ Φ × ω). A pulley ratio of about 2.5–3:1 spins the alternator at roughly 2,000 rpm at engine idle so it can deliver useful current even when the car is stationary.\n\nA bridge of six diodes (three-phase full-wave rectifier) converts the AC into DC with a small ripple that the battery smooths. The regulator senses system voltage and switches the field current on and off rapidly, varying the average field strength to hold the setpoint — classically around 14.2–14.6 V, temperature-compensated because a cold lead-acid battery needs a higher charging voltage. Output current rises with speed and is limited at high speed by stator reactance, which makes alternators inherently self-limiting; typical passenger-car units are rated roughly 90–200 A.\n\nGenerating electricity costs fuel. Delivering 100 A at 14 V (1.4 kW) with an efficiency of around 60% takes over 2 kW from the crankshaft. Modern 'smart charging' lets the engine ECU vary the setpoint over a LIN or similar bus: it lowers voltage during acceleration to reduce load, raises it on the overrun to recover energy that would otherwise be wasted, and uses a battery sensor to keep state of charge in an optimal band. The charge warning lamp traditionally lit when the alternator's own output was below battery voltage; today it is usually driven by the regulator or ECU fault logic, which can also report open circuits, a slipping belt or over-voltage.",
+  "steps": [
+    {
+      "id": "belt-drive",
+      "title": "The engine spins the alternator",
+      "beginner": "A belt from the crankshaft turns the alternator about two to three times faster than the engine.",
+      "technical": "Pulley ratio ≈ 2.5–3:1; an overrunning or decoupling pulley often smooths belt loads from crankshaft speed fluctuations."
+    },
+    {
+      "id": "field",
+      "title": "A rotating electromagnet",
+      "beginner": "A small current through brushes makes the rotor into a magnet that spins inside fixed coils.",
+      "technical": "Field current (a few amps) through slip rings magnetises the claw poles; EMF ∝ flux × speed."
+    },
+    {
+      "id": "induction",
+      "title": "Coils make alternating current",
+      "beginner": "As the magnet's poles sweep past, current is pushed back and forth in the stator coils.",
+      "technical": "Three stator phases 120° apart produce three-phase AC; frequency = pole pairs × rotor speed."
+    },
+    {
+      "id": "rectify",
+      "title": "Diodes make it DC",
+      "beginner": "One-way diodes let the current flow only towards the battery, producing direct current.",
+      "technical": "A six-diode full-wave bridge rectifies all three phases; the battery absorbs the residual ripple."
+    },
+    {
+      "id": "regulate",
+      "title": "The regulator holds about 14 V",
+      "beginner": "The regulator strengthens or weakens the magnet so the voltage stays steady at any engine speed.",
+      "technical": "Field current is switched to hold the setpoint; smart charging lets the ECU vary it for efficiency and battery health."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "crank", "label": "Crankshaft pulley", "topicId": "pistons-and-crankshaft" },
+      { "id": "rotor", "label": "Rotor field", "detail": "Brushes & slip rings" },
+      { "id": "stator", "label": "Stator", "detail": "Three-phase AC" },
+      { "id": "rectifier", "label": "Diode rectifier", "detail": "AC → DC" },
+      { "id": "regulator", "label": "Regulator", "detail": "≈ 14 V setpoint" },
+      { "id": "battery", "label": "Battery & loads", "topicId": "battery-and-starter" }
+    ],
+    "edges": [
+      { "from": "crank", "to": "rotor", "label": "belt" },
+      { "from": "rotor", "to": "stator", "label": "rotating field" },
+      { "from": "stator", "to": "rectifier" },
+      { "from": "rectifier", "to": "battery" },
+      { "from": "battery", "to": "regulator", "label": "voltage sensed" },
+      { "from": "regulator", "to": "rotor", "label": "field current" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Electrical power", "definition": "Power delivered equals voltage times current.", "equation": "P = V × I" },
+    { "term": "Electromagnetic induction", "definition": "A changing magnetic flux through a coil induces a voltage; faster change means higher voltage.", "equation": "E = −N dΦ/dt" },
+    { "term": "Rectifier", "definition": "A diode bridge that converts the alternator's three-phase AC into DC." },
+    { "term": "Voltage regulator", "definition": "Controls rotor field current to hold the system voltage at its setpoint." }
+  ],
+  "misconceptions": [
+    { "myth": "The alternator only charges the battery.", "reality": "With the engine running, the alternator supplies all electrical loads directly; the battery is mainly a buffer and the energy source for starting." },
+    { "myth": "Electrical loads are free once the engine is running.", "reality": "Every watt drawn must come from the crankshaft at the alternator's efficiency, so heavy loads raise fuel consumption." },
+    { "myth": "A battery warning light means the battery needs replacing.", "reality": "It usually signals that the charging system is not charging — often the alternator, its belt or wiring — even if the battery itself is healthy." }
+  ],
+  "practicalExamples": [
+    "With the engine running and loads switched off, a healthy system typically reads about 13.8–14.7 V across the battery; smart-charging cars may read lower at times by design.",
+    "A squeal at start-up on a damp morning can be the auxiliary belt slipping on the alternator pulley under high charging load.",
+    "If the charge light comes on while driving, switching off non-essential loads extends how far the battery alone can run the car."
+  ],
+  "relatedTopicIds": ["battery-and-starter", "diagnosing-warning-signs", "hybrid-and-electric-drives", "routine-maintenance"],
+  "prerequisiteTopicIds": ["battery-and-starter"],
+  "quiz": [
+    {
+      "id": "power-calc",
+      "prompt": "An alternator supplies 90 A at 14 V. How much electrical power is that?",
+      "options": ["104 W", "630 W", "1,260 W", "12,600 W"],
+      "answerIndex": 2,
+      "explanation": "P = V × I = 14 × 90 = 1,260 W."
+    },
+    {
+      "id": "rectifier-role",
+      "prompt": "What do the diodes in an alternator do?",
+      "options": ["Store energy", "Convert alternating current into direct current", "Increase voltage", "Drive the cooling fan"],
+      "answerIndex": 1,
+      "explanation": "The six-diode bridge rectifies the three-phase AC from the stator into DC."
+    },
+    {
+      "id": "regulation",
+      "prompt": "How does the regulator keep output near 14 V as engine speed rises?",
+      "options": ["By slipping the belt", "By reducing the rotor's field current", "By switching off the headlights", "By adding resistance in the battery cable"],
+      "answerIndex": 1,
+      "explanation": "Induced voltage rises with speed, so the regulator weakens the field to compensate."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"How the charging system works","url":"https://www.howacarworks.com/basics/how-the-charging-system-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
+    {"title":"Testing an alternator and checking output","url":"https://www.howacarworks.com/electrical-systems/testing-an-alternator-and-checking-output","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

@@ -1,0 +1,112 @@
+{
+  "id": "driveshafts-and-cv-joints",
+  "slug": "driveshafts-and-cv-joints",
+  "title": "Driveshafts and CV Joints",
+  "summary": "Wheels move up and down and steer, yet they must keep receiving smooth drive. Learn how propshafts, universal joints and constant-velocity joints carry torque through changing angles — and why a torn rubber boot can end in a clicking joint.",
+  "categoryId": "drivetrain",
+  "difficulty": "intermediate",
+  "estimatedDuration": 11,
+  "tags": ["driveshaft", "cv joint", "universal joint", "propshaft", "half-shaft", "drivetrain"],
+  "learningObjectives": [
+    "Explain why driveshafts need joints that work at an angle and change length",
+    "Describe the speed fluctuation of a Hooke's (universal) joint and how it is cancelled",
+    "Distinguish fixed ball-type and plunging tripod CV joints",
+    "Recognise the symptoms of worn joints and damaged boots"
+  ],
+  "beginnerExplanation": "The gearbox and differential are bolted to the car's body, but the wheels move up and down over bumps, and front wheels also steer. The shafts that carry drive between them therefore have to bend at their ends and even change length slightly, all while transmitting large forces without jerking.\n\nRear-drive cars use a long propeller shaft from gearbox to rear axle with a universal joint at each end — a cross-shaped piece that lets the shaft work at an angle. Front-drive cars use two short half-shafts, each with constant-velocity (CV) joints. The outer joint can bend through a large angle as the wheel steers; the inner joint lets the shaft slide in and out as the suspension moves.\n\nCV joints are packed with grease and sealed by a ribbed rubber boot. If the boot splits, the grease escapes and grit gets in, and the joint wears quickly. A rhythmic clicking when turning sharply while accelerating is the classic sign of a worn outer joint.",
+  "technicalExplanation": "A Hooke's (Cardan) joint is two yokes linked by a cross on needle bearings. At a working angle β the output speed is not constant: ω₂/ω₁ = cos β / (1 − sin²β sin²θ), where θ is input rotation angle, so output speed swings between ω₁ cos β and ω₁ / cos β twice per revolution. At 10° the fluctuation is about ±1.5%, enough to cause vibration at speed. Propshafts cancel it by using two joints with equal working angles and in-phase yokes, so the second joint's fluctuation undoes the first. A slip yoke on splines accommodates length change; long propshafts are split with a centre bearing, and some use rubber flexible couplings.\n\nConstant-velocity joints transmit uniform speed at any angle because their driving contact points always lie on the plane bisecting the angle between the shafts. The ball-type (Rzeppa) joint has six balls running in grooves between an inner race and an outer bell, held in that bisecting plane by a cage; it is used at the wheel end where up to about 45–50° of articulation is needed. Plunging joints at the gearbox end — tripod (three rollers on a spider running in a grooved housing) or double-offset ball types — allow axial travel as the suspension compresses, at smaller angles.\n\nJoint life depends on lubrication and angle. Boot damage admits water and abrasive dirt; the ball tracks pit and wear, producing the knocking or clicking felt most under load at large steering angles. Worn plunging joints tend to cause vibration under acceleration rather than clicks. Half-shafts of unequal length on transverse engines cause different joint angles and twist stiffness on each side, one source of torque steer.",
+  "steps": [
+    {
+      "id": "why-joints",
+      "title": "The wheels move; the gearbox does not",
+      "beginner": "Suspension travel and steering change the angle and length between the differential and each wheel.",
+      "technical": "Joint angle varies with ride height and steer; distance between differential output and hub changes with suspension geometry, requiring plunge."
+    },
+    {
+      "id": "universal-joint",
+      "title": "Universal joints on propshafts",
+      "beginner": "A cross-shaped joint lets a propeller shaft drive at an angle.",
+      "technical": "A Hooke's joint's output speed fluctuates twice per revolution, between ω cos β and ω / cos β."
+    },
+    {
+      "id": "cancel-fluctuation",
+      "title": "Pairs of joints cancel the wobble",
+      "beginner": "Using two joints set up the right way makes the speed changes cancel out.",
+      "technical": "Equal working angles at both ends and in-phase yokes give constant output speed; unequal angles leave a residual vibration."
+    },
+    {
+      "id": "cv-joints",
+      "title": "CV joints on half-shafts",
+      "beginner": "Front-drive shafts use ball or roller joints that pass on perfectly smooth rotation even when steered hard.",
+      "technical": "Rzeppa (fixed, large angle) outboard; tripod or double-offset (plunging) inboard. Contact points lie on the bisecting plane, giving constant velocity."
+    },
+    {
+      "id": "boots",
+      "title": "Boots keep them alive",
+      "beginner": "A rubber boot holds the grease in and the dirt out; a split boot quickly ruins the joint.",
+      "technical": "Contamination causes pitting of tracks and balls; clicking under load at full lock indicates outer joint wear."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "gearbox", "label": "Gearbox / diff output", "topicId": "differential" },
+      { "id": "inner-joint", "label": "Inner plunging joint", "detail": "Tripod: length change" },
+      { "id": "shaft", "label": "Half-shaft", "detail": "Carries wheel torque" },
+      { "id": "outer-joint", "label": "Outer CV joint", "detail": "Rzeppa: up to ≈ 45–50°" },
+      { "id": "hub", "label": "Wheel hub", "detail": "Steers and moves vertically", "topicId": "steering-systems" }
+    ],
+    "edges": [
+      { "from": "gearbox", "to": "inner-joint" },
+      { "from": "inner-joint", "to": "shaft" },
+      { "from": "shaft", "to": "outer-joint" },
+      { "from": "outer-joint", "to": "hub" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Hooke's joint speed ratio", "definition": "Instantaneous output/input speed ratio of a universal joint at angle β and input position θ.", "equation": "ω₂/ω₁ = cos β / (1 − sin²β · sin²θ)" },
+    { "term": "Constant-velocity joint", "definition": "A joint whose driving contacts lie on the plane bisecting the shaft angle, so output speed always equals input speed." },
+    { "term": "Plunge", "definition": "Axial sliding in an inboard joint that accommodates changes in shaft length as the suspension moves." },
+    { "term": "Phasing", "definition": "Aligning the yokes of two universal joints so that their speed fluctuations cancel." }
+  ],
+  "misconceptions": [
+    { "myth": "A clicking noise when turning is just normal tyre noise.", "reality": "A rhythmic click that speeds up with road speed and is loudest at full lock under power is the classic outer CV joint wear symptom." },
+    { "myth": "A torn CV boot is cosmetic.", "reality": "The boot is the joint's only protection. Once grease leaves and grit enters, wear accelerates quickly; replacing a boot early is far cheaper than a joint." },
+    { "myth": "Any universal joint gives smooth drive as long as it is in good condition.", "reality": "A single Hooke's joint at an angle always produces speed fluctuation; smooth drive relies on correct pairing and phasing." }
+  ],
+  "practicalExamples": [
+    "Driving slowly in a tight circle on a car park with gentle throttle is a simple test for outer CV joint clicks.",
+    "Grease spattered around the inside of a wheel arch is a sign of a split CV boot.",
+    "A vibration that appears only when accelerating and disappears when coasting often points to a worn inner plunging joint."
+  ],
+  "relatedTopicIds": ["differential", "drivetrain-layouts", "steering-systems", "diagnosing-warning-signs"],
+  "prerequisiteTopicIds": ["drivetrain-layouts"],
+  "quiz": [
+    {
+      "id": "plunge",
+      "prompt": "Why is the inner joint on a front-drive half-shaft usually a plunging type?",
+      "options": ["To allow steering", "To let the shaft change length as the suspension moves", "To multiply torque", "To reduce weight"],
+      "answerIndex": 1,
+      "explanation": "Suspension travel changes the distance between the differential and the hub, so the inner joint must slide axially."
+    },
+    {
+      "id": "hooke",
+      "prompt": "A single universal joint runs at a significant angle. What happens to the output speed?",
+      "options": ["It is constant", "It fluctuates twice per revolution", "It is always slower than the input", "It reverses direction"],
+      "answerIndex": 1,
+      "explanation": "Output speed swings between ω cos β and ω / cos β twice every revolution."
+    },
+    {
+      "id": "symptom",
+      "prompt": "A clicking noise appears when accelerating on full steering lock. What is the most likely cause?",
+      "options": ["Worn brake pads", "Worn outer CV joint", "Low engine oil", "Loose exhaust"],
+      "answerIndex": 1,
+      "explanation": "Outer CV joints work at their largest angles on full lock, where wear in the ball tracks becomes audible under load."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"How to check U-Joints","url":"https://www.howacarworks.com/transmission/how-to-check-u-joints","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
+    {"title":"Checking the half shafts","url":"https://www.howacarworks.com/transmission/checking-the-half-shafts","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

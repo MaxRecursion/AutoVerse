@@ -1,0 +1,54 @@
+[
+  {
+    "id": "how-a-car-moves",
+    "title": "Beginner: how a car moves",
+    "summary": "Follow energy from fuel to tarmac: what the engine does, how the gearbox and differential shape its output, and how the tyres finally push the car along.",
+    "level": "beginner",
+    "order": 1,
+    "topicIds": [
+      "how-a-car-works",
+      "four-stroke-cycle",
+      "torque-and-power",
+      "clutch",
+      "manual-gearbox",
+      "gear-ratios",
+      "differential",
+      "drivetrain-layouts",
+      "tyres-and-grip"
+    ]
+  },
+  {
+    "id": "inside-the-engine",
+    "title": "Inside the engine",
+    "summary": "Take the combustion engine apart one system at a time — the moving parts, how fuel and spark are timed, and how heat and friction are kept under control.",
+    "level": "intermediate",
+    "order": 2,
+    "topicIds": [
+      "four-stroke-cycle",
+      "pistons-and-crankshaft",
+      "valves-and-camshaft",
+      "spark-ignition",
+      "fuel-injection",
+      "engine-layouts",
+      "diesel-engines",
+      "cooling-system",
+      "lubrication-system"
+    ]
+  },
+  {
+    "id": "stopping-steering-and-grip",
+    "title": "Stopping, steering and grip",
+    "summary": "Understand the systems that keep a car under control: hydraulic brakes and ABS, steering, suspension and the small contact patches that do all the work.",
+    "level": "intermediate",
+    "order": 3,
+    "topicIds": [
+      "brake-hydraulics",
+      "disc-brakes",
+      "anti-lock-braking",
+      "steering-systems",
+      "suspension-basics",
+      "springs-and-dampers",
+      "tyres-and-grip"
+    ]
+  }
+]

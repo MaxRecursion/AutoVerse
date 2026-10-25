@@ -1,0 +1,114 @@
+{
+  "id": "steering-systems",
+  "slug": "steering-systems",
+  "title": "Steering Systems",
+  "summary": "Turning the wheel moves a rack sideways, which swivels the front wheels on their pivots. Learn how rack-and-pinion steering works, why the inner wheel must turn more than the outer, how power assistance helps, and why a car straightens itself.",
+  "categoryId": "suspension-steering",
+  "difficulty": "beginner",
+  "estimatedDuration": 12,
+  "tags": ["steering", "rack and pinion", "power steering", "ackermann", "caster", "alignment"],
+  "learningObjectives": [
+    "Describe how a rack-and-pinion mechanism converts rotation into sideways motion",
+    "Calculate road-wheel angle from steering ratio",
+    "Explain Ackermann geometry and why the inner wheel steers more",
+    "Compare hydraulic and electric power steering and explain self-centring from caster"
+  ],
+  "beginnerExplanation": "The steering wheel turns a shaft that ends in a small gear called the pinion. The pinion's teeth mesh with a toothed bar called the rack, which runs across the car. As the pinion turns, the rack slides left or right, and track rods at each end push or pull arms on the front wheel hubs, swivelling the wheels.\n\nIt takes several turns of the steering wheel to swing the front wheels from full left to full right. That gearing — the steering ratio — makes steering precise and lighter to operate. Most cars also have power assistance: an electric motor (or, in older cars, a hydraulic pump) adds force so parking is easy, while the system gives less help at speed so the steering feels steady.\n\nThe geometry matters too. In a turn the inside wheel follows a tighter circle than the outside wheel, so the linkages are arranged to turn it slightly more. And the wheel pivots are tilted so the car naturally wants to drive straight, which is why the steering wheel returns to centre after a corner.",
+  "technicalExplanation": "Rack-and-pinion steering converts pinion rotation to rack displacement x = r_pinion × θ. The overall steering ratio — steering-wheel angle divided by mean road-wheel angle — is typically about 12:1 to 18:1 for cars, giving roughly 2.5 to 3.5 turns lock to lock. Variable-ratio racks cut teeth with changing pitch so the ratio is slower near centre (stable on the motorway) and quicker towards lock (easier parking). Recirculating-ball steering boxes, with balls running between a worm and a nut to reduce friction, remain common on heavy vehicles with beam axles.\n\nAckermann geometry angles the steering arms so that, in a slow turn, lines through both front wheel axes meet on the extension of the rear axle line; the inner wheel therefore steers more than the outer and neither tyre scrubs. At higher speeds tyres run with slip angles, so production cars often use partial Ackermann. Wheel alignment adds further terms: toe (wheels pointing slightly in or out) affects straight-line stability and tyre wear; caster tilts the steering axis rearward at the top, putting the tyre's contact point behind the axis (mechanical trail) so lateral force creates a self-aligning moment; kingpin inclination and scrub radius shape steering feel and how braking forces feed back.\n\nHydraulic power steering uses an engine-driven pump and a rotary valve on a torsion bar: driver torque twists the bar, opening ports that direct fluid to one side of a piston on the rack. Electric power steering (EPS) measures driver torque with a torque sensor and drives an electric motor on the column, pinion or rack, with assistance mapped against vehicle speed. Because it draws power only when steering and can be commanded by software, EPS saves fuel and enables lane-keeping assistance and automated parking; steer-by-wire systems remove the mechanical column entirely, with redundant actuators.",
+  "steps": [
+    {
+      "id": "pinion-rack",
+      "title": "Pinion drives the rack",
+      "beginner": "Turning the wheel spins a small gear that slides a toothed bar left or right.",
+      "technical": "Rack travel x = r_p × θ; a 7 mm pitch-radius pinion moves the rack about 44 mm per steering-wheel revolution."
+    },
+    {
+      "id": "track-rods",
+      "title": "Track rods swivel the hubs",
+      "beginner": "Rods at each end of the rack push and pull arms on the hubs so the wheels pivot.",
+      "technical": "Ball joints at the inner and outer track-rod ends allow suspension travel; track-rod length sets toe."
+    },
+    {
+      "id": "ratio",
+      "title": "Gearing makes it precise",
+      "beginner": "Several turns of the steering wheel give only a modest turn of the road wheels.",
+      "technical": "Overall ratio = steering-wheel angle ÷ road-wheel angle, typically 12–18:1; variable-ratio racks change pitch along their length."
+    },
+    {
+      "id": "ackermann",
+      "title": "Inner wheel turns more",
+      "beginner": "The inside wheel follows a tighter circle, so the linkage steers it at a sharper angle.",
+      "technical": "Ackermann condition: cot δ_outer − cot δ_inner = track / wheelbase (pivot-to-pivot track) for zero-scrub low-speed turns."
+    },
+    {
+      "id": "assist-and-centre",
+      "title": "Assistance and self-centring",
+      "beginner": "A motor adds force when needed, and tilted pivots make the wheel return to centre.",
+      "technical": "EPS assistance is mapped to torque sensor input and speed; caster trail produces a self-aligning moment that returns the wheel."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "wheel", "label": "Steering wheel", "detail": "Driver torque" },
+      { "id": "eps", "label": "Torque sensor & motor", "detail": "Speed-mapped assist" },
+      { "id": "rack", "label": "Pinion & rack", "detail": "Rotation → translation" },
+      { "id": "track-rods", "label": "Track rods", "detail": "Set toe" },
+      { "id": "knuckles", "label": "Steering knuckles", "detail": "Ackermann arms" },
+      { "id": "tyres", "label": "Tyres", "detail": "Slip angle → cornering force", "topicId": "tyres-and-grip" }
+    ],
+    "edges": [
+      { "from": "wheel", "to": "eps" },
+      { "from": "eps", "to": "rack" },
+      { "from": "rack", "to": "track-rods" },
+      { "from": "track-rods", "to": "knuckles" },
+      { "from": "knuckles", "to": "tyres" },
+      { "from": "tyres", "to": "wheel", "label": "self-aligning feel" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Steering ratio", "definition": "Steering-wheel angle divided by the resulting road-wheel angle.", "equation": "i_s = θ_wheel / δ_road" },
+    { "term": "Ackermann geometry", "definition": "Linkage layout that makes the inner wheel steer more than the outer so both roll about a common centre." },
+    { "term": "Caster and trail", "definition": "Rearward tilt of the steering axis places the contact patch behind it, producing self-centring." },
+    { "term": "Toe", "definition": "The angle of the wheels relative to the car's centreline viewed from above; small amounts strongly affect stability and tyre wear." }
+  ],
+  "misconceptions": [
+    { "myth": "Light steering means the car has less grip.", "reality": "Assistance level is a tuning choice. Steering effort says little about available grip, although a sudden lightening at speed can indicate front tyres beginning to slide or aquaplane." },
+    { "myth": "Wheel alignment only matters after an accident.", "reality": "Kerb strikes and worn joints shift alignment; even small toe errors noticeably shorten tyre life and can make the car pull." },
+    { "myth": "Both front wheels always point in exactly the same direction.", "reality": "In a turn the inner wheel deliberately points more sharply than the outer, thanks to Ackermann geometry." }
+  ],
+  "practicalExamples": [
+    "Releasing the steering wheel gently after a slow corner and watching it unwind shows caster's self-centring effect.",
+    "Tyres worn on one edge often indicate incorrect toe or camber rather than a tyre fault.",
+    "A car that pulls to one side on a level road may have uneven tyre pressures, an alignment error or a sticking brake."
+  ],
+  "relatedTopicIds": ["tyres-and-grip", "driveshafts-and-cv-joints", "diagnosing-warning-signs", "mechanical-sympathy"],
+  "prerequisiteTopicIds": ["how-a-car-works"],
+  "quiz": [
+    {
+      "id": "ratio-calc",
+      "prompt": "A car has a 15:1 steering ratio. You turn the steering wheel 90°. Roughly how far do the road wheels turn?",
+      "options": ["1.5°", "6°", "15°", "90°"],
+      "answerIndex": 1,
+      "explanation": "Road-wheel angle = 90° ÷ 15 = 6°."
+    },
+    {
+      "id": "ackermann-q",
+      "prompt": "Why does the inner front wheel steer at a larger angle than the outer one?",
+      "options": ["To reduce steering effort", "Because it follows a tighter circle around the turn centre", "To improve braking", "It does not; they are always parallel"],
+      "answerIndex": 1,
+      "explanation": "Ackermann geometry matches each wheel to its own turning radius so the tyres do not scrub."
+    },
+    {
+      "id": "eps-benefit",
+      "prompt": "Which is an advantage of electric power steering over hydraulic?",
+      "options": ["It needs regular fluid changes", "It only uses energy when assistance is needed and can be controlled by software", "It is always heavier to operate", "It cannot vary assistance with speed"],
+      "answerIndex": 1,
+      "explanation": "EPS draws power on demand and its motor can be commanded for lane-keeping and parking assistance."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"How the steering system works","url":"https://www.howacarworks.com/basics/how-the-steering-system-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

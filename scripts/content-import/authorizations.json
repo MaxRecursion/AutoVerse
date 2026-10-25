@@ -1,0 +1,13 @@
+{
+  "$comment": "Explicit reuse permissions for third-party articles. Only URLs matched here are imported in full; everything else stays metadata-only (title + link). Never add an entry without written permission or a published licence that covers reuse. See scripts/content-import/authorizations.ts for the field reference.",
+  "format": {
+    "url": "Exact canonical article URL (use either url or urlPrefix, not both)",
+    "urlPrefix": "Canonical URL prefix covered by the permission, e.g. a whole category",
+    "licence": { "name": "Licence or permission name, e.g. CC BY 4.0 or 'Written permission'", "url": "Optional licence URL" },
+    "grantedBy": "Rights holder who granted the permission",
+    "grantedAt": "ISO date the permission was granted or the licence was confirmed (YYYY-MM-DD)",
+    "evidence": "Where the permission is recorded: licence page URL or a path to the stored correspondence",
+    "attribution": "Attribution text that must accompany any reuse"
+  },
+  "authorizations": []
+}

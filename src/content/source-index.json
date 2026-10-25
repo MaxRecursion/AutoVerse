@@ -1,0 +1,2573 @@
+[
+  {
+    "url": "https://www.howacarworks.com/technology/car-aerodynamics",
+    "title": "Car aerodynamics",
+    "sourceCategory": "Technology",
+    "mappedCategoryId": "aero-technology",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:07.875Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/technology/dashboard-technology",
+    "title": "Dashboard technology",
+    "sourceCategory": "Technology",
+    "mappedCategoryId": "aero-technology",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:19.470Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/technology/how-cars-are-designed",
+    "title": "How cars are designed",
+    "sourceCategory": "Technology",
+    "mappedCategoryId": "aero-technology",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:37.901Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/technology/plastic-cars",
+    "title": "Plastic cars",
+    "sourceCategory": "Technology",
+    "mappedCategoryId": "aero-technology",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:47.475Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/technology/vehicle-adhesives-and-sealants",
+    "title": "Vehicle adhesives and sealants",
+    "sourceCategory": "Technology",
+    "mappedCategoryId": "aero-technology",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:13.556Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/technology/torque-and-bhp-explained",
+    "title": "Torque and BHP explained",
+    "sourceCategory": "Technology",
+    "mappedCategoryId": "basics",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:37.496Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/adjusting-and-replacing-window-winding-mechanisms",
+    "title": "Adjusting and replacing window-winding mechanisms",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:57.520Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/adjusting-catches-and-hinges",
+    "title": "Adjusting catches and hinges",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:55.540Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/applying-underbody-sealant",
+    "title": "Applying underbody sealant",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:37.889Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/checking-windscreen-wipers-and-washers",
+    "title": "Checking windscreen wipers and washers",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:29.573Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/cleaning-and-checking-the-underside",
+    "title": "Cleaning and checking the underside",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:45.538Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/cleaning-the-outside-and-checking-for-rust",
+    "title": "Cleaning the outside and checking for rust",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:45.862Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/drilling-holes-in-car-bodywork",
+    "title": "Drilling holes in car bodywork",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:51.578Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/eliminating-rust-before-painting",
+    "title": "Eliminating rust before painting",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:09.601Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/fitting-a-new-windscreen-washer-motor",
+    "title": "Fitting a new windscreen-washer motor",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:37.889Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/how-to-clean-a-car-interior",
+    "title": "How to clean a car interior",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:45.923Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/replacing-and-adjusting-windscreen-wipers",
+    "title": "How to replace windscreen wipers",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:07.567Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/lubricating-hinges-pedals-and-locks",
+    "title": "Lubricating hinges, pedals and locks",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:15.939Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/painting",
+    "title": "Painting a car",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:15.907Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/patching-rust-holes",
+    "title": "Patching rust holes",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:27.585Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/removing-a-door-trim-panel",
+    "title": "Removing a door trim panel",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:16.002Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/renewing-hinge-pins-and-hinges",
+    "title": "Renewing door hinge pins and hinges",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:15.851Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/repairing-an-electric-window",
+    "title": "Repairing an electric window",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:37.889Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/repairing-quarterlights",
+    "title": "Repairing quarterlights",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:46.032Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/replacing-a-car-door",
+    "title": "Replacing a car door",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:37.889Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/replacing-rear-quarterlights",
+    "title": "Replacing rear quarterlights",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:37.889Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/smoothing-out-a-dent",
+    "title": "Smoothing out a dent",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "body-chassis",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:27.462Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-the-braking-system-works",
+    "title": "How the braking system works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:43.879Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/adjusting-a-disc-handbrake",
+    "title": "Adjusting a disc handbrake",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:09.529Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/adjusting-the-brakes",
+    "title": "Adjusting the brakes",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:18.038Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/adjusting-the-handbrake",
+    "title": "Adjusting the handbrake",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:59.494Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/bleeding-the-brakes",
+    "title": "Bleeding the brakes",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:29.509Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/checking-and-renewing-brake-cables",
+    "title": "Checking and renewing brake cables",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:17.844Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/checking-the-brake-light-circuit",
+    "title": "Checking the brake light circuit",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:31.533Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/fitting-new-flexible-brake-hoses",
+    "title": "Fitting new flexible brake hoses",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:23.515Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/fitting-new-metal-brake-pipes",
+    "title": "Fitting new metal brake pipes",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:47.519Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/looking-for-leaks-in-the-brake-system",
+    "title": "Looking for leaks in the brake system",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:47.951Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/renewing-disc-brake-pads",
+    "title": "Renewing disc-brake pads",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:47.941Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/renewing-drum-brake-shoes",
+    "title": "Renewing drum-brake shoes",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:47.908Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/replacing-a-drum-brake-wheel-cylinder",
+    "title": "Replacing a drum-brake wheel cylinder",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:17.949Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/replacing-a-handbrake-cable",
+    "title": "Replacing a handbrake cable",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:57.499Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/brakes/replacing-a-master-cylinder-and-servo-unit",
+    "title": "Replacing a master cylinder and servo unit",
+    "sourceCategory": "Brakes",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:17.949Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/technology/how-abs-works",
+    "title": "How ABS works",
+    "sourceCategory": "Technology",
+    "mappedCategoryId": "brakes",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:49.472Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-an-engine-cooling-system-works",
+    "title": "How an engine cooling system works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "cooling-lubrication",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:49.566Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/cooling-systems/checking-and-topping-up-car-antifreeze-coolant",
+    "title": "Checking and topping up car antifreeze coolant",
+    "sourceCategory": "Cooling systems",
+    "mappedCategoryId": "cooling-lubrication",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:51.987Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/cooling-systems/checking-for-coolant-leaks",
+    "title": "Checking for coolant leaks",
+    "sourceCategory": "Cooling systems",
+    "mappedCategoryId": "cooling-lubrication",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:21.931Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/cooling-systems/checking-hoses-and-the-radiator-cap",
+    "title": "Checking hoses and the radiator cap",
+    "sourceCategory": "Cooling systems",
+    "mappedCategoryId": "cooling-lubrication",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:51.925Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/cooling-systems/draining-and-refilling-a-fully-sealed-cooling-system",
+    "title": "Draining and refilling a fully sealed cooling system",
+    "sourceCategory": "Cooling systems",
+    "mappedCategoryId": "cooling-lubrication",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:21.892Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/cooling-systems/how-to-flush-an-engine-radiator",
+    "title": "How to flush an engine radiator",
+    "sourceCategory": "Cooling systems",
+    "mappedCategoryId": "cooling-lubrication",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:03.443Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/cooling-systems/how-to-remove-a-car-radiator",
+    "title": "How to remove a car radiator",
+    "sourceCategory": "Cooling systems",
+    "mappedCategoryId": "cooling-lubrication",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:21.879Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/cooling-systems/how-to-replace-a-car-thermostat",
+    "title": "How to replace a car thermostat",
+    "sourceCategory": "Cooling systems",
+    "mappedCategoryId": "cooling-lubrication",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:34.181Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/cooling-systems/replacing-a-water-pump",
+    "title": "Replacing a water pump",
+    "sourceCategory": "Cooling systems",
+    "mappedCategoryId": "cooling-lubrication",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:01.499Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/cooling-systems/replacing-core-plugs",
+    "title": "Replacing core plugs",
+    "sourceCategory": "Cooling systems",
+    "mappedCategoryId": "cooling-lubrication",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:51.910Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/technology/how-car-oil-is-refined",
+    "title": "How car oil is refined",
+    "sourceCategory": "Technology",
+    "mappedCategoryId": "cooling-lubrication",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:37.880Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/checking-the-half-shafts",
+    "title": "Checking the half shafts",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "drivetrain",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:03.933Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/checking-the-rear-axle-for-leaks-and-changing-the-oil",
+    "title": "Checking the rear axle for leaks and changing the oil",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "drivetrain",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:03.965Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/driven-wheel-hubs",
+    "title": "Driven wheel hubs",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "drivetrain",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:59.508Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/how-to-check-u-joints",
+    "title": "How to check U-Joints",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "drivetrain",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:15.426Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/a-state-of-mind",
+    "title": "A State of Mind",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:51.506Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/acceleration-and-economy",
+    "title": "Acceleration and Economy",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:11.985Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/accidents",
+    "title": "Accidents",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:42.139Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/advanced-gearshifts",
+    "title": "Advanced Gearshifts",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:41.477Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/bends-and-corners",
+    "title": "Bends and Corners",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/braking",
+    "title": "Braking",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:25.501Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/crossing-train-tracks-safely",
+    "title": "Crossing train tracks safely",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/dealing-with-engine-problems",
+    "title": "Dealing with engine problems",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/driving-abroad",
+    "title": "Driving Abroad",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:41.882Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/driving-at-night",
+    "title": "Driving at Night",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/driving-for-economy",
+    "title": "Driving for Economy",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/driving-in-summer",
+    "title": "Driving in Summer",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:53.414Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/driving-in-wet-weather",
+    "title": "Driving in wet weather",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/driving-in-winter",
+    "title": "Driving in Winter",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:03.688Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/driving-on-ice-and-snow",
+    "title": "Driving on ice and snow",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/fog",
+    "title": "Fog",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:11.869Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/fuel-efficient-driving-techniques",
+    "title": "Fuel-efficient driving techniques",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/how-to-avoid-car-accidents",
+    "title": "How to avoid car accidents",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/how-to-make-driving-comfortable",
+    "title": "How to make driving comfortable",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/how-to-tow-a-trailer",
+    "title": "How to tow a trailer",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/junctions",
+    "title": "Junctions",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:42.073Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/making-allowances-for-other-road-users",
+    "title": "Making allowances for other road users",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/motorways-and-highways",
+    "title": "Motorways and Highways",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:23.588Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/negotiating-road-junctions",
+    "title": "Negotiating road junctions",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/observation",
+    "title": "Observation",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:05.556Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/overtaking",
+    "title": "Overtaking",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:39.634Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/overtaking-with-care",
+    "title": "Overtaking with care",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/planning",
+    "title": "Planning",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/preparing-for-the-summer",
+    "title": "Preparing for the summer",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/preparing-to-tow",
+    "title": "Preparing to tow",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/reaction-times",
+    "title": "Reaction Times",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/road-positioning",
+    "title": "Road positioning",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/safety-at-the-wheel",
+    "title": "Safety at the Wheel",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:47.523Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/signals",
+    "title": "Signals",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/steering",
+    "title": "Steering",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:11.953Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/sympathy-and-understanding",
+    "title": "Sympathy and Understanding",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/towing",
+    "title": "Towing",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:17.461Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/traffic",
+    "title": "Traffic",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/tyres",
+    "title": "Tyres",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:23.434Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/using-four-wheel-drive",
+    "title": "Using four-wheel drive",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/using-the-mirrors",
+    "title": "Using the mirrors",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/what-to-do-if-car-lights-stop-working",
+    "title": "What to do if car lights stop working",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/what-to-do-if-the-engine-stops",
+    "title": "What to do if the engine stops",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/advanced-driving/what-to-do-if-the-windscreen-shatters",
+    "title": "What to do if the windscreen shatters",
+    "sourceCategory": "Advanced Driving",
+    "mappedCategoryId": "driving",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:08.002Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/car-horn-not-working",
+    "title": "Car horn not working?",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:27.512Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/checking-and-replacing-fuses",
+    "title": "Checking and replacing fuses",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:24.011Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/checking-headlamps-and-lights",
+    "title": "Checking headlamps and lights",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:53.951Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/checking-the-instruments",
+    "title": "Checking the instruments",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:51.509Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/fitting-a-new-speedometer-cable",
+    "title": "Fitting a new speedometer cable",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:23.956Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/fitting-new-lamps-or-sealed-units",
+    "title": "Fitting new headlamps",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:35.462Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/fixing-a-heated-rear-window",
+    "title": "Fixing a heated rear window",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:45.915Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/fixing-a-reversing-light",
+    "title": "Fixing a reversing light",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:45.915Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/fixing-a-windscreen-wiper-motor",
+    "title": "Fixing a windscreen wiper motor",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:24.044Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/how-a-speedo-works",
+    "title": "How a speedometer works",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:45.915Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/how-an-oil-pressure-guage-works",
+    "title": "How an oil pressure gauge works",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:53.877Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/aligning-the-headlamps",
+    "title": "How to align headlights at home",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:05.441Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/how-to-check-a-relay-switch",
+    "title": "How to check a relay switch",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:13.514Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/how-to-fix-a-car-fan",
+    "title": "How to fix a car fan",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:55.600Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/how-to-fix-an-indicator-stalk",
+    "title": "How to fix an indicator stalk",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:45.915Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/how-to-test-electrical-circuits",
+    "title": "How to test electrical circuits",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:53.915Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/identifying-and-suppressing-radio-interference",
+    "title": "Identifying and suppressing radio interference",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:13.645Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/servicing-the-windscreen-wiper-mechanism",
+    "title": "Servicing the windscreen-wiper mechanism",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:35.530Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/testing-and-replacing-a-flasher-unit",
+    "title": "Testing and replacing a flasher unit",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:03.481Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/working-on-the-wiring-system",
+    "title": "Working on the wiring system",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:23.901Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-car-electrical-systems-work",
+    "title": "How car electrical systems work",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:35.972Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-the-charging-system-works",
+    "title": "How the charging system works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:27.517Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-the-starting-system-works",
+    "title": "starter motor",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:35.972Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/checking-battery-leads-and-connections",
+    "title": "Checking battery leads and connections",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:01.530Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/checking-the-batteries",
+    "title": "Checking the batteries",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:49.875Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/checking-the-electrics-with-a-multimeter",
+    "title": "Checking the electrics with a multimeter",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:53.563Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/checking-adjusting-and-refitting-drive-belts",
+    "title": "Checking, adjusting and refitting drive belts",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:20.014Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/cleaning-and-replacing-a-control-box",
+    "title": "Cleaning and replacing a control box",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:20.007Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/fitting-a-new-voltage-regulator",
+    "title": "Fitting a new voltage regulator",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:11.556Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/fixing-a-simple-light-cluster",
+    "title": "Fixing a simple light cluster",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:29.673Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/how-to-fix-a-dynamo",
+    "title": "How to fix a dynamo",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:49.930Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/how-to-test-a-car-battery",
+    "title": "How to test a car battery",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:49.933Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/overhauling-a-light-cluster",
+    "title": "Overhauling a light cluster",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:33.572Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/removing-and-refitting-a-dynamo-pulley",
+    "title": "Removing and refitting a dynamo pulley",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:25.498Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/renewing-alternator-brushes",
+    "title": "Renewing alternator brushes",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:49.533Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/replacing-dynamo-brushes",
+    "title": "Replacing dynamo brushes",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:59.490Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/testing-a-dynamo-and-checking-output",
+    "title": "Testing a dynamo and checking output",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:19.920Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/testing-an-alternator-and-checking-output",
+    "title": "Testing an alternator and checking output",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:31.464Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/update-your-charging-system",
+    "title": "Update your charging system",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:11.569Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/electrical-systems/using-a-car-battery-charger",
+    "title": "Using a car battery charger",
+    "sourceCategory": "Electrical systems",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:19.889Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/checking-the-starter-circuit",
+    "title": "Checking a starter circuit",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:27.910Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/checking-and-replacing-starter-motor-brushes",
+    "title": "Checking and replacing starter-motor brushes",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:53.896Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/checking-and-replacing-the-starter-motor",
+    "title": "Checking and replacing the starter motor",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:39.479Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/replacing-starter-or-dynamo-bearings",
+    "title": "Replacing starter or dynamo bearings",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:35.656Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/replacing-the-bendix-gear",
+    "title": "Replacing the Bendix gear",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:59.559Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/stripping-the-starter-motor",
+    "title": "Stripping the starter motor",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "electrical",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:17.614Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-engine-timing-works",
+    "title": "How engine timing works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:25.586Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/the-engine",
+    "title": "The engine",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:13.881Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/the-engine-how-it-drives-its-ancillary-parts",
+    "title": "The engine - how it drives its ancillary parts",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:35.972Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/the-engine-how-power-is-created",
+    "title": "The engine - how power is created",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:25.453Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/the-engine-how-the-valves-open-and-close",
+    "title": "The engine - how the valves open and close",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:35.972Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/how-to-fit-a-new-exhaust",
+    "title": "How to fit a new exhaust",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:37.889Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/bodywork/how-to-replace-an-exhaust",
+    "title": "How to replace an exhaust",
+    "sourceCategory": "Bodywork",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:21.478Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/engine/adjusting-a-camshaft-timing-belt",
+    "title": "Adjusting a camshaft timing belt",
+    "sourceCategory": "Engine",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:09.436Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/engine/air-filter-change",
+    "title": "Air filter change",
+    "sourceCategory": "Engine",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:45.862Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/engine/checking-for-oil-leaks",
+    "title": "Checking for oil leaks",
+    "sourceCategory": "Engine",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:25.938Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/engine/cylinder-compression-test",
+    "title": "Cylinder compression test",
+    "sourceCategory": "Engine",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:25.453Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/engine/engine-mount-replacement",
+    "title": "Engine mount replacement",
+    "sourceCategory": "Engine",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:07.947Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/engine/engine-oil-pump-replacement",
+    "title": "Engine oil pump replacement",
+    "sourceCategory": "Engine",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:01.958Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/engine/exhaust-manifold-gasket-replacement",
+    "title": "Exhaust manifold gasket replacement",
+    "sourceCategory": "Engine",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:21.478Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/engine/how-to-drain-engine-oil-and-remove-filter",
+    "title": "How to drain engine oil and remove filter",
+    "sourceCategory": "Engine",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:53.877Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/engine/how-to-remove-a-cylinder-head",
+    "title": "How to remove a cylinder head",
+    "sourceCategory": "Engine",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:21.931Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/engine/servicing-a-diesel-engine",
+    "title": "Servicing a diesel engine",
+    "sourceCategory": "Engine",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:13.939Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/engine/tuning-the-engine-with-a-colortune-plug",
+    "title": "Tuning the engine with a colortune plug",
+    "sourceCategory": "Engine",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:08.064Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/technology/how-a-rotary-wankel-engine-works",
+    "title": "How a rotary Wankel engine works",
+    "sourceCategory": "Technology",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:38.167Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/technology/how-a-two-stroke-engine-works",
+    "title": "How a two-stroke engine works",
+    "sourceCategory": "Technology",
+    "mappedCategoryId": "engine",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:07.947Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-a-diesel-engine-works",
+    "title": "How a diesel engine works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:13.939Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-a-fuel-injection-system-works",
+    "title": "How a fuel injection system works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:35.972Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-a-fuel-pump-works",
+    "title": "How a fuel pump works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:53.468Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-the-fuel-system-works-fixed-jet-carburettors",
+    "title": "How the fuel system works - fixed-jet carburettors",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:43.494Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-the-ignition-system-works",
+    "title": "How the ignition system works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:05.511Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-variable-jet-carburettors-work",
+    "title": "How variable-jet carburettors work",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:19.478Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/adjusting-a-fixed-jet-carburettor",
+    "title": "Adjusting a fixed-jet carburettor",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:25.940Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/adjusting-a-stromberg-carburettor",
+    "title": "Adjusting a Stromberg carburettor",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:33.602Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/adjusting-an-emission-control-carburettor",
+    "title": "Adjusting an emission-control carburettor",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:55.929Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/adjusting-an-su-carburettor",
+    "title": "Adjusting an SU carburettor",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:15.595Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/checking-a-ford-vv-carburettor",
+    "title": "Checking a Ford VV carburettor",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:37.481Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/checking-a-mechanical-fuel-pump",
+    "title": "Checking a mechanical fuel pump",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:25.938Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/checking-and-cleaning-a-fixed-jet-carburettor",
+    "title": "Checking and cleaning a fixed-jet carburettor",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:15.534Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/checking-and-cleaning-a-gm-varajet-carburettor",
+    "title": "Checking and cleaning a GM Varajet carburettor",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:07.502Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/checking-and-cleaning-an-su-carburettor",
+    "title": "Checking and cleaning an SU carburettor",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:53.528Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/checking-and-replacing-a-fuel-sender-unit",
+    "title": "Checking and replacing a fuel sender unit",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:05.503Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/checking-fuel-pipes",
+    "title": "Checking fuel pipes",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:37.547Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/cleaning-fuel-pump-filters",
+    "title": "Cleaning fuel-pump filters",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:55.920Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/how-to-overhaul-a-stromberg-carburettor",
+    "title": "How to overhaul a Stromberg carburettor",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:55.993Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/preparing-for-carburettor-adjustment",
+    "title": "Preparing for carburettor adjustment",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:57.546Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/removing-a-carburettor-for-cleaning",
+    "title": "Removing a carburettor for cleaning",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:26.028Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/overhauling-a-mechanical-fuel-pump",
+    "title": "Servicing a mechanical fuel pump",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:29.505Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/fuel-systems/servicing-the-fuel-supply-system",
+    "title": "Servicing the fuel supply system",
+    "sourceCategory": "Fuel systems",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:25.927Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/adjusting-the-static-timing",
+    "title": "Adjusting the static timing",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:39.535Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/checking-the-dwell-angle",
+    "title": "Checking the dwell angle",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:27.863Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/checking-the-high",
+    "title": "Checking the high-tension circuit",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:57.883Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/checking-the-low-tension-circuit",
+    "title": "Checking the low-tension circuit",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:55.511Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/cleaning-and-fitting-spark-plugs",
+    "title": "Cleaning and fitting spark plugs",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:31.503Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/curing-running-on",
+    "title": "Curing running on",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:53.896Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/fitting-a-condenser",
+    "title": "Fitting a condenser",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:28.059Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/fitting-a-new-coil",
+    "title": "Fitting a new coil",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:53.896Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/fitting-and-adjusting-contact-breaker-points",
+    "title": "Fitting and adjusting contact-breaker points",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:58.017Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/fitting-new-high-tension-leads",
+    "title": "Fitting new high-tension leads",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:57.946Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/inspecting-the-ignition-system",
+    "title": "Inspecting the ignition system",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:27.938Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/overhauling-a-bosch-distributor",
+    "title": "Overhauling a Bosch distributor",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:07.603Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/removing-and-refitting-the-distributor",
+    "title": "Removing and refitting the distributor",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:17.532Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/stroboscopic-timing",
+    "title": "Stroboscopic timing",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:09.436Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/ignition-system/troubleshooting-the-ignition-warning-light",
+    "title": "Troubleshooting the ignition warning light",
+    "sourceCategory": "Ignition System",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:53.896Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/technology/lean-burn-engines",
+    "title": "Lean burn engines",
+    "sourceCategory": "Technology",
+    "mappedCategoryId": "fuel-ignition",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:08.064Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/accessories/how-to-fix-a-car-heater",
+    "title": "How to fix a car heater",
+    "sourceCategory": "Accessories",
+    "mappedCategoryId": "hvac",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:31.595Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-car-heating-and-ventilation-systems-work",
+    "title": "How car heating and ventilation systems work",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "hvac",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:14.048Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/cooling-systems/checking-heater-and-ventilator-output",
+    "title": "Checking heater and ventilator output",
+    "sourceCategory": "Cooling systems",
+    "mappedCategoryId": "hvac",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:22.024Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/adding-reversing-lights",
+    "title": "Adding reversing lights",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:09.926Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/converting-an-automatic-choke-to-manual",
+    "title": "Converting an automatic choke to manual",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:49.460Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/fitting-a-brake-light-warning-system",
+    "title": "Fitting a brake light warning system",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:21.453Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/fitting-a-sunroof",
+    "title": "Fitting a sunroof",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:39.880Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/fitting-a-towing-socket",
+    "title": "Fitting a towing socket",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:10.673Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/fitting-an-electric-fan-to-a-car",
+    "title": "Fitting an electric fan to a car",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:23.515Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/fitting-an-electric-fan-to-a-side-radiator",
+    "title": "Fitting an electric fan to a side radiator",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:37.574Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/fitting-vehicle-deadlocks",
+    "title": "Fitting vehicle deadlocks",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:05.888Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/how-to-add-extra-speakers",
+    "title": "How to add extra car speakers",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:04.598Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/how-to-fit-a-bodykit",
+    "title": "How to fit a bodykit",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:39.971Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/how-to-fit-an-oil-radiator",
+    "title": "How to fit an oil radiator",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:21.600Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/how-to-install-an-oil-temperature-gauge",
+    "title": "How to install an oil temperature gauge",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:01.592Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/how-to-tint-windows",
+    "title": "How to tint windows",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:39.575Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/installing-a-car-graphic-equalizer",
+    "title": "Installing a car graphic equalizer",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:51.437Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/installing-a-cigarette-lighter-socket",
+    "title": "Installing a cigarette lighter socket",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:09.894Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/installing-a-turbocharger",
+    "title": "Installing a turbocharger",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:45.535Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/installing-central-locking",
+    "title": "Installing central locking",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:05.888Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/installing-window-blinds",
+    "title": "Installing window blinds",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:39.950Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/modifications/trimming-wheels",
+    "title": "Trimming wheels",
+    "sourceCategory": "Modifications",
+    "mappedCategoryId": "maintenance",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:15.478Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-car-springs-and-dampers-work",
+    "title": "How car springs and dampers work",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:40:35.972Z",
+    "licence": "No reuse licence identified — linked only",
+    "note": "Seen on the category index only; the article page itself was not requested (crawl request cap)."
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-car-suspension-works",
+    "title": "How car suspension works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:43.946Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-the-steering-system-works",
+    "title": "How the steering system works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:07.562Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/adjusting-and-replacing-a-power-steering-drive-belt",
+    "title": "Adjusting and replacing a power-steering drive belt",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:30.072Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/adjusting-toe-alignment-on-wheels",
+    "title": "Adjusting toe alignment on wheels",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:29.986Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/checking-power-assisted-steering",
+    "title": "Checking power-assisted steering",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:01.554Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/checking-rack-and-pinion-steering",
+    "title": "Checking rack and pinion steering",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:59.942Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/checking-steering-joints-for-wear",
+    "title": "Checking steering joints for wear",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:29.902Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/checking-steering-swivel-pins",
+    "title": "Checking steering swivel pins",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:41.556Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/checking-steering-box-mountings",
+    "title": "Checking steering-box mountings",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:59.882Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/checking-steering-rack-security",
+    "title": "Checking steering-rack security",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:11.489Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/checking-the-steering-box",
+    "title": "Checking the steering box",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:59.920Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/how-to-lubricate-the-steering-system",
+    "title": "How to lubricate the steering system",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:57.599Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/lubricating-steering-swivel-joints",
+    "title": "Lubricating steering swivel joints",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:19.604Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/refitting-track-rods-and-ball-joints",
+    "title": "Refitting track rods and ball joints",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:41.480Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/replacing-other-types-of-track-rod",
+    "title": "Replacing other types of track rod",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:29.916Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/replacing-steering-rack-gaiters",
+    "title": "Replacing steering-rack gaiters",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:09.494Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/replacing-track-rod-end-ball-joints",
+    "title": "Replacing track-rod-end ball joints",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:33.528Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/steering/setting-the-tracking",
+    "title": "Setting the tracking",
+    "sourceCategory": "Steering",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:19.586Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/suspension/checking-damper-units",
+    "title": "Checking damper units",
+    "sourceCategory": "Suspension",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:43.937Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/suspension/checking-engine-dampers",
+    "title": "Checking engine dampers",
+    "sourceCategory": "Suspension",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:13.454Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/suspension/checking-suspension-joints-and-pivots",
+    "title": "Checking suspension joints and pivots",
+    "sourceCategory": "Suspension",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:31.920Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/suspension/cleaning-and-checking-leaf-springs",
+    "title": "Cleaning and checking leaf springs",
+    "sourceCategory": "Suspension",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:43.482Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/suspension/coil-springs-replacement",
+    "title": "Coil springs replacement",
+    "sourceCategory": "Suspension",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:01.958Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/suspension/how-to-replace-anti-roll-bar-bushes",
+    "title": "How to replace anti-roll-bar bushes",
+    "sourceCategory": "Suspension",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:01.991Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/suspension/fitting-new-dampers",
+    "title": "How to replace dampers",
+    "sourceCategory": "Suspension",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:31.976Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/suspension/renewing-macpherson-strut-inserts",
+    "title": "Renewing MacPherson-strut inserts",
+    "sourceCategory": "Suspension",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:01.899Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/suspension/replacing-lever-arm-dampers",
+    "title": "Replacing lever-arm dampers",
+    "sourceCategory": "Suspension",
+    "mappedCategoryId": "suspension-steering",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:31.919Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-a-car-clutch-works",
+    "title": "How a car clutch works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:43.908Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-automatic-gearboxes-work",
+    "title": "How automatic gearboxes work",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:55.456Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-manual-gearboxes-work",
+    "title": "How manual gearboxes work",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:13.943Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/basics/how-the-transmission-works",
+    "title": "How the transmission works",
+    "sourceCategory": "Basics",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:48:41.605Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/adjusting-the-clutch",
+    "title": "Adjusting the clutch",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:45.570Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/checking-the-clutch-cable",
+    "title": "Checking a clutch cable",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:45.467Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/checking-and-removing-a-clutch-master-cylinder",
+    "title": "Checking and removing a clutch master cylinder",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:11.489Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/checking-the-gearbox-oil-level-draining-and-refilling",
+    "title": "Checking the gearbox oil level, draining and refilling",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:34.646Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/diagnosing-faults-in-automatic-transmission",
+    "title": "Diagnosing faults in automatic transmission",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:21.531Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/fitting-new-clutch-seals-and-removing-a-slave-cylinder",
+    "title": "Fitting new clutch seals and removing a slave cylinder",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:03.892Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/bleeding-the-clutch",
+    "title": "How to bleed a clutch",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:34.471Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/how-to-check-and-change-automatic-transmission-fluid",
+    "title": "How to check and change automatic transmission fluid",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:33.901Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/replacing-and-renewing-clutch-cables",
+    "title": "Replacing and renewing clutch cables",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:47:43.592Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/transmission/replacing-transmission-oil-seals",
+    "title": "Replacing transmission oil seals",
+    "sourceCategory": "Transmission",
+    "mappedCategoryId": "transmission",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:46:35.591Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/wheels-and-tyres/adjusting-wheel-bearings",
+    "title": "Adjusting wheel bearings",
+    "sourceCategory": "Wheels and Tyres",
+    "mappedCategoryId": "wheels-tyres",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:47.446Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/wheels-and-tyres/avoiding-tyre-and-wheel-damage",
+    "title": "Avoiding tyre and wheel damage",
+    "sourceCategory": "Wheels and Tyres",
+    "mappedCategoryId": "wheels-tyres",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:35.946Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/wheels-and-tyres/avoiding-tyre-wear",
+    "title": "Avoiding tyre wear",
+    "sourceCategory": "Wheels and Tyres",
+    "mappedCategoryId": "wheels-tyres",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:06.066Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/wheels-and-tyres/checking-for-wheel-and-tyre-damage",
+    "title": "Checking for wheel and tyre damage",
+    "sourceCategory": "Wheels and Tyres",
+    "mappedCategoryId": "wheels-tyres",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:41:35.866Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/wheels-and-tyres/checking-removing-and-refitting-road-wheels",
+    "title": "Checking, removing and refitting road wheels",
+    "sourceCategory": "Wheels and Tyres",
+    "mappedCategoryId": "wheels-tyres",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:44:05.962Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/wheels-and-tyres/lubricating-and-reassembling-wheel-bearings",
+    "title": "Lubricating and reassembling wheel bearings",
+    "sourceCategory": "Wheels and Tyres",
+    "mappedCategoryId": "wheels-tyres",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:45:17.457Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/wheels-and-tyres/removing-wheel-bearings",
+    "title": "Removing wheel bearings",
+    "sourceCategory": "Wheels and Tyres",
+    "mappedCategoryId": "wheels-tyres",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:42:35.964Z",
+    "licence": "No reuse licence identified — linked only"
+  },
+  {
+    "url": "https://www.howacarworks.com/wheels-and-tyres/replacing-wheel-bearings-on-driven-wheels",
+    "title": "Replacing wheel bearings on driven wheels",
+    "sourceCategory": "Wheels and Tyres",
+    "mappedCategoryId": "wheels-tyres",
+    "importStatus": "metadata-only",
+    "retrievedAt": "2026-10-21T18:43:05.917Z",
+    "licence": "No reuse licence identified — linked only"
+  }
+]

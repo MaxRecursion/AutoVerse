@@ -1,0 +1,181 @@
+{
+  "id": "four-stroke-cycle",
+  "slug": "four-stroke-cycle",
+  "title": "The Four-Stroke Cycle",
+  "summary": "Intake, compression, power, exhaust: how a petrol engine breathes in, squeezes, burns and breathes out over two turns of the crankshaft — with the piston, valves, camshafts and spark all kept in step.",
+  "categoryId": "engine",
+  "difficulty": "beginner",
+  "estimatedDuration": 15,
+  "tags": ["engine", "four-stroke", "otto cycle", "piston", "valves", "combustion", "petrol"],
+  "learningObjectives": [
+    "Name the four strokes in order and say what the piston and both valves are doing in each",
+    "Explain why one complete cycle takes two crankshaft revolutions and why the camshafts turn at half crank speed",
+    "Describe why the spark fires before top dead centre and why valves open and close away from TDC and BDC",
+    "Calculate swept volume and compression ratio from bore, stroke and clearance volume",
+    "Relate engine speed to how often each cylinder fires"
+  ],
+  "beginnerExplanation": "Most car engines work in a repeating pattern of four steps, called strokes. A stroke is one trip of the piston, either down the cylinder or back up.\n\nOn the intake stroke the piston moves down with the intake valve open, drawing a mixture of air and fuel into the cylinder, a bit like pulling back the plunger of a syringe. On the compression stroke both valves are shut and the piston rises, squeezing that mixture into a small space at the top. Just before the piston reaches the top, the spark plug makes a spark. The mixture burns very quickly, the hot gas expands, and it shoves the piston down: this is the power stroke, the only one that produces work. Finally, on the exhaust stroke the exhaust valve opens and the rising piston pushes the burnt gas out, ready to start again.\n\nThe piston is joined to the crankshaft by a connecting rod, so its up-and-down motion turns the crankshaft round. Each stroke is half a turn of the crankshaft, so the whole cycle takes two full turns. The camshafts, which open the valves, are driven by a belt at half the crankshaft's speed so each valve opens just once per cycle.\n\nIn a real engine at idle all of this happens about five or six times a second in every cylinder, which is why the laboratory slows it down dramatically.",
+  "technicalExplanation": "The four-stroke spark-ignition engine completes one thermodynamic cycle in 720° of crank rotation. Taking 0° as top dead centre (TDC) at the start of intake: intake runs 0–180°, compression 180–360°, power (expansion) 360–540° and exhaust 540–720°. Because each valve event happens once per cycle, the camshafts are driven at ω_cam = ω_crank / 2 by a belt, chain or gears.\n\nReal valve events do not coincide with TDC and BDC. The intake valve opens before TDC and closes well after BDC (40° ABDC in this illustrative engine) so that the momentum of the incoming column of air keeps filling the cylinder while the piston has already begun to rise. The exhaust valve opens before BDC (40° BBDC) so that the remaining cylinder pressure blows most of the gas out (blow-down) before the piston has to push against it, and it closes shortly after TDC. Around exhaust/intake TDC both valves are briefly open together; this overlap lets the outgoing exhaust help draw in the new charge.\n\nDuring compression the trapped charge is squeezed from the swept-plus-clearance volume towards the clearance volume. The ratio of those volumes is the compression ratio, about 10.5 : 1 here, which raises temperature and pressure and makes the subsequent expansion more efficient. Combustion is not instantaneous: the flame needs a few milliseconds to cross the chamber, so the spark is advanced to fire before TDC (15° here) and peak pressure arrives roughly 15–20° after TDC, where it can push on a crank that has started to turn.\n\nOnly the power stroke delivers positive work; the other three strokes absorb a little. A single cylinder therefore produces torque in sharp pulses, carried between them by the flywheel's stored energy, while multi-cylinder engines stagger their power strokes (every 720°/n) to overlap them. The lab's pressure curve and combustion glow are illustrative models for teaching the shape of the cycle, not measured data.",
+  "steps": [
+    {
+      "id": "intake",
+      "title": "Intake stroke",
+      "beginner": "The piston moves down and the intake valve is open, so fresh air and fuel are drawn into the cylinder — like pulling back a syringe plunger.",
+      "technical": "0–180°. The descending piston lowers cylinder pressure slightly below the intake manifold's, and charge flows past the open intake valve. The valve opened 10° before TDC and stays open until 40° after BDC, using the inertia of the moving air to improve filling (volumetric efficiency).",
+      "cue": "intake",
+      "componentIds": ["intake-valve", "intake-port", "piston", "intake-camshaft"]
+    },
+    {
+      "id": "compression",
+      "title": "Compression stroke",
+      "beginner": "Both valves close and the piston rises, squeezing the mixture into the small space at the top of the cylinder. Squeezing it makes it hotter and ready to burn well.",
+      "technical": "180–360°. After intake-valve closing the trapped charge is compressed roughly polytropically (pV^n ≈ constant, n ≈ 1.3) towards the clearance volume. With a 10.5 : 1 compression ratio the illustrative model reaches roughly 15 bar by the time the spark fires, and the charge temperature rises with it, improving the expansion work that follows.",
+      "cue": "compression",
+      "componentIds": ["piston", "combustion-chamber", "piston-rings"]
+    },
+    {
+      "id": "spark",
+      "title": "The spark",
+      "beginner": "Just before the piston reaches the top, the spark plug sparks. The flame starts small and spreads through the squeezed mixture.",
+      "technical": "345° (15° BTDC). Ignition is timed before TDC because the flame kernel needs time to grow and the flame front a few milliseconds to cross the chamber; the goal is peak pressure shortly after TDC. The engine management system varies the advance with speed and load.",
+      "cue": "spark",
+      "componentIds": ["spark-plug", "combustion-chamber"]
+    },
+    {
+      "id": "power",
+      "title": "Power stroke",
+      "beginner": "The burning gas gets very hot and pushes hard on the piston, driving it down. This push turns the crankshaft — it is the only stroke that makes power.",
+      "technical": "360–540°. Pressure peaks about 15–20° after TDC (around 40 bar in the illustrative curve) and falls as the gas expands. Gas force on the crown is transmitted through the rod to the crank pin; crank torque = F·r·sin(θ + φ) / cos φ, so useful torque appears once the crank has moved away from TDC.",
+      "cue": "power",
+      "componentIds": ["piston", "connecting-rod", "crankshaft", "combustion-chamber"]
+    },
+    {
+      "id": "exhaust",
+      "title": "Exhaust stroke",
+      "beginner": "The exhaust valve opens and the rising piston pushes the burnt gas out of the cylinder, clearing it for the next intake.",
+      "technical": "540–720°. The exhaust valve actually opened at 500° (40° BBDC), so blow-down has already released most of the pressure; the piston then displaces the remaining gas. The exhaust valve stays open until 10° after TDC.",
+      "cue": "exhaust",
+      "componentIds": ["exhaust-valve", "exhaust-port", "exhaust-camshaft", "piston"]
+    },
+    {
+      "id": "overlap",
+      "title": "Overlap — and round again",
+      "beginner": "At the very top, for a moment both valves are slightly open. The last exhaust leaving helps pull in the new charge, and the cycle starts again.",
+      "technical": "710–10°. With both valves off their seats, exhaust momentum scavenges the clearance volume and helps start intake flow. Overlap suits high speed; too much overlap at idle lets exhaust flow back and makes the idle rough, which is one reason variable valve timing exists.",
+      "cue": "overlap",
+      "componentIds": ["intake-valve", "exhaust-valve"]
+    }
+  ],
+  "componentIds": ["piston", "connecting-rod", "crankshaft", "intake-valve", "exhaust-valve", "intake-camshaft", "exhaust-camshaft", "spark-plug", "combustion-chamber", "cylinder", "timing-belt", "flywheel"],
+  "labId": "engine",
+  "flow": {
+    "nodes": [
+      { "id": "charge", "label": "Fresh charge", "detail": "Air (and fuel) from the intake port", "componentId": "intake-port" },
+      { "id": "intake-stroke", "label": "Intake", "detail": "Piston down, intake valve open", "componentId": "intake-valve" },
+      { "id": "compression-stroke", "label": "Compression", "detail": "Both valves shut, piston up", "componentId": "piston" },
+      { "id": "ignition", "label": "Spark", "detail": "15° before TDC", "componentId": "spark-plug", "topicId": "spark-ignition" },
+      { "id": "power-stroke", "label": "Power", "detail": "Expanding gas drives the piston down", "componentId": "combustion-chamber" },
+      { "id": "crank", "label": "Crankshaft torque", "detail": "Rod turns push into rotation", "componentId": "crankshaft", "topicId": "pistons-and-crankshaft" },
+      { "id": "exhaust-stroke", "label": "Exhaust", "detail": "Exhaust valve open, piston up", "componentId": "exhaust-valve" },
+      { "id": "cams", "label": "Camshafts at ½ speed", "detail": "Open each valve once per cycle", "componentId": "intake-camshaft", "topicId": "valves-and-camshaft" }
+    ],
+    "edges": [
+      { "from": "charge", "to": "intake-stroke", "label": "drawn in" },
+      { "from": "intake-stroke", "to": "compression-stroke", "label": "BDC" },
+      { "from": "compression-stroke", "to": "ignition" },
+      { "from": "ignition", "to": "power-stroke", "label": "TDC" },
+      { "from": "power-stroke", "to": "crank", "label": "work out" },
+      { "from": "power-stroke", "to": "exhaust-stroke", "label": "BDC" },
+      { "from": "exhaust-stroke", "to": "intake-stroke", "label": "TDC (overlap)" },
+      { "from": "crank", "to": "cams", "label": "timing belt 2 : 1" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Top and bottom dead centre (TDC / BDC)", "definition": "The highest and lowest points of the piston's travel, where it momentarily stops and reverses. Crank angles are usually measured from TDC." },
+    { "term": "Stroke", "definition": "One piston trip between TDC and BDC — half a crankshaft revolution. The word also means the distance travelled, which is twice the crank throw.", "equation": "S = 2r" },
+    { "term": "Swept volume (displacement)", "definition": "The volume the piston sweeps in one stroke. Multiply by the number of cylinders for engine capacity.", "equation": "V_s = (π/4) · B² · S" },
+    { "term": "Compression ratio", "definition": "Total cylinder volume at BDC divided by the clearance volume left at TDC.", "equation": "CR = (V_s + V_c) / V_c" },
+    { "term": "Camshaft speed", "definition": "Each valve opens once per 720° cycle, so the camshafts turn once for every two crankshaft revolutions.", "equation": "ω_cam = ω_crank / 2" },
+    { "term": "Firing frequency", "definition": "Each cylinder fires once every two revolutions, so at N rpm one cylinder fires N/120 times per second.", "equation": "f = N / 120" }
+  ],
+  "misconceptions": [
+    { "myth": "Each stroke is one full turn of the crankshaft.", "reality": "Each stroke is half a turn. The four strokes together take two turns (720°), which is why the camshafts run at half speed." },
+    { "myth": "The spark fires exactly when the piston is at the top.", "reality": "It fires before TDC so the flame has time to build pressure; peak pressure arrives a little after TDC, when the crank can turn it into torque." },
+    { "myth": "The fuel explodes and blasts the piston down.", "reality": "Normal combustion is a fast but controlled flame front. A sudden, uncontrolled explosion of the end gas is knock, which engines are designed to avoid." },
+    { "myth": "Valves open and close exactly at TDC and BDC.", "reality": "Intake closes well after BDC and exhaust opens well before it, and both valves overlap around TDC, to make the most of gas momentum and pressure." },
+    { "myth": "An engine produces power continuously.", "reality": "Each cylinder pushes for only about a quarter of its cycle. The flywheel and the staggered firing of other cylinders smooth the gaps." }
+  ],
+  "practicalExamples": [
+    "At a typical idle of 800 rpm a whole four-stroke cycle takes 0.15 s, so the lab's 6-second cycle at 1× is about 40 times slower than idle.",
+    "A four-cylinder engine at 3000 rpm makes 50 crank revolutions per second; each cylinder fires 25 times a second, giving 100 power strokes per second in total.",
+    "A lawnmower or small generator often uses exactly the single-cylinder four-stroke shown here, with a heavy flywheel to keep it turning between power strokes.",
+    "A compression test measures the pressure each cylinder builds on the compression stroke; a low reading points to leaking rings, valves or head gasket."
+  ],
+  "relatedTopicIds": ["pistons-and-crankshaft", "valves-and-camshaft", "spark-ignition", "fuel-injection", "diesel-engines", "torque-and-power", "engine-layouts"],
+  "prerequisiteTopicIds": ["how-a-car-works"],
+  "quiz": [
+    {
+      "id": "revolutions-per-cycle",
+      "prompt": "How many crankshaft revolutions does one complete four-stroke cycle take?",
+      "options": ["One", "Two", "Four", "Half"],
+      "answerIndex": 1,
+      "explanation": "Each stroke is half a revolution, so four strokes take two revolutions (720°)."
+    },
+    {
+      "id": "only-power",
+      "prompt": "Which stroke is the only one that delivers work to the crankshaft?",
+      "options": ["Intake", "Compression", "Power", "Exhaust"],
+      "answerIndex": 2,
+      "explanation": "Expanding combustion gas pushes the piston down on the power stroke; the other three strokes take a little energy rather than producing it."
+    },
+    {
+      "id": "cam-speed",
+      "prompt": "Why are the camshafts driven at half crankshaft speed?",
+      "options": [
+        "To reduce wear on the timing belt",
+        "Because each valve opens once per cycle, and a cycle is two crank revolutions",
+        "Because the valves are half the size of the piston",
+        "So the engine can idle more slowly"
+      ],
+      "answerIndex": 1,
+      "explanation": "One cam revolution must correspond to one 720° cycle, so the cam turns once for every two crank turns."
+    },
+    {
+      "id": "spark-before-tdc",
+      "prompt": "Why does the spark plug fire before the piston reaches top dead centre?",
+      "options": [
+        "To make the piston stop sooner",
+        "Because the flame takes time to spread, and peak pressure should arrive just after TDC",
+        "To cool the combustion chamber",
+        "Because the exhaust valve is still open at TDC"
+      ],
+      "answerIndex": 1,
+      "explanation": "Combustion takes a few milliseconds. Firing early lets pressure peak shortly after TDC, where it can turn the crank."
+    },
+    {
+      "id": "compression-ratio",
+      "prompt": "A cylinder has a swept volume of 450 cm³ and a clearance volume of 50 cm³. What is its compression ratio?",
+      "options": ["9 : 1", "10 : 1", "11 : 1", "8 : 1"],
+      "answerIndex": 1,
+      "explanation": "CR = (450 + 50) / 50 = 10, so 10 : 1."
+    }
+  ],
+  "sourceReferences": [
+    {
+      "title": "The engine - how power is created",
+      "url": "https://www.howacarworks.com/basics/the-engine-how-power-is-created",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading. AutoVerse text is original."
+    },
+    {
+      "title": "The engine",
+      "url": "https://www.howacarworks.com/basics/the-engine",
+      "publisher": "How a Car Works",
+      "accessed": "2026-10-21",
+      "note": "Further reading. AutoVerse text is original."
+    }
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

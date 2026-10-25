@@ -1,0 +1,320 @@
+{
+  "nodes": [
+    {
+      "id": "engine",
+      "label": "Engine",
+      "topicId": "four-stroke-cycle",
+      "focus": {
+        "labId": "engine",
+        "componentId": "crankshaft"
+      },
+      "group": "power"
+    },
+    {
+      "id": "clutch",
+      "label": "Clutch",
+      "topicId": "clutch",
+      "focus": {
+        "labId": "transmission",
+        "componentId": "clutch-disc"
+      },
+      "group": "driveline"
+    },
+    {
+      "id": "gearbox",
+      "label": "Gearbox",
+      "topicId": "manual-gearbox",
+      "focus": {
+        "labId": "transmission",
+        "componentId": "constant-mesh-gears"
+      },
+      "group": "driveline"
+    },
+    {
+      "id": "transaxle",
+      "label": "Transaxle",
+      "topicId": "drivetrain-layouts",
+      "focus": {
+        "labId": "transmission",
+        "componentId": "gearbox-casing"
+      },
+      "group": "driveline"
+    },
+    {
+      "id": "centre-differential",
+      "label": "Centre differential",
+      "topicId": "differential",
+      "group": "driveline"
+    },
+    {
+      "id": "propshaft",
+      "label": "Propeller shaft",
+      "topicId": "driveshafts-and-cv-joints",
+      "group": "driveline"
+    },
+    {
+      "id": "differential",
+      "label": "Differential",
+      "topicId": "differential",
+      "group": "driveline"
+    },
+    {
+      "id": "front-differential",
+      "label": "Front differential",
+      "topicId": "differential",
+      "group": "driveline"
+    },
+    {
+      "id": "driveshafts",
+      "label": "Driveshafts",
+      "topicId": "driveshafts-and-cv-joints",
+      "group": "driveline"
+    },
+    {
+      "id": "wheels",
+      "label": "Wheels & tyres",
+      "topicId": "tyres-and-grip",
+      "focus": {
+        "labId": "suspension",
+        "componentId": "wheel-and-tyre"
+      },
+      "group": "wheels"
+    },
+    {
+      "id": "brakes",
+      "label": "Brakes",
+      "topicId": "brake-hydraulics",
+      "focus": {
+        "labId": "braking",
+        "componentId": "brake-disc"
+      },
+      "group": "chassis"
+    },
+    {
+      "id": "suspension",
+      "label": "Suspension",
+      "topicId": "suspension-basics",
+      "focus": {
+        "labId": "suspension",
+        "componentId": "coil-spring"
+      },
+      "group": "chassis"
+    },
+    {
+      "id": "steering",
+      "label": "Steering",
+      "topicId": "steering-systems",
+      "group": "chassis"
+    },
+    {
+      "id": "battery",
+      "label": "Battery",
+      "topicId": "battery-and-starter",
+      "group": "electrical"
+    },
+    {
+      "id": "starter",
+      "label": "Starter motor",
+      "topicId": "battery-and-starter",
+      "group": "electrical"
+    },
+    {
+      "id": "alternator",
+      "label": "Alternator",
+      "topicId": "alternator-and-charging",
+      "group": "electrical"
+    },
+    {
+      "id": "ignition",
+      "label": "Ignition",
+      "topicId": "spark-ignition",
+      "focus": {
+        "labId": "engine",
+        "componentId": "spark-plug"
+      },
+      "group": "electrical"
+    },
+    {
+      "id": "cooling",
+      "label": "Cooling system",
+      "topicId": "cooling-system",
+      "group": "support"
+    },
+    {
+      "id": "lubrication",
+      "label": "Lubrication",
+      "topicId": "lubrication-system",
+      "focus": {
+        "labId": "engine",
+        "componentId": "oil-sump"
+      },
+      "group": "support"
+    },
+    {
+      "id": "fuel-system",
+      "label": "Fuel system",
+      "topicId": "fuel-injection",
+      "group": "support"
+    },
+    {
+      "id": "exhaust",
+      "label": "Exhaust",
+      "topicId": "four-stroke-cycle",
+      "focus": {
+        "labId": "engine",
+        "componentId": "exhaust-port"
+      },
+      "group": "support"
+    },
+    {
+      "id": "air-conditioning",
+      "label": "Air conditioning",
+      "topicId": "air-conditioning",
+      "group": "support"
+    }
+  ],
+  "layouts": [
+    {
+      "id": "rwd",
+      "title": "Rear-wheel drive",
+      "description": "The engine sits lengthways at the front and drives the rear wheels. A long propeller shaft runs under the car to a differential on the rear axle.",
+      "path": [
+        "engine",
+        "clutch",
+        "gearbox",
+        "propshaft",
+        "differential",
+        "driveshafts",
+        "wheels"
+      ],
+      "notes": [
+        "Steering and driving are split between the axles: the front wheels steer, the rear wheels push.",
+        "On a car with a solid (live) rear axle, half-shafts inside the axle casing take the place of separate driveshafts."
+      ]
+    },
+    {
+      "id": "fwd",
+      "title": "Front-wheel drive (transverse)",
+      "description": "The engine sits across the nose with the gearbox on one end. Gearbox and differential share one casing, the transaxle, and short driveshafts turn the front wheels.",
+      "path": [
+        "engine",
+        "clutch",
+        "transaxle",
+        "driveshafts",
+        "wheels"
+      ],
+      "notes": [
+        "The most common layout for everyday cars: compact, light and no propeller shaft through the cabin floor.",
+        "The front wheels both steer and drive, so the driveshafts need constant-velocity joints that work at an angle."
+      ]
+    },
+    {
+      "id": "awd",
+      "title": "All-wheel drive",
+      "description": "Every wheel is driven. After the gearbox a centre differential splits the drive between a propeller shaft to the rear axle and a second output to the front axle.",
+      "path": [
+        "engine",
+        "clutch",
+        "gearbox",
+        "centre-differential",
+        "propshaft",
+        "differential",
+        "driveshafts",
+        "wheels"
+      ],
+      "notes": [
+        "The path shown follows the drive to the rear wheels; the branch from the centre differential carries drive to the front differential and front wheels.",
+        "Many all-wheel-drive cars replace the centre differential with a clutch pack that sends drive to the second axle only when needed."
+      ]
+    }
+  ],
+  "links": [
+    {
+      "from": "cooling",
+      "to": "engine",
+      "label": "Coolant carries surplus heat away"
+    },
+    {
+      "from": "lubrication",
+      "to": "engine",
+      "label": "Oil film between moving parts"
+    },
+    {
+      "from": "fuel-system",
+      "to": "engine",
+      "label": "Fuel metered into the cylinders"
+    },
+    {
+      "from": "engine",
+      "to": "exhaust",
+      "label": "Burnt gas leaves the cylinders"
+    },
+    {
+      "from": "engine",
+      "to": "air-conditioning",
+      "label": "Belt drives the compressor"
+    },
+    {
+      "from": "air-conditioning",
+      "to": "cooling",
+      "label": "Condenser sits ahead of the radiator"
+    },
+    {
+      "from": "starter",
+      "to": "engine",
+      "label": "Turns the crankshaft to start it"
+    },
+    {
+      "from": "engine",
+      "to": "alternator",
+      "label": "Belt drives the alternator"
+    },
+    {
+      "from": "ignition",
+      "to": "engine",
+      "label": "Spark lights the mixture"
+    },
+    {
+      "from": "battery",
+      "to": "starter",
+      "label": "Heavy current for starting"
+    },
+    {
+      "from": "alternator",
+      "to": "battery",
+      "label": "Recharges the battery while running"
+    },
+    {
+      "from": "battery",
+      "to": "ignition",
+      "label": "Powers the ignition"
+    },
+    {
+      "from": "centre-differential",
+      "to": "front-differential",
+      "label": "All-wheel drive: second output to the front axle",
+      "kind": "flow"
+    },
+    {
+      "from": "front-differential",
+      "to": "wheels",
+      "label": "Front driveshafts turn the front wheels",
+      "kind": "flow"
+    },
+    {
+      "from": "brakes",
+      "to": "wheels",
+      "label": "A disc and caliper slow each wheel"
+    },
+    {
+      "from": "suspension",
+      "to": "wheels",
+      "label": "Locates each wheel and keeps the tyre on the road"
+    },
+    {
+      "from": "steering",
+      "to": "wheels",
+      "label": "Turns the front wheels"
+    }
+  ]
+}

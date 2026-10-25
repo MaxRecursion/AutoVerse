@@ -1,0 +1,197 @@
+{
+  "id": "springs-and-dampers",
+  "slug": "springs-and-dampers",
+  "title": "Springs and Dampers",
+  "summary": "Springs decide how far the wheel moves and how fast the body bounces; dampers decide how quickly that bouncing dies away. Try soft and stiff springs, a worn damper and an over-firm one, and see why a balanced setup keeps the tyre on the road.",
+  "categoryId": "suspension-steering",
+  "difficulty": "intermediate",
+  "estimatedDuration": 16,
+  "tags": ["springs", "dampers", "shock absorbers", "spring rate", "damping ratio", "ride frequency", "wheel hop", "bump stop"],
+  "learningObjectives": [
+    "Use spring rate (F = k·x) to predict how far a suspension moves under a load",
+    "Explain why the car sits on two springs in series — the coil spring and the tyre — and how that sets the body's bounce frequency",
+    "Describe how a damper's force depends on speed rather than distance, and what damping ratio means",
+    "Compare too little, balanced and too much damping in terms of comfort and tyre contact",
+    "Recognise wheel hop and explain why the damper must control the wheel as well as the body"
+  ],
+  "beginnerExplanation": "A suspension spring is a store of energy. Push on it and it shortens; the harder you push, the further it goes. How stiff it is — its spring rate — decides how much the wheel moves over a bump and how quickly the body bobs up and down afterwards. Soft springs give a gentle, floaty ride but use up more of the suspension's travel; stiff springs feel firm and keep the body steadier.\n\nIf a car had only springs it would keep bouncing after every bump, like a ball on a rubber band. The damper — usually called a shock absorber — stops that. It is a tube of oil with a piston inside; when the suspension moves, oil is forced through tiny holes and valves, which resists the movement and turns its energy into heat. The faster the suspension moves, the harder the damper pushes back.\n\nGetting the damper right is a balance. Too little damping and the car floats and wallows, and the wheels can bounce. Too much and the suspension can hardly move, so bumps jolt the whole car and the tyre can skip off the road. A balanced damper lets the body rise once, dip a little and settle, while the tyre stays firmly on the road.",
+  "technicalExplanation": "A linear spring obeys F = k·x. The body's support is the coil spring (at the wheel) in series with the tyre, giving a ride rate k_ride = k·k_t/(k + k_t); with the lab's defaults k = 25 N/mm and k_t = 200 N/mm, k_ride ≈ 22 N/mm. On a 300 kg sprung mass that gives a body natural frequency f = (1/2π)·√(k_ride/m_s) ≈ 1.4 Hz, inside the 1–1.5 Hz band typical of passenger cars. The unsprung mass has its own, much faster mode — wheel hop — at roughly (1/2π)·√((k + k_t)/m_u) ≈ 12 Hz with m_u = 40 kg. The spring rate also sets the static and dynamic travel; when the travel runs out, a progressive rubber bump stop adds stiffness rapidly so metal never meets metal.\n\nA hydraulic damper produces a force that depends on the velocity across it, F_d ≈ c·v. Real dampers are valved: bleed orifices control the low-speed range that governs body motion, and spring-loaded shim stacks open at higher speeds so sharp impacts are not transmitted at full force — a digressive curve, which is what the lab's model uses. They are also usually firmer in rebound than in compression. A single number summarises the result: the damping ratio ζ = c/(2√(k·m)). At ζ = 1 (critical damping) a disturbed mass returns to rest without overshoot; passenger cars typically use roughly ζ ≈ 0.2–0.4 for the body as a compromise between control and comfort.\n\nThe lab's presets set ζ ≈ 0.08 (a worn damper), 0.32 (balanced) and 1.1 (over-damped) for the body mode, scaling c with the spring rate so 'balanced' stays balanced as you move the slider. The trade-offs show up in the response: low damping lets the body ring for several cycles and lets the wheel hop on ripples near 12 Hz; high damping makes the suspension nearly rigid over a quick bump, so body acceleration rises and the tyre load swings from more than twice static to zero. Damping that is right for the body is also close to what the wheel needs to stay in contact, which is why ζ around 0.3 is a common starting point.",
+  "steps": [
+    {
+      "id": "two-springs",
+      "title": "Two springs in series",
+      "beginner": "The car actually sits on two springs stacked one on the other: the steel coil spring and the air-filled tyre. The tyre is about eight times stiffer, so most of the softness you feel comes from the coil spring.",
+      "technical": "Springs in series combine as k_ride = k·k_t/(k + k_t). With k = 25 N/mm and k_t = 200 N/mm, k_ride ≈ 22 N/mm, and the 300 kg sprung mass bounces at about 1.4 Hz. At rest both springs are preloaded by the car's weight, so the model's displacements start from zero.",
+      "cue": "approach",
+      "componentIds": ["coil-spring", "wheel-and-tyre"]
+    },
+    {
+      "id": "spring-rate",
+      "title": "Spring rate: how far the wheel moves",
+      "beginner": "A softer spring gives a gentler ride but lets the wheel travel further into the car. With the slider at 15 N/mm the same bump pushes the wheel about 60 mm up — far enough to squash the rubber bump stop.",
+      "technical": "Halving k roughly doubles the deflection under the same force (F = k·x). Dropping the wheel rate from 25 to 15 N/mm lowers the body frequency from about 1.4 Hz to 1.1 Hz but raises peak travel from about 55 mm to 60 mm, past the bump stop's contact at 58 mm, where the progressive stop adds about 160 N/mm. Designers trade ride frequency against the travel available.",
+      "cue": "soft-spring",
+      "componentIds": ["coil-spring", "bump-stop", "damper"]
+    },
+    {
+      "id": "too-soft",
+      "title": "Too little damping: the body floats",
+      "beginner": "Choose the 'too soft' damper, like a worn-out shock absorber. After the bump the body is flung about 54 mm up and keeps bobbing for several bounces. It feels floaty, and the tyre's grip keeps changing as its load rises and falls.",
+      "technical": "At ζ ≈ 0.08 the logarithmic decrement is δ = 2πζ/√(1 − ζ²) ≈ 0.5, so each bounce is still about 60% of the one before and the body rings at about 1.4 Hz long after the input. The weak damper also fails to control the wheel: on this bump the tyre load briefly falls to zero.",
+      "cue": "soft-float",
+      "componentIds": ["damper", "coil-spring", "chassis-mounts"]
+    },
+    {
+      "id": "balanced",
+      "title": "Balanced damping: one bounce and settled",
+      "beginner": "With the balanced damper the body rises about 40 mm, dips once and is nearly back at ride height by 1.4 s — the moment shown here — whereas the worn damper would still have it about 38 mm high. The tyre never leaves the road.",
+      "technical": "ζ ≈ 0.3 is a common compromise: overshoot is small and the tyre load stays between about 0.6 and 1.9 × static over the bump. Production dampers are usually firmer in rebound than in compression, so the spring's stored energy is released slowly while bumps are still absorbed softly.",
+      "cue": "well-damped",
+      "componentIds": ["damper", "coil-spring"]
+    },
+    {
+      "id": "too-stiff",
+      "title": "Too much damping: the tyre skips",
+      "beginner": "Now try the 'too stiff' damper. It barely lets the suspension move, so the bump shoves the whole car upward and the wheel is lifted off the road as the body is thrown over the crest. The ride is harsh and the tyre skips.",
+      "technical": "Above critical damping (ζ ≈ 1.1) the damper acts almost like a rigid strut at the bump's velocities: peak body acceleration rises to about 12 m/s² (about 7 m/s² when balanced) and the tyre load swings from about 2.2 × static to zero, losing contact for about 85 ms. Grip needs a steady tyre load, so over-damping costs both comfort and grip.",
+      "cue": "stiff-skip",
+      "componentIds": ["damper", "wheel-and-tyre"]
+    },
+    {
+      "id": "wheel-hop",
+      "title": "Wheel hop on ripples",
+      "beginner": "On the washboard ripples with the soft damper, the light wheel starts bouncing on its own tyre and keeps leaving the road. The body hardly notices, but the tyre has lost much of its grip. The balanced damper keeps it planted.",
+      "technical": "The unsprung mass on the spring and tyre has its own resonance, f_hop ≈ (1/2π)·√((k + k_t)/m_u) ≈ 12 Hz. At 18 km/h the 0.42 m ripples excite exactly that frequency, and with ζ ≈ 0.08 the motion builds until the tyre is airborne for about 0.2 s of every 2 s lap. That is the damper's second job: controlling the wheel, not just the body.",
+      "cue": "wheel-hop",
+      "componentIds": ["wheel-and-tyre", "damper", "hub-bearing"]
+    }
+  ],
+  "componentIds": ["coil-spring", "damper", "bump-stop", "wheel-and-tyre", "lower-control-arm", "chassis-mounts"],
+  "labId": "suspension",
+  "flow": {
+    "nodes": [
+      { "id": "bump", "label": "Bump input", "detail": "Road pushes the tyre" },
+      { "id": "tyre-spring", "label": "Tyre", "detail": "Spring k_t, push only", "componentId": "wheel-and-tyre" },
+      { "id": "wheel-mass", "label": "Wheel mass", "detail": "Hops at ~12 Hz" },
+      { "id": "spring", "label": "Coil spring", "detail": "Stores energy, F = k·x", "componentId": "coil-spring" },
+      { "id": "damper", "label": "Damper", "detail": "Resists speed, F ≈ c·v", "componentId": "damper" },
+      { "id": "body-mass", "label": "Body mass", "detail": "Bounces at ~1.4 Hz", "componentId": "chassis-mounts" },
+      { "id": "heat", "label": "Heat", "detail": "Warm damper oil" }
+    ],
+    "edges": [
+      { "from": "bump", "to": "tyre-spring" },
+      { "from": "tyre-spring", "to": "wheel-mass" },
+      { "from": "wheel-mass", "to": "spring", "label": "travel" },
+      { "from": "wheel-mass", "to": "damper", "label": "travel speed" },
+      { "from": "spring", "to": "body-mass", "label": "force ∝ travel" },
+      { "from": "damper", "to": "body-mass", "label": "force ∝ speed" },
+      { "from": "damper", "to": "heat", "label": "energy out" }
+    ]
+  },
+  "keyConcepts": [
+    {
+      "term": "Spring rate",
+      "definition": "How much force it takes to compress a spring by a unit distance, usually quoted in N/mm.",
+      "equation": "F = k × x"
+    },
+    {
+      "term": "Ride rate",
+      "definition": "The overall stiffness supporting the body: the suspension spring (at the wheel) and the tyre act in series.",
+      "equation": "k_ride = k × k_t / (k + k_t)"
+    },
+    {
+      "term": "Natural frequency",
+      "definition": "The rate at which a mass bounces on a spring when disturbed. The body bounces slowly (about 1–1.5 Hz in cars); the much lighter wheel hops quickly (around 10–15 Hz).",
+      "equation": "f = (1 / 2π) × √(k / m)"
+    },
+    {
+      "term": "Damping force",
+      "definition": "A damper's force depends on how fast it is moving, not on how far it has moved. Valving shapes the curve so it is firm at low speeds and softer at high speeds.",
+      "equation": "F_d ≈ c × v"
+    },
+    {
+      "term": "Damping ratio",
+      "definition": "Damping compared with the critical amount that just stops overshoot. Below 1 the mass overshoots and oscillates; above 1 it creeps back slowly and the suspension feels stiff over quick bumps.",
+      "equation": "ζ = c / (2 × √(k × m))"
+    },
+    {
+      "term": "Wheel hop",
+      "definition": "The unsprung mass bouncing between the suspension spring and the tyre. If it is poorly damped the tyre repeatedly unloads and can leave the road.",
+      "equation": "f_hop ≈ (1 / 2π) × √((k + k_t) / m_u)"
+    }
+  ],
+  "misconceptions": [
+    {
+      "myth": "Dampers hold the car up.",
+      "reality": "The springs carry the car's weight. A damper produces force only while it is moving, so at rest it supports essentially nothing; a car with failed dampers sits at the normal height but bounces."
+    },
+    {
+      "myth": "Firmer dampers always handle better.",
+      "reality": "Too much damping stops the wheel following the road. Over bumps the tyre load swings to zero and grip is lost, as the lab's 'too stiff' setting shows."
+    },
+    {
+      "myth": "A car that keeps bouncing has weak springs.",
+      "reality": "Persistent bouncing points to worn dampers. Weak or broken springs usually show up as a corner sitting low, or the suspension hitting its bump stops."
+    }
+  ],
+  "practicalExamples": [
+    "A quick check for worn dampers is to push a corner of the car down firmly and let go: it should rise and settle at once. If it bobs up and down several times, the damper is no longer controlling the spring (a proper test on a damper rig is more reliable).",
+    "Oil streaking down the outside of a damper body means its seal has failed and it is losing the fluid it needs to work.",
+    "Worn dampers let the wheel hop on rippled roads, which can wear tyres in a patchy, scalloped pattern and lengthen braking distances on rough surfaces.",
+    "Some performance cars have adjustable dampers with separate bump and rebound settings, so the owner can firm up body control for a track day and soften it for the road."
+  ],
+  "relatedTopicIds": ["suspension-basics", "tyres-and-grip", "diagnosing-warning-signs", "routine-maintenance", "mechanical-sympathy"],
+  "prerequisiteTopicIds": ["suspension-basics"],
+  "quiz": [
+    {
+      "id": "damper-depends-on",
+      "prompt": "A damper's force depends mainly on…",
+      "options": ["How far it has been compressed", "How fast it is moving", "The weight of the car", "The tyre pressure"],
+      "answerIndex": 1,
+      "explanation": "Dampers resist velocity (F ≈ c·v). Springs are the parts whose force depends on how far they are compressed."
+    },
+    {
+      "id": "spring-force",
+      "prompt": "A 30 N/mm spring is compressed by 20 mm. What force is it pushing with?",
+      "options": ["60 N", "600 N", "1,500 N", "6,000 N"],
+      "answerIndex": 1,
+      "explanation": "F = k·x = 30 N/mm × 20 mm = 600 N."
+    },
+    {
+      "id": "bouncing-car",
+      "prompt": "After a speed hump a car keeps bouncing up and down several times. What is most likely worn?",
+      "options": ["The springs", "The dampers", "The tyres", "The steering rack"],
+      "answerIndex": 1,
+      "explanation": "Bouncing that does not die away means the energy stored in the springs is not being removed — the dampers' job."
+    },
+    {
+      "id": "stiff-grip",
+      "prompt": "Why can over-stiff damping reduce grip on a bumpy road?",
+      "options": [
+        "It makes the tyres hotter",
+        "The suspension cannot move quickly enough, so the wheel is thrown off the bumps and the tyre load swings to zero",
+        "It lowers the car's ride height",
+        "It makes the steering heavier"
+      ],
+      "answerIndex": 1,
+      "explanation": "A tyre's grip depends on its load. Over-damping makes the load swing between very high and zero as the wheel is pushed and pulled by the bumps, so at times the tyre has nothing to grip with."
+    },
+    {
+      "id": "frequency-scaling",
+      "prompt": "If you double a car's ride rate while the mass stays the same, its body bounce frequency…",
+      "options": ["Doubles", "Rises by about 1.4 times (√2)", "Rises four times", "Does not change"],
+      "answerIndex": 1,
+      "explanation": "f = (1/2π)·√(k/m), so frequency scales with the square root of stiffness: doubling k raises f by √2 ≈ 1.41."
+    }
+  ],
+  "sourceReferences": [
+    {
+      "title": "How car springs and dampers work",
+      "url": "https://www.howacarworks.com/basics/how-car-springs-and-dampers-work",
+      "publisher": "How a Car Works",
+      "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
+    }
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

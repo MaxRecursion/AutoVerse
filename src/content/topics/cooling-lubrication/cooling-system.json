@@ -1,0 +1,114 @@
+{
+  "id": "cooling-system",
+  "slug": "cooling-system",
+  "title": "Engine Cooling System",
+  "summary": "Only part of the fuel's energy becomes motion; much of the rest is heat that must leave the engine. Follow coolant through the water jacket, thermostat, radiator and pressure cap, and learn why an engine must run warm — but never too hot.",
+  "categoryId": "cooling-lubrication",
+  "difficulty": "beginner",
+  "estimatedDuration": 11,
+  "tags": ["cooling", "coolant", "radiator", "thermostat", "heat", "overheating"],
+  "learningObjectives": [
+    "Explain where engine heat comes from and why it must be controlled",
+    "Trace the coolant circuit through pump, jacket, thermostat and radiator",
+    "Explain how a pressure cap raises the boiling point of coolant",
+    "Recognise the main causes and warning signs of overheating"
+  ],
+  "beginnerExplanation": "A combustion engine turns only part of its fuel into movement. A large share leaves as hot exhaust, and a large share soaks into the metal around the cylinders. Without cooling, the metal would quickly get hot enough to distort the cylinder head, break down the oil and damage pistons.\n\nLiquid coolant — water mixed with antifreeze — flows through passages around the cylinders called the water jacket. A pump keeps it moving. The hot coolant then passes through the radiator at the front of the car, where air flowing through thin fins carries the heat away. A fan helps when the car is slow or stationary.\n\nEngines also must not run too cold: they wear faster and waste fuel. A thermostat acts like a gate. It stays shut while the engine warms up, keeping coolant inside the engine, then opens to send coolant to the radiator once the engine reaches its working temperature. The same hot coolant also feeds the cabin heater.",
+  "technicalExplanation": "At typical operating points, roughly a quarter to a third of the fuel's chemical energy is rejected to the coolant, comparable to what reaches the crankshaft. The heat flow carried by the coolant is Q̇ = ṁ × c_p × ΔT; with a pump circulating about 1–2 kg/s, a temperature drop of only 5–10 °C across the radiator removes tens of kilowatts.\n\nA wax-pellet thermostat begins to open at a set temperature (commonly around 85–95 °C; some electronically mapped thermostats run hotter at light load for efficiency and cooler at high load to protect against knock). While it is closed, a bypass keeps coolant circulating through the block so hot spots do not form. The radiator is a cross-flow or down-flow heat exchanger with aluminium tubes and louvred fins; the fan is switched or speed-controlled by the ECU.\n\nThe system is sealed and pressurised: a radiator or expansion-tank cap holds roughly 1–1.5 bar above atmospheric. Raising pressure raises the boiling point, so a 50/50 mix of water and ethylene glycol that would boil a little above 100 °C at atmospheric pressure stays liquid to around 120 °C or more. Glycol also lowers the freezing point (to about −35 °C at 50/50) and carries corrosion inhibitors that protect aluminium, iron and seals; those inhibitors deplete, which is why coolant has a service life. Nucleate boiling at hot spots aids heat transfer locally, but bulk boiling creates steam pockets that insulate metal, which is why a low coolant level can cause rapid overheating.",
+  "steps": [
+    {
+      "id": "heat-in-metal",
+      "title": "Combustion heats the metal",
+      "beginner": "Burning fuel heats the cylinder walls and head far beyond what metal and oil can tolerate for long.",
+      "technical": "Peak gas temperatures exceed 2,000 °C; heat flux is highest around the exhaust valves and spark plug, so jacket passages concentrate flow there."
+    },
+    {
+      "id": "pump-circulates",
+      "title": "The pump moves coolant",
+      "beginner": "A pump, driven by a belt or an electric motor, pushes coolant through the passages around the cylinders.",
+      "technical": "A centrifugal pump delivers flow roughly proportional to its speed; electric pumps decouple flow from engine speed and allow after-run cooling."
+    },
+    {
+      "id": "thermostat-regulates",
+      "title": "The thermostat decides the route",
+      "beginner": "Cold engine: the thermostat stays shut and coolant skips the radiator. Warm engine: it opens and coolant flows to the radiator.",
+      "technical": "A wax pellet expands as it melts, opening the valve progressively over a few degrees; mapped thermostats add an electric heater to open it earlier on demand."
+    },
+    {
+      "id": "radiator-rejects",
+      "title": "The radiator sheds heat",
+      "beginner": "Thin metal fins pass the heat into air flowing through the radiator; a fan pulls air through when the car is slow.",
+      "technical": "Heat rejection ≈ U × A × ΔT_mean between coolant and air; airflow from ram pressure and the fan sets the air-side coefficient, which usually limits performance."
+    },
+    {
+      "id": "pressure-and-expansion",
+      "title": "Pressure keeps it liquid",
+      "beginner": "The cap keeps the system under pressure so the coolant does not boil, and an expansion tank takes up the extra volume as it heats.",
+      "technical": "A 1.2 bar cap lifts the boiling point by roughly 20–25 °C; the vacuum valve in the cap lets coolant return from the tank as the system cools."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "engine", "label": "Water jacket", "detail": "Heat picked up", "topicId": "four-stroke-cycle" },
+      { "id": "thermostat", "label": "Thermostat", "detail": "Opens ≈ 85–95 °C" },
+      { "id": "radiator", "label": "Radiator & fan", "detail": "Heat to air" },
+      { "id": "pump", "label": "Water pump", "detail": "Circulates coolant" },
+      { "id": "heater", "label": "Heater core", "detail": "Cabin warmth", "topicId": "air-conditioning" }
+    ],
+    "edges": [
+      { "from": "pump", "to": "engine" },
+      { "from": "engine", "to": "thermostat" },
+      { "from": "thermostat", "to": "radiator", "label": "when warm" },
+      { "from": "radiator", "to": "pump" },
+      { "from": "engine", "to": "heater", "label": "always" },
+      { "from": "heater", "to": "pump" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Heat carried by coolant", "definition": "Heat flow equals mass flow times specific heat times the temperature change.", "equation": "Q̇ = ṁ × c_p × ΔT" },
+    { "term": "Thermostat", "definition": "A temperature-operated valve that holds the engine at its design temperature by controlling flow to the radiator." },
+    { "term": "Pressure cap", "definition": "A spring-loaded valve that keeps the sealed system above atmospheric pressure, raising the coolant's boiling point." },
+    { "term": "Antifreeze (glycol)", "definition": "Lowers the freezing point, raises the boiling point and carries corrosion inhibitors that protect the engine's metals." }
+  ],
+  "misconceptions": [
+    { "myth": "Removing the thermostat makes an engine run cooler and therefore better.", "reality": "The engine may never reach its design temperature, increasing wear, fuel use and emissions — and in some designs uneven flow can even cause local overheating." },
+    { "myth": "Plain water is a better coolant than a water-glycol mix.", "reality": "Water carries heat well, but it freezes, boils sooner and offers no corrosion protection. The correct mix protects the whole system." },
+    { "myth": "It is fine to open the cap to check the coolant on a hot engine.", "reality": "The coolant is under pressure above its atmospheric boiling point; releasing the cap can make it flash to steam and scald. Check only when cold." }
+  ],
+  "practicalExamples": [
+    "The temperature gauge settles mid-scale within minutes of starting: that is the thermostat opening and holding temperature.",
+    "In stationary traffic on a hot day you may hear the radiator fan run on — there is no ram air, so the fan provides the airflow.",
+    "Turning the cabin heater to full hot with the fan on maximum can buy time if an engine starts to overheat, because the heater core is an extra radiator."
+  ],
+  "relatedTopicIds": ["lubrication-system", "air-conditioning", "diagnosing-warning-signs", "routine-maintenance"],
+  "prerequisiteTopicIds": ["how-a-car-works"],
+  "quiz": [
+    {
+      "id": "thermostat-cold",
+      "prompt": "What does the thermostat do while the engine is still cold?",
+      "options": ["Opens fully to cool the engine faster", "Stays closed so coolant bypasses the radiator", "Switches the fan on", "Releases pressure from the system"],
+      "answerIndex": 1,
+      "explanation": "Keeping coolant out of the radiator lets the engine reach working temperature quickly."
+    },
+    {
+      "id": "pressure-cap",
+      "prompt": "Why is the cooling system pressurised?",
+      "options": ["To push coolant into the cylinders", "To raise the coolant's boiling point", "To make the pump work harder", "To cool the oil"],
+      "answerIndex": 1,
+      "explanation": "Higher pressure means a higher boiling point, so coolant stays liquid and keeps transferring heat."
+    },
+    {
+      "id": "heat-calc",
+      "prompt": "Coolant (c_p ≈ 3.6 kJ/kg·K) flows at 1.5 kg/s and cools by 8 °C in the radiator. About how much heat is rejected?",
+      "options": ["4 kW", "12 kW", "43 kW", "430 kW"],
+      "answerIndex": 2,
+      "explanation": "Q̇ = 1.5 × 3.6 × 8 ≈ 43 kW."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"How an engine cooling system works","url":"https://www.howacarworks.com/basics/how-an-engine-cooling-system-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
+    {"title":"Checking hoses and the radiator cap","url":"https://www.howacarworks.com/cooling-systems/checking-hoses-and-the-radiator-cap","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

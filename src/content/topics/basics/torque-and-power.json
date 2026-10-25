@@ -1,0 +1,105 @@
+{
+  "id": "torque-and-power",
+  "slug": "torque-and-power",
+  "title": "Torque and Power",
+  "summary": "Torque is twisting force; power is how quickly that force does work. Learn how they relate (P = Tω), why gearing changes torque but not power, and how to read an engine's curves.",
+  "categoryId": "basics",
+  "difficulty": "beginner",
+  "estimatedDuration": 12,
+  "tags": ["physics", "torque", "power", "gearing", "performance"],
+  "learningObjectives": [
+    "Define torque and power and state their units",
+    "Use P = T × ω to convert between torque, engine speed and power",
+    "Explain why a gearbox multiplies torque but cannot add power",
+    "Read a torque and power curve and identify the useful rev range"
+  ],
+  "beginnerExplanation": "Torque is a twisting effort, like the turning force you put on a spanner. Push harder, or use a longer spanner, and the torque goes up. Engines are rated by the torque they put on the crankshaft.\n\nPower is how fast that twisting effort gets work done. A small engine spinning very quickly can make the same power as a large engine turning slowly with more torque. Power is what ultimately decides how fast a car can accelerate at speed and how quickly it can climb a hill.\n\nGears let the car trade between the two. In first gear the wheels turn slowly but with a lot of torque, which is perfect for pulling away. In top gear the wheels turn quickly with less torque, which is fine once the car is moving.",
+  "technicalExplanation": "Torque T is force × lever arm, measured in newton-metres (N·m). Power P is the rate of doing work. For a rotating shaft P = T × ω, where ω is angular speed in radians per second (ω = 2π × rpm / 60). In convenient units, P[kW] = T[N·m] × rpm / 9549. For example, 300 N·m at 4,000 rpm is about 126 kW (roughly 170 PS).\n\nA gear pair with ratio i multiplies torque by i and divides speed by i, so ideal power is unchanged; real gear meshes lose a few per cent as heat. Wheel torque is T_engine × i_gear × i_final × η, and the tractive force at the road is that torque divided by the tyre's rolling radius. Because power is conserved through the gearbox, the maximum tractive force available at any road speed is limited by engine power: F_max ≈ P × η / v.\n\nAn engine's torque curve is shaped by how well it breathes: cylinder filling (volumetric efficiency) peaks at the speed where intake and exhaust tuning, valve timing and any boost combine best. Power keeps rising past the torque peak because speed is still increasing faster than torque is falling, until breathing and friction losses cause power to peak and then drop. Drivers get the strongest acceleration in a gear by keeping the engine near its power peak; they get the best efficiency at moderate speed and relatively high load.",
+  "steps": [
+    {
+      "id": "torque-as-twist",
+      "title": "Torque is twisting force",
+      "beginner": "Pushing on the end of a spanner creates a twist around the bolt. Double the push or double the spanner length and the twist doubles.",
+      "technical": "T = F × r. 100 N applied 0.3 m from the axis is 30 N·m. In an engine, cylinder pressure on the piston acts through the crank throw to produce crankshaft torque that varies through the cycle; quoted figures are averages."
+    },
+    {
+      "id": "power-as-rate",
+      "title": "Power is torque at speed",
+      "beginner": "The same torque applied faster gets more work done each second, which is what power measures.",
+      "technical": "P = T × ω with ω = 2π n / 60. 200 N·m at 6,000 rpm (628 rad/s) is about 126 kW — the same as 300 N·m at 4,000 rpm."
+    },
+    {
+      "id": "gearing-trades",
+      "title": "Gears trade speed for torque",
+      "beginner": "A low gear makes the wheels turn slowly but forcefully. A high gear makes them turn quickly but gently.",
+      "technical": "Ratio i: T_out = T_in × i × η, ω_out = ω_in / i. With a 3.5:1 first gear and a 4:1 final drive, 250 N·m at the crank becomes about 3,300 N·m at the wheels after ~94% driveline efficiency."
+    },
+    {
+      "id": "read-curves",
+      "title": "Read the torque and power curves",
+      "beginner": "Torque usually rises to a broad peak in the middle of the rev range; power keeps climbing to near the red line.",
+      "technical": "Power peaks above the torque peak because P ∝ T × n. Between the two peaks the engine delivers strong acceleration with a forgiving response; turbocharged engines often show a flat torque plateau from low speed."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "crank", "label": "Crankshaft torque", "detail": "T_engine at engine speed n" },
+      { "id": "gear", "label": "Gear ratio", "detail": "× i_gear, ÷ speed" },
+      { "id": "final", "label": "Final drive", "detail": "× i_final", "topicId": "differential" },
+      { "id": "wheel", "label": "Wheel torque", "detail": "T_engine × i_gear × i_final × η" },
+      { "id": "thrust", "label": "Tractive force", "detail": "F = T_wheel / r", "topicId": "tyres-and-grip" }
+    ],
+    "edges": [
+      { "from": "crank", "to": "gear" },
+      { "from": "gear", "to": "final" },
+      { "from": "final", "to": "wheel" },
+      { "from": "wheel", "to": "thrust", "label": "at the contact patch" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Torque", "definition": "A twisting force about an axis, measured in newton-metres.", "equation": "T = F × r" },
+    { "term": "Power", "definition": "Rate of doing work, measured in watts (kW for engines).", "equation": "P = T × ω" },
+    { "term": "Handy conversion", "definition": "Power in kilowatts from torque in N·m and engine speed in rpm.", "equation": "P[kW] = T[N·m] × rpm / 9549" },
+    { "term": "Wheel torque", "definition": "Engine torque multiplied by the overall gearing, less driveline losses.", "equation": "T_wheel = T_engine × i_gear × i_final × η" }
+  ],
+  "misconceptions": [
+    { "myth": "Torque makes a car fast; power is just a number.", "reality": "Acceleration at a given road speed depends on wheel torque, which is set by engine power once you are free to choose the best gear. Torque and power describe the same output from different angles." },
+    { "myth": "A gearbox increases power.", "reality": "Gears multiply torque and divide speed by the same factor. Power stays the same apart from small friction losses." },
+    { "myth": "Diesels pull harder because they make more power.", "reality": "Diesels often make more torque at low engine speed, but they usually rev lower, so peak power is often similar to or below a comparable petrol engine." }
+  ],
+  "practicalExamples": [
+    "Changing down a gear to overtake raises engine speed towards the power peak, giving more wheel torque at the same road speed.",
+    "Cycling up a hill: standing on the pedals gives torque; spinning a low gear quickly keeps power up without crushing your knees.",
+    "Two cars with the same peak power but different torque curves can feel very different: a flat torque curve feels strong without many gear changes."
+  ],
+  "relatedTopicIds": ["how-a-car-works", "automatic-transmission", "differential", "mechanical-sympathy"],
+  "prerequisiteTopicIds": ["how-a-car-works"],
+  "quiz": [
+    {
+      "id": "power-calc",
+      "prompt": "An engine makes 300 N·m at 4,000 rpm. About how much power is that?",
+      "options": ["30 kW", "126 kW", "300 kW", "1,200 kW"],
+      "answerIndex": 1,
+      "explanation": "P[kW] = 300 × 4000 / 9549 ≈ 126 kW."
+    },
+    {
+      "id": "gear-effect",
+      "prompt": "Ignoring friction, what does a 3:1 gear reduction do to torque and power?",
+      "options": ["Triples torque and triples power", "Triples torque, power unchanged", "Torque unchanged, triples power", "Divides both by three"],
+      "answerIndex": 1,
+      "explanation": "Torque is multiplied by the ratio and speed divided by it, so the product (power) is unchanged."
+    },
+    {
+      "id": "power-peak",
+      "prompt": "Why does peak power usually occur at a higher engine speed than peak torque?",
+      "options": ["Because power is torque multiplied by speed, and speed keeps rising after torque starts to fall", "Because the turbo only works at high rpm", "Because the gearbox changes ratio automatically", "It never does"],
+      "answerIndex": 0,
+      "explanation": "As long as rpm rises proportionally faster than torque falls, their product (power) still increases."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"Torque and BHP explained","url":"https://www.howacarworks.com/technology/torque-and-bhp-explained","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

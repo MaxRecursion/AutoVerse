@@ -1,0 +1,21 @@
+# Netlify build settings. Routing lives in dist/_redirects, which the build
+# generates from public/_redirects: scripts/prerender prepends an explicit
+# rewrite for every prerendered route (so /topics/<slug> is served from
+# /topics/<slug>/index.html), followed by the SPA fallback to /index.html.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/models/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

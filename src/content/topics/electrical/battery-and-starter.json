@@ -1,0 +1,114 @@
+{
+  "id": "battery-and-starter",
+  "slug": "battery-and-starter",
+  "title": "Battery and Starter Motor",
+  "summary": "Turning the key or pressing start asks a 12-volt battery to deliver hundreds of amps to a small, powerful motor that spins the engine until it fires. Learn how the battery stores energy, how the starter engages the flywheel, and why cold mornings are hardest.",
+  "categoryId": "electrical",
+  "difficulty": "beginner",
+  "estimatedDuration": 11,
+  "tags": ["battery", "starter", "12v", "lead-acid", "solenoid", "cranking", "electrical"],
+  "learningObjectives": [
+    "Explain how a lead-acid battery stores and releases energy",
+    "Estimate state of charge from resting battery voltage",
+    "Describe how the starter solenoid engages the pinion and switches current",
+    "Explain why cold weather and poor connections cause slow cranking"
+  ],
+  "beginnerExplanation": "An engine cannot start itself: it needs to be spun until it draws in air and fuel and begins firing. That is the starter motor's job, and the energy comes from the car's 12-volt battery.\n\nWhen you turn the key or press the start button, a switch called the solenoid does two things at once. It pushes a small gear on the starter (the pinion) into mesh with a large toothed ring around the engine's flywheel, and it closes heavy-duty contacts that let a very large current flow from the battery into the motor. The motor spins the engine at a few hundred revolutions per minute until it fires. Then a one-way clutch lets the pinion freewheel, and it retracts when you release the key.\n\nStarting takes a lot of current for a few seconds — often more than a hundred amps. On a cold morning the battery's chemistry is slower and the engine oil is thicker, so the battery can deliver less while the engine demands more. That combination, plus a weak or old battery or corroded terminals, is why cars most often fail to start in winter.",
+  "technicalExplanation": "A 12 V lead-acid battery has six cells of about 2.1 V each. On discharge, lead (negative plate) and lead dioxide (positive plate) react with sulphuric acid to form lead sulphate and water, so electrolyte density falls with state of charge; charging reverses the reaction. Resting open-circuit voltage after several hours without load is a useful guide: about 12.6–12.7 V is fully charged, around 12.4 V is roughly 75%, and about 12.2 V is roughly half charged. Leaving a battery discharged lets lead sulphate crystals harden (sulphation), permanently reducing capacity. Ratings include capacity in amp-hours and cold-cranking amps (current deliverable at −18 °C while holding a minimum voltage). Stop-start vehicles use enhanced flooded (EFB) or absorbent glass mat (AGM) batteries that tolerate frequent deep cycling, and a battery sensor on the negative terminal tracks state of charge.\n\nThe starter is a DC motor — permanent-magnet with an internal planetary reduction gear in most modern cars, or series-wound in older and heavy-duty units — producing roughly 1–3 kW. Its pinion meshes with the flywheel ring gear at about 10–15:1, giving the torque needed to overcome compression and friction at cranking speeds of roughly 150–300 rpm. The solenoid has a pull-in winding and a hold-in winding: together they shift the pinion via a fork and close the main contacts, after which the hold-in winding alone keeps it engaged. An overrunning (roller) clutch prevents the engine from driving the starter to destructive speed once it fires.\n\nCranking current is large, so small resistances matter: 150 A through 5 mΩ of corroded terminals loses 0.75 V and heats the joint. A voltage-drop test across each cable and connection under cranking load finds such faults more reliably than a resistance meter. At low temperature the battery's internal resistance rises and available capacity falls, while thicker oil raises the engine's cranking torque. Stop-start systems use reinforced starters or a belt-driven starter-generator to cope with many more starts.",
+  "steps": [
+    {
+      "id": "stored-energy",
+      "title": "Chemical energy waits in the battery",
+      "beginner": "The battery stores energy chemically and releases it as electric current when a circuit is completed.",
+      "technical": "Pb + PbO₂ + 2H₂SO₄ → 2PbSO₄ + 2H₂O on discharge; six cells in series give ≈ 12.6 V at rest."
+    },
+    {
+      "id": "solenoid",
+      "title": "The solenoid acts",
+      "beginner": "A small current from the ignition switch energises the solenoid, a powerful electromagnet.",
+      "technical": "Pull-in and hold-in windings move the plunger; the ignition circuit carries only a few amps while the main contacts switch hundreds."
+    },
+    {
+      "id": "engage",
+      "title": "Pinion meets ring gear",
+      "beginner": "The solenoid pushes the starter's small gear into the teeth around the flywheel.",
+      "technical": "A shift fork moves the pinion along a helical spline; ring-gear ratio ≈ 10–15:1 multiplies motor torque."
+    },
+    {
+      "id": "crank",
+      "title": "The motor cranks the engine",
+      "beginner": "Heavy current flows through the motor, which spins the engine fast enough to start.",
+      "technical": "Cranking speed ≈ 150–300 rpm; current 100–300+ A depending on engine size, temperature and compression."
+    },
+    {
+      "id": "disengage",
+      "title": "Freewheel and retract",
+      "beginner": "Once the engine runs, a one-way clutch stops it spinning the starter, and the gear pulls back.",
+      "technical": "The overrunning clutch decouples the pinion; releasing the switch de-energises the solenoid and a return spring withdraws it."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "battery", "label": "12 V battery", "detail": "≈ 12.6 V at rest" },
+      { "id": "switch", "label": "Ignition / start switch", "detail": "Low current" },
+      { "id": "solenoid", "label": "Solenoid", "detail": "Engages pinion, closes contacts" },
+      { "id": "motor", "label": "Starter motor", "detail": "100–300+ A" },
+      { "id": "flywheel", "label": "Flywheel ring gear", "detail": "≈ 10–15 : 1", "topicId": "pistons-and-crankshaft" },
+      { "id": "alternator", "label": "Alternator recharges", "topicId": "alternator-and-charging" }
+    ],
+    "edges": [
+      { "from": "switch", "to": "solenoid" },
+      { "from": "battery", "to": "solenoid", "label": "heavy cable" },
+      { "from": "solenoid", "to": "motor" },
+      { "from": "motor", "to": "flywheel" },
+      { "from": "alternator", "to": "battery", "label": "after start" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Ohm's law voltage drop", "definition": "Voltage lost across a resistance carrying current; tiny resistances matter at cranking currents.", "equation": "V = I × R" },
+    { "term": "Open-circuit voltage", "definition": "Battery voltage at rest with no load, a guide to state of charge (≈ 12.6–12.7 V full, ≈ 12.2 V about half)." },
+    { "term": "Cold-cranking amps (CCA)", "definition": "The current a battery can deliver at −18 °C for a set time while staying above a minimum voltage." },
+    { "term": "Overrunning clutch", "definition": "A one-way clutch that lets the starter drive the engine but not the reverse." }
+  ],
+  "misconceptions": [
+    { "myth": "If the dashboard lights come on, the battery must be fine.", "reality": "Lights need only a few amps. A battery can light the dashboard yet collapse under the hundreds of amps a starter draws." },
+    { "myth": "Idling the engine for a few minutes fully recharges a flat battery.", "reality": "Charging current at idle is limited and a deeply discharged battery takes hours to recover; a proper charger or a long drive is needed." },
+    { "myth": "A clicking noise when starting always means a dead starter motor.", "reality": "Rapid clicking is often a low battery or poor connection making the solenoid engage and drop out. Check the battery and terminals first." }
+  ],
+  "practicalExamples": [
+    "Slow, laboured cranking on a frosty morning that improves later in the day points to a battery near the end of its life.",
+    "White or green crust on a terminal adds resistance; cleaning and tightening it can restore normal cranking.",
+    "Many cars disconnect non-essential loads such as heated seats during cranking to leave more current for the starter."
+  ],
+  "relatedTopicIds": ["alternator-and-charging", "diagnosing-warning-signs", "routine-maintenance", "hybrid-and-electric-drives"],
+  "prerequisiteTopicIds": ["how-a-car-works"],
+  "quiz": [
+    {
+      "id": "resting-voltage",
+      "prompt": "A battery reads 12.2 V after resting overnight with no load. What does that suggest?",
+      "options": ["Fully charged", "About half charged", "Overcharged", "Completely flat"],
+      "answerIndex": 1,
+      "explanation": "Around 12.6–12.7 V is full; about 12.2 V indicates roughly 50% state of charge."
+    },
+    {
+      "id": "voltage-drop",
+      "prompt": "A starter draws 200 A through a connection with 4 mΩ resistance. How much voltage is lost there?",
+      "options": ["0.08 V", "0.8 V", "8 V", "50 V"],
+      "answerIndex": 1,
+      "explanation": "V = I × R = 200 × 0.004 = 0.8 V — a significant loss from a 12 V supply."
+    },
+    {
+      "id": "solenoid-jobs",
+      "prompt": "Which two jobs does the starter solenoid perform?",
+      "options": ["Charges the battery and lights the dashboard", "Pushes the pinion into mesh and switches the main motor current", "Controls fuel injection and spark", "Cools the motor and measures speed"],
+      "answerIndex": 1,
+      "explanation": "It shifts the pinion via a fork and closes heavy contacts so battery current reaches the motor."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"How to test a car battery","url":"https://www.howacarworks.com/electrical-systems/how-to-test-a-car-battery","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
+    {"title":"Checking a starter circuit","url":"https://www.howacarworks.com/ignition-system/checking-the-starter-circuit","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

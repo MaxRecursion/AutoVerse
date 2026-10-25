@@ -1,0 +1,112 @@
+{
+  "id": "how-a-car-works",
+  "slug": "how-a-car-works",
+  "title": "How a Car Works: The Big Picture",
+  "summary": "Follow energy from the fuel tank or battery to the tyre contact patch, and meet the supporting systems that keep that chain working safely.",
+  "categoryId": "basics",
+  "difficulty": "beginner",
+  "estimatedDuration": 10,
+  "tags": ["overview", "energy", "powertrain", "systems"],
+  "learningObjectives": [
+    "Trace the path of energy from fuel or battery to the road",
+    "Name the job of the engine, transmission, driveline and tyres in that chain",
+    "Distinguish the power chain from the supporting systems (cooling, lubrication, electrics) and the control systems (steering, brakes, suspension)",
+    "Explain why most of the energy in fuel never reaches the wheels"
+  ],
+  "beginnerExplanation": "A car is a machine for turning stored energy into controlled movement. Petrol and diesel hold chemical energy; an engine burns the fuel and turns some of that energy into a spinning crankshaft. An electric car stores energy in a battery and a motor spins instead.\n\nThe spinning output is rarely at the right speed for the wheels, so a gearbox trades speed for turning force. A propshaft or driveshafts carry the rotation to the wheels, and a differential lets the left and right wheels turn at different speeds in corners. Finally the tyres grip the road and push the car along.\n\nAround that power chain sit systems that keep it alive (cooling, lubrication, the electrical system) and systems that let you control it (steering, brakes and suspension). Everything is held together by the body and chassis.",
+  "technicalExplanation": "Treat the vehicle as an energy-conversion chain. Chemical energy in fuel (about 43–45 MJ/kg for petrol and diesel) is released by combustion, and the engine's thermodynamic cycle converts a fraction of it into shaft work. In everyday driving a petrol car delivers very roughly a fifth to a third of the fuel's energy to the wheels; the rest leaves as heat through the exhaust and cooling system, plus pumping, friction and accessory losses.\n\nThe engine produces torque over a limited speed band, so the transmission selects a ratio that matches engine speed to road speed. Wheel torque is engine torque multiplied by the gear and final-drive ratios (less driveline losses), and tractive force is that wheel torque divided by the tyre's rolling radius. The car accelerates when tractive force exceeds the road load: aerodynamic drag, rolling resistance and any gradient.\n\nThe control systems shape the forces at the four contact patches. Brakes convert kinetic energy (½mv²) into heat, steering sets the tyres' slip angles to generate cornering force, and suspension keeps the tyres loaded consistently over bumps. Supporting systems maintain the operating conditions: lubrication separates moving surfaces, cooling holds metal temperatures in a safe window, and the electrical system powers ignition, injection, sensors and control units.",
+  "steps": [
+    {
+      "id": "store-energy",
+      "title": "Energy is stored on board",
+      "beginner": "Fuel in the tank or charge in a battery is the car's energy supply. Everything the car does is paid for from this store.",
+      "technical": "Liquid fuels carry roughly 43–45 MJ/kg; a lithium-ion traction pack stores far less per kilogram (very roughly 0.5–0.9 MJ/kg at cell level) but converts it to motion far more efficiently."
+    },
+    {
+      "id": "convert-energy",
+      "title": "The engine or motor makes it spin",
+      "beginner": "The engine burns fuel to push pistons that turn a crankshaft. An electric motor uses magnetic forces to turn its shaft directly.",
+      "technical": "Combustion pressure acting on the pistons produces crankshaft torque; mean output depends on displacement, volumetric efficiency and combustion efficiency. Mechanical power is torque × angular speed."
+    },
+    {
+      "id": "match-speed",
+      "title": "The gearbox matches speed and force",
+      "beginner": "Low gears give strong pulling force for starting off; high gears let the engine turn slowly at motorway speeds.",
+      "technical": "Each ratio multiplies torque and divides speed by the same factor, minus small gear-mesh losses, keeping the engine in a useful part of its torque and efficiency map."
+    },
+    {
+      "id": "deliver-to-wheels",
+      "title": "The driveline delivers drive to the wheels",
+      "beginner": "Shafts carry the rotation to the driven wheels, and the differential lets the outside wheel spin faster than the inside one in a turn.",
+      "technical": "The final drive applies a further fixed reduction; the differential averages wheel speeds to its input while splitting torque between the driven wheels."
+    },
+    {
+      "id": "grip-the-road",
+      "title": "Tyres turn torque into thrust",
+      "beginner": "The tyre's grip on the road is what actually pushes the car forward, turns it and stops it.",
+      "technical": "Tractive force F = T_wheel / r. Every longitudinal and lateral force on the car passes through four contact patches, each limited by friction coefficient × vertical load."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "energy", "label": "Fuel or battery", "detail": "Stored chemical or electrochemical energy" },
+      { "id": "engine", "label": "Engine / motor", "detail": "Converts energy into crankshaft rotation", "topicId": "four-stroke-cycle" },
+      { "id": "gearbox", "label": "Transmission", "detail": "Trades speed for torque", "topicId": "torque-and-power" },
+      { "id": "driveline", "label": "Driveline & differential", "detail": "Carries torque to the driven wheels", "topicId": "differential" },
+      { "id": "tyres", "label": "Tyres", "detail": "Turn wheel torque into thrust at the road", "topicId": "tyres-and-grip" }
+    ],
+    "edges": [
+      { "from": "energy", "to": "engine", "label": "fuel / current" },
+      { "from": "engine", "to": "gearbox", "label": "torque at engine speed" },
+      { "from": "gearbox", "to": "driveline", "label": "multiplied torque" },
+      { "from": "driveline", "to": "tyres", "label": "wheel torque" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Powertrain", "definition": "Everything that creates and delivers drive: engine or motor, transmission, driveshafts, differential." },
+    { "term": "Tractive force", "definition": "The forward push the driven tyres exert on the road.", "equation": "F = T_wheel / r" },
+    { "term": "Road load", "definition": "The forces resisting motion: aerodynamic drag, rolling resistance and gradient. Surplus tractive force accelerates the car." },
+    { "term": "Kinetic energy", "definition": "Energy of motion that the brakes must turn into heat to stop the car.", "equation": "E = ½ m v²" }
+  ],
+  "misconceptions": [
+    { "myth": "The engine pushes the car directly.", "reality": "The engine only spins a shaft. The forward push comes from the tyres reacting against the road surface." },
+    { "myth": "Most of the fuel's energy moves the car.", "reality": "In typical driving most of it leaves as heat through the exhaust and radiator; only a minority reaches the wheels." },
+    { "myth": "Brakes and steering are separate from the drivetrain's physics.", "reality": "All of them work through the same four tyre contact patches, which share a limited amount of grip." }
+  ],
+  "practicalExamples": [
+    "A warm radiator and hot exhaust after a drive are the unused energy from the fuel made visible.",
+    "Pulling away in third gear feels sluggish because the gearbox is multiplying the engine's torque less than first gear does.",
+    "On ice the engine and gearbox work exactly as usual, but the tyres cannot pass the force to the road, so the wheels spin."
+  ],
+  "relatedTopicIds": ["torque-and-power", "four-stroke-cycle", "drivetrain-layouts", "tyres-and-grip"],
+  "prerequisiteTopicIds": [],
+  "quiz": [
+    {
+      "id": "where-force-comes-from",
+      "prompt": "What ultimately pushes a car forward?",
+      "options": ["The pistons pressing on the body", "The tyres pushing against the road surface", "Air pressure from the exhaust", "The gearbox casing"],
+      "answerIndex": 1,
+      "explanation": "Engine torque reaches the wheels, but the forward force acts at the contact patch where the tyre pushes back on the road."
+    },
+    {
+      "id": "gearbox-role",
+      "prompt": "What does a low gear do compared with a high gear?",
+      "options": ["Gives more wheel torque but less road speed for a given engine speed", "Makes the engine produce more power", "Reduces fuel use at all speeds", "Disconnects the differential"],
+      "answerIndex": 0,
+      "explanation": "A ratio multiplies torque and divides speed by the same factor; it cannot create power."
+    },
+    {
+      "id": "energy-losses",
+      "prompt": "Where does most of the fuel's energy go in a typical petrol car?",
+      "options": ["Into moving the car", "Into charging the battery", "Out as heat through the exhaust and cooling system", "Into the brakes"],
+      "answerIndex": 2,
+      "explanation": "Heat engines reject a large share of the fuel energy as heat; only a minority becomes useful work at the wheels."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"The engine","url":"https://www.howacarworks.com/basics/the-engine","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
+    {"title":"How the transmission works","url":"https://www.howacarworks.com/basics/how-the-transmission-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

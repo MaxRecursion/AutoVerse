@@ -1,0 +1,114 @@
+{
+  "id": "routine-maintenance",
+  "slug": "routine-maintenance",
+  "title": "Routine Maintenance",
+  "summary": "Most expensive failures start as something cheap that was not checked. Learn which simple checks an owner can make, which items are replaced on a schedule and why, and how to read a service schedule — with the understanding that your vehicle's handbook always takes priority.",
+  "categoryId": "maintenance",
+  "difficulty": "beginner",
+  "estimatedDuration": 12,
+  "tags": ["maintenance", "servicing", "oil", "tyres", "fluids", "checks", "ownership"],
+  "learningObjectives": [
+    "List the regular owner checks and how to make them safely",
+    "Explain why fluids and filters are replaced by time as well as distance",
+    "Explain why some components, such as timing belts, have strict replacement intervals",
+    "Use the vehicle handbook and service records to plan maintenance"
+  ],
+  "beginnerExplanation": "Cars wear gradually. Oil breaks down, filters clog, rubber hardens and tyres lose tread. Routine maintenance means catching these changes early, when the fix is cheap and before they cause a breakdown or affect safety.\n\nSome checks anyone can do in a few minutes: the engine oil level on the dipstick, coolant and brake fluid levels against the marks on their see-through reservoirs, washer fluid, tyre pressures and tread, and whether every light works. Doing them regularly — for example every couple of weeks and before a long trip — builds a sense of what is normal for your car.\n\nOther items are replaced on a schedule set by the manufacturer: oil and filters, spark plugs, brake fluid, coolant and, on many engines, the timing belt. Schedules usually give both a distance and a time limit, whichever comes first, because many fluids and rubber parts age even when the car is not driven much. The handbook for your specific vehicle is the authority; this lesson explains the reasons behind it.",
+  "technicalExplanation": "Engine oil degrades through oxidation, thermal breakdown, additive depletion and contamination by fuel, water, soot and combustion acids. Short journeys are especially hard on oil because the engine rarely gets hot enough to boil off condensed water and fuel; many manufacturers define a 'severe service' schedule with shorter intervals for this, towing, dusty conditions or extended idling. Some vehicles use oil-life monitors that estimate degradation from temperatures, revolutions and trip patterns rather than fixed intervals. Oil level should be read on level ground following the handbook's procedure, as consumption between services is normal within limits.\n\nGlycol brake fluid absorbs moisture, lowering its boiling point, so it is replaced on a time basis (commonly around two years) rather than distance. Coolant inhibitors deplete over years. Air filters restrict flow as they load; cabin filters clog with pollen and particulates. Spark plug electrodes erode, raising the voltage needed to fire. Rubber auxiliary belts crack and stretch, and their tensioners wear.\n\nTiming belts deserve special attention. On an 'interference' engine, valves and pistons occupy the same space at different times; if the belt snaps, they collide, often destroying valves and damaging pistons and the cylinder head. Belt intervals are therefore strict in both distance and years, and the tensioner, idlers and often the water pump are renewed at the same time. Chain-driven camshafts are designed to last longer but still need correct oil to keep tensioners and guides healthy. Tyre condition is checked for tread depth, uneven wear (a sign of alignment or pressure issues), cuts, bulges and age-related cracking. Keeping dated service records — what was done, when and at what distance — supports diagnosis later and helps resale. Work beneath a vehicle must only be done with it supported on proper stands on firm ground, never on a jack alone.",
+  "steps": [
+    {
+      "id": "fluids",
+      "title": "Check the fluids",
+      "beginner": "Check oil, coolant, brake fluid and washer levels regularly, with the engine cold and the car level.",
+      "technical": "Oil between dipstick marks; coolant between MIN/MAX cold (never open a hot pressurised cap); a falling brake-fluid level indicates pad wear or a leak."
+    },
+    {
+      "id": "tyres",
+      "title": "Check tyres",
+      "beginner": "Set pressures cold to the figures on the door pillar or fuel flap, and look at the tread and sidewalls.",
+      "technical": "Measure tread across the width; inner- or outer-edge wear suggests alignment or pressure faults; bulges indicate carcass damage."
+    },
+    {
+      "id": "lights-wipers",
+      "title": "Lights, wipers and warnings",
+      "beginner": "Walk round the car to check all lights, and replace smeary wiper blades.",
+      "technical": "Check brake, indicator and number-plate lamps; confirm warning lamps illuminate at key-on and extinguish after start (bulb check)."
+    },
+    {
+      "id": "scheduled",
+      "title": "Follow the service schedule",
+      "beginner": "Replace oil, filters, plugs and fluids at the intervals in the handbook — time or distance, whichever comes first.",
+      "technical": "Use severe-service intervals for short trips, towing or dusty use; time-based limits cover hygroscopic and age-sensitive items."
+    },
+    {
+      "id": "critical-items",
+      "title": "Respect critical intervals",
+      "beginner": "Some parts, like timing belts, can cause major engine damage if they fail, so their replacement is never postponed.",
+      "technical": "Interference engines suffer valve-to-piston contact on belt failure; renew belt, tensioner and idlers (often the water pump) together."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "owner", "label": "Owner checks", "detail": "Fluids, tyres, lights" },
+      { "id": "schedule", "label": "Service schedule", "detail": "Time or distance" },
+      { "id": "oil", "label": "Oil & filter", "topicId": "lubrication-system" },
+      { "id": "coolant", "label": "Coolant", "topicId": "cooling-system" },
+      { "id": "brakes", "label": "Brake fluid & pads", "topicId": "brake-hydraulics" },
+      { "id": "records", "label": "Service records", "detail": "Supports diagnosis", "topicId": "diagnosing-warning-signs" }
+    ],
+    "edges": [
+      { "from": "owner", "to": "records", "label": "notes" },
+      { "from": "schedule", "to": "oil" },
+      { "from": "schedule", "to": "coolant" },
+      { "from": "schedule", "to": "brakes" },
+      { "from": "oil", "to": "records" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Whichever comes first", "definition": "Service items have both a distance and a time limit because fluids and rubber age even when a car is little used." },
+    { "term": "Severe service", "definition": "Shorter intervals for short trips, towing, dusty roads or long idling, which accelerate oil and component wear." },
+    { "term": "Interference engine", "definition": "An engine in which valves and pistons would collide if valve timing were lost, making timing-belt failure destructive." },
+    { "term": "Hygroscopic", "definition": "Tending to absorb moisture from the air — why brake fluid is replaced on a time basis." }
+  ],
+  "misconceptions": [
+    { "myth": "A car that is rarely driven does not need servicing.", "reality": "Oil, brake fluid, coolant, tyres and rubber parts all age with time; low-mileage cars still need time-based servicing." },
+    { "myth": "If the car drives normally, the timing belt is fine.", "reality": "Belts usually give no warning before failing. Replace them at the specified interval regardless of how the engine feels." },
+    { "myth": "Topping up the brake fluid fixes a low level.", "reality": "A low level is a symptom: worn pads or a leak. Find the cause; topping up alone can mask a developing problem." }
+  ],
+  "practicalExamples": [
+    "Checking tyre pressures monthly and before long trips improves grip, braking and fuel economy, and helps tyres last longer.",
+    "A car used only for short school runs may need oil changes more often than the standard interval suggests.",
+    "Keeping receipts and noting the date and distance of each service makes it easy to spot when a time-based item is due."
+  ],
+  "relatedTopicIds": ["lubrication-system", "cooling-system", "tyres-and-grip", "diagnosing-warning-signs"],
+  "prerequisiteTopicIds": ["how-a-car-works"],
+  "quiz": [
+    {
+      "id": "time-based",
+      "prompt": "Why is brake fluid usually replaced on a time basis rather than distance?",
+      "options": ["It evaporates while driving", "It absorbs moisture over time, lowering its boiling point", "It wears out the pads", "It changes colour"],
+      "answerIndex": 1,
+      "explanation": "Glycol brake fluid is hygroscopic: water absorbed over time reduces its boiling point whether or not the car is driven."
+    },
+    {
+      "id": "interference",
+      "prompt": "Why is a timing-belt interval so important on an interference engine?",
+      "options": ["The car will not start without a new belt", "If the belt breaks, valves and pistons can collide and cause major damage", "Belts get louder with age", "It improves fuel economy"],
+      "answerIndex": 1,
+      "explanation": "Losing valve timing lets open valves meet rising pistons, which can bend valves and damage the head."
+    },
+    {
+      "id": "coolant-check",
+      "prompt": "When should you check the coolant level?",
+      "options": ["Immediately after a long drive", "With the engine cold, using the expansion-tank marks", "While the engine is running at high revs", "Only when the warning light is on"],
+      "answerIndex": 1,
+      "explanation": "Cold readings are accurate and safe; opening a hot pressurised system can release scalding coolant."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"Checking and topping up car antifreeze coolant","url":"https://www.howacarworks.com/cooling-systems/checking-and-topping-up-car-antifreeze-coolant","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
+    {"title":"Checking for wheel and tyre damage","url":"https://www.howacarworks.com/wheels-and-tyres/checking-for-wheel-and-tyre-damage","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

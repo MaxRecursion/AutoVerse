@@ -1,0 +1,116 @@
+{
+  "id": "mechanical-sympathy",
+  "slug": "mechanical-sympathy",
+  "title": "Mechanical Sympathy",
+  "summary": "Mechanical sympathy means driving in a way that respects how the car works. Learn why gentle warm-ups, sensible engine speeds, smooth inputs, anticipation and engine braking reduce wear, save fuel and make driving safer.",
+  "categoryId": "driving",
+  "difficulty": "beginner",
+  "estimatedDuration": 11,
+  "tags": ["driving", "technique", "wear", "economy", "engine braking", "smoothness"],
+  "learningObjectives": [
+    "Explain why a cold engine should be driven gently rather than idled or revved",
+    "Explain why labouring an engine at very low speed and high load is harmful",
+    "Use anticipation to reduce braking losses and brake wear",
+    "Use engine braking appropriately on long descents"
+  ],
+  "beginnerExplanation": "Mechanical sympathy is a driving style based on understanding what the machinery is doing. It does not mean driving slowly; it means avoiding the situations that cause unnecessary wear or waste.\n\nWhen an engine is cold its oil is thick and its parts have not expanded to their working clearances, so the best approach is to drive off gently soon after starting rather than idling for a long time or revving hard. Equally, an engine should not be made to struggle: pressing hard on the accelerator in a high gear at very low engine speed puts heavy loads on bearings and the drivetrain. Changing down a gear is kinder and usually smoother.\n\nSmooth, anticipatory driving helps everything. Looking well ahead lets you ease off early instead of braking hard, which saves fuel, brakes and tyres. On long downhill stretches, a lower gear lets the engine help hold the car's speed so the brakes do not overheat.",
+  "technicalExplanation": "On a cold start, oil viscosity is high and takes time to reach all surfaces; piston-to-bore and other clearances are designed for operating temperature; fuel enrichment can wash oil from cylinder walls and dilute the sump. Light-load driving warms the engine and catalytic converter far faster than idling, minimising this period. High engine speed and heavy load before the oil is warm increase wear, which is why some cars display a variable rev-limit indicator while cold. Automatic gearboxes and turbochargers likewise benefit from a gentle start.\n\nLabouring (lugging) — high load at very low engine speed — produces high cylinder pressures at low piston speed, where bearing oil films are thinnest (film thickness rises with speed), and invites knock in petrol engines. Low-frequency torsional vibration stresses dual-mass flywheels, engine mounts and driveline joints. Economy is best at moderate engine speeds and relatively high load (where brake-specific fuel consumption is lowest), so the practical goal is to change up early but not so early that the engine struggles when asked to accelerate.\n\nEvery brake application turns kinetic energy (½ m v²) into heat. Anticipation reduces how often that energy is thrown away. On long descents, sustained friction braking can raise brake temperatures until pad friction falls (fade) or old fluid boils; selecting a lower gear uses engine pumping and friction losses — and fuel cut-off on the overrun means no fuel is used. Smooth inputs also limit load transfer, keeping tyre forces within the friction circle and reducing tyre wear. Other habits: do not rest a foot on the clutch pedal (it partially loads the release bearing and can let the clutch slip); do not rest a hand on the gear lever (it can press selector forks against rotating collars); bring an automatic to a complete stop before selecting Reverse or Park; and after sustained hard driving, a minute or so of gentle running lets turbocharger and engine temperatures settle before switching off.",
+  "steps": [
+    {
+      "id": "warm-up",
+      "title": "Warm up by driving gently",
+      "beginner": "Start, settle for a moment, then drive off gently; avoid long idling and high revs until the engine is warm.",
+      "technical": "Light load warms oil, coolant and catalyst fastest; cold oil and enriched mixtures make high load at high rpm costly in wear."
+    },
+    {
+      "id": "right-gear",
+      "title": "Do not labour the engine",
+      "beginner": "If the engine shudders or struggles when you accelerate, change down a gear.",
+      "technical": "Low speed plus high load means thin bearing films, knock risk and torsional vibration; choose a gear where the engine pulls cleanly."
+    },
+    {
+      "id": "anticipate",
+      "title": "Look ahead and lift early",
+      "beginner": "Easing off early instead of braking late saves fuel, brakes and tyres.",
+      "technical": "Every stop converts ½ m v² to heat; coasting in gear with fuel cut-off recovers distance at zero fuel cost."
+    },
+    {
+      "id": "engine-braking",
+      "title": "Use engine braking on descents",
+      "beginner": "On long hills, a lower gear helps hold your speed so the brakes stay cool.",
+      "technical": "Engine drag shares the energy dissipation, preventing pad fade and fluid boiling; in EVs and hybrids regeneration does the same job."
+    },
+    {
+      "id": "smooth-inputs",
+      "title": "Be smooth with every control",
+      "beginner": "Gentle steering, braking and acceleration keep the car settled and the tyres gripping.",
+      "technical": "Progressive inputs limit load-transfer rates and keep combined tyre demands inside the friction circle."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "driver", "label": "Driver inputs", "detail": "Throttle, gears, brakes, steering" },
+      { "id": "engine", "label": "Engine load & speed", "topicId": "torque-and-power" },
+      { "id": "gearbox", "label": "Gear choice", "topicId": "automatic-transmission" },
+      { "id": "brakes", "label": "Brake heat", "topicId": "brake-hydraulics" },
+      { "id": "tyres", "label": "Tyre forces", "topicId": "tyres-and-grip" },
+      { "id": "outcome", "label": "Wear · economy · safety" }
+    ],
+    "edges": [
+      { "from": "driver", "to": "engine" },
+      { "from": "driver", "to": "gearbox" },
+      { "from": "driver", "to": "brakes" },
+      { "from": "driver", "to": "tyres" },
+      { "from": "engine", "to": "outcome" },
+      { "from": "brakes", "to": "outcome" },
+      { "from": "tyres", "to": "outcome" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Kinetic energy lost in braking", "definition": "Every stop converts the car's kinetic energy into brake heat; anticipation avoids wasting it.", "equation": "E_k = ½ m v²" },
+    { "term": "Labouring (lugging)", "definition": "Demanding high load from an engine at very low speed, which stresses bearings and the driveline." },
+    { "term": "Engine braking", "definition": "Using the drag of the engine, in gear with the throttle closed, to slow the car without heating the brakes." },
+    { "term": "Brake fade", "definition": "Loss of braking effectiveness as pads and discs overheat or brake fluid boils." }
+  ],
+  "misconceptions": [
+    { "myth": "Modern engines must be idled for several minutes to warm up.", "reality": "Gentle driving warms an engine much faster than idling and wastes less fuel; long idling adds fuel dilution without benefit." },
+    { "myth": "Using the lowest possible revs is always the most economical.", "reality": "Labouring in too high a gear can increase fuel use and wear. The aim is moderate revs where the engine pulls cleanly." },
+    { "myth": "Engine braking wears the engine and clutch.", "reality": "With the clutch fully engaged there is no clutch slip, and the engine loads are modest; it is the intended way to control speed on descents." }
+  ],
+  "practicalExamples": [
+    "On a long mountain descent, selecting the gear you would use to climb the same hill keeps the brakes cool.",
+    "Approaching a red light, lifting off early often means arriving as it turns green — without stopping at all.",
+    "If the car shudders when accelerating from 40 km/h in top gear, dropping two gears gives smoother, healthier progress."
+  ],
+  "relatedTopicIds": ["torque-and-power", "brake-hydraulics", "tyres-and-grip", "automatic-transmission"],
+  "prerequisiteTopicIds": ["torque-and-power"],
+  "quiz": [
+    {
+      "id": "warm-up-q",
+      "prompt": "What is the kindest way to warm up a cold engine?",
+      "options": ["Idle for ten minutes", "Rev it hard to warm the oil quickly", "Drive off gently after a short moment", "Switch it on and off several times"],
+      "answerIndex": 2,
+      "explanation": "Light-load driving warms the engine and catalyst fastest while keeping wear-inducing loads low."
+    },
+    {
+      "id": "descent",
+      "prompt": "Why use a lower gear on a long, steep descent?",
+      "options": ["To use more fuel", "So the engine helps control speed and the brakes do not overheat", "To charge the 12 V battery", "To improve steering"],
+      "answerIndex": 1,
+      "explanation": "Engine braking shares the energy that would otherwise all become brake heat, preventing fade."
+    },
+    {
+      "id": "anticipation",
+      "prompt": "A 1,500 kg car brakes to a stop from 20 m/s. How much energy becomes heat in the brakes?",
+      "options": ["15 kJ", "30 kJ", "300 kJ", "3,000 kJ"],
+      "answerIndex": 2,
+      "explanation": "E = ½ × 1,500 × 20² = 300,000 J = 300 kJ — energy anticipation can often avoid wasting."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"Acceleration and Economy","url":"https://www.howacarworks.com/advanced-driving/acceleration-and-economy","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
+    {"title":"Advanced Gearshifts","url":"https://www.howacarworks.com/advanced-driving/advanced-gearshifts","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}

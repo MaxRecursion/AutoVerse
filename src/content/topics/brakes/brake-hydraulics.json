@@ -1,0 +1,114 @@
+{
+  "id": "brake-hydraulics",
+  "slug": "brake-hydraulics",
+  "title": "Brake Hydraulics",
+  "summary": "A light push on the brake pedal becomes tonnes of clamping force at the wheels. Follow the force through the pedal lever, servo, master cylinder and fluid lines to the calipers, and see why air or water in the fluid makes brakes spongy or fade.",
+  "categoryId": "brakes",
+  "difficulty": "beginner",
+  "estimatedDuration": 12,
+  "tags": ["brakes", "hydraulics", "master cylinder", "brake fluid", "servo", "pascal"],
+  "learningObjectives": [
+    "Explain how hydraulic pressure transmits and multiplies force",
+    "Trace force from pedal through servo and master cylinder to the calipers",
+    "Explain why brake systems use two separate circuits",
+    "Describe why brake fluid must be free of air and changed periodically"
+  ],
+  "beginnerExplanation": "When you press the brake pedal, you are not pushing the brake pads directly. You are pushing a small piston into a cylinder full of brake fluid. Liquids barely compress, so that push becomes pressure that travels instantly through metal pipes and flexible hoses to every wheel.\n\nAt each wheel the pressure pushes on pistons that are much bigger than the one at the pedal. Pressure acting on a bigger area makes a bigger force — the same idea that lets a small hydraulic jack lift a car. Add the leverage of the pedal and a brake servo that uses engine vacuum or an electric motor to help your foot, and a gentle push becomes enough force to squeeze the pads hard against the discs.\n\nThe system is split into two independent circuits so that a leak in one still leaves you with some braking. And the fluid has to stay healthy: an air bubble squashes like a sponge, and water absorbed over time can boil during heavy braking, both of which make the pedal feel soft and the brakes weaker.",
+  "technicalExplanation": "Hydraulic braking relies on Pascal's principle: pressure in an enclosed incompressible fluid is the same everywhere (neglecting flow losses), so p = F_mc / A_mc at the master cylinder appears at every caliper piston, where it produces F = p × A_caliper. For example, 2,000 N on a 20 mm master-cylinder piston (314 mm²) gives about 6.4 MPa (64 bar); on a 54 mm caliper piston (2,290 mm²) that pressure produces roughly 14.6 kN of clamp force. Force gain is bought with travel: the master cylinder must displace enough fluid to move all the caliper pistons, so pedal travel is much greater than pad travel.\n\nBefore the master cylinder, the pedal provides a lever ratio of about 3–4:1, and the servo (booster) adds assistance. A vacuum servo uses the pressure difference between engine vacuum and atmosphere across a large diaphragm; diesel, turbo and electric cars use a vacuum pump or an electromechanical booster instead. Tandem master cylinders feed two circuits, commonly split diagonally (one front and the opposite rear wheel) in front-drive cars so either circuit can still brake one front wheel. Proportioning, once done by valves, is now handled by the ABS/ESC modulator's electronic brake-force distribution, which limits rear pressure as load transfers forward.\n\nGlycol-ether brake fluids (DOT 3, 4, 5.1) are hygroscopic: they absorb moisture through hoses and seals. Water lowers the boiling point; DOT 4, for instance, must boil no lower than 230 °C dry and 155 °C 'wet' (at about 3.7% water). If fluid near hot calipers boils, compressible vapour forms and the pedal can sink towards the floor — vapour lock. Air entering during repairs has the same effect permanently until the system is bled. Silicone DOT 5 fluid is not compatible with glycol fluids and is not used in ABS-equipped road cars without manufacturer approval.",
+  "steps": [
+    {
+      "id": "pedal-lever",
+      "title": "The pedal multiplies your push",
+      "beginner": "The pedal is a lever, so a moderate push from your foot becomes a stronger push on the pushrod.",
+      "technical": "Pedal ratio ≈ 3–4:1; 300 N at the foot gives roughly 1,000–1,200 N at the pushrod."
+    },
+    {
+      "id": "servo-assist",
+      "title": "The servo adds assistance",
+      "beginner": "A booster uses engine vacuum or an electric motor to add several times more force.",
+      "technical": "Vacuum servos use the atmosphere-to-vacuum pressure difference across a diaphragm; electromechanical boosters also enable regenerative-brake blending and automatic braking."
+    },
+    {
+      "id": "master-cylinder",
+      "title": "Force becomes pressure",
+      "beginner": "The master cylinder's piston pressurises the brake fluid in two separate circuits.",
+      "technical": "p = F / A_mc. A tandem master cylinder gives two independent circuits, typically split diagonally."
+    },
+    {
+      "id": "lines",
+      "title": "Pressure travels to every wheel",
+      "beginner": "Steel pipes and flexible hoses carry the pressure instantly to all four wheels.",
+      "technical": "Incompressible fluid transmits pressure equally; flexible hoses accommodate steering and suspension movement; the ABS modulator sits in between."
+    },
+    {
+      "id": "calipers",
+      "title": "Large pistons clamp the pads",
+      "beginner": "Bigger pistons at the wheels turn the pressure into a much larger clamping force on the discs.",
+      "technical": "F_clamp = p × A_caliper; braking torque = 2 × μ_pad × F_clamp × r_effective for a two-sided caliper."
+    }
+  ],
+  "flow": {
+    "nodes": [
+      { "id": "pedal", "label": "Pedal", "detail": "Lever ≈ 3–4 : 1" },
+      { "id": "servo", "label": "Servo / booster", "detail": "Assistance" },
+      { "id": "master", "label": "Master cylinder", "detail": "p = F / A" },
+      { "id": "abs", "label": "ABS / ESC modulator", "detail": "Valves per wheel" },
+      { "id": "caliper", "label": "Calipers", "detail": "F = p × A" },
+      { "id": "tyre", "label": "Tyre grip", "detail": "Final limit", "topicId": "tyres-and-grip" }
+    ],
+    "edges": [
+      { "from": "pedal", "to": "servo" },
+      { "from": "servo", "to": "master" },
+      { "from": "master", "to": "abs", "label": "two circuits" },
+      { "from": "abs", "to": "caliper" },
+      { "from": "caliper", "to": "tyre", "label": "braking torque" }
+    ]
+  },
+  "keyConcepts": [
+    { "term": "Pascal's principle", "definition": "Pressure applied to an enclosed fluid is transmitted equally throughout it.", "equation": "p = F / A" },
+    { "term": "Hydraulic force multiplication", "definition": "Output force scales with the ratio of piston areas; the price is proportionally more input travel.", "equation": "F_out = F_in × (A_out / A_in)" },
+    { "term": "Dual circuit", "definition": "Two independent hydraulic circuits so a single leak cannot remove all braking." },
+    { "term": "Hygroscopic fluid", "definition": "Glycol brake fluid absorbs water over time, lowering its boiling point; hence periodic replacement." }
+  ],
+  "misconceptions": [
+    { "myth": "A spongy pedal just means the pads are worn.", "reality": "Worn pads usually mean a longer pedal, not a spongy one. Sponginess points to air or vapour in the fluid, or flexing hoses, and needs prompt attention." },
+    { "myth": "Brake fluid never needs changing because it is in a sealed system.", "reality": "The system breathes through the reservoir cap and absorbs moisture through hoses; fluid is replaced at the interval the manufacturer specifies, commonly around every two years." },
+    { "myth": "Bigger brakes always mean shorter stopping distances.", "reality": "Once the brakes can lock or reach ABS intervention, tyre grip sets the limit. Bigger brakes mainly resist fade during repeated or prolonged stops." }
+  ],
+  "practicalExamples": [
+    "With the engine off, pump the pedal a few times until it goes firm, then start the engine: the pedal dips slightly as the vacuum servo begins to assist.",
+    "A falling fluid level in the reservoir often reflects pad wear, as caliper pistons move outward and hold more fluid — but a sudden drop suggests a leak.",
+    "Descending a long mountain pass on the brakes alone can boil old fluid; using a lower gear keeps brake temperatures down."
+  ],
+  "relatedTopicIds": ["tyres-and-grip", "routine-maintenance", "diagnosing-warning-signs", "mechanical-sympathy"],
+  "prerequisiteTopicIds": ["how-a-car-works"],
+  "quiz": [
+    {
+      "id": "pressure-calc",
+      "prompt": "Brake pressure is 60 bar (6 MPa). What clamp force does a caliper piston of 2,000 mm² produce?",
+      "options": ["1.2 kN", "3 kN", "12 kN", "120 kN"],
+      "answerIndex": 2,
+      "explanation": "F = p × A = 6 N/mm² × 2,000 mm² = 12,000 N."
+    },
+    {
+      "id": "two-circuits",
+      "prompt": "Why do cars have two separate brake hydraulic circuits?",
+      "options": ["To brake harder", "So a leak in one circuit still leaves some braking", "To separate front and rear fluid types", "To make bleeding easier"],
+      "answerIndex": 1,
+      "explanation": "Redundancy: a failure in one circuit leaves the other able to stop the car, though with longer distances."
+    },
+    {
+      "id": "spongy",
+      "prompt": "Why does air in the brake lines make the pedal feel spongy?",
+      "options": ["Air is lighter than fluid", "Air is compressible, so pedal travel squashes it instead of moving the pistons", "Air makes the pads slippery", "Air blocks the servo"],
+      "answerIndex": 1,
+      "explanation": "Unlike brake fluid, air compresses, absorbing pedal travel before pressure builds."
+    }
+  ],
+  "sourceReferences": [
+    {"title":"How the braking system works","url":"https://www.howacarworks.com/basics/how-the-braking-system-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
+    {"title":"Bleeding the brakes","url":"https://www.howacarworks.com/brakes/bleeding-the-brakes","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
+  ],
+  "licence": { "name": "AutoVerse original content" },
+  "contentStatus": "complete"
+}
