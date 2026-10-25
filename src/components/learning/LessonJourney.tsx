@@ -14,15 +14,18 @@ export function LessonJourney({
   category,
   routeTopics,
   path,
+  next,
+  nextLabel,
 }: {
   topic: Topic
   category?: Category
   routeTopics: Topic[]
   path?: PathProgress
+  next?: Topic
+  nextLabel: string
 }) {
   const completed = useProgress((s) => s.completed)
   const currentIndex = routeTopics.findIndex((item) => item.id === topic.id)
-  const next = routeTopics.slice(currentIndex + 1).find((item) => !completed[item.id])
   const isComplete = !!completed[topic.id]
   const completedCount = routeTopics.filter((item) => !!completed[item.id]).length
   const percent = routeTopics.length ? Math.round((completedCount / routeTopics.length) * 100) : 0
@@ -46,9 +49,11 @@ export function LessonJourney({
         <div className="mt-2 flex items-center justify-between gap-3 text-xs text-steel-300">
           <p aria-live="polite" aria-atomic="true">
             {allComplete
-              ? path
-                ? 'Learning path complete — every lesson is done.'
-                : 'Sequence complete — every lesson is done.'
+              ? path?.missing
+                ? 'All available lessons are complete; planned lessons will appear here when ready.'
+                : path
+                  ? 'Learning path complete — every lesson is done.'
+                  : 'Sequence complete — every lesson is done.'
               : isComplete
                 ? `Lesson complete · ${completedCount} of ${routeTopics.length} lessons done.`
                 : `You’re on step ${currentIndex + 1}. Mark it complete when you’re finished.`}
@@ -66,14 +71,14 @@ export function LessonJourney({
           )}
         >
           <span className="min-w-0">
-            <span className="eyebrow block">{isComplete ? 'Next lesson' : 'After this lesson'}</span>
+            <span className="eyebrow block">{nextLabel}</span>
             <span className="block truncate font-medium text-paper group-hover:text-cyan">{next.title}</span>
           </span>
           <ArrowRight aria-hidden className="size-4 shrink-0 text-steel-400 group-hover:text-cyan" />
         </Link>
       ) : allComplete ? (
         <span className="inline-flex min-h-11 shrink-0 items-center gap-2 text-sm text-ok">
-          <CircleCheck aria-hidden className="size-4" /> {path ? 'Path complete' : 'Sequence complete'}
+          <CircleCheck aria-hidden className="size-4" /> {path?.missing ? 'Available lessons complete' : path ? 'Path complete' : 'Sequence complete'}
         </span>
       ) : null}
     </section>

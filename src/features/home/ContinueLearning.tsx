@@ -17,7 +17,7 @@ export function ContinueLearning() {
   if (items.length === 0) return null
 
   return (
-    <HomeSection id="continue" eyebrow="Continue learning" title="Pick up where you left off" action={{ to: '/progress', label: 'All progress' }}>
+    <HomeSection id="continue" eyebrow="Recently viewed" title="Your recent lessons" action={{ to: '/progress', label: 'All progress' }}>
       <ul className="grid grid-cols-1 gap-3 md:grid-cols-3">
         {items.map(({ topic, at }) => {
           const category = getCategory(topic.categoryId)
@@ -48,6 +48,7 @@ export function ContinueLearning() {
                       Completed
                     </span>
                   )}
+                  {!done && <span className="text-steel-300">In progress</span>}
                 </span>
               </Link>
             </li>

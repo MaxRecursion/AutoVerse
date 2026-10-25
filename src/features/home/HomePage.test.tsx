@@ -52,13 +52,13 @@ describe('HomePage', () => {
     expect(document.title).toBe(HOME_DOCUMENT_TITLE)
   })
 
-  it('Start Learning moves on to the next unfinished lesson of the beginner path', () => {
+  it('continues at the next unfinished lesson when the learner has completed a lesson', () => {
     const path = pickBeginnerPath(learningPaths)!
     const first = resolvePathProgress(path, getTopic, {}).topics[0]
     useProgress.setState({ completed: { [first.id]: '2026-01-01T00:00:00.000Z' } })
     renderHome()
     const expected = startLearningHref(resolvePathProgress(path, getTopic, { [first.id]: 'x' }).next)
-    expect(screen.getByRole('link', { name: 'Start Learning' })).toHaveAttribute('href', expected)
+    expect(screen.getByRole('link', { name: 'Continue Learning' })).toHaveAttribute('href', expected)
   })
 
   it('links every category with its lesson count', () => {
@@ -109,17 +109,27 @@ describe('HomePage', () => {
     }
   })
 
-  it('hides “Continue learning” until a lesson has been viewed', () => {
+  it('shows recent lessons only after a lesson has been viewed', () => {
     const topic = getTopic('four-stroke-cycle')!
     const { unmount } = renderHome()
-    expect(screen.queryByRole('region', { name: 'Pick up where you left off' })).toBeNull()
+    expect(screen.queryByRole('region', { name: 'Your recent lessons' })).toBeNull()
     unmount()
 
     act(() => useProgress.setState({ recent: [{ topicId: topic.id, at: new Date().toISOString() }, { topicId: 'not-a-topic', at: '' }] }))
     renderHome()
-    const section = screen.getByRole('region', { name: 'Pick up where you left off' })
+    const section = screen.getByRole('region', { name: 'Your recent lessons' })
     expect(within(section).getByRole('link', { name: new RegExp(topic.title) })).toHaveAttribute('href', `/topics/${topic.slug}`)
     expect(within(section).getAllByRole('listitem')).toHaveLength(1)
+  })
+
+  it('resumes the path of the most recently visited lesson across the home actions', () => {
+    const recentTopic = getTopic('pistons-and-crankshaft')!
+    useProgress.setState({ recent: [{ topicId: recentTopic.id, at: new Date().toISOString() }] })
+    renderHome()
+
+    expect(screen.getByRole('link', { name: 'Continue Learning' })).toHaveAttribute('href', '/topics/four-stroke-cycle')
+    const pathSection = screen.getByRole('region', { name: 'Inside the engine' })
+    expect(within(pathSection).getByRole('link', { name: /Continue with The Four-Stroke Cycle/ })).toHaveAttribute('href', '/topics/four-stroke-cycle')
   })
 
   it('keeps the page usable when the 3D hero cannot load', async () => {

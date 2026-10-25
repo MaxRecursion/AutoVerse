@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { LearningPathSchema, TopicSchema, type Topic } from '@/lib/schemas'
 import { useProgress } from '@/stores/progress'
-import { resolvePathProgress } from './paths'
+import { resolveCurrentPathProgress, resolveNextPathProgress, resolvePathProgress, resolveTopicPathProgress } from './paths'
 import { formatRelativeTime } from './time'
 
 const state = () => useProgress.getState()
@@ -101,6 +101,34 @@ describe('learning path progress', () => {
     const p = resolvePathProgress(path, () => undefined, {})
     expect(p).toMatchObject({ total: 0, percent: 0, missing: 4 })
     expect(p.next).toBeUndefined()
+  })
+
+  it('uses the beginner path for lessons shared by multiple paths', () => {
+    const enginePath = LearningPathSchema.parse({
+      id: 'engine',
+      title: 'Inside the engine',
+      summary: 'Engine systems',
+      level: 'intermediate',
+      order: 2,
+      topicIds: ['one', 'two'],
+    })
+    expect(resolveTopicPathProgress('one', [enginePath, path], (id) => existing.get(id), {})?.path.id).toBe('p')
+  })
+
+  it('follows the latest visited path and recommends the next unfinished path', () => {
+    const existingPath = LearningPathSchema.parse({
+      id: 'next',
+      title: 'Next path',
+      summary: 'More topics',
+      level: 'intermediate',
+      order: 2,
+      topicIds: ['four', 'two'],
+    })
+    existing.set('four', mk('four'))
+    const paths = [path, existingPath]
+    const current = resolveCurrentPathProgress(paths, ['four', 'one'], (id) => existing.get(id), {})
+    expect(current?.path.id).toBe('next')
+    expect(resolveNextPathProgress(paths, path.id, (id) => existing.get(id), { one: 'done', two: 'done', three: 'done' })?.next?.id).toBe('four')
   })
 })
 

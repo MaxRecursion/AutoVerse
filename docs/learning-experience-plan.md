@@ -28,11 +28,14 @@ Check a first-time learner can start, identify their place, complete a lesson, c
 
 Lesson pages now show their selected learning path (beginner path preferred when lessons overlap), current step, completed count, progress bar, and next unfinished lesson. Completing a lesson immediately updates that summary and the bottom-of-page continuation link. Lessons outside a curated path use their category order. Four core lessons now carry structured, sourced history notes: Bertha Benz and the early motor car, Otto and Langen's engine work, Duesenberg's production four-wheel hydraulic brakes, and Dunlop's practical tyre alongside Thomson's earlier pneumatic-tyre work. Progress remains local to this browser.
 
+## Shipped in the Second Slice
+
+Home, lesson, and progress pages now resolve the same current path from the most recently visited path lesson (the beginner route wins when paths overlap). Their primary action targets the same first unfinished lesson. The hero action changes from “Start Learning” to “Continue Learning” when there is history; the recent-lessons section is clearly secondary. Completing every available lesson produces a path-complete message and points to the next unfinished path.
+
 ## Next Work
 
-1. **Tighten the learning loop:** align home resume, lesson continuation, and progress-page actions; add path milestones and an explicit completed-path state.
-2. **Improve activity feedback:** explain incorrect quiz answers more clearly and show a concise result after a learner finishes a quiz or lab.
-3. **Build depth:** expand sparse categories (tyres, HVAC, body/chassis, and driving) with prerequisite-aware lessons and carefully sourced history notes.
-4. **Validate usability:** test first-time navigation, completion and refresh, keyboard and screen-reader feedback, narrow screens, and GitHub Pages subpaths.
+1. **Improve activity feedback:** explain incorrect quiz answers more clearly and show a concise result after a learner finishes a quiz or lab.
+2. **Build depth:** expand sparse categories (tyres, HVAC, body/chassis, and driving) with prerequisite-aware lessons and carefully sourced history notes.
+3. **Validate usability:** test first-time navigation, completion and refresh, keyboard and screen-reader feedback, narrow screens, direct links, and GitHub Pages subpaths.
 
 Consider progress export or cross-device sync after the core learning flow is clear.

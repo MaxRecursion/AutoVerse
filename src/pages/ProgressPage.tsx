@@ -7,7 +7,8 @@ import { useDocumentTitle } from '@/components/learning/useDocumentTitle'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Progress } from '@/components/ui/progress'
-import { resolvePathProgress, type PathProgress } from '@/features/progress/paths'
+import { PathAction } from '@/features/progress/PathAction'
+import { resolveCurrentPathProgress, resolveNextPathProgress, resolvePathProgress, type PathProgress } from '@/features/progress/paths'
 import { formatDate, formatRelativeTime } from '@/features/progress/time'
 import { getTopic, learningPaths, topics } from '@/lib/content'
 import type { Topic } from '@/lib/schemas'
@@ -38,7 +39,18 @@ export default function ProgressPage() {
     () => withTopic(Object.entries(quizScores).map(([topicId, r]) => ({ topicId, ...r }))).sort((a, b) => b.at.localeCompare(a.at)),
     [quizScores],
   )
-  const paths = useMemo(() => learningPaths.map((p) => resolvePathProgress(p, getTopic, completed)).filter((p) => p.total > 0), [completed])
+  const currentPath = useMemo(
+    () => resolveCurrentPathProgress(learningPaths, recent.map((item) => item.topicId), getTopic, completed),
+    [recent, completed],
+  )
+  const paths = useMemo(
+    () =>
+      learningPaths
+        .map((path) => resolvePathProgress(path, getTopic, completed))
+        .filter((progress) => progress.total > 0)
+        .sort((a, b) => Number(b.path.id === currentPath?.path.id) - Number(a.path.id === currentPath?.path.id)),
+    [completed, currentPath],
+  )
   const hasAny = recentTopics.length + completedTopics.length + bookmarkTopics.length + quizRows.length > 0
 
   return (
@@ -74,7 +86,13 @@ export default function ProgressPage() {
           <ul className="grid gap-4 lg:grid-cols-2">
             {paths.map((p) => (
               <li key={p.path.id}>
-                <PathCard progress={p} completed={completed} />
+                <PathCard
+                  progress={p}
+                  completed={completed}
+                  current={p.path.id === currentPath?.path.id}
+                  started={p.completed > 0 || recent.some((item) => p.path.topicIds.includes(item.topicId))}
+                  nextPath={p.path.id === currentPath?.path.id ? resolveNextPathProgress(learningPaths, p.path.id, getTopic, completed) : undefined}
+                />
               </li>
             ))}
           </ul>
@@ -228,14 +246,26 @@ function RemoveBookmark({ topic }: { topic: Topic }) {
   )
 }
 
-function PathCard({ progress, completed }: { progress: PathProgress; completed: Readonly<Record<string, string>> }) {
-  const { path, topics: list, missing, percent, next } = progress
+function PathCard({
+  progress,
+  completed,
+  current,
+  started,
+  nextPath,
+}: {
+  progress: PathProgress
+  completed: Readonly<Record<string, string>>
+  current: boolean
+  started: boolean
+  nextPath?: PathProgress
+}) {
+  const { path, topics: list, missing, percent } = progress
   return (
     <article className="panel flex h-full flex-col gap-4 p-5" aria-labelledby={`path-${path.id}`}>
       <div>
         <p className="eyebrow flex items-center gap-2">
           <Route aria-hidden className="size-3.5 text-amber" />
-          {DIFFICULTY_LABEL[path.level]} path
+          {current ? (started ? 'Current path' : 'Suggested starting path') : `${DIFFICULTY_LABEL[path.level]} path`}
         </p>
         <h3 id={`path-${path.id}`} className="mt-1.5 text-lg font-semibold text-paper">
           {path.title}
@@ -273,23 +303,13 @@ function PathCard({ progress, completed }: { progress: PathProgress; completed: 
           )
         })}
       </ol>
-      {missing > 0 && (
+      {missing > 0 && progress.next && (
         <p className="text-xs text-steel-500">
           {missing} more {missing === 1 ? 'lesson is' : 'lessons are'} planned for this path and not written yet.
         </p>
       )}
       <div className="mt-auto">
-        {next ? (
-          <Button asChild className="h-10">
-            <Link to={topicHref(next)}>
-              {progress.completed ? 'Continue' : 'Start'}: {next.title} <ArrowRight aria-hidden />
-            </Link>
-          </Button>
-        ) : (
-          <p className="inline-flex items-center gap-2 text-sm text-ok">
-            <CircleCheck aria-hidden className="size-4" /> Every available lesson in this path is complete.
-          </p>
-        )}
+        <PathAction progress={progress} nextPath={nextPath} started={started} />
       </div>
     </article>
   )

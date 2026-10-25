@@ -1,31 +1,35 @@
 import { useMemo } from 'react'
-import { ArrowRight, CircleCheck, Clock, Route } from 'lucide-react'
+import { CircleCheck, Clock } from 'lucide-react'
 import { Link } from 'react-router'
 import { DifficultyMeter } from '@/components/learning/TopicMeta'
 import { DIFFICULTY_LABEL, topicHref } from '@/components/learning/labels'
-import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { resolvePathProgress } from '@/features/progress/paths'
+import { PathAction } from '@/features/progress/PathAction'
+import { resolveCurrentPathProgress, resolveNextPathProgress } from '@/features/progress/paths'
 import { getTopic, learningPaths } from '@/lib/content'
 import { cn } from '@/lib/utils'
 import { useProgress } from '@/stores/progress'
 import { HomeSection } from './HomeSection'
-import { displayPathTitle, pickBeginnerPath, totalMinutes } from './homeData'
+import { displayPathTitle, totalMinutes } from './homeData'
 
 /** Homepage band: the curated beginner path as a numbered route, with local progress. */
 export function BeginnerPath() {
   const completed = useProgress((s) => s.completed)
-  const path = useMemo(() => pickBeginnerPath(learningPaths), [])
-  const progress = useMemo(() => (path ? resolvePathProgress(path, getTopic, completed) : null), [path, completed])
-  if (!path || !progress || progress.total === 0) return null
+  const recent = useProgress((s) => s.recent)
+  const progress = useMemo(
+    () => resolveCurrentPathProgress(learningPaths, recent.map((item) => item.topicId), getTopic, completed),
+    [recent, completed],
+  )
+  if (!progress || progress.total === 0) return null
 
-  const { topics: stops, next, missing, percent } = progress
-  const started = progress.completed > 0
+  const { path, topics: stops, next, missing, percent } = progress
+  const started = progress.completed > 0 || recent.some((item) => path.topicIds.includes(item.topicId))
+  const nextPath = !next ? resolveNextPathProgress(learningPaths, path.id, getTopic, completed) : undefined
   const minutes = totalMinutes(stops)
   const title = displayPathTitle(path)
 
   return (
-    <HomeSection id="path" eyebrow={`${DIFFICULTY_LABEL[path.level]} learning path`} title={title} description={path.summary}>
+    <HomeSection id="path" eyebrow={`${started ? 'Your' : 'Suggested'} ${DIFFICULTY_LABEL[path.level].toLowerCase()} learning path`} title={title} description={path.summary}>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-8">
         <div className="panel flex flex-col gap-5 self-start p-5 lg:sticky lg:top-20">
           <dl className="grid grid-cols-2 gap-3">
@@ -50,24 +54,7 @@ export function BeginnerPath() {
             </div>
             <Progress value={percent} aria-label={`${title} progress`} className="h-1.5 bg-graphite-700" />
           </div>
-          {next ? (
-            <Button asChild className="h-auto min-h-11 justify-start whitespace-normal py-2.5 text-left">
-              <Link to={topicHref(next)}>
-                <Route aria-hidden />
-                <span className="flex-1">
-                  {started ? 'Continue with' : 'Start with'} {next.title}
-                </span>
-                <ArrowRight aria-hidden />
-              </Link>
-            </Button>
-          ) : (
-            <Button asChild variant="outline" className="h-11">
-              <Link to="/progress">
-                <CircleCheck aria-hidden className="text-ok" />
-                Path complete · review your progress
-              </Link>
-            </Button>
-          )}
+          <PathAction progress={progress} nextPath={nextPath} started={started} />
           {missing > 0 && (
             <p className="text-xs leading-relaxed text-steel-400">
               {missing === 1 ? 'One more lesson' : `${missing} more lessons`} on this path {missing === 1 ? 'is' : 'are'} still being written and will

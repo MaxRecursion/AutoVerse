@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { LabHost } from '@/features/labs/LabHost'
 import { useLabInstance } from '@/features/labs/useLabInstance'
 import { getLab } from '@/features/labs/registry'
-import { resolvePathProgress } from '@/features/progress/paths'
+import { resolveNextPathProgress, resolveTopicPathProgress } from '@/features/progress/paths'
 import { useIsMobile, usePrefersReducedMotion } from '@/hooks/useMediaQuery'
 import { getCategory, getComponent, getRelatedTopics, getTopic, getTopicsInCategory, learningPaths } from '@/lib/content'
 import type { FlowDiagram as FlowDiagramData, Topic } from '@/lib/schemas'
@@ -68,17 +68,28 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
   const prereqIds = new Set(prerequisites.map((t) => t.id))
   const related = getRelatedTopics(topic).filter((t) => !prereqIds.has(t.id))
   const inCategory = sortForLearning(getTopicsInCategory(topic.categoryId))
-  const pathProgress = learningPaths
-    .filter((path) => path.topicIds.includes(topic.id))
-    .map((path) => resolvePathProgress(path, getTopic, completed))
-    .filter((path) => path.topics.some((item) => item.id === topic.id))
-    .sort((a, b) => {
-      const levelOrder = { beginner: 0, intermediate: 1, advanced: 2 }
-      return levelOrder[a.path.level] - levelOrder[b.path.level] || a.path.order - b.path.order
-    })[0]
+  const pathProgress = resolveTopicPathProgress(topic.id, learningPaths, getTopic, completed)
   const routeTopics = pathProgress?.topics ?? inCategory
   const currentRouteIndex = routeTopics.findIndex((item) => item.id === topic.id)
-  const routeNext = routeTopics.slice(currentRouteIndex + 1).find((item) => !completed[item.id])
+  const nextPath = pathProgress && !pathProgress.next ? resolveNextPathProgress(learningPaths, pathProgress.path.id, getTopic, completed) : undefined
+  const nextAfterCurrent = routeTopics.slice(currentRouteIndex + 1).find((item) => !completed[item.id])
+  const currentIsNextPathStep = pathProgress?.next?.id === topic.id
+  const routeNext = pathProgress
+    ? pathProgress.next?.id === topic.id
+      ? nextAfterCurrent
+      : pathProgress.next ?? nextPath?.next
+    : nextAfterCurrent
+  const routeNextLabel = pathProgress
+    ? !pathProgress.next
+      ? nextPath?.next
+        ? 'Start next path'
+        : 'Up next'
+      : currentIsNextPathStep
+        ? 'After this lesson'
+        : completed[topic.id]
+          ? 'Next lesson'
+          : 'Next path step'
+    : 'Up next'
 
   const revealScene = () => revealElement(sceneRef.current, reduced)
   const showCue = (cue: string) => {
@@ -195,7 +206,7 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
       <div className="mx-auto max-w-6xl px-4 pb-6 pt-6 sm:px-6 lg:pt-10">
         <LessonHeader topic={topic} category={category} interactive={!!lab} />
         <div className="mt-5">
-          <LessonJourney topic={topic} category={category} routeTopics={routeTopics} path={pathProgress} />
+          <LessonJourney topic={topic} category={category} routeTopics={routeTopics} path={pathProgress} next={routeNext} nextLabel={routeNextLabel} />
         </div>
       </div>
 

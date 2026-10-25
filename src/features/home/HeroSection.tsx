@@ -3,20 +3,27 @@ import { ArrowRight, Car, GraduationCap, Network } from 'lucide-react'
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { labs } from '@/features/labs/registry'
-import { resolvePathProgress } from '@/features/progress/paths'
+import { resolveCurrentPathProgress, resolveNextPathProgress } from '@/features/progress/paths'
 import { getTopic, learningPaths, sceneComponents, topics } from '@/lib/content'
 import { useProgress } from '@/stores/progress'
 import { HeroEngine } from './HeroEngine'
-import { pickBeginnerPath, startLearningHref } from './homeData'
+import { startLearningHref } from './homeData'
 import { Reveal } from './Reveal'
 
 /** Above the fold: brand, promise, the three ways in, and the live engine. */
 export function HeroSection() {
   const completed = useProgress((s) => s.completed)
-  const startHref = useMemo(() => {
-    const path = pickBeginnerPath(learningPaths)
-    return startLearningHref(path ? resolvePathProgress(path, getTopic, completed).next : undefined)
-  }, [completed])
+  const recent = useProgress((s) => s.recent)
+  const { startHref, startLabel } = useMemo(() => {
+    const current = resolveCurrentPathProgress(learningPaths, recent.map((item) => item.topicId), getTopic, completed)
+    if (current?.next) {
+      const hasStarted = current.completed > 0 || recent.some((item) => current.path.topicIds.includes(item.topicId))
+      return { startHref: startLearningHref(current.next), startLabel: hasStarted ? 'Continue Learning' : 'Start Learning' }
+    }
+    const nextPath = current && resolveNextPathProgress(learningPaths, current.path.id, getTopic, completed)
+    if (nextPath?.next) return { startHref: startLearningHref(nextPath.next), startLabel: 'Start Next Path' }
+    return { startHref: '/learn', startLabel: 'Explore Lessons' }
+  }, [completed, recent])
 
   const stats = [
     { label: 'Lessons', value: topics.length },
@@ -71,7 +78,7 @@ export function HeroSection() {
             <Button asChild size="lg" variant="ghost" className="h-11 px-4 text-[15px] text-paper hover:text-cyan">
               <Link to={startHref}>
                 <GraduationCap aria-hidden />
-                Start Learning
+                {startLabel}
                 <ArrowRight aria-hidden />
               </Link>
             </Button>

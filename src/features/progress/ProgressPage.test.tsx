@@ -17,7 +17,16 @@ vi.mock('@/lib/content', async (importOriginal) => {
         title: 'Fixture path',
         summary: 'Two written lessons and one that is not written yet.',
         level: 'beginner',
+        order: 1,
         topicIds: ['fixture-engine-cycle', 'lesson-not-written-yet', 'fixture-ignition'],
+      }),
+      LearningPathSchema.parse({
+        id: 'next-path',
+        title: 'Next path',
+        summary: 'One more topic.',
+        level: 'intermediate',
+        order: 2,
+        topicIds: ['fixture-outline', 'fixture-engine-cycle'],
       }),
     ],
   }
@@ -57,7 +66,20 @@ describe('ProgressPage', () => {
     const path = screen.getByRole('article', { name: 'Fixture path' })
     expect(within(path).getByText('1 of 2 lessons')).toBeInTheDocument()
     expect(within(path).getByText(/1 more lesson is planned/)).toBeInTheDocument()
-    expect(within(path).getByRole('link', { name: /Continue: Fixture ignition/ })).toHaveAttribute('href', '/topics/fixture-ignition')
+    expect(within(path).getByRole('link', { name: /Continue with Fixture ignition/ })).toHaveAttribute('href', '/topics/fixture-ignition')
+  })
+
+  it('celebrates a completed path and points to the next one', () => {
+    const s = useProgress.getState()
+    s.visit('fixture-ignition')
+    s.setCompleted('fixture-engine-cycle', true)
+    s.setCompleted('fixture-ignition', true)
+    renderPage()
+
+    const path = screen.getByRole('article', { name: 'Fixture path' })
+    expect(within(path).getByRole('status')).toHaveTextContent('All available lessons complete')
+    expect(within(path).getByText('You finished 2 lessons in Fixture path.')).toBeInTheDocument()
+    expect(within(path).getByRole('link', { name: /Start next path: Next path/ })).toHaveAttribute('href', '/topics/fixture-outline')
   })
 
   it('removes a bookmark and clears everything after confirmation', async () => {
