@@ -6,8 +6,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { LabHost } from '@/features/labs/LabHost'
 import { useLabInstance } from '@/features/labs/useLabInstance'
 import { getLab } from '@/features/labs/registry'
+import { resolvePathProgress } from '@/features/progress/paths'
 import { useIsMobile, usePrefersReducedMotion } from '@/hooks/useMediaQuery'
-import { getCategory, getComponent, getRelatedTopics, getTopic, getTopicsInCategory } from '@/lib/content'
+import { getCategory, getComponent, getRelatedTopics, getTopic, getTopicsInCategory, learningPaths } from '@/lib/content'
 import type { FlowDiagram as FlowDiagramData, Topic } from '@/lib/schemas'
 import type { LabStore } from '@/lib/simulation/labStore'
 import { usePreferences } from '@/stores/preferences'
@@ -15,6 +16,8 @@ import { useProgress } from '@/stores/progress'
 import { FlowDiagram } from './FlowDiagram'
 import { KeyConcepts, Misconceptions, PracticalExamples, RelatedTopics, SourcesAndAttribution } from './LessonDetails'
 import { LessonActions, LessonHeader } from './LessonHeader'
+import { EngineeringHistoryNote } from './EngineeringHistoryNote'
+import { LessonJourney } from './LessonJourney'
 import { LessonComponents } from './LessonComponents'
 import { LessonQuiz } from './LessonQuiz'
 import { LessonSection } from './LessonSection'
@@ -54,6 +57,7 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
   const lab = topic.labId && store ? getLab(topic.labId) : undefined
 
   const visit = useProgress((s) => s.visit)
+  const completed = useProgress((s) => s.completed)
   useEffect(() => {
     visit(topic.id)
   }, [topic.id, visit])
@@ -64,7 +68,17 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
   const prereqIds = new Set(prerequisites.map((t) => t.id))
   const related = getRelatedTopics(topic).filter((t) => !prereqIds.has(t.id))
   const inCategory = sortForLearning(getTopicsInCategory(topic.categoryId))
-  const upNext = inCategory[inCategory.findIndex((t) => t.id === topic.id) + 1] ?? related[0]
+  const pathProgress = learningPaths
+    .filter((path) => path.topicIds.includes(topic.id))
+    .map((path) => resolvePathProgress(path, getTopic, completed))
+    .filter((path) => path.topics.some((item) => item.id === topic.id))
+    .sort((a, b) => {
+      const levelOrder = { beginner: 0, intermediate: 1, advanced: 2 }
+      return levelOrder[a.path.level] - levelOrder[b.path.level] || a.path.order - b.path.order
+    })[0]
+  const routeTopics = pathProgress?.topics ?? inCategory
+  const currentRouteIndex = routeTopics.findIndex((item) => item.id === topic.id)
+  const routeNext = routeTopics.slice(currentRouteIndex + 1).find((item) => !completed[item.id])
 
   const revealScene = () => revealElement(sceneRef.current, reduced)
   const showCue = (cue: string) => {
@@ -95,6 +109,11 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
           ))}
         </div>
       ),
+    },
+    !!topic.historyNote && {
+      id: 'history',
+      title: 'Engineering history',
+      content: <EngineeringHistoryNote note={topic.historyNote} />,
     },
     topic.learningObjectives.length > 0 && {
       id: 'objectives',
@@ -175,6 +194,9 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
     <div ref={rootRef}>
       <div className="mx-auto max-w-6xl px-4 pb-6 pt-6 sm:px-6 lg:pt-10">
         <LessonHeader topic={topic} category={category} interactive={!!lab} />
+        <div className="mt-5">
+          <LessonJourney topic={topic} category={category} routeTopics={routeTopics} path={pathProgress} />
+        </div>
       </div>
 
       <LessonBar title={topic.title} sections={visible} />
@@ -186,7 +208,7 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
           </LessonSection>
         ))}
 
-        <LessonFooter topic={topic} upNext={upNext && upNext.id !== topic.id ? upNext : undefined} />
+        <LessonFooter topic={topic} upNext={routeNext && routeNext.id !== topic.id ? routeNext : undefined} />
       </article>
     </div>
   )

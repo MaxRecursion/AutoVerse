@@ -21,6 +21,16 @@ export const SourceReferenceSchema = z.object({
   note: z.string().optional(),
 })
 
+/** A concise, sourced story about the people behind a technical milestone. */
+export const EngineeringHistoryNoteSchema = z.object({
+  person: z.string().min(1),
+  contribution: z.string().min(1),
+  /** Display text for an exact year, range, or era. */
+  year: z.string().min(1),
+  anecdote: z.string().min(1),
+  source: SourceReferenceSchema,
+})
+
 export const LicenceSchema = z.object({
   name: z.string().min(1),
   url: z.url().optional(),
@@ -98,6 +108,7 @@ export const TopicSchema = z.object({
     .default([]),
   misconceptions: z.array(z.object({ myth: z.string().min(1), reality: z.string().min(1) })).default([]),
   practicalExamples: z.array(z.string().min(1)).default([]),
+  historyNote: EngineeringHistoryNoteSchema.optional(),
   relatedTopicIds: z.array(id).default([]),
   prerequisiteTopicIds: z.array(id).default([]),
   quiz: z.array(QuizQuestionSchema).default([]),
@@ -204,6 +215,7 @@ export type ContentStatus = z.infer<typeof ContentStatusSchema>
 export type ExplanationLevel = z.infer<typeof ExplanationLevelSchema>
 export type Category = z.infer<typeof CategorySchema>
 export type Topic = z.infer<typeof TopicSchema>
+export type EngineeringHistoryNote = z.infer<typeof EngineeringHistoryNoteSchema>
 export type Step = z.infer<typeof StepSchema>
 export type QuizQuestion = z.infer<typeof QuizQuestionSchema>
 export type FlowDiagram = z.infer<typeof FlowDiagramSchema>

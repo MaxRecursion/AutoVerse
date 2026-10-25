@@ -176,6 +176,17 @@
       "note": "Further reading. AutoVerse text is original."
     }
   ],
+  "historyNote": {
+    "person": "Nikolaus August Otto and Eugen Langen",
+    "contribution": "Developed the practical four-stroke gas engine that shaped later combustion engines",
+    "year": "1867–1876",
+    "anecdote": "With Langen's financial backing, Otto's earlier gas engine won a gold medal at the 1867 Paris Exposition for its low fuel use. Their work continued, and Otto realized the four-stroke engine in 1876—a reminder that major engine advances often grew from a team and a sequence of prototypes.",
+    "source": {
+      "title": "Kraftmaschinen (in German)",
+      "url": "https://www.deutsches-museum.de/assets/Verlag/Download/Kultur_und_Technik/2007/Kultur_Technik_2007_Heft1.pdf",
+      "publisher": "Deutsches Museum"
+    }
+  },
   "licence": { "name": "AutoVerse original content" },
   "contentStatus": "complete"
 }

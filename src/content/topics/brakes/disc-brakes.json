@@ -211,6 +211,17 @@
       "note": "Further reading on an external site. Linked only; AutoVerse lesson text is written independently."
     }
   ],
+  "historyNote": {
+    "person": "Frederick S. Duesenberg",
+    "contribution": "Put four-wheel hydraulic brakes into production automobiles with the Model A",
+    "year": "1921",
+    "anecdote": "Four-wheel brakes and hydraulic braking each had earlier pioneers. Duesenberg's Model A was the first production automobile to combine hydraulic brakes on all four wheels, reducing stopping distances as cars became faster.",
+    "source": {
+      "title": "Duesenberg 4-Wheel Hydraulic Braking System",
+      "url": "https://www.asme.org/about-asme/engineering-history/landmarks/284-duesenberg-4-wheel-hydraulic-braking-system",
+      "publisher": "ASME"
+    }
+  },
   "licence": { "name": "AutoVerse original content" },
   "contentStatus": "complete"
 }

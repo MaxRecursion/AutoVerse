@@ -107,6 +107,17 @@
     {"title":"The engine","url":"https://www.howacarworks.com/basics/the-engine","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
     {"title":"How the transmission works","url":"https://www.howacarworks.com/basics/how-the-transmission-works","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
   ],
+  "historyNote": {
+    "person": "Bertha Benz",
+    "contribution": "Demonstrated the practical value of the motor car with an early long-distance drive",
+    "year": "1888",
+    "anecdote": "She set off from Mannheim toward Pforzheim with her sons, without telling Carl Benz. Along the way, a chemist's shop supplied more ligroin fuel, turning a road trip into an early lesson in what drivers and vehicles needed beyond the workshop.",
+    "source": {
+      "title": "Bertha Benz",
+      "url": "https://group.mercedes-benz.com/company/tradition/founders-pioneers/bertha-benz.html",
+      "publisher": "Mercedes-Benz Group"
+    }
+  },
   "licence": { "name": "AutoVerse original content" },
   "contentStatus": "complete"
 }

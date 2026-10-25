@@ -109,6 +109,17 @@
     {"title":"Avoiding tyre wear","url":"https://www.howacarworks.com/wheels-and-tyres/avoiding-tyre-wear","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."},
     {"title":"Tyres","url":"https://www.howacarworks.com/advanced-driving/tyres","publisher":"How a Car Works","accessed":"2026-10-21","note":"Further reading on an external site. Linked only; AutoVerse lesson text is written independently."}
   ],
+  "historyNote": {
+    "person": "John Boyd Dunlop",
+    "contribution": "Developed a practical pneumatic tyre with an inner tube",
+    "year": "1888",
+    "anecdote": "Dunlop started experimenting after his son complained about the rough ride of his tricycle. An air-filled rubber tyre made it more comfortable. The idea had an earlier pioneer too: Robert William Thomson patented a pneumatic tyre decades before, but Dunlop's version proved practical for bicycles and later cars.",
+    "source": {
+      "title": "The Dunlop tyre: Air apparent",
+      "url": "https://blog.nms.ac.uk/discover-catalogue/dunlop-tyre-air-apparent",
+      "publisher": "National Museums Scotland"
+    }
+  },
   "licence": { "name": "AutoVerse original content" },
   "contentStatus": "complete"
 }
