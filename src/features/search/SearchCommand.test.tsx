@@ -2,6 +2,7 @@ import { act, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { createMemoryRouter, RouterProvider, useParams } from 'react-router'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { usePreferences } from '@/stores/preferences'
 import { useProgress } from '@/stores/progress'
 import { openSearch } from './events'
 import { SearchCommand } from './SearchCommand'
@@ -36,6 +37,7 @@ function setup() {
       },
       { path: '/topics/:slug', element: <Lesson /> },
       { path: '/labs/:labId', element: <h1>Lab page</h1> },
+      { path: '/glossary', element: <h1>Glossary</h1> },
     ],
     { initialEntries: ['/'] },
   )
@@ -98,6 +100,24 @@ describe('SearchCommand', () => {
     const options = within(recent).getAllByRole('option')
     expect(options).toHaveLength(1)
     expect(options[0]).toHaveTextContent('Fixture ignition')
+  })
+
+  it('reaches every page and the app actions, by keyboard alone', async () => {
+    const user = userEvent.setup()
+    usePreferences.getState().setLevel('beginner')
+    const router = setup()
+    await user.keyboard('{Control>}k{/Control}')
+    const dialog = await screen.findByRole('dialog')
+    expect(within(within(dialog).getByRole('group', { name: 'Pages' })).getAllByRole('option')).toHaveLength(9)
+    expect(within(dialog).getByRole('option', { name: 'Switch to technical explanations' })).toBeInTheDocument()
+
+    await user.keyboard('technical{Enter}')
+    expect(usePreferences.getState().level).toBe('technical')
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+
+    await user.keyboard('{Control>}k{/Control}')
+    await user.keyboard('glosary{Enter}')
+    expect(router.state.location.pathname).toBe('/glossary')
   })
 
   it('can be opened pre-filled from anywhere', async () => {
