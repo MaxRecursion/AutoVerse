@@ -1,7 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from '@/app/App'
-import { router, routerReady } from '@/app/router'
+import { installRoutePrefetch } from '@/app/prefetch'
+import { router, routerReady, routes } from '@/app/router'
 import { setStaticFirstPaint } from '@/lib/boot'
 import '@/styles/globals.css'
 
@@ -19,6 +20,7 @@ const stopWatching = router.subscribe((state) => {
 })
 
 await routerReady()
+installRoutePrefetch(routes, import.meta.env.BASE_URL)
 
 createRoot(container).render(
   <StrictMode>
