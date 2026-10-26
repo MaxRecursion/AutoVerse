@@ -3,6 +3,10 @@
   "slug": "spark-ignition",
   "title": "Spark Ignition and Combustion Timing",
   "summary": "How a spark plug lights the compressed charge, why the spark is timed before top dead centre, how the flame spreads to build pressure, and what knock is.",
+  "seo": {
+    "title": "How Spark Plugs and Ignition Timing Work",
+    "description": "How a spark plug lights the compressed mixture, why the spark fires before top dead centre, how the flame spreads, and what engine knock is."
+  },
   "categoryId": "fuel-ignition",
   "difficulty": "intermediate",
   "layer": "mechanism",
@@ -281,6 +285,20 @@
       "explanation": "Octane measures resistance to auto-ignition, allowing more compression or advance before knock."
     }
   ],
+  "faq": [
+    {
+      "question": "Why does the spark plug fire before top dead centre?",
+      "answer": "The flame takes time to spread through the cylinder. Firing a little before the piston reaches the top means the burning gas reaches peak pressure just after top dead centre, when it can push the piston down most effectively. Engines advance the spark further at higher speeds."
+    },
+    {
+      "question": "What is engine knock?",
+      "answer": "Knock is when part of the fuel-air mixture ignites by itself, ahead of the flame front, causing a sharp pressure spike that sounds like pinging or knocking and can damage pistons. Suitable fuel octane, a cooler charge and retarding the spark prevent it."
+    },
+    {
+      "question": "What does an ignition coil do?",
+      "answer": "It steps the car's 12-volt supply up to the many thousands of volts needed to jump the spark plug gap. Current builds a magnetic field in the coil, and when it is switched off the collapsing field induces a very high voltage in the secondary winding."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How the ignition system works",
@@ -300,5 +318,19 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Spark plug",
+      "sameAs": "https://en.wikipedia.org/wiki/Spark_plug"
+    },
+    {
+      "name": "Ignition timing",
+      "sameAs": "https://en.wikipedia.org/wiki/Ignition_timing"
+    },
+    {
+      "name": "Engine knocking",
+      "sameAs": "https://en.wikipedia.org/wiki/Engine_knocking"
+    }
+  ]
 }

@@ -3,6 +3,10 @@
   "slug": "manual-gearbox",
   "title": "The Manual Gearbox",
   "summary": "How a five-speed manual gearbox gives the engine a choice of ratios: gears that are always in mesh, a layshaft that drives them all, and synchronisers that pick which one drives the output — plus direct drive, overdrive and reverse.",
+  "seo": {
+    "title": "How a Manual Gearbox Works: Gears and Synchros",
+    "description": "How a five-speed manual transmission works: constant-mesh gears, layshaft, selector forks and synchronisers, and what happens when you change gear."
+  },
   "categoryId": "transmission",
   "difficulty": "intermediate",
   "layer": "mechanism",
@@ -370,6 +374,20 @@
       "explanation": "The 3–4 collar engages the input pinion's dog teeth, so the drive goes straight through without any loaded gear mesh, giving exactly 1 : 1."
     }
   ],
+  "faq": [
+    {
+      "question": "How does a manual gearbox work?",
+      "answer": "The input shaft drives a layshaft carrying a gear for each ratio. Matching gears on the output shaft are always in mesh but spin freely until a sliding collar, moved by the gear lever through a selector fork, locks the chosen gear to the output shaft."
+    },
+    {
+      "question": "What does a synchromesh (synchroniser) do?",
+      "answer": "Before a gear is locked, a cone clutch in the synchroniser rubs against the gear and brings its speed into line with the output shaft. Only when the speeds match can the collar slide over the dog teeth, which is what makes gear changes smooth and quiet."
+    },
+    {
+      "question": "Why do you press the clutch to change gear?",
+      "answer": "Disengaging the clutch takes engine torque off the gearbox, so the synchroniser only has to match the speed of the gearbox's own light, freely spinning parts instead of fighting the engine."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How manual gearboxes work",
@@ -389,5 +407,11 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Manual transmission",
+      "sameAs": "https://en.wikipedia.org/wiki/Manual_transmission"
+    }
+  ]
 }

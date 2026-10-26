@@ -3,6 +3,10 @@
   "slug": "gear-ratios",
   "title": "Gear Ratios and Torque Multiplication",
   "summary": "Why a car needs several ratios, how to work them out from tooth counts, and how a gearbox trades rotational speed for torque while keeping power almost unchanged, from 1st gear's leverage to overdrive.",
+  "seo": {
+    "title": "Gear Ratios and Torque Multiplication Explained",
+    "description": "How to work out a gear ratio from tooth counts, why low gears multiply torque and high gears save fuel, and how overall gearing sets speed at each rpm."
+  },
   "categoryId": "transmission",
   "difficulty": "intermediate",
   "layer": "engineering",
@@ -306,6 +310,20 @@
       "explanation": "Overdrive means a ratio below 1 : 1, so the output shaft turns faster than the engine and torque is reduced."
     }
   ],
+  "faq": [
+    {
+      "question": "How do you calculate a gear ratio?",
+      "answer": "Divide the number of teeth on the driven gear by the number on the driving gear. A 12-tooth gear driving a 36-tooth gear gives 3:1: the output turns three times more slowly than the input, with about three times the torque."
+    },
+    {
+      "question": "Why do low gears give more torque?",
+      "answer": "A low gear has a high ratio, so the output turns slower than the engine. Because power stays almost the same through the gears, slower rotation means proportionally more torque, which is what you need to pull away or climb a hill."
+    },
+    {
+      "question": "What is a final drive ratio?",
+      "answer": "It is the fixed reduction in the differential that follows the gearbox. The overall ratio in any gear is the gearbox ratio multiplied by the final drive ratio, and together with tyre size it sets how fast the car goes at a given engine speed."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How the transmission works",
@@ -325,5 +343,11 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Gear train",
+      "sameAs": "https://en.wikipedia.org/wiki/Gear_train"
+    }
+  ]
 }

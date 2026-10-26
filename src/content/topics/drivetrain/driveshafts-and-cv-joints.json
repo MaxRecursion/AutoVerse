@@ -3,6 +3,10 @@
   "slug": "driveshafts-and-cv-joints",
   "title": "Driveshafts and CV Joints",
   "summary": "Wheels move up and down and steer, yet they must keep receiving smooth drive. Learn how propshafts, universal joints and constant-velocity joints carry torque through changing angles — and why a torn rubber boot can end in a clicking joint.",
+  "seo": {
+    "title": "How Driveshafts and CV Joints Work",
+    "description": "How propshafts, universal joints and constant-velocity joints carry drive to wheels that steer and bounce, and what a clicking CV joint is telling you."
+  },
   "categoryId": "drivetrain",
   "difficulty": "intermediate",
   "layer": "mechanism",
@@ -188,6 +192,20 @@
       "explanation": "Outer CV joints work at their largest angles on full lock, where wear in the ball tracks becomes audible under load."
     }
   ],
+  "faq": [
+    {
+      "question": "What is a CV joint?",
+      "answer": "A constant-velocity joint transmits drive through an angle without the speed pulsing within each turn. Front-wheel-drive cars use them at both ends of each driveshaft, so the wheel can steer and move with the suspension while still receiving smooth drive."
+    },
+    {
+      "question": "What is the difference between a propshaft and a driveshaft?",
+      "answer": "A propshaft (propeller shaft) carries drive along the car, typically from the gearbox to a rear differential. Driveshafts, or half-shafts, carry drive from the differential out to the individual wheels."
+    },
+    {
+      "question": "What does a clicking noise when turning mean?",
+      "answer": "A rhythmic click from the front when accelerating through a tight turn is the classic sign of a worn outer CV joint, often after its rubber boot has split, letting the grease out and dirt in."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How to check U-Joints",
@@ -207,5 +225,19 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Constant-velocity joint",
+      "sameAs": "https://en.wikipedia.org/wiki/Constant-velocity_joint"
+    },
+    {
+      "name": "Drive shaft",
+      "sameAs": "https://en.wikipedia.org/wiki/Drive_shaft"
+    },
+    {
+      "name": "Universal joint",
+      "sameAs": "https://en.wikipedia.org/wiki/Universal_joint"
+    }
+  ]
 }

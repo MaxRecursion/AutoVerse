@@ -3,6 +3,10 @@
   "slug": "lubrication-system",
   "title": "Lubrication System",
   "summary": "Engine oil keeps rotating metal parts from ever touching by holding them apart on a pressurised film. Learn how the pump, filter and galleries feed the bearings, what viscosity grades mean, and why oil pressure warnings are urgent.",
+  "seo": {
+    "title": "How Engine Oil and Lubrication Systems Work",
+    "description": "How engine oil keeps metal parts apart: oil pump, filter and galleries, the pressurised oil film in bearings, viscosity grades, and the oil warning light."
+  },
   "categoryId": "cooling-lubrication",
   "difficulty": "intermediate",
   "layer": "mechanism",
@@ -203,6 +207,20 @@
       "explanation": "Unfiltered oil is far better than no oil; the bypass ensures the bearings are never starved."
     }
   ],
+  "faq": [
+    {
+      "question": "What does engine oil actually do?",
+      "answer": "Its main job is to stop moving parts touching: in the bearings it forms a pressurised film that holds the metal surfaces apart. It also carries heat away, keeps dirt suspended until the filter catches it, protects against corrosion and helps the piston rings seal."
+    },
+    {
+      "question": "What do oil viscosity grades like 5W-30 mean?",
+      "answer": "The number before the W describes how easily the oil flows when cold, and a lower number flows better for cold starts. The second number describes its thickness at normal operating temperature. Always use the grade the vehicle's manufacturer specifies."
+    },
+    {
+      "question": "What does the oil pressure warning light mean?",
+      "answer": "It means oil pressure has fallen too low to protect the engine, often because the oil level is very low or the pump has a problem. Stop as soon as it is safe and switch the engine off, because running without oil pressure can destroy the bearings within minutes."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How an oil pressure gauge works",
@@ -222,5 +240,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Motor oil",
+      "sameAs": "https://en.wikipedia.org/wiki/Motor_oil"
+    },
+    {
+      "name": "Lubrication",
+      "sameAs": "https://en.wikipedia.org/wiki/Lubrication"
+    }
+  ]
 }

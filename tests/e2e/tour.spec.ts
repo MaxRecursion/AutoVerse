@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { open, reload } from './helpers'
 import { TOUR_STEPS } from '../../src/features/tour/steps'
 
 /** The tour, in a real browser: every spotlight must land on a real element, across pages, on desktop and a phone. */
@@ -24,7 +25,7 @@ async function expectSpotlightOn(page: Page, selectors: string[]) {
 test.describe('product tour', () => {
   test('walks every step, spotlighting the real element on each page, then hands over to learning', async ({ page, isMobile }) => {
     test.setTimeout(90_000) // three real pages, two with software-rendered 3D
-    await page.goto('/learn')
+    await open(page, '/learn')
     await startFromHeader(page)
     const dialog = page.getByRole('dialog')
 
@@ -65,7 +66,7 @@ test.describe('product tour', () => {
   })
 
   test('Esc leaves the tour and puts the learner back where they started', async ({ page }) => {
-    await page.goto('/learn/engine')
+    await open(page, '/learn/engine')
     await startFromHeader(page)
     await expect(page).toHaveURL(/\/$/) // step 1 lives on the home page
     await page.getByRole('dialog').getByRole('button', { name: 'Next' }).click()
@@ -76,7 +77,7 @@ test.describe('product tour', () => {
   })
 
   test('keyboard: arrows move between steps and focus lands on each heading', async ({ page }) => {
-    await page.goto('/')
+    await open(page, '/')
     await startFromHeader(page)
     const heading = page.getByRole('dialog').getByRole('heading', { level: 2 })
     await expect(heading).toBeFocused()
@@ -90,19 +91,19 @@ test.describe('product tour', () => {
 
 test.describe('invitation', () => {
   test('is offered once to a new visitor, and never again after "No thanks"', async ({ page }) => {
-    await page.goto('/')
+    await open(page, '/')
     const invite = page.getByRole('region', { name: 'Product tour invitation' })
     // Generous: headless Chromium renders the 3D hero in software, which delays the invitation's timer.
     await expect(invite).toBeVisible({ timeout: 20_000 })
     await invite.getByRole('button', { name: 'No thanks' }).click()
     await expect(invite).toHaveCount(0)
-    await page.reload()
+    await reload(page)
     await page.waitForTimeout(6000)
     await expect(invite).toHaveCount(0)
   })
 
   test('"Show me around" starts the tour', async ({ page }) => {
-    await page.goto('/')
+    await open(page, '/')
     await page.getByRole('region', { name: 'Product tour invitation' }).getByRole('button', { name: 'Show me around' }).click({ timeout: 20_000 })
     await expect(page.getByRole('dialog')).toContainText('Welcome to AutoVerse')
   })

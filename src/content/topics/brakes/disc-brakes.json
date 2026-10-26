@@ -3,6 +3,10 @@
   "slug": "disc-brakes",
   "title": "Disc Brakes",
   "summary": "A disc brake slows the wheel by squeezing pads onto a spinning iron disc. Follow one stop from the pedal to the pads, see how a small push becomes tonnes of clamp, and watch the car’s movement energy turn into heat.",
+  "seo": {
+    "title": "How Disc Brakes Work: Pads, Calipers and Heat",
+    "description": "How disc brakes stop a car: pads squeezed onto a spinning disc turn kinetic energy into heat. See a stop in 3D, learn brake fade and why discs are vented."
+  },
   "categoryId": "brakes",
   "difficulty": "beginner",
   "layer": "mechanism",
@@ -317,6 +321,24 @@
       "explanation": "The tyre can push on the road with at most μ times the load, so a_max = μg ≈ 0.7 g. Brake harder and the wheel locks instead."
     }
   ],
+  "faq": [
+    {
+      "question": "How do disc brakes work?",
+      "answer": "Hydraulic pressure pushes pistons in a caliper, which squeeze friction pads against both faces of a metal disc that turns with the wheel. The friction slows the disc, and with it the wheel, turning the car's kinetic energy into heat in the disc and pads."
+    },
+    {
+      "question": "What is brake fade?",
+      "answer": "Fade is a loss of stopping power after hard or repeated braking, when the pads and discs get so hot that their friction drops, or the brake fluid boils and the pedal goes soft. It recovers as the brakes cool."
+    },
+    {
+      "question": "Why are some brake discs vented?",
+      "answer": "A vented disc has two faces joined by internal vanes that pump air through it, helping it shed heat between stops. Better cooling resists fade, which is why the heavily loaded front brakes are usually vented."
+    },
+    {
+      "question": "What is the difference between disc and drum brakes?",
+      "answer": "A disc brake squeezes pads onto a disc that is open to the air, so it cools well and resists fade. A drum brake pushes shoes outward against the inside of a rotating drum, which is cheaper and makes a simple parking brake but sheds heat less easily."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How the braking system works",
@@ -336,5 +358,11 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Disc brake",
+      "sameAs": "https://en.wikipedia.org/wiki/Disc_brake"
+    }
+  ]
 }

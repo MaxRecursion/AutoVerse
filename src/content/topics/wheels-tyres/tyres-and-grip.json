@@ -3,6 +3,10 @@
   "slug": "tyres-and-grip",
   "title": "Tyres and Grip",
   "summary": "Every force that accelerates, brakes or steers a car passes through four tyre contact patches, each roughly the size of a postcard. Learn how grip is generated, why tyres must slip a little to work, and how pressure, tread and the friction circle set the limits.",
+  "seo": {
+    "title": "How Tyres (Tires) Grip the Road: Contact Patch",
+    "description": "How tyres grip: the postcard-sized contact patch, friction and slip, why braking and cornering share grip, and what tread, pressure and heat change."
+  },
   "categoryId": "wheels-tyres",
   "difficulty": "beginner",
   "layer": "surface",
@@ -202,6 +206,24 @@
       "explanation": "55 is the aspect ratio: sidewall height is 55% of the 205 mm section width."
     }
   ],
+  "faq": [
+    {
+      "question": "How do car tyres grip the road?",
+      "answer": "The rubber in each contact patch deforms into the tiny bumps of the road surface and bonds to it on a microscopic level, and the tyre transmits force by stretching slightly, which is called slip. Grip depends on the load on the tyre, its rubber compound, its temperature and the surface."
+    },
+    {
+      "question": "What is the tyre contact patch?",
+      "answer": "It is the area of tread touching the road at any moment, roughly the size of a postcard for a normal car tyre. Every force that accelerates, brakes or steers the car passes through these four small patches."
+    },
+    {
+      "question": "Why do tyres have tread?",
+      "answer": "Grooves give water somewhere to go, so the rubber can stay in contact with the road in the wet. With too little tread depth, water builds up under the tyre faster than it can escape and the car can aquaplane."
+    },
+    {
+      "question": "Does tyre pressure affect grip?",
+      "answer": "Yes. Under-inflation overheats the sidewalls and makes steering vague, while over-inflation shrinks the contact patch and reduces grip. Use the pressures on the vehicle's placard, checked when the tyres are cold."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "Avoiding tyre wear",
@@ -221,5 +243,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Tire",
+      "sameAs": "https://en.wikipedia.org/wiki/Tire"
+    },
+    {
+      "name": "Contact patch",
+      "sameAs": "https://en.wikipedia.org/wiki/Contact_patch"
+    }
+  ]
 }

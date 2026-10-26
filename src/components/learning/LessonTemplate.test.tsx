@@ -98,6 +98,7 @@ describe('LessonTemplate', () => {
       'Key components',
       'How it flows',
       'Go deeper',
+      'Common questions',
       'Check your understanding',
       'Related lessons',
       'Sources & attribution',
@@ -115,6 +116,23 @@ describe('LessonTemplate', () => {
     const parts = within(screen.getByRole('region', { name: 'Key components' }))
     expect(parts.getAllByRole('button').map((b) => b.querySelector('span span')?.textContent)).toEqual(['Fixture piston', 'Fixture crankshaft'])
     expect(screen.queryByText(/fixture-missing-part/)).not.toBeInTheDocument()
+  })
+
+  it('keeps both explanation levels in the page: the other one is a Go deeper panel', () => {
+    renderLesson()
+    const deeper = within(screen.getByRole('region', { name: 'Go deeper' }))
+    expect(deeper.getByText('The engineering explanation')).toBeInTheDocument()
+    expect(deeper.getByText('Technical intro paragraph with thermodynamic detail.')).toBeInTheDocument()
+    act(() => usePreferences.getState().setLevel('technical'))
+    expect(deeper.getByText('The plain-language version')).toBeInTheDocument()
+    expect(deeper.getByText('Beginner intro paragraph one.')).toBeInTheDocument()
+  })
+
+  it('answers common questions in the page, each question a heading', () => {
+    renderLesson()
+    const questions = within(screen.getByRole('region', { name: 'Common questions' }))
+    expect(questions.getByRole('heading', { level: 3, name: 'Why does the cycle take two crank turns?' })).toBeInTheDocument()
+    expect(questions.getByText(/half a crankshaft turn/)).toBeInTheDocument()
   })
 
   it('records the visit on mount', () => {
@@ -235,7 +253,8 @@ describe('LessonTemplate', () => {
     const headings = sectionHeadings()
     expect(headings.slice(0, 2)).toEqual(['The idea', 'What you will learn'])
     expect(headings.at(-1)).toBe('Sources & attribution')
-    for (const empty of ['Try it yourself', 'How it flows', 'Key components', 'Step by step', 'Go deeper', 'Check your understanding']) {
+    // "Go deeper" stays: it always offers the other explanation level.
+    for (const empty of ['Try it yourself', 'How it flows', 'Key components', 'Step by step', 'Common questions', 'Check your understanding']) {
       expect(headings).not.toContain(empty)
     }
     expect(screen.queryByTestId('lab-host')).not.toBeInTheDocument()

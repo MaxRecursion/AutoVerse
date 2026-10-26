@@ -3,6 +3,10 @@
   "slug": "drivetrain-layouts",
   "title": "Drivetrain Layouts",
   "summary": "Front-, rear- and all-wheel drive differ in which wheels push the car and where the heavy parts sit. Compare packaging, traction, handling balance and efficiency, and see how weight transfer decides which layout grips best when accelerating.",
+  "seo": {
+    "title": "FWD vs RWD vs AWD: Drivetrain Layouts Explained",
+    "description": "Front-, rear- and all-wheel drive compared: which wheels push the car, where the engine and gearbox sit, and how layout affects traction and handling."
+  },
   "categoryId": "drivetrain",
   "difficulty": "beginner",
   "layer": "surface",
@@ -204,6 +208,20 @@
       "explanation": "On loose surfaces the tyres can slip slightly to relieve wind-up; on grippy roads the locked axles fight each other."
     }
   ],
+  "faq": [
+    {
+      "question": "What is the difference between FWD, RWD and AWD?",
+      "answer": "Front-wheel drive sends power to the front wheels, which also steer; rear-wheel drive sends it to the rear wheels; all-wheel drive can drive all four. The choice changes packaging, weight distribution, traction and how the car behaves near its limits."
+    },
+    {
+      "question": "Why are most small cars front-wheel drive?",
+      "answer": "Mounting the engine across the car, with the gearbox and differential combined in one transaxle, puts the whole drivetrain at the front. There is no propshaft running back, which saves weight, cost and cabin space, and the engine's weight over the driven wheels helps traction."
+    },
+    {
+      "question": "Is all-wheel drive better in snow?",
+      "answer": "All-wheel drive helps you pull away and accelerate on slippery roads because the drive is shared between four tyres. It does not help you stop or corner, which depends on the tyres' grip, so good winter tyres matter more."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How the transmission works",
@@ -216,5 +234,23 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Powertrain layout",
+      "sameAs": "https://en.wikipedia.org/wiki/Powertrain_layout"
+    },
+    {
+      "name": "Front-wheel drive",
+      "sameAs": "https://en.wikipedia.org/wiki/Front-wheel_drive"
+    },
+    {
+      "name": "Rear-wheel drive",
+      "sameAs": "https://en.wikipedia.org/wiki/Rear-wheel_drive"
+    },
+    {
+      "name": "All-wheel drive vehicle",
+      "sameAs": "https://en.wikipedia.org/wiki/All-wheel_drive_vehicle"
+    }
+  ]
 }

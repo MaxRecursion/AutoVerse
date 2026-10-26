@@ -101,6 +101,19 @@ describe('bundled content', () => {
     expect(orders).toEqual([...orders].sort((a, b) => a - b))
   })
 
+  it('gives every lesson search copy, common questions and the subject it is about', () => {
+    for (const t of topics) {
+      expect(t.seo, t.id).toBeDefined()
+      expect(t.faq.length, t.id).toBeGreaterThanOrEqual(3)
+      for (const q of t.faq) expect(q.question, t.id).toMatch(/\?$/)
+      expect(t.about.length, t.id).toBeGreaterThanOrEqual(1)
+      for (const a of t.about) expect(a.sameAs, t.id).toMatch(/^https:\/\/en\.wikipedia\.org\/wiki\/\S+$/)
+    }
+    // Pages with the same title or description compete with each other in search.
+    expect(duplicatesOf(topics.map((t) => t.seo?.title ?? ''))).toEqual([])
+    expect(duplicatesOf(topics.map((t) => t.seo?.description ?? ''))).toEqual([])
+  })
+
   it('never lists a topic as related to itself', () => {
     for (const t of topics) expect(getRelatedTopics(t).map((r) => r.id)).not.toContain(t.id)
   })

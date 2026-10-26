@@ -3,6 +3,10 @@
   "slug": "differential",
   "title": "The Differential",
   "summary": "In a corner the outside wheel travels further than the inside wheel, so driven wheels cannot be locked together. The differential lets them turn at different speeds while still sharing torque — and adds the final gear reduction on the way.",
+  "seo": {
+    "title": "How a Car Differential Works (Open vs LSD)",
+    "description": "Why wheels must turn at different speeds in a corner, how an open differential's gears allow it, and how limited-slip and locking diffs help traction."
+  },
   "categoryId": "drivetrain",
   "difficulty": "intermediate",
   "layer": "mechanism",
@@ -205,6 +209,20 @@
       "explanation": "Torque is split equally, so the gripping wheel is limited to the tiny torque the icy wheel can resist."
     }
   ],
+  "faq": [
+    {
+      "question": "What does a differential do?",
+      "answer": "It lets the two driven wheels on an axle turn at different speeds while both are still driven. In a corner the outside wheel travels further than the inside one, so without a differential one tyre would have to scrub or skip."
+    },
+    {
+      "question": "Why does a car get stuck with one wheel spinning?",
+      "answer": "An open differential always sends equal torque to both wheels. If one wheel is on ice it can take only a tiny torque before it spins, so the wheel with grip receives the same tiny amount and the car goes nowhere."
+    },
+    {
+      "question": "What is a limited-slip differential?",
+      "answer": "It is a differential that resists large speed differences between the wheels, using clutches, gears or viscous fluid. When one wheel starts to spin it sends more torque to the wheel with grip, improving traction without locking the wheels together all the time."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How the transmission works",
@@ -217,5 +235,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Differential (mechanical device)",
+      "sameAs": "https://en.wikipedia.org/wiki/Differential_(mechanical_device)"
+    },
+    {
+      "name": "Limited-slip differential",
+      "sameAs": "https://en.wikipedia.org/wiki/Limited-slip_differential"
+    }
+  ]
 }

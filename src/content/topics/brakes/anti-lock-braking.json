@@ -3,6 +3,10 @@
   "slug": "anti-lock-braking",
   "title": "Anti-lock Braking (ABS)",
   "summary": "Brake harder than the tyres can grip and a wheel locks: the car slides, stops later and will not steer. ABS watches every wheel’s speed and, many times a second, eases and restores the pressure to keep each tyre turning near its best grip.",
+  "seo": {
+    "title": "How ABS Works: Anti-lock Brakes Explained",
+    "description": "Why a locked wheel slides and cannot steer, how ABS senses wheel speed and pulses brake pressure many times a second, and what the pedal judder means."
+  },
   "categoryId": "brakes",
   "difficulty": "intermediate",
   "layer": "engineering",
@@ -323,6 +327,20 @@
       "explanation": "Each passing tooth on the tone ring (or magnetic pole in the bearing) produces a pulse; the pulse rate gives wheel speed, from which the computer works out slip."
     }
   ],
+  "faq": [
+    {
+      "question": "How does ABS work?",
+      "answer": "Sensors measure every wheel's speed. If a wheel starts slowing much faster than the car, a sign it is about to lock, the ABS unit briefly releases, holds and reapplies that wheel's brake pressure, many times a second, keeping the tyre just short of locking."
+    },
+    {
+      "question": "Why does the brake pedal judder when ABS works?",
+      "answer": "The ABS valves are rapidly changing the brake pressure, and those pulses are felt through the pedal, often with a buzzing noise. It is normal: keep pressing firmly and steer where you want to go."
+    },
+    {
+      "question": "Does ABS make a car stop shorter?",
+      "answer": "On most surfaces it stops at least as short, but its main benefit is that you can still steer while braking hard. On loose gravel or deep snow a locked wheel can build up a wedge of material and sometimes stop a little shorter."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How ABS works",
@@ -342,5 +360,11 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Anti-lock braking system",
+      "sameAs": "https://en.wikipedia.org/wiki/Anti-lock_braking_system"
+    }
+  ]
 }

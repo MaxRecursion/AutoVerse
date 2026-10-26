@@ -3,6 +3,10 @@
   "slug": "hybrid-and-electric-drives",
   "title": "Hybrid and Electric Drives",
   "summary": "Electric motors deliver strong torque from standstill, run efficiently and can turn braking energy back into charge. Learn how a battery, inverter and motor drive an electric car, and how mild, full and plug-in hybrids share the work with an engine.",
+  "seo": {
+    "title": "How Hybrid and Electric Cars Work",
+    "description": "How electric and hybrid cars drive: battery, inverter and motor, instant torque, regenerative braking, and how series, parallel and plug-in hybrids differ."
+  },
   "categoryId": "aero-technology",
   "difficulty": "intermediate",
   "layer": "engineering",
@@ -207,9 +211,41 @@
       "explanation": "It synthesises three-phase AC of the right frequency and amplitude to produce the requested torque, and reverses the flow during regeneration."
     }
   ],
+  "faq": [
+    {
+      "question": "How does an electric car work?",
+      "answer": "A battery pack stores energy as direct current. An inverter converts it into the alternating current that drives an electric motor, usually through a single fixed reduction gear, and the same motor can run as a generator to recover energy when the car slows."
+    },
+    {
+      "question": "What is regenerative braking?",
+      "answer": "When you lift off or brake, the motor runs as a generator, turning some of the car's kinetic energy back into electricity to recharge the battery instead of wasting all of it as heat in the brakes."
+    },
+    {
+      "question": "What is the difference between a hybrid and a plug-in hybrid?",
+      "answer": "A conventional hybrid charges its small battery only from the engine and from regenerative braking. A plug-in hybrid has a larger battery that can also be charged from the mains, so it can drive useful distances on electricity alone."
+    },
+    {
+      "question": "Why do electric cars accelerate so quickly from a standstill?",
+      "answer": "Electric motors produce strong torque from zero rpm and respond almost instantly, so they deliver their pull immediately, without waiting for an engine to rev or a gearbox to shift."
+    }
+  ],
   "sourceReferences": [],
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Electric car",
+      "sameAs": "https://en.wikipedia.org/wiki/Electric_car"
+    },
+    {
+      "name": "Hybrid electric vehicle",
+      "sameAs": "https://en.wikipedia.org/wiki/Hybrid_electric_vehicle"
+    },
+    {
+      "name": "Regenerative braking",
+      "sameAs": "https://en.wikipedia.org/wiki/Regenerative_braking"
+    }
+  ]
 }

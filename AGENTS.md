@@ -12,6 +12,7 @@ AutoVerse is a static-first React/TypeScript app. Pages are in `src/pages/`, sha
 - `npm run typecheck` and `npm run lint` check TypeScript and ESLint.
 - `npm test` runs Vitest; `npm run test:e2e` runs Playwright specs when present.
 - `npm run validate:content -- --strict` validates lesson schemas and cross-references.
+- `npm run og:images` redraws the share images in `public/og/` after adding pages or changing titles and descriptions; commit them (a test fails when they are out of date).
 
 ## Style and Naming
 
@@ -27,7 +28,11 @@ Use short, imperative commit subjects (for example, `Add transmission lesson`). 
 
 ## GitHub Pages
 
-`.github/workflows/deploy-pages.yml` deploys `dist/` on pushes to `main`. Keep `PUBLIC_BASE_PATH` and `SITE_URL` aligned with `/AutoVerse/` so assets, router links, prerendered links, and canonical URLs work at the repository subpath.
+`.github/workflows/deploy-pages.yml` deploys `dist/` on pushes to `main`. Keep `PUBLIC_BASE_PATH` and `SITE_URL` aligned with `/AutoVerse/` so assets, router links, prerendered links, and canonical URLs work at the repository subpath. Optional repository variables `GOOGLE_SITE_VERIFICATION`, `BING_SITE_VERIFICATION` and `INDEXNOW_KEY` turn on search-console verification tags and IndexNow pings (see `docs/SEO.md`).
+
+## Search and Static Rendering
+
+Every public page is rendered to HTML at build time from `src/app/routes.tsx` (`src/entry-server.tsx`, `scripts/prerender/`). Components must not touch `window`, `document` or `localStorage` during render, and collapsed content stays in the DOM with `hidden`. Browser tests wait for `html[data-app="ready"]` before clicking. Every lesson needs `seo` (title up to 60 characters, description 70–160, both unique), three or four `faq` entries in original wording that the lesson supports, and `about` (Wikipedia article URLs checked to exist). New pages also need metadata in `scripts/prerender/routes.ts` and `npm run og:images`. Details in `docs/ARCHITECTURE.md` and `docs/SEO.md`.
 
 ## Content and Learning Flow
 

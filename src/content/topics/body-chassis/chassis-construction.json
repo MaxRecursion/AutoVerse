@@ -3,6 +3,10 @@
   "slug": "chassis-construction",
   "title": "Chassis Construction",
   "summary": "A car's structure must carry loads, resist twisting, protect occupants and stay light. Compare ladder frames, monocoques and space frames, and see how crumple zones and a rigid safety cell manage crash energy.",
+  "seo": {
+    "title": "Monocoque vs Ladder Frame: How Car Chassis Work",
+    "description": "How a car's structure carries loads and protects occupants: ladder frames, monocoques and space frames, torsional stiffness and crumple zones."
+  },
   "categoryId": "body-chassis",
   "difficulty": "beginner",
   "layer": "surface",
@@ -191,6 +195,20 @@
       "explanation": "In a monocoque the welded body structure is the chassis; a ladder frame carries loads in separate rails."
     }
   ],
+  "faq": [
+    {
+      "question": "What is a monocoque car body?",
+      "answer": "In a monocoque, or unibody, the body shell itself is the structure: floor, pillars, roof and panels are joined into one stiff, load-bearing shell. Almost all modern cars are built this way because it is light, stiff and strong for its weight."
+    },
+    {
+      "question": "What is a ladder frame chassis?",
+      "answer": "A ladder frame is a separate, rigid frame of two long rails joined by cross-members, with the body bolted on top. It is heavy but tough and easy to adapt, so it is still used for many pickups, trucks and serious off-roaders."
+    },
+    {
+      "question": "What are crumple zones?",
+      "answer": "They are areas at the front and rear designed to deform in a controlled way in a crash. By crushing progressively they lengthen the time over which the car decelerates, which reduces the forces on the people inside the strong central cabin."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How cars are designed",
@@ -203,5 +221,19 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Vehicle frame",
+      "sameAs": "https://en.wikipedia.org/wiki/Vehicle_frame"
+    },
+    {
+      "name": "Monocoque",
+      "sameAs": "https://en.wikipedia.org/wiki/Monocoque"
+    },
+    {
+      "name": "Crumple zone",
+      "sameAs": "https://en.wikipedia.org/wiki/Crumple_zone"
+    }
+  ]
 }

@@ -3,6 +3,10 @@
   "slug": "clutch",
   "title": "The Clutch",
   "summary": "How a friction clutch connects and disconnects the engine and gearbox: a disc clamped between the flywheel and a spring-loaded pressure plate, released by the pedal. Covers the bite point, controlled slip and why slipping makes heat.",
+  "seo": {
+    "title": "How a Car Clutch Works (and Why It Slips)",
+    "description": "How a friction clutch connects and disconnects engine and gearbox: friction disc, pressure plate, release bearing, the biting point, and clutch slip."
+  },
   "categoryId": "transmission",
   "difficulty": "beginner",
   "layer": "surface",
@@ -280,6 +284,20 @@
       "explanation": "Holding on the bite point slips the clutch continuously, wearing it. The brakes are designed to hold the car."
     }
   ],
+  "faq": [
+    {
+      "question": "What does a clutch do in a car?",
+      "answer": "It connects and disconnects the engine from the gearbox. With the pedal up, springs clamp a friction disc between the flywheel and a pressure plate so they turn together; pressing the pedal releases the clamp so you can change gear or stop without stalling."
+    },
+    {
+      "question": "What is the clutch biting point?",
+      "answer": "It is the pedal position where the friction disc starts to grip and transmit torque. Around this point the clutch slips deliberately, letting the gearbox side match the engine's speed smoothly as you pull away."
+    },
+    {
+      "question": "What are the signs of a slipping clutch?",
+      "answer": "Engine speed rises but the car does not accelerate to match, especially in high gears or uphill, sometimes with a burning smell. It usually means the friction lining is worn or contaminated, so the springs can no longer clamp it firmly enough."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How a car clutch works",
@@ -299,5 +317,11 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Clutch",
+      "sameAs": "https://en.wikipedia.org/wiki/Clutch"
+    }
+  ]
 }

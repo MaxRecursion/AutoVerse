@@ -10,8 +10,9 @@ npx tsc -b --noEmit    # typecheck (npm run typecheck)
 npm run lint           # ESLint
 npm test               # Vitest (unit/component)
 npm run test:e2e       # Playwright browser tests
-npm run build          # typecheck + vite build + static prerender (scripts/prerender)
+npm run build          # typecheck + client build + server bundle + static prerender (scripts/prerender)
 npm run validate:content
+npm run og:images      # redraw the share images in public/og/ (commit them)
 ```
 
 ## Layers
@@ -24,6 +25,7 @@ npm run validate:content
 | Labs | `src/features/<name>-lab/` | `config.ts` (pure: cues, deriveCue, params) + `<Name>LabView.tsx` (lazy) + scene + pure math module + tests. Registered in `src/features/labs/registry.ts`. |
 | Learning UI | `src/components/learning/`, `src/pages/` | Lesson template, quizzes, level toggle, flow diagrams. |
 | Local progress | `src/stores/progress.ts`, `src/stores/preferences.ts` | `localStorage` only. |
+| Static rendering | `src/app/routes.tsx`, `src/entry-server.tsx`, `scripts/prerender/` | One route table for the browser router and the build. Every public page is rendered to HTML at build time; see below. |
 | Offline tooling | `scripts/` | Content discovery/import, validation, model inspection, prerender. Never bundled. |
 
 ## Simulation & animation contract
@@ -57,6 +59,16 @@ npm run validate:content
 - Simulation numbers are illustrative; say so in the UI (`disclaimer` prop on `LabWorkbench`).
 - Category ids: `basics, engine, fuel-ignition, cooling-lubrication, transmission, drivetrain, brakes, suspension-steering, wheels-tyres, electrical, hvac, body-chassis, aero-technology, maintenance, driving`.
 - Topic files: `src/content/topics/<categoryId>/<topic-id>.json` (one topic per file, `id === slug`). Component files: `src/content/components/<systemId>.json` (array).
+
+## Static rendering, search and AI discovery
+
+Why and what is in [SEO.md](SEO.md). The contract for code:
+
+- `npm run build` bundles the client, then the server entry (`vite build --ssr src/entry-server.tsx --outDir dist-ssr`), then `scripts/prerender/prerender.ts` renders every public route with React Router's static handler and `renderToString` into `dist/<path>.html` (so `/topics/x` answers 200 as `topics/x.html`, no redirect), with the page's title, description, canonical, Open Graph tags, share image and JSON-LD from `scripts/prerender/routes.ts`. It also writes a Markdown twin of each lesson, `llms.txt`, `llms-full.txt`, `sitemap.xml` (lastmod from git history), `robots.txt` and `404.html`.
+- There is no hydration: `main.tsx` waits for the router's lazy route (`routerReady()`), then `createRoot().render()` replaces the static markup in one commit. While the static markup is up, links work and buttons do not; `AppShell` sets `html[data-app="ready"]` once React owns the page, and browser tests wait for it (`tests/e2e/helpers.ts`). `isStaticFirstPaint()` keeps entrance animations off the first paint so the swap is invisible.
+- Components must render on the server: no `window`, `document` or `localStorage` during render (read them in effects or store initialisers). Collapsed content stays in the DOM with `hidden`, never unmounted, so crawlers see it.
+- A new page needs its route in `src/app/routes.tsx`, its title, description and structured data in `scripts/prerender/routes.ts`, and `npm run og:images`. Personal pages (`/progress`, certificates) are `ssr: false, noindex: true` and disallowed in robots.
+- Share images (`public/og/`, 1200×630) are drawn by `npm run og:images` from `scripts/prerender/share-cards.ts` and committed with `scripts/prerender/share-cards.json`; a test fails when they fall behind the pages or their titles.
 
 ## Learning flow
 

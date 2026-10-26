@@ -3,6 +3,10 @@
   "slug": "aerodynamics",
   "title": "Car Aerodynamics",
   "summary": "Above town speeds, pushing air aside becomes the biggest load on a car. Learn the drag equation, why drag power rises with the cube of speed, what drag coefficient and frontal area mean, and how spoilers, diffusers and smooth underbodies manage lift and drag.",
+  "seo": {
+    "title": "Car Aerodynamics: Drag, Downforce and Fuel Use",
+    "description": "How air resistance shapes cars: the drag equation, why drag power rises with the cube of speed, drag coefficient, frontal area, lift and downforce."
+  },
   "categoryId": "aero-technology",
   "difficulty": "intermediate",
   "layer": "engineering",
@@ -195,6 +199,20 @@
       "explanation": "The diffuser slows and expands the air leaving the underbody, which lowers pressure beneath the car relative to above it."
     }
   ],
+  "faq": [
+    {
+      "question": "What is a drag coefficient?",
+      "answer": "It is a number that describes how easily a shape moves through air, independent of its size. Drag force depends on the drag coefficient multiplied by the frontal area, the air density and the square of speed, so a car's total drag needs both numbers."
+    },
+    {
+      "question": "Why does fuel use rise so sharply at high speed?",
+      "answer": "Aerodynamic drag force grows with the square of speed, and the power needed to overcome it grows with the cube. Going from 100 to 130 km/h therefore needs roughly twice the power just to push through the air."
+    },
+    {
+      "question": "What is downforce?",
+      "answer": "Downforce is aerodynamic force pressing a car onto the road, produced by wings, diffusers and shaped underbodies. It increases tyre grip without adding weight but usually adds drag, which is why it matters most on racing cars."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "Car aerodynamics",
@@ -207,5 +225,19 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Automotive aerodynamics",
+      "sameAs": "https://en.wikipedia.org/wiki/Automotive_aerodynamics"
+    },
+    {
+      "name": "Drag coefficient",
+      "sameAs": "https://en.wikipedia.org/wiki/Drag_coefficient"
+    },
+    {
+      "name": "Downforce",
+      "sameAs": "https://en.wikipedia.org/wiki/Downforce"
+    }
+  ]
 }

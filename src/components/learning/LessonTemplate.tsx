@@ -93,7 +93,8 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
       hasLab: !!lab,
       stepIds: topic.steps.map((s) => s.id),
       hasFlow,
-      hasDeeper: topic.keyConcepts.length + topic.misconceptions.length + topic.practicalExamples.length > 0,
+      // The other explanation level is always offered, so every lesson can be explored more deeply.
+      hasDeeper: true,
       hasQuiz: topic.quiz.length > 0,
       hasStory: pioneers.length > 0,
     }),
@@ -146,7 +147,21 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
     </div>
   )
 
+  // The explanation at the level the reader is NOT using, so both versions are always in the page.
+  const otherLevel = level === 'beginner' ? topic.technicalExplanation : topic.beginnerExplanation
   const deeperCandidates: (DeeperPanel | false)[] = [
+    {
+      id: 'other-level',
+      title: level === 'beginner' ? 'The engineering explanation' : 'The plain-language version',
+      count: paragraphs(otherLevel).length,
+      content: (
+        <div className="flex flex-col gap-3 text-[15px] leading-relaxed text-steel-300">
+          {paragraphs(otherLevel).map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
+        </div>
+      ),
+    },
     topic.keyConcepts.length > 0 && {
       id: 'concepts',
       title: 'Key concepts',
@@ -255,6 +270,22 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
       title: 'Go deeper',
       description: 'Optional. Open a panel for the engineering detail — or switch to Technical above.',
       content: <LessonDeeper panels={deeperPanels} onOpen={() => signal(topic.id, 'deeper')} />,
+    },
+    topic.faq.length > 0 && {
+      id: 'questions',
+      stage: 'Go deeper',
+      title: 'Common questions',
+      description: 'Short answers to the questions people most often ask about this topic.',
+      content: (
+        <div className="flex flex-col gap-5">
+          {topic.faq.map((q) => (
+            <div key={q.question}>
+              <h3 className="text-base font-semibold leading-snug text-paper">{q.question}</h3>
+              <p className="mt-1.5 text-[15px] leading-relaxed text-steel-300">{q.answer}</p>
+            </div>
+          ))}
+        </div>
+      ),
     },
     topic.quiz.length > 0 && {
       id: 'quiz',

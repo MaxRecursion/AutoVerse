@@ -3,6 +3,10 @@
   "slug": "four-stroke-cycle",
   "title": "The Four-Stroke Cycle",
   "summary": "Intake, compression, power, exhaust: how a petrol engine breathes in, squeezes, burns and breathes out over two turns of the crankshaft — with the piston, valves, camshafts and spark all kept in step.",
+  "seo": {
+    "title": "How a Four-Stroke Engine Works: The 4 Strokes",
+    "description": "Intake, compression, power and exhaust: how a four-stroke petrol engine works over two crank turns, with an interactive 3D engine you can slow down."
+  },
   "categoryId": "engine",
   "difficulty": "beginner",
   "layer": "surface",
@@ -344,6 +348,20 @@
       "explanation": "CR = (450 + 50) / 50 = 10, so 10 : 1."
     }
   ],
+  "faq": [
+    {
+      "question": "What are the four strokes of an engine?",
+      "answer": "Intake: the piston moves down and draws in air and fuel. Compression: the piston rises and squeezes the mixture. Power: the spark ignites it and the hot, expanding gas pushes the piston down. Exhaust: the piston rises again and pushes the burnt gas out."
+    },
+    {
+      "question": "Why does a four-stroke engine need two crankshaft turns per cycle?",
+      "answer": "Each stroke is one trip of the piston, up or down, and each trip is half a crankshaft revolution. Four strokes therefore take two full turns, so each cylinder fires once every two revolutions and the camshaft turns at half crankshaft speed."
+    },
+    {
+      "question": "What is the difference between a two-stroke and a four-stroke engine?",
+      "answer": "A two-stroke engine completes its cycle in one crankshaft turn by combining intake and exhaust with the compression and power strokes, usually through ports in the cylinder wall. It is simpler and lighter; a four-stroke uses valves, is more fuel-efficient and runs cleaner."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "The engine - how power is created",
@@ -363,5 +381,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Four-stroke engine",
+      "sameAs": "https://en.wikipedia.org/wiki/Four-stroke_engine"
+    },
+    {
+      "name": "Otto cycle",
+      "sameAs": "https://en.wikipedia.org/wiki/Otto_cycle"
+    }
+  ]
 }

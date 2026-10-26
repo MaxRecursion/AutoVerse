@@ -9,6 +9,7 @@
 import { findReferenceErrors } from '../../src/lib/content'
 import {
   learningPathFindings,
+  searchFindings,
   sourceIndexFindings,
   sourceReferenceFindings,
   topicPathFindings,
@@ -26,6 +27,7 @@ const findings: Finding[] = [
   ...findReferenceErrors(content, labIds.length ? { labIds } : {}).map((e) => ({ ...e, level: 'error' as const })),
   ...topicPathFindings(content.topicFiles, content.topics),
   ...content.topics.flatMap(topicStatusFindings),
+  ...searchFindings(content.topics),
   ...sourceIndexFindings(content.sourceArticles, new Set(content.categories.map((c) => c.id))),
   ...learningPathFindings(content.learningPaths, new Set(content.topics.map((t) => t.id))),
 ]

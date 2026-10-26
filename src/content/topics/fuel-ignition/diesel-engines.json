@@ -3,6 +3,10 @@
   "slug": "diesel-engines",
   "title": "Diesel Engines",
   "summary": "Diesels have no spark plugs: they squeeze air until it is hot enough to ignite fuel injected at very high pressure. See why that makes them efficient and torquey, and why they need glow plugs, turbochargers and elaborate exhaust cleaning.",
+  "seo": {
+    "title": "How Diesel Engines Work: Compression Ignition",
+    "description": "How a diesel engine ignites fuel without spark plugs, why high compression makes it efficient and torquey, and how common-rail injection works."
+  },
   "categoryId": "fuel-ignition",
   "difficulty": "intermediate",
   "layer": "engineering",
@@ -197,6 +201,20 @@
       "explanation": "Urea decomposes to ammonia, which reacts with NOx over the SCR catalyst to form nitrogen and water."
     }
   ],
+  "faq": [
+    {
+      "question": "How does a diesel engine ignite its fuel without a spark?",
+      "answer": "It compresses air so much that the air becomes hot enough to ignite diesel fuel on contact. Fuel is injected at very high pressure near the end of the compression stroke and starts burning as soon as it meets the hot air."
+    },
+    {
+      "question": "Why are diesel engines more efficient than petrol engines?",
+      "answer": "They run much higher compression ratios, which extracts more work from each unit of fuel; they control power by varying the fuel instead of throttling the air, avoiding pumping losses; and diesel fuel carries more energy per litre."
+    },
+    {
+      "question": "What does common-rail injection mean?",
+      "answer": "A high-pressure pump keeps fuel in a shared rail at very high pressure, and electronically controlled injectors draw from it. Because pressure no longer depends on engine speed, the computer can make several precisely timed injections per cycle, which reduces noise and emissions."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How a diesel engine works",
@@ -209,5 +227,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Diesel engine",
+      "sameAs": "https://en.wikipedia.org/wiki/Diesel_engine"
+    },
+    {
+      "name": "Common rail",
+      "sameAs": "https://en.wikipedia.org/wiki/Common_rail"
+    }
+  ]
 }

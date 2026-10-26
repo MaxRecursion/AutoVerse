@@ -6,7 +6,7 @@
   "description": "AutoVerse — an interactive 3D automotive learning platform",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && tsx scripts/prerender/prerender.ts",
+    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && tsx scripts/prerender/prerender.ts",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "lint": "eslint .",
@@ -14,6 +14,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "validate:content": "tsx scripts/validation/validate-content.ts",
+    "og:images": "tsx scripts/prerender/og-images.ts",
     "content:discover": "tsx scripts/content-discovery/discover.ts",
     "content:import": "tsx scripts/content-import/import.ts",
     "assets:inspect": "tsx scripts/assets/inspect-models.ts"

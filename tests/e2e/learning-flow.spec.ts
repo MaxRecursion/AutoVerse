@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { open, reload } from './helpers'
 
 /**
  * The learner's core loop, driven with real actions in a real browser:
@@ -13,7 +14,7 @@ const centre = (page: Page, selector: string) => page.locator(selector).last().e
 test.describe('start → finish → next', () => {
   test('a first-time learner starts, earns the stages, finishes, and is taken to the next lesson', async ({ page }) => {
     // 1. One obvious place to start, and the header agrees with the hero.
-    await page.goto('/')
+    await open(page, '/')
     await expect(page.getByRole('link', { name: /^Start here: How a Car Works: The Big Picture\. 0 of \d+ lessons complete\./ })).toBeVisible()
     await page.getByRole('main').getByRole('link', { name: 'Start Learning' }).click()
     await expect(page).toHaveURL(/\/topics\/how-a-car-works$/)
@@ -66,14 +67,14 @@ test.describe('start → finish → next', () => {
     await expect(route).not.toContainText('still open')
 
     // 9. Refresh: the same state, on the lesson and on the progress page.
-    await page.reload()
+    await reload(page)
     await expect(page.getByRole('link', { name: /1 of \d+ lessons complete/ })).toBeVisible()
-    await page.goto('/progress')
+    await open(page, '/progress')
     await expect(page.getByRole('main')).toContainText('How a Car Works: The Big Picture')
   })
 
   test('opening a later lesson names what was skipped, instead of calling it "next"', async ({ page }) => {
-    await page.goto('/topics/four-stroke-cycle')
+    await open(page, '/topics/four-stroke-cycle')
     const route = page.getByRole('region', { name: 'Your place in this learning route' })
     await expect(route).toContainText('Step 2 of 9')
     await expect(route.getByRole('link', { name: /After this lesson\s*Torque and Power/ })).toBeVisible()
@@ -82,7 +83,7 @@ test.describe('start → finish → next', () => {
   })
 
   test('a learner can finish early, but it is labelled as such', async ({ page }) => {
-    await page.goto('/topics/how-a-car-works')
+    await open(page, '/topics/how-a-car-works')
     await expect(page.getByRole('button', { name: /^Finish/ })).toHaveCount(0)
     await page.getByRole('button', { name: 'Mark complete anyway' }).click()
     await expect(page.getByText('Lesson complete: How a Car Works: The Big Picture')).toBeVisible()
@@ -92,7 +93,7 @@ test.describe('start → finish → next', () => {
 
 test.describe('orientation', () => {
   test('a system hub offers one primary action and a surface → depth ladder', async ({ page }) => {
-    await page.goto('/learn/engine')
+    await open(page, '/learn/engine')
     await expect(page.getByRole('heading', { level: 1, name: 'Engine' })).toBeVisible()
     const start = page.getByRole('link', { name: /^Start here: The Four-Stroke Cycle/ })
     await expect(start).toBeVisible()
@@ -105,7 +106,7 @@ test.describe('orientation', () => {
 
 test.describe('labs and stories', () => {
   test('selecting a part ticks a mission and shows who developed it', async ({ page }) => {
-    await page.goto('/labs/engine')
+    await open(page, '/labs/engine')
     await expect(page.getByRole('heading', { level: 1, name: 'Four-Stroke Engine Laboratory' })).toBeVisible()
 
     // A real action ticks a mission and says so.

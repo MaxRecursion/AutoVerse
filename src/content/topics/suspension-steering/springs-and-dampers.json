@@ -3,6 +3,10 @@
   "slug": "springs-and-dampers",
   "title": "Springs and Dampers",
   "summary": "Springs decide how far the wheel moves and how fast the body bounces; dampers decide how quickly that bouncing dies away. Try soft and stiff springs, a worn damper and an over-firm one, and see why a balanced setup keeps the tyre on the road.",
+  "seo": {
+    "title": "Springs vs Shock Absorbers: What Each One Does",
+    "description": "How springs carry the car and dampers (shock absorbers) control its bounce: spring rate, damping, ride frequency, and what worn shocks feel like."
+  },
   "categoryId": "suspension-steering",
   "difficulty": "intermediate",
   "layer": "mechanism",
@@ -308,6 +312,20 @@
       "explanation": "f = (1/2π)·√(k/m), so frequency scales with the square root of stiffness: doubling k raises f by √2 ≈ 1.41."
     }
   ],
+  "faq": [
+    {
+      "question": "What is the difference between a spring and a shock absorber?",
+      "answer": "The spring carries the car's weight and stores energy when the wheel hits a bump. The shock absorber, properly called a damper, controls how fast the spring compresses and rebounds by forcing oil through small valves, turning bounce energy into heat."
+    },
+    {
+      "question": "What happens if dampers are too soft or too stiff?",
+      "answer": "Too little damping lets the body keep bouncing after a bump and lets the wheel hop, so the tyre loses contact. Too much damping passes every bump into the cabin and also stops the wheel following the road. Well-matched damping settles the body after about one bounce."
+    },
+    {
+      "question": "How can you tell if shock absorbers are worn?",
+      "answer": "Common signs are a car that keeps bouncing after bumps, dives under braking, wallows in corners, or shows uneven, cupped tyre wear. Oil leaking down the damper body is another clue."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How car springs and dampers work",
@@ -319,5 +337,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Shock absorber",
+      "sameAs": "https://en.wikipedia.org/wiki/Shock_absorber"
+    },
+    {
+      "name": "Coil spring",
+      "sameAs": "https://en.wikipedia.org/wiki/Coil_spring"
+    }
+  ]
 }

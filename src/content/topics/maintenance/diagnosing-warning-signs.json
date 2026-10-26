@@ -3,6 +3,10 @@
   "slug": "diagnosing-warning-signs",
   "title": "Diagnosing Warning Signs",
   "summary": "Cars announce most problems before they become failures — through warning lights, noises, smells, smoke and changes in feel. Learn what the common signs usually point to, how fault codes help, and a methodical way to narrow down a cause.",
+  "seo": {
+    "title": "Car Warning Lights and Noises: What They Mean",
+    "description": "How to read your car's warning signs: dashboard lights, noises, smells, smoke and changes in feel, which need immediate action, and what OBD codes are."
+  },
   "categoryId": "maintenance",
   "difficulty": "intermediate",
   "layer": "engineering",
@@ -201,6 +205,20 @@
       "explanation": "Changing gear changes engine speed but not road speed, so a noise that ignores gear changes is road-speed related."
     }
   ],
+  "faq": [
+    {
+      "question": "Which dashboard warning lights mean stop immediately?",
+      "answer": "Red warnings, especially oil pressure, engine temperature, brake system and charging faults, mean stop as soon as it is safe and investigate before driving on. Amber warnings, such as the engine management light, usually mean get the car checked soon; a flashing engine light warns of misfiring that can damage the catalytic converter."
+    },
+    {
+      "question": "What is an OBD code?",
+      "answer": "On-board diagnostics is the system that monitors the engine and its emissions controls. When it detects a fault it stores a standard code, such as P0301 for a misfire in cylinder 1, which a scan tool can read through the diagnostic socket under the dashboard."
+    },
+    {
+      "question": "What does white, blue or black exhaust smoke mean?",
+      "answer": "Thin white vapour on a cold start is just condensation, but thick, sweet-smelling white smoke can mean coolant is being burnt. Blue smoke means the engine is burning oil, and black smoke means it is getting too much fuel."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "Checking the instruments",
@@ -220,5 +238,11 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "On-board diagnostics",
+      "sameAs": "https://en.wikipedia.org/wiki/On-board_diagnostics"
+    }
+  ]
 }

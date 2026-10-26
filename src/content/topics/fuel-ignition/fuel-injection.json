@@ -3,6 +3,10 @@
   "slug": "fuel-injection",
   "title": "Fuel Injection",
   "summary": "Modern petrol engines meter fuel electronically: the ECU measures the air going in, works out how much fuel will burn cleanly with it, and opens the injectors for precisely timed pulses. Learn port and direct injection and closed-loop mixture control.",
+  "seo": {
+    "title": "How Fuel Injection Works in Petrol Engines",
+    "description": "How an engine computer meters fuel: air-flow and oxygen sensors, injectors and pulse width, port vs direct injection, and why carburettors disappeared."
+  },
   "categoryId": "fuel-ignition",
   "difficulty": "intermediate",
   "layer": "mechanism",
@@ -208,6 +212,20 @@
       "explanation": "Evaporation absorbs heat from the trapped air, lowering its temperature and making knock less likely."
     }
   ],
+  "faq": [
+    {
+      "question": "How does fuel injection work?",
+      "answer": "Sensors measure how much air the engine is drawing in, and the engine control unit calculates how much fuel will burn cleanly with it. It then opens electrically operated injectors for precisely the right number of milliseconds, spraying finely atomised fuel into the intake or straight into the cylinder."
+    },
+    {
+      "question": "What is the difference between port and direct injection?",
+      "answer": "Port injection sprays fuel into the intake port just behind the intake valve, where it mixes with the incoming air. Direct injection sprays it at high pressure straight into the combustion chamber, which cools the charge and allows finer control at the cost of a more complex high-pressure system."
+    },
+    {
+      "question": "Why did fuel injection replace carburettors?",
+      "answer": "Electronic injection meters fuel far more precisely in every condition, making engines cleaner, more economical and easier to start. Exact fuel control is also essential for catalytic converters to work, which is why emissions rules made injection universal."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How a fuel pump works",
@@ -220,5 +238,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Fuel injection",
+      "sameAs": "https://en.wikipedia.org/wiki/Fuel_injection"
+    },
+    {
+      "name": "Engine control unit",
+      "sameAs": "https://en.wikipedia.org/wiki/Engine_control_unit"
+    }
+  ]
 }

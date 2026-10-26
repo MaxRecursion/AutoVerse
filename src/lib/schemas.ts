@@ -105,6 +105,15 @@ export const TopicSchema = z.object({
   relatedTopicIds: z.array(id).default([]),
   prerequisiteTopicIds: z.array(id).default([]),
   quiz: z.array(QuizQuestionSchema).default([]),
+  /**
+   * Questions people ask about this topic, answered in a sentence or three.
+   * Shown as "Common questions" on the lesson and published as FAQPage data.
+   */
+  faq: z.array(z.object({ question: z.string().min(10), answer: z.string().min(40) })).default([]),
+  /** Search-result title and description, written for how people search. Fall back to title / summary. */
+  seo: z.object({ title: z.string().min(10).max(60), description: z.string().min(70).max(160) }).optional(),
+  /** The real-world things this lesson explains, as entities search engines know (structured data `about`). */
+  about: z.array(z.object({ name: z.string().min(2), sameAs: z.url() })).default([]),
   sourceReferences: z.array(SourceReferenceSchema).default([]),
   attribution: z.string().optional(),
   licence: LicenceSchema,

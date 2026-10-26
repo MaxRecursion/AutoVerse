@@ -52,52 +52,51 @@ export function PioneerCard({ pioneer: p, open, onOpenChange, currentTopicId, sh
             <ChevronDown aria-hidden className={cn('size-4 transition-transform', open && 'rotate-180')} />
           </button>
 
+          {/* Always rendered (hidden until opened) so the story is part of the page for search engines and AI crawlers. */}
           <div id={bodyId} hidden={!open}>
-            {open && (
-              <div className="mt-2 flex flex-col gap-3">
-                <p className="text-[15px] leading-relaxed text-steel-300">{p.story}</p>
-                {p.caution && (
-                  <p className="flex gap-2 rounded-lg border border-white/[0.08] bg-graphite-900/70 p-3 text-[13px] leading-relaxed text-steel-300">
-                    <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-cyan" />
-                    <span>
-                      <span className="font-medium text-paper">Worth knowing: </span>
-                      {p.caution}
-                    </span>
-                  </p>
-                )}
-                {lessons.length > 0 && (
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="eyebrow">Appears in</span>
-                    {lessons.map((t) => (
-                      <Link key={t.id} to={topicHref(t)} className="rounded-full border border-white/10 px-3 py-1 text-xs text-steel-300 hover:border-cyan/50 hover:text-cyan">
-                        {t.title}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-                <div>
-                  <p className="eyebrow">Sources</p>
-                  <ul className="mt-1 flex flex-col">
-                    {p.sources.map((s) => (
-                      <li key={s.url}>
-                        <a
-                          href={s.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex min-h-9 items-center gap-1.5 text-sm text-cyan underline-offset-4 hover:underline"
-                        >
-                          {s.publisher ? `${s.publisher}: ` : ''}
-                          {s.title}
-                          <ExternalLink aria-hidden className="size-3.5" />
-                          <span className="sr-only"> (opens in a new tab{s.accessed ? `; read ${s.accessed}` : ''})</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="text-xs text-steel-500">Retold in our own words from the sources above.</p>
+            <div className="mt-2 flex flex-col gap-3">
+              <p className="text-[15px] leading-relaxed text-steel-300">{p.story}</p>
+              {p.caution && (
+                <p className="flex gap-2 rounded-lg border border-white/[0.08] bg-graphite-900/70 p-3 text-[13px] leading-relaxed text-steel-300">
+                  <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-cyan" />
+                  <span>
+                    <span className="font-medium text-paper">Worth knowing: </span>
+                    {p.caution}
+                  </span>
+                </p>
+              )}
+              {lessons.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="eyebrow">Appears in</span>
+                  {lessons.map((t) => (
+                    <Link key={t.id} to={topicHref(t)} className="rounded-full border border-white/10 px-3 py-1 text-xs text-steel-300 hover:border-cyan/50 hover:text-cyan">
+                      {t.title}
+                    </Link>
+                  ))}
                 </div>
+              )}
+              <div>
+                <p className="eyebrow">Sources</p>
+                <ul className="mt-1 flex flex-col">
+                  {p.sources.map((s) => (
+                    <li key={s.url}>
+                      <a
+                        href={s.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex min-h-9 items-center gap-1.5 text-sm text-cyan underline-offset-4 hover:underline"
+                      >
+                        {s.publisher ? `${s.publisher}: ` : ''}
+                        {s.title}
+                        <ExternalLink aria-hidden className="size-3.5" />
+                        <span className="sr-only"> (opens in a new tab{s.accessed ? `; read ${s.accessed}` : ''})</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-xs text-steel-500">Retold in our own words from the sources above.</p>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

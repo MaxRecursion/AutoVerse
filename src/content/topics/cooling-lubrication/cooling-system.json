@@ -3,6 +3,10 @@
   "slug": "cooling-system",
   "title": "Engine Cooling System",
   "summary": "Only part of the fuel's energy becomes motion; much of the rest is heat that must leave the engine. Follow coolant through the water jacket, thermostat, radiator and pressure cap, and learn why an engine must run warm — but never too hot.",
+  "seo": {
+    "title": "How a Car Engine Cooling System Works",
+    "description": "How coolant carries heat from the engine to the radiator: water pump, thermostat, radiator, fan and pressure cap, and what overheating warnings mean."
+  },
   "categoryId": "cooling-lubrication",
   "difficulty": "beginner",
   "layer": "surface",
@@ -199,6 +203,20 @@
       "explanation": "Q̇ = 1.5 × 3.6 × 8 ≈ 43 kW."
     }
   ],
+  "faq": [
+    {
+      "question": "How does a car's cooling system work?",
+      "answer": "A water pump circulates coolant through passages around the cylinders and head, where it absorbs heat. The hot coolant flows to the radiator, where air passing through the fins carries the heat away, then returns to the engine. A thermostat controls the flow so the engine warms up quickly and then stays at its working temperature."
+    },
+    {
+      "question": "What does the thermostat do?",
+      "answer": "It keeps coolant away from the radiator while the engine is cold, so the engine reaches its operating temperature quickly, then opens progressively to hold that temperature steady once warm."
+    },
+    {
+      "question": "Why is the cooling system pressurised?",
+      "answer": "Pressure raises the coolant's boiling point well above 100 °C, so it can run hot without boiling. The radiator or expansion-tank cap holds that pressure, which is why it must never be opened while the engine is hot."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How an engine cooling system works",
@@ -218,5 +236,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Internal combustion engine cooling",
+      "sameAs": "https://en.wikipedia.org/wiki/Internal_combustion_engine_cooling"
+    },
+    {
+      "name": "Radiator (engine cooling)",
+      "sameAs": "https://en.wikipedia.org/wiki/Radiator_(engine_cooling)"
+    }
+  ]
 }

@@ -24,9 +24,10 @@ describe('PioneersPage', () => {
     const user = userEvent.setup()
     renderAt('/pioneers')
     const card = within(document.getElementById('pioneer-james-watt')!)
-    expect(card.queryByText(/brewery horse/)).not.toBeInTheDocument()
+    // The story is in the page (for search engines and AI crawlers) but hidden until asked for.
+    expect(card.getByText(/brewery horse/)).not.toBeVisible()
     await user.click(card.getByRole('button', { name: /read the story/i }))
-    expect(card.getByText(/brewery horse/)).toBeInTheDocument()
+    expect(card.getByText(/brewery horse/)).toBeVisible()
     expect(card.getByText(/Worth knowing/)).toBeInTheDocument()
     const source = card.getByRole('link', { name: /Horsepower/ })
     expect(source).toHaveAttribute('href', 'https://en.wikipedia.org/wiki/Horsepower')

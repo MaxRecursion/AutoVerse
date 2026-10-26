@@ -3,6 +3,10 @@
   "slug": "air-conditioning",
   "title": "Air Conditioning",
   "summary": "Car air conditioning does not make cold — it moves heat out of the cabin. Follow refrigerant around the compressor, condenser, expansion valve and evaporator, and learn why the same system clears a misted windscreen in winter.",
+  "seo": {
+    "title": "How Car Air Conditioning Works: The AC Cycle",
+    "description": "How car air conditioning moves heat out of the cabin: refrigerant, compressor, condenser, expansion valve and evaporator, and why AC also dries the air."
+  },
   "categoryId": "hvac",
   "difficulty": "intermediate",
   "layer": "mechanism",
@@ -207,6 +211,20 @@
       "explanation": "Cooling air below its dew point removes water; the heater can then re-warm that dry air."
     }
   ],
+  "faq": [
+    {
+      "question": "How does car air conditioning work?",
+      "answer": "A compressor pumps refrigerant around a closed loop. In the evaporator behind the dashboard the refrigerant boils at low pressure and absorbs heat from the cabin air; the compressor then raises its pressure and temperature, and the condenser at the front of the car releases that heat outside."
+    },
+    {
+      "question": "Why does car AC help demist the windscreen?",
+      "answer": "Air passing over the cold evaporator drops below its dew point, so its moisture condenses out and drains away. The drier air, even when reheated, clears misted glass much faster."
+    },
+    {
+      "question": "Does using the air conditioning use more fuel?",
+      "answer": "Yes. The compressor is driven by the engine, or by the battery in an electric car, so running the AC adds load and uses some extra energy. How much depends on the outside temperature and how hard the system has to work."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How car heating and ventilation systems work",
@@ -219,5 +237,11 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Automotive air conditioning",
+      "sameAs": "https://en.wikipedia.org/wiki/Automotive_air_conditioning"
+    }
+  ]
 }

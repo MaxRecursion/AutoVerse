@@ -3,6 +3,10 @@
   "slug": "brake-hydraulics",
   "title": "Brake Hydraulics",
   "summary": "A light push on the brake pedal becomes tonnes of clamping force at the wheels. Follow the force through the pedal lever, servo, master cylinder and fluid lines to the calipers, and see why air or water in the fluid makes brakes spongy or fade.",
+  "seo": {
+    "title": "How Hydraulic Brakes Work: Pedal to Caliper",
+    "description": "How a light push on the brake pedal becomes tonnes of clamping force: pedal leverage, brake servo, master cylinder, brake fluid and caliper pistons."
+  },
   "categoryId": "brakes",
   "difficulty": "beginner",
   "layer": "surface",
@@ -200,6 +204,20 @@
       "explanation": "Unlike brake fluid, air compresses, absorbing pedal travel before pressure builds."
     }
   ],
+  "faq": [
+    {
+      "question": "How do hydraulic brakes work?",
+      "answer": "Pressing the pedal pushes a piston in the master cylinder, which pressurises brake fluid in the lines. Because liquid barely compresses, that pressure reaches every wheel, where it pushes larger caliper or wheel-cylinder pistons that clamp the pads or shoes against the disc or drum."
+    },
+    {
+      "question": "How do brakes multiply the force from your foot?",
+      "answer": "First the pedal acts as a lever, then the vacuum or electric servo adds assistance. Finally, the small master-cylinder piston acting on much larger caliper pistons multiplies the force again, just as in any hydraulic press."
+    },
+    {
+      "question": "What does a spongy brake pedal mean?",
+      "answer": "A spongy pedal usually means air in the brake lines, or brake fluid that has absorbed water and formed vapour when hot. Gas compresses, so the pedal travels further before the brakes bite. It needs checking promptly."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How the braking system works",
@@ -219,5 +237,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Hydraulic brake",
+      "sameAs": "https://en.wikipedia.org/wiki/Hydraulic_brake"
+    },
+    {
+      "name": "Master cylinder",
+      "sameAs": "https://en.wikipedia.org/wiki/Master_cylinder"
+    }
+  ]
 }

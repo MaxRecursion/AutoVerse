@@ -3,6 +3,10 @@
   "slug": "mechanical-sympathy",
   "title": "Mechanical Sympathy",
   "summary": "Mechanical sympathy means driving in a way that respects how the car works. Learn why gentle warm-ups, sensible engine speeds, smooth inputs, anticipation and engine braking reduce wear, save fuel and make driving safer.",
+  "seo": {
+    "title": "Mechanical Sympathy: Driving to Make a Car Last",
+    "description": "How driving with the car's engineering in mind saves fuel and wear: gentle warm-ups, sensible revs, smooth inputs, anticipation and engine braking."
+  },
   "categoryId": "driving",
   "difficulty": "beginner",
   "layer": "surface",
@@ -203,6 +207,20 @@
       "explanation": "E = ½ × 1,500 × 20² = 300,000 J = 300 kJ — energy anticipation can often avoid wasting."
     }
   ],
+  "faq": [
+    {
+      "question": "What does mechanical sympathy mean when driving?",
+      "answer": "It means driving with an understanding of how the car works, so you avoid putting needless stress on its parts: warming the engine gently, changing gear at sensible speeds, using smooth inputs and anticipating the road so you brake less."
+    },
+    {
+      "question": "Is it bad to rev a cold engine?",
+      "answer": "Yes. Until the oil has warmed and is circulating fully and the parts have expanded to their working clearances, high engine speeds and heavy loads increase wear. Drive off gently and avoid high revs for the first few minutes."
+    },
+    {
+      "question": "Does smooth driving really save fuel?",
+      "answer": "Yes. Hard acceleration followed by braking throws away energy the engine has just spent, while anticipating traffic and coasting down to stops wastes far less. Smooth driving also reduces wear on the brakes, tyres and drivetrain."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "Acceleration and Economy",
@@ -222,5 +240,11 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Energy-efficient driving",
+      "sameAs": "https://en.wikipedia.org/wiki/Energy-efficient_driving"
+    }
+  ]
 }

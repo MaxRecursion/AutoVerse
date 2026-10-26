@@ -3,6 +3,10 @@
   "slug": "suspension-basics",
   "title": "Suspension Basics",
   "summary": "The suspension lets each wheel rise and fall over the road while the body glides along and the tyre stays pressed onto the surface. Drive a double-wishbone corner over a bump and a pothole and see how the arms, spring and damper share the work.",
+  "seo": {
+    "title": "How Car Suspension Works: MacPherson & Wishbones",
+    "description": "How a car's suspension keeps the tyres on the road and the body steady: springs, dampers, control arms, MacPherson struts and double wishbones."
+  },
   "categoryId": "suspension-steering",
   "difficulty": "beginner",
   "layer": "surface",
@@ -346,6 +350,20 @@
       "explanation": "The tyre can only push on the road. If the surface falls faster than the wheel can be accelerated downward, the tyre force drops to zero and the tyre leaves the road until it catches up."
     }
   ],
+  "faq": [
+    {
+      "question": "What does car suspension do?",
+      "answer": "It lets each wheel move up and down over bumps while the body stays comparatively level, and it keeps the tyres pressed firmly onto the road so they can grip for steering, braking and acceleration. It also controls the wheels' angles as they move."
+    },
+    {
+      "question": "What is the difference between a MacPherson strut and double wishbones?",
+      "answer": "A MacPherson strut combines the spring and damper in one tall unit that also locates the top of the wheel, with a single lower arm: compact and cheap. Double wishbones use an upper and a lower arm, which give engineers more control over the wheel's angles as the suspension moves."
+    },
+    {
+      "question": "What does unsprung mass mean?",
+      "answer": "It is everything not carried by the springs: wheels, tyres, brakes, hubs and part of the suspension arms. The lighter it is, the more easily the wheel can follow bumps, which helps both grip and ride comfort."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How car suspension works",
@@ -358,5 +376,19 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Car suspension",
+      "sameAs": "https://en.wikipedia.org/wiki/Car_suspension"
+    },
+    {
+      "name": "MacPherson strut",
+      "sameAs": "https://en.wikipedia.org/wiki/MacPherson_strut"
+    },
+    {
+      "name": "Double wishbone suspension",
+      "sameAs": "https://en.wikipedia.org/wiki/Double_wishbone_suspension"
+    }
+  ]
 }

@@ -3,6 +3,10 @@
   "slug": "torque-and-power",
   "title": "Torque and Power",
   "summary": "Torque is twisting force; power is how quickly that force does work. Learn how they relate (P = Tω), why gearing changes torque but not power, and how to read an engine's curves.",
+  "seo": {
+    "title": "Torque vs Horsepower: What's the Difference?",
+    "description": "Torque is twisting force; power is how fast that force does work. Learn P = Tω, why gears trade torque for speed, and how to read a torque curve."
+  },
   "categoryId": "basics",
   "difficulty": "beginner",
   "layer": "surface",
@@ -186,6 +190,20 @@
       "explanation": "As long as rpm rises proportionally faster than torque falls, their product (power) still increases."
     }
   ],
+  "faq": [
+    {
+      "question": "What is the difference between torque and horsepower?",
+      "answer": "Torque is a twisting force, measured in newton-metres or pound-feet. Power is the rate at which that force does work, so it depends on how fast the shaft turns: power equals torque multiplied by rotational speed. Horsepower is simply a unit of power."
+    },
+    {
+      "question": "Does torque or power decide how fast a car accelerates?",
+      "answer": "Acceleration depends on the force at the wheels, and gearing can multiply torque but cannot create power. So for cars of the same weight, the one with more power available at that road speed can accelerate harder."
+    },
+    {
+      "question": "How do you convert torque to horsepower?",
+      "answer": "Horsepower equals torque in pound-feet multiplied by rpm, divided by 5,252. In SI units, power in watts equals torque in newton-metres multiplied by angular speed in radians per second, and one kilowatt is about 1.34 horsepower."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "Torque and BHP explained",
@@ -198,5 +216,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Torque",
+      "sameAs": "https://en.wikipedia.org/wiki/Torque"
+    },
+    {
+      "name": "Horsepower",
+      "sameAs": "https://en.wikipedia.org/wiki/Horsepower"
+    }
+  ]
 }

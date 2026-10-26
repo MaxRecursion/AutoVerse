@@ -3,6 +3,10 @@
   "slug": "steering-systems",
   "title": "Steering Systems",
   "summary": "Turning the wheel moves a rack sideways, which swivels the front wheels on their pivots. Learn how rack-and-pinion steering works, why the inner wheel must turn more than the outer, how power assistance helps, and why a car straightens itself.",
+  "seo": {
+    "title": "How Car Steering Works: Rack and Pinion",
+    "description": "How turning the steering wheel turns the front wheels: rack-and-pinion gearing, tie rods, Ackermann geometry, and how power steering assists you."
+  },
   "categoryId": "suspension-steering",
   "difficulty": "beginner",
   "layer": "surface",
@@ -202,6 +206,20 @@
       "explanation": "EPS draws power on demand and its motor can be commanded for lane-keeping and parking assistance."
     }
   ],
+  "faq": [
+    {
+      "question": "How does rack-and-pinion steering work?",
+      "answer": "The steering column turns a small pinion gear meshed with a toothed bar, the rack. As the pinion turns, the rack slides sideways and pushes or pulls tie rods connected to each front wheel's steering arm, swivelling the wheels."
+    },
+    {
+      "question": "What is Ackermann steering geometry?",
+      "answer": "In a turn the inner front wheel follows a tighter circle than the outer one, so it must turn through a larger angle. Ackermann geometry angles the steering arms so the wheels turn by different amounts and roll around a common centre without scrubbing."
+    },
+    {
+      "question": "How does power steering work?",
+      "answer": "Power steering adds force to what the driver applies. Hydraulic systems use a pump and a valve that directs pressurised fluid to one side of a piston on the rack; electric systems use a motor on the column or rack, controlled by a torque sensor."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How the steering system works",
@@ -214,5 +232,19 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Steering",
+      "sameAs": "https://en.wikipedia.org/wiki/Steering"
+    },
+    {
+      "name": "Rack and pinion",
+      "sameAs": "https://en.wikipedia.org/wiki/Rack_and_pinion"
+    },
+    {
+      "name": "Ackermann steering geometry",
+      "sameAs": "https://en.wikipedia.org/wiki/Ackermann_steering_geometry"
+    }
+  ]
 }

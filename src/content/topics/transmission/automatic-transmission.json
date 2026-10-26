@@ -3,6 +3,10 @@
   "slug": "automatic-transmission",
   "title": "Automatic Transmission",
   "summary": "A conventional automatic replaces the clutch pedal with a fluid torque converter and swaps gears by clamping parts of planetary gearsets with hydraulic clutches. See how it pulls away smoothly, multiplies torque and shifts without interrupting drive.",
+  "seo": {
+    "title": "How an Automatic Transmission Works",
+    "description": "How a conventional automatic changes gear by itself: torque converter, planetary gearsets, clutches and bands, compared with CVT and dual-clutch boxes."
+  },
   "categoryId": "transmission",
   "difficulty": "intermediate",
   "layer": "engineering",
@@ -198,6 +202,20 @@
       "explanation": "Clutch-to-clutch control hands torque from one element to the next without a gap in drive."
     }
   ],
+  "faq": [
+    {
+      "question": "How does an automatic transmission change gears?",
+      "answer": "It uses planetary gearsets, which give different ratios depending on which of their parts is held still or driven. Hydraulically or electronically controlled clutches and bands lock those parts in different combinations, and the control unit chooses the combination from road speed, throttle and load."
+    },
+    {
+      "question": "What does a torque converter do?",
+      "answer": "It replaces the clutch pedal. Fluid flung by an engine-driven impeller turns a turbine connected to the gearbox, so the car can sit still in gear with the engine running, and at low speeds the converter multiplies torque. A lock-up clutch joins the two halves at cruising speed to avoid slip."
+    },
+    {
+      "question": "What is the difference between an automatic, a CVT and a dual-clutch gearbox?",
+      "answer": "A conventional automatic uses a torque converter and planetary gears with fixed ratios. A CVT varies its ratio continuously, typically with a belt or chain between two variable pulleys. A dual-clutch gearbox is an automated manual with one clutch for odd gears and one for even gears, so it can preselect the next gear."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How automatic gearboxes work",
@@ -210,5 +228,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Automatic transmission",
+      "sameAs": "https://en.wikipedia.org/wiki/Automatic_transmission"
+    },
+    {
+      "name": "Torque converter",
+      "sameAs": "https://en.wikipedia.org/wiki/Torque_converter"
+    }
+  ]
 }

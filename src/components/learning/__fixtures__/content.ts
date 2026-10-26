@@ -72,6 +72,7 @@ export const fixtureTopicInput = {
     { id: 'q1', prompt: 'How many strokes are in the cycle?', options: ['Two', 'Four', 'Six'], answerIndex: 1, explanation: 'Intake, compression, power, exhaust.' },
     { id: 'q2', prompt: 'What pushes the piston down on the power stroke?', options: ['The spark', 'Expanding gas'], answerIndex: 1, explanation: 'Hot, expanding gas does the work.' },
   ],
+  faq: [{ question: 'Why does the cycle take two crank turns?', answer: 'Each of the four strokes is half a crankshaft turn, so the whole cycle takes two full turns.' }],
   sourceReferences: [{ title: 'Example further reading', url: 'https://example.com/reading', publisher: 'Example Publisher' }],
   attribution: 'Diagram concept by the AutoVerse team.',
   licence: original,

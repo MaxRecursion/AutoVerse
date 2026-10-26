@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      indexnow_all:
+        description: Submit every page to IndexNow, not only pages changed today or yesterday
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -11,6 +16,9 @@ permissions:
 concurrency:
   group: github-pages
   cancel-in-progress: true
+
+env:
+  SITE_URL: https://maxrecursion.github.io/AutoVerse
 
 jobs:
   build:
@@ -21,6 +29,9 @@ jobs:
     steps:
       - name: Check out main
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          # Full history: each page's sitemap lastmod is the last commit to its content.
+          fetch-depth: 0
       - name: Set up Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
@@ -34,7 +45,11 @@ jobs:
         run: npm run build
         env:
           PUBLIC_BASE_PATH: /AutoVerse/
-          SITE_URL: https://maxrecursion.github.io/AutoVerse
+          # Optional repository variables (Settings → Secrets and variables → Actions → Variables):
+          # search-console ownership tags and the IndexNow key. All three end up public by design.
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          BING_SITE_VERIFICATION: ${{ vars.BING_SITE_VERIFICATION }}
+          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }}
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
@@ -53,3 +68,23 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5
+
+  indexnow:
+    # Runs only when the INDEXNOW_KEY repository variable is set. A failure here never fails the deploy.
+    if: ${{ vars.INDEXNOW_KEY != '' }}
+    runs-on: ubuntu-latest
+    needs: deploy
+    continue-on-error: true
+    permissions:
+      contents: read
+    steps:
+      - name: Check out main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 22
+      - name: Tell IndexNow engines which pages changed
+        run: node --experimental-strip-types scripts/prerender/indexnow.ts ${{ inputs.indexnow_all && '--all' || '' }}
+        env:
+          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY }}

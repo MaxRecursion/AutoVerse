@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { Outlet, ScrollRestoration } from 'react-router'
 import { Header } from './Header'
 import { Footer } from './Footer'
@@ -7,6 +7,10 @@ import { TourInvite } from '@/features/tour/TourInvite'
 import { ToastHost } from './ToastHost'
 
 export function AppShell() {
+  // Marks the moment the app has taken over the prerendered HTML (buttons work from here on); used by browser tests.
+  useEffect(() => {
+    document.documentElement.dataset.app = 'ready'
+  }, [])
   return (
     <div className="flex min-h-dvh flex-col">
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded focus:bg-cyan focus:px-3 focus:py-2 focus:text-ink">

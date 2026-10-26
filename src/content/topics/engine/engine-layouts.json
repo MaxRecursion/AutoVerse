@@ -3,6 +3,10 @@
   "slug": "engine-layouts",
   "title": "Engine Layouts: Inline, V and Flat",
   "summary": "Why engines come as inline-fours, straight-sixes, V8s and boxers: how cylinder arrangement affects size, smoothness, firing order and where the engine fits in the car.",
+  "seo": {
+    "title": "Inline vs V vs Boxer Engines: Layouts Explained",
+    "description": "Why engines come as inline-fours, straight-sixes, V8s and flat boxers: how cylinder layout affects size, balance, smoothness and where the engine fits."
+  },
   "categoryId": "engine",
   "difficulty": "intermediate",
   "layer": "engineering",
@@ -184,6 +188,20 @@
       "explanation": "Lying the cylinders flat keeps the engine's mass low, at the cost of extra width."
     }
   ],
+  "faq": [
+    {
+      "question": "What is the difference between an inline and a V engine?",
+      "answer": "An inline engine has all its cylinders in one row along the crankshaft. A V engine splits them into two banks set at an angle that share one crankshaft, which makes an engine with many cylinders much shorter, at the cost of extra width and a second cylinder head."
+    },
+    {
+      "question": "Why is a straight-six engine so smooth?",
+      "answer": "In an inline six the forces and rocking couples from the pistons and connecting rods cancel one another out almost completely, so the engine runs smoothly without needing balance shafts."
+    },
+    {
+      "question": "What is a boxer (flat) engine?",
+      "answer": "A boxer engine lays its cylinders flat in two opposed banks, and the pistons in each opposite pair move outward and inward together. It is low and wide, which lowers the centre of gravity, and the opposing pistons cancel many of each other's vibrations."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "The engine",
@@ -196,5 +214,23 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Engine configuration",
+      "sameAs": "https://en.wikipedia.org/wiki/Engine_configuration"
+    },
+    {
+      "name": "Straight engine",
+      "sameAs": "https://en.wikipedia.org/wiki/Straight_engine"
+    },
+    {
+      "name": "V engine",
+      "sameAs": "https://en.wikipedia.org/wiki/V_engine"
+    },
+    {
+      "name": "Flat engine",
+      "sameAs": "https://en.wikipedia.org/wiki/Flat_engine"
+    }
+  ]
 }

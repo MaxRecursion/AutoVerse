@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { LazyMotion, domAnimation, m } from 'motion/react'
 import { usePrefersReducedMotion } from '@/hooks/useMediaQuery'
+import { isStaticFirstPaint } from '@/lib/boot'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -20,13 +21,14 @@ interface RevealProps {
 
 /**
  * A short fade-and-rise as content arrives. Renders a plain <div> (content
- * immediately visible) under reduced motion or where IntersectionObserver is
- * missing, so nothing can stay hidden.
+ * immediately visible) under reduced motion, where IntersectionObserver is
+ * missing, in the build-time render, and on a prerendered first paint, so
+ * nothing can stay hidden and React taking over static HTML never flashes.
  */
 export function Reveal({ children, className, delay = 0, trigger = 'view' }: RevealProps) {
   const reduced = usePrefersReducedMotion()
   const canObserve = typeof IntersectionObserver !== 'undefined'
-  if (reduced || (trigger === 'view' && !canObserve)) return <div className={className}>{children}</div>
+  if (reduced || isStaticFirstPaint() || (trigger === 'view' && !canObserve)) return <div className={className}>{children}</div>
 
   const transition = { duration: 0.6, delay, ease: EASE }
   const hidden = { opacity: 0, y: 16 }

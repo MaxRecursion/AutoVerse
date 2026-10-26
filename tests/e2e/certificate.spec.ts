@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { open, reload } from './helpers'
 
 /**
  * Certificates, in a real browser. Finishing a whole course by hand is the same
@@ -43,7 +44,7 @@ test.describe('certificate', () => {
     })
 
     // The progress page notices the finished course and holds the certificate.
-    await page.goto('/progress')
+    await open(page, '/progress')
     const card = page.getByRole('article', { name: /^Certificate: How a car moves/ })
     await expect(card).toContainText('Earned')
     await card.getByRole('link', { name: 'View certificate' }).click()
@@ -64,7 +65,7 @@ test.describe('certificate', () => {
     expect(await page.evaluate(() => (window as unknown as { __printed: number }).__printed)).toBe(1)
 
     // The name is remembered on a reload.
-    await page.reload()
+    await reload(page)
     await expect(page.getByRole('textbox', { name: 'Name on the certificate' })).toHaveValue('Ada Lovelace')
 
     // In print, the site chrome disappears and only the certificate remains.
@@ -79,7 +80,7 @@ test.describe('certificate', () => {
 
   test('is not awarded one lesson short, and says what is left', async ({ page }) => {
     await seedFinishedCourse(page, { except: ['tyres-and-grip'] })
-    await page.goto(`/certificate/${COURSE}`)
+    await open(page, `/certificate/${COURSE}`)
     await expect(page.getByText('Not earned yet')).toBeVisible()
     await expect(page.locator('#certificate')).toHaveCount(0)
     await expect(page.getByText('8 of 9 lessons · 8 of 9 quizzes')).toBeVisible()
@@ -88,7 +89,7 @@ test.describe('certificate', () => {
 
   test('finishing the last lesson awards it on the spot, with a link to it', async ({ page }) => {
     await seedFinishedCourse(page, { except: ['tyres-and-grip'] })
-    await page.goto('/topics/tyres-and-grip')
+    await open(page, '/topics/tyres-and-grip')
     await page.getByRole('button', { name: 'Mark complete anyway' }).click()
     // The lesson's own quiz is still missing, so completing the lesson alone is not enough.
     await expect(page.getByText('Lesson complete: ')).toBeVisible()

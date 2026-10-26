@@ -3,6 +3,10 @@
   "slug": "alternator-and-charging",
   "title": "Alternator and Charging",
   "summary": "Once the engine runs, a belt-driven alternator powers every electrical load and recharges the battery. Learn how a spinning magnet makes alternating current, how diodes turn it into DC, and how the regulator holds voltage steady from idle to the red line.",
+  "seo": {
+    "title": "How a Car Alternator Works: Charging Explained",
+    "description": "How a belt-driven alternator powers the car and recharges the battery: rotating magnet, stator, rectifier diodes, voltage regulator and warning signs."
+  },
   "categoryId": "electrical",
   "difficulty": "intermediate",
   "layer": "mechanism",
@@ -205,6 +209,20 @@
       "explanation": "Induced voltage rises with speed, so the regulator weakens the field to compensate."
     }
   ],
+  "faq": [
+    {
+      "question": "What does an alternator do?",
+      "answer": "Once the engine is running, the alternator supplies the car's electrical power and recharges the battery. A belt from the crankshaft spins it, and it typically holds the electrical system at roughly 13.5 to 14.5 volts."
+    },
+    {
+      "question": "Why does an alternator make AC if a car runs on DC?",
+      "answer": "Spinning a magnetic field past fixed coils naturally produces alternating current, and doing it that way is light and efficient. Built-in diodes, the rectifier, convert the output to direct current for the battery and the car's electronics."
+    },
+    {
+      "question": "What are the signs of a failing alternator?",
+      "answer": "A battery warning light while driving, dimming or flickering lights, electrical faults and a battery that keeps going flat are common signs. A squealing belt or a whining noise can also point to the alternator or its drive belt."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How the charging system works",
@@ -224,5 +242,11 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Alternator (automotive)",
+      "sameAs": "https://en.wikipedia.org/wiki/Alternator_(automotive)"
+    }
+  ]
 }

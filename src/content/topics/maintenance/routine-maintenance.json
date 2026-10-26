@@ -3,6 +3,10 @@
   "slug": "routine-maintenance",
   "title": "Routine Maintenance",
   "summary": "Most expensive failures start as something cheap that was not checked. Learn which simple checks an owner can make, which items are replaced on a schedule and why, and how to read a service schedule — with the understanding that your vehicle's handbook always takes priority.",
+  "seo": {
+    "title": "Car Maintenance Checklist: What to Check and When",
+    "description": "Simple checks every owner can make, from tyres, oil, coolant and lights to brakes and wipers, which parts are replaced on schedule, and why it pays off."
+  },
   "categoryId": "maintenance",
   "difficulty": "beginner",
   "layer": "surface",
@@ -198,6 +202,20 @@
       "explanation": "Cold readings are accurate and safe; opening a hot pressurised system can release scalding coolant."
     }
   ],
+  "faq": [
+    {
+      "question": "What car checks should I do regularly?",
+      "answer": "Check tyre pressures and tread, engine oil and coolant levels, washer fluid, lights and wipers, and look for leaks or warning lights. Most checks take a few minutes and catch problems while they are cheap to fix. The owner's handbook lists the exact checks and intervals."
+    },
+    {
+      "question": "How often should engine oil be changed?",
+      "answer": "Follow the interval in the vehicle's service schedule, set by distance or time, whichever comes first, and use the shorter severe-use interval for frequent short trips or towing. Modern engines and oils often allow longer intervals than older cars."
+    },
+    {
+      "question": "Why do some parts need replacing even if they seem fine?",
+      "answer": "Some components wear invisibly: timing belts age, brake fluid absorbs water, and coolant's protective additives run down. Replacing them on schedule prevents sudden and expensive failures."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "Checking and topping up car antifreeze coolant",
@@ -217,5 +235,11 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Service (motor vehicle)",
+      "sameAs": "https://en.wikipedia.org/wiki/Service_(motor_vehicle)"
+    }
+  ]
 }

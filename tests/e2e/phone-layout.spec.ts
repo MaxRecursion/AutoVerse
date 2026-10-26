@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { open } from './helpers'
 
 /**
  * Nothing may be wider than the screen on a phone. Horizontal overflow is not
@@ -17,7 +18,7 @@ test.describe('phone layout', () => {
 
     const wide: string[] = []
     for (const path of paths) {
-      await page.goto(path)
+      await open(page, path)
       await page.waitForLoadState('networkidle')
       const { scroll, inner } = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, inner: window.innerWidth }))
       if (scroll > inner) wide.push(`${path}: ${scroll}px > ${inner}px`)
@@ -27,7 +28,7 @@ test.describe('phone layout', () => {
 
   test('a completed lesson, with its finish card and toast, still fits', async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem('autoverse.preferences', JSON.stringify({ state: { level: 'beginner', tourStatus: 'declined', learnerName: '' }, version: 0 })))
-    await page.goto('/topics/tyres-and-grip')
+    await open(page, '/topics/tyres-and-grip')
     await page.getByRole('button', { name: 'Mark complete anyway' }).click()
     await expect(page.getByText('Lesson complete: Tyres and Grip')).toBeVisible()
     expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0)

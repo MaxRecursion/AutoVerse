@@ -46,6 +46,34 @@ export function topicStatusFindings(topic: Topic): Finding[] {
 }
 
 /**
+ * Search and AI answers: every lesson needs its own search title and
+ * description, at least three common questions (shown on the page and
+ * published as FAQPage data) and the subject it is about. Pages with the same
+ * title or description compete with each other, so duplicates are errors.
+ */
+export function searchFindings(topics: Topic[]): Finding[] {
+  const out: Finding[] = []
+  const titles = new Map<string, string>()
+  const descriptions = new Map<string, string>()
+  for (const t of topics) {
+    const file = `topic:${t.id}`
+    const warn = (message: string) => out.push({ level: 'warning', file, message })
+    if (!t.seo) warn('has no seo title and description')
+    if (t.faq.length < 3) warn(`has ${t.faq.length} common question(s); write at least 3`)
+    if (!t.about.length) warn('has no "about" subject (the Wikipedia article it explains)')
+    const unique = (kind: string, value: string | undefined, seen: Map<string, string>) => {
+      if (!value) return
+      const other = seen.get(value)
+      if (other) out.push({ level: 'error', file, message: `seo ${kind} is the same as ${other}'s` })
+      else seen.set(value, t.id)
+    }
+    unique('title', t.seo?.title, titles)
+    unique('description', t.seo?.description, descriptions)
+  }
+  return out
+}
+
+/**
  * Third-party links in sourceReferences must be pages the discovery tooling
  * actually confirmed (present in source-index.json with an HTTP 2xx fetch or
  * a listing on a fetched index). Unknown hosts are left to editorial review.

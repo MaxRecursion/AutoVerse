@@ -1,0 +1,595 @@
+[
+  {
+    "file": "og/home.png",
+    "eyebrow": "Interactive automotive lessons",
+    "title": "Learn how cars work, in interactive 3D",
+    "text": "Free interactive lessons on how cars work: engines, gearboxes, brakes, suspension and more, with live 3D labs, quizzes and the engineers behind each part.",
+    "chips": [
+      "34 lessons",
+      "4 3D labs",
+      "15 vehicle systems"
+    ]
+  },
+  {
+    "file": "og/learn.png",
+    "eyebrow": "Every lesson",
+    "title": "How Cars Work: Every Lesson by System",
+    "text": "Browse 34 free lessons on how cars work, from engines, fuel and cooling to gearboxes, brakes, suspension, tyres and electrics.",
+    "chips": []
+  },
+  {
+    "file": "og/learn/basics.png",
+    "eyebrow": "Lessons by system",
+    "title": "Basics & Fundamentals",
+    "text": "How the major systems of a car fit together, and the physics vocabulary used everywhere else. 2 free lessons, surface to engineering detail.",
+    "chips": [
+      "2 lessons"
+    ]
+  },
+  {
+    "file": "og/learn/engine.png",
+    "eyebrow": "Lessons by system",
+    "title": "Engine",
+    "text": "Four-stroke operation, pistons, crankshafts, valves, camshafts and engine layouts. 4 free lessons, surface to engineering detail.",
+    "chips": [
+      "4 lessons"
+    ]
+  },
+  {
+    "file": "og/learn/fuel-and-ignition.png",
+    "eyebrow": "Lessons by system",
+    "title": "Fuel & Ignition",
+    "text": "Fuel delivery, injection, petrol and diesel combustion, spark and compression ignition. 3 free lessons, surface to engineering detail.",
+    "chips": [
+      "3 lessons"
+    ]
+  },
+  {
+    "file": "og/learn/cooling-and-lubrication.png",
+    "eyebrow": "Lessons by system",
+    "title": "Cooling & Lubrication",
+    "text": "How engines shed heat and keep metal surfaces separated by oil films. 2 free lessons, surface to engineering detail.",
+    "chips": [
+      "2 lessons"
+    ]
+  },
+  {
+    "file": "og/learn/transmission.png",
+    "eyebrow": "Lessons by system",
+    "title": "Transmission & Clutch",
+    "text": "Clutches, manual and automatic gearboxes, gear ratios and torque multiplication. 4 free lessons, surface to engineering detail.",
+    "chips": [
+      "4 lessons"
+    ]
+  },
+  {
+    "file": "og/learn/drivetrain.png",
+    "eyebrow": "Lessons by system",
+    "title": "Drivetrain & Differentials",
+    "text": "Driveshafts, differentials and the layouts that carry power to the wheels. 3 free lessons, surface to engineering detail.",
+    "chips": [
+      "3 lessons"
+    ]
+  },
+  {
+    "file": "og/learn/brakes.png",
+    "eyebrow": "Lessons by system",
+    "title": "Brakes",
+    "text": "Hydraulic brakes, discs, drums, pads and anti-lock braking. 3 free lessons, surface to engineering detail.",
+    "chips": [
+      "3 lessons"
+    ]
+  },
+  {
+    "file": "og/learn/suspension-and-steering.png",
+    "eyebrow": "Lessons by system",
+    "title": "Suspension & Steering",
+    "text": "Springs, dampers, linkages and steering geometry that keep tyres in contact with the road. 3 free lessons, surface to engineering detail.",
+    "chips": [
+      "3 lessons"
+    ]
+  },
+  {
+    "file": "og/learn/wheels-and-tyres.png",
+    "eyebrow": "Lessons by system",
+    "title": "Wheels & Tyres",
+    "text": "Tyre construction, grip, slip and the contact patch. 1 free lessons, surface to engineering detail.",
+    "chips": [
+      "1 lesson"
+    ]
+  },
+  {
+    "file": "og/learn/electrical.png",
+    "eyebrow": "Lessons by system",
+    "title": "Electrical Systems",
+    "text": "Battery, starter motor, alternator, charging and vehicle electrics. 2 free lessons, surface to engineering detail.",
+    "chips": [
+      "2 lessons"
+    ]
+  },
+  {
+    "file": "og/learn/heating-and-air-conditioning.png",
+    "eyebrow": "Lessons by system",
+    "title": "Heating & Air Conditioning",
+    "text": "Cabin heating, ventilation and the refrigeration cycle. 1 free lessons, surface to engineering detail.",
+    "chips": [
+      "1 lesson"
+    ]
+  },
+  {
+    "file": "og/learn/body-and-chassis.png",
+    "eyebrow": "Lessons by system",
+    "title": "Bodywork & Chassis",
+    "text": "Monocoque and ladder frames, crash structures and materials. 1 free lessons, surface to engineering detail.",
+    "chips": [
+      "1 lesson"
+    ]
+  },
+  {
+    "file": "og/learn/aerodynamics-and-technology.png",
+    "eyebrow": "Lessons by system",
+    "title": "Aerodynamics & Technology",
+    "text": "Drag, downforce and modern automotive technology. 2 free lessons, surface to engineering detail.",
+    "chips": [
+      "2 lessons"
+    ]
+  },
+  {
+    "file": "og/learn/maintenance.png",
+    "eyebrow": "Lessons by system",
+    "title": "Maintenance & Troubleshooting",
+    "text": "Servicing, diagnosing common faults and sensible modifications. 2 free lessons, surface to engineering detail.",
+    "chips": [
+      "2 lessons"
+    ]
+  },
+  {
+    "file": "og/learn/driving.png",
+    "eyebrow": "Lessons by system",
+    "title": "Driving Technique",
+    "text": "How mechanical understanding translates into smoother, safer driving. 1 free lessons, surface to engineering detail.",
+    "chips": [
+      "1 lesson"
+    ]
+  },
+  {
+    "file": "og/topics/air-conditioning.png",
+    "eyebrow": "Heating & Air Conditioning · Lesson",
+    "title": "Air Conditioning",
+    "text": "How car air conditioning moves heat out of the cabin: refrigerant, compressor, condenser, expansion valve and evaporator, and why AC also dries the air.",
+    "chips": [
+      "Intermediate",
+      "12 min"
+    ]
+  },
+  {
+    "file": "og/topics/alternator-and-charging.png",
+    "eyebrow": "Electrical Systems · Lesson",
+    "title": "Alternator and Charging",
+    "text": "How a belt-driven alternator powers the car and recharges the battery: rotating magnet, stator, rectifier diodes, voltage regulator and warning signs.",
+    "chips": [
+      "Intermediate",
+      "12 min"
+    ]
+  },
+  {
+    "file": "og/topics/anti-lock-braking.png",
+    "eyebrow": "Brakes · Lesson",
+    "title": "Anti-lock Braking (ABS)",
+    "text": "Why a locked wheel slides and cannot steer, how ABS senses wheel speed and pulses brake pressure many times a second, and what the pedal judder means.",
+    "chips": [
+      "Intermediate",
+      "14 min",
+      "Interactive 3D lab"
+    ]
+  },
+  {
+    "file": "og/topics/automatic-transmission.png",
+    "eyebrow": "Transmission & Clutch · Lesson",
+    "title": "Automatic Transmission",
+    "text": "How a conventional automatic changes gear by itself: torque converter, planetary gearsets, clutches and bands, compared with CVT and dual-clutch boxes.",
+    "chips": [
+      "Intermediate",
+      "15 min"
+    ]
+  },
+  {
+    "file": "og/topics/battery-and-starter.png",
+    "eyebrow": "Electrical Systems · Lesson",
+    "title": "Battery and Starter Motor",
+    "text": "How a 12-volt battery and starter motor crank the engine: solenoid, pinion and flywheel ring gear, cold cranking amps, and why cars won't start.",
+    "chips": [
+      "Beginner",
+      "11 min"
+    ]
+  },
+  {
+    "file": "og/topics/brake-hydraulics.png",
+    "eyebrow": "Brakes · Lesson",
+    "title": "Brake Hydraulics",
+    "text": "How a light push on the brake pedal becomes tonnes of clamping force: pedal leverage, brake servo, master cylinder, brake fluid and caliper pistons.",
+    "chips": [
+      "Beginner",
+      "12 min"
+    ]
+  },
+  {
+    "file": "og/topics/aerodynamics.png",
+    "eyebrow": "Aerodynamics & Technology · Lesson",
+    "title": "Car Aerodynamics",
+    "text": "How air resistance shapes cars: the drag equation, why drag power rises with the cube of speed, drag coefficient, frontal area, lift and downforce.",
+    "chips": [
+      "Intermediate",
+      "12 min"
+    ]
+  },
+  {
+    "file": "og/topics/chassis-construction.png",
+    "eyebrow": "Bodywork & Chassis · Lesson",
+    "title": "Chassis Construction",
+    "text": "How a car's structure carries loads and protects occupants: ladder frames, monocoques and space frames, torsional stiffness and crumple zones.",
+    "chips": [
+      "Beginner",
+      "11 min"
+    ]
+  },
+  {
+    "file": "og/topics/diagnosing-warning-signs.png",
+    "eyebrow": "Maintenance & Troubleshooting · Lesson",
+    "title": "Diagnosing Warning Signs",
+    "text": "How to read your car's warning signs: dashboard lights, noises, smells, smoke and changes in feel, which need immediate action, and what OBD codes are.",
+    "chips": [
+      "Intermediate",
+      "14 min"
+    ]
+  },
+  {
+    "file": "og/topics/diesel-engines.png",
+    "eyebrow": "Fuel & Ignition · Lesson",
+    "title": "Diesel Engines",
+    "text": "How a diesel engine ignites fuel without spark plugs, why high compression makes it efficient and torquey, and how common-rail injection works.",
+    "chips": [
+      "Intermediate",
+      "14 min"
+    ]
+  },
+  {
+    "file": "og/topics/disc-brakes.png",
+    "eyebrow": "Brakes · Lesson",
+    "title": "Disc Brakes",
+    "text": "How disc brakes stop a car: pads squeezed onto a spinning disc turn kinetic energy into heat. See a stop in 3D, learn brake fade and why discs are vented.",
+    "chips": [
+      "Beginner",
+      "14 min",
+      "Interactive 3D lab"
+    ]
+  },
+  {
+    "file": "og/topics/driveshafts-and-cv-joints.png",
+    "eyebrow": "Drivetrain & Differentials · Lesson",
+    "title": "Driveshafts and CV Joints",
+    "text": "How propshafts, universal joints and constant-velocity joints carry drive to wheels that steer and bounce, and what a clicking CV joint is telling you.",
+    "chips": [
+      "Intermediate",
+      "11 min"
+    ]
+  },
+  {
+    "file": "og/topics/drivetrain-layouts.png",
+    "eyebrow": "Drivetrain & Differentials · Lesson",
+    "title": "Drivetrain Layouts",
+    "text": "Front-, rear- and all-wheel drive compared: which wheels push the car, where the engine and gearbox sit, and how layout affects traction and handling.",
+    "chips": [
+      "Beginner",
+      "12 min"
+    ]
+  },
+  {
+    "file": "og/topics/cooling-system.png",
+    "eyebrow": "Cooling & Lubrication · Lesson",
+    "title": "Engine Cooling System",
+    "text": "How coolant carries heat from the engine to the radiator: water pump, thermostat, radiator, fan and pressure cap, and what overheating warnings mean.",
+    "chips": [
+      "Beginner",
+      "11 min"
+    ]
+  },
+  {
+    "file": "og/topics/engine-layouts.png",
+    "eyebrow": "Engine · Lesson",
+    "title": "Engine Layouts: Inline, V and Flat",
+    "text": "Why engines come as inline-fours, straight-sixes, V8s and flat boxers: how cylinder layout affects size, balance, smoothness and where the engine fits.",
+    "chips": [
+      "Intermediate",
+      "12 min"
+    ]
+  },
+  {
+    "file": "og/topics/fuel-injection.png",
+    "eyebrow": "Fuel & Ignition · Lesson",
+    "title": "Fuel Injection",
+    "text": "How an engine computer meters fuel: air-flow and oxygen sensors, injectors and pulse width, port vs direct injection, and why carburettors disappeared.",
+    "chips": [
+      "Intermediate",
+      "14 min"
+    ]
+  },
+  {
+    "file": "og/topics/gear-ratios.png",
+    "eyebrow": "Transmission & Clutch · Lesson",
+    "title": "Gear Ratios and Torque Multiplication",
+    "text": "How to work out a gear ratio from tooth counts, why low gears multiply torque and high gears save fuel, and how overall gearing sets speed at each rpm.",
+    "chips": [
+      "Intermediate",
+      "15 min",
+      "Interactive 3D lab"
+    ]
+  },
+  {
+    "file": "og/topics/how-a-car-works.png",
+    "eyebrow": "Basics & Fundamentals · Lesson",
+    "title": "How a Car Works: The Big Picture",
+    "text": "How a car turns fuel or battery energy into motion: engine, transmission, driveline, brakes, steering and suspension, and how they work together.",
+    "chips": [
+      "Beginner",
+      "10 min"
+    ]
+  },
+  {
+    "file": "og/topics/hybrid-and-electric-drives.png",
+    "eyebrow": "Aerodynamics & Technology · Lesson",
+    "title": "Hybrid and Electric Drives",
+    "text": "How electric and hybrid cars drive: battery, inverter and motor, instant torque, regenerative braking, and how series, parallel and plug-in hybrids differ.",
+    "chips": [
+      "Intermediate",
+      "15 min"
+    ]
+  },
+  {
+    "file": "og/topics/lubrication-system.png",
+    "eyebrow": "Cooling & Lubrication · Lesson",
+    "title": "Lubrication System",
+    "text": "How engine oil keeps metal parts apart: oil pump, filter and galleries, the pressurised oil film in bearings, viscosity grades, and the oil warning light.",
+    "chips": [
+      "Intermediate",
+      "12 min"
+    ]
+  },
+  {
+    "file": "og/topics/mechanical-sympathy.png",
+    "eyebrow": "Driving Technique · Lesson",
+    "title": "Mechanical Sympathy",
+    "text": "How driving with the car's engineering in mind saves fuel and wear: gentle warm-ups, sensible revs, smooth inputs, anticipation and engine braking.",
+    "chips": [
+      "Beginner",
+      "11 min"
+    ]
+  },
+  {
+    "file": "og/topics/pistons-and-crankshaft.png",
+    "eyebrow": "Engine · Lesson",
+    "title": "Pistons, Connecting Rods and the Crankshaft",
+    "text": "How a crankshaft turns the pistons' up-and-down push into rotation: rings, wrist pin, connecting rod, crank throw, counterweights and flywheel explained.",
+    "chips": [
+      "Intermediate",
+      "14 min",
+      "Interactive 3D lab"
+    ]
+  },
+  {
+    "file": "og/topics/routine-maintenance.png",
+    "eyebrow": "Maintenance & Troubleshooting · Lesson",
+    "title": "Routine Maintenance",
+    "text": "Simple checks every owner can make, from tyres, oil, coolant and lights to brakes and wipers, which parts are replaced on schedule, and why it pays off.",
+    "chips": [
+      "Beginner",
+      "12 min"
+    ]
+  },
+  {
+    "file": "og/topics/spark-ignition.png",
+    "eyebrow": "Fuel & Ignition · Lesson",
+    "title": "Spark Ignition and Combustion Timing",
+    "text": "How a spark plug lights the compressed mixture, why the spark fires before top dead centre, how the flame spreads, and what engine knock is.",
+    "chips": [
+      "Intermediate",
+      "12 min",
+      "Interactive 3D lab"
+    ]
+  },
+  {
+    "file": "og/topics/springs-and-dampers.png",
+    "eyebrow": "Suspension & Steering · Lesson",
+    "title": "Springs and Dampers",
+    "text": "How springs carry the car and dampers (shock absorbers) control its bounce: spring rate, damping, ride frequency, and what worn shocks feel like.",
+    "chips": [
+      "Intermediate",
+      "16 min",
+      "Interactive 3D lab"
+    ]
+  },
+  {
+    "file": "og/topics/steering-systems.png",
+    "eyebrow": "Suspension & Steering · Lesson",
+    "title": "Steering Systems",
+    "text": "How turning the steering wheel turns the front wheels: rack-and-pinion gearing, tie rods, Ackermann geometry, and how power steering assists you.",
+    "chips": [
+      "Beginner",
+      "12 min"
+    ]
+  },
+  {
+    "file": "og/topics/suspension-basics.png",
+    "eyebrow": "Suspension & Steering · Lesson",
+    "title": "Suspension Basics",
+    "text": "How a car's suspension keeps the tyres on the road and the body steady: springs, dampers, control arms, MacPherson struts and double wishbones.",
+    "chips": [
+      "Beginner",
+      "14 min",
+      "Interactive 3D lab"
+    ]
+  },
+  {
+    "file": "og/topics/clutch.png",
+    "eyebrow": "Transmission & Clutch · Lesson",
+    "title": "The Clutch",
+    "text": "How a friction clutch connects and disconnects engine and gearbox: friction disc, pressure plate, release bearing, the biting point, and clutch slip.",
+    "chips": [
+      "Beginner",
+      "12 min",
+      "Interactive 3D lab"
+    ]
+  },
+  {
+    "file": "og/topics/differential.png",
+    "eyebrow": "Drivetrain & Differentials · Lesson",
+    "title": "The Differential",
+    "text": "Why wheels must turn at different speeds in a corner, how an open differential's gears allow it, and how limited-slip and locking diffs help traction.",
+    "chips": [
+      "Intermediate",
+      "12 min"
+    ]
+  },
+  {
+    "file": "og/topics/four-stroke-cycle.png",
+    "eyebrow": "Engine · Lesson",
+    "title": "The Four-Stroke Cycle",
+    "text": "Intake, compression, power and exhaust: how a four-stroke petrol engine works over two crank turns, with an interactive 3D engine you can slow down.",
+    "chips": [
+      "Beginner",
+      "15 min",
+      "Interactive 3D lab"
+    ]
+  },
+  {
+    "file": "og/topics/manual-gearbox.png",
+    "eyebrow": "Transmission & Clutch · Lesson",
+    "title": "The Manual Gearbox",
+    "text": "How a five-speed manual transmission works: constant-mesh gears, layshaft, selector forks and synchronisers, and what happens when you change gear.",
+    "chips": [
+      "Intermediate",
+      "18 min",
+      "Interactive 3D lab"
+    ]
+  },
+  {
+    "file": "og/topics/torque-and-power.png",
+    "eyebrow": "Basics & Fundamentals · Lesson",
+    "title": "Torque and Power",
+    "text": "Torque is twisting force; power is how fast that force does work. Learn P = Tω, why gears trade torque for speed, and how to read a torque curve.",
+    "chips": [
+      "Beginner",
+      "12 min"
+    ]
+  },
+  {
+    "file": "og/topics/tyres-and-grip.png",
+    "eyebrow": "Wheels & Tyres · Lesson",
+    "title": "Tyres and Grip",
+    "text": "How tyres grip: the postcard-sized contact patch, friction and slip, why braking and cornering share grip, and what tread, pressure and heat change.",
+    "chips": [
+      "Beginner",
+      "13 min"
+    ]
+  },
+  {
+    "file": "og/topics/valves-and-camshaft.png",
+    "eyebrow": "Engine · Lesson",
+    "title": "Valves, Camshafts and Valve Timing",
+    "text": "How cam lobes open an engine's intake and exhaust valves at precise crank angles: lift, duration, valve overlap, and why the camshaft turns at half speed.",
+    "chips": [
+      "Intermediate",
+      "14 min",
+      "Interactive 3D lab"
+    ]
+  },
+  {
+    "file": "og/labs.png",
+    "eyebrow": "Interactive 3D labs",
+    "title": "Interactive 3D Car Labs: Engine, Gearbox, Brakes",
+    "text": "Run a four-stroke engine, a manual gearbox, disc brakes and a suspension corner in your browser: play, slow down, explode and select every part.",
+    "chips": []
+  },
+  {
+    "file": "og/labs/engine.png",
+    "eyebrow": "Interactive 3D lab",
+    "title": "Four-Stroke Engine Laboratory",
+    "text": "Watch intake, compression, power and exhaust with crank, piston, cam and valves on one synchronised timeline.",
+    "chips": [
+      "Runs in your browser"
+    ]
+  },
+  {
+    "file": "og/labs/transmission.png",
+    "eyebrow": "Interactive 3D lab",
+    "title": "Manual Gearbox Laboratory",
+    "text": "Select gears and see how ratio trades rotational speed for torque between input and output shafts.",
+    "chips": [
+      "Runs in your browser"
+    ]
+  },
+  {
+    "file": "og/labs/braking.png",
+    "eyebrow": "Interactive 3D lab",
+    "title": "Disc Brake Laboratory",
+    "text": "Press the pedal, watch hydraulic pressure clamp the pads, and see kinetic energy become heat — with a conceptual ABS demo.",
+    "chips": [
+      "Runs in your browser"
+    ]
+  },
+  {
+    "file": "og/labs/suspension.png",
+    "eyebrow": "Interactive 3D lab",
+    "title": "Suspension Laboratory",
+    "text": "Drive over bumps and see the spring, damper and control arms keep the tyre on the road.",
+    "chips": [
+      "Runs in your browser"
+    ]
+  },
+  {
+    "file": "og/explore.png",
+    "eyebrow": "Explore the car",
+    "title": "Explore a Car in 3D: Every System, Labelled",
+    "text": "Explore a car in 3D: light up the engine, gearbox, brakes, suspension, steering and electrics, see where each part sits and open the lesson that explains it.",
+    "chips": []
+  },
+  {
+    "file": "og/map.png",
+    "eyebrow": "System map",
+    "title": "How Car Systems Connect: Engine to Wheels",
+    "text": "See how the engine, clutch, gearbox, driveshafts, differential and wheels connect, and how front-, rear- and all-wheel-drive layouts change the power path.",
+    "chips": []
+  },
+  {
+    "file": "og/pioneers.png",
+    "eyebrow": "History of the car",
+    "title": "Who Invented Car Parts? The Engineers Behind Them",
+    "text": "26 engineers behind the car's parts, from Ackermann steering to the radial tyre, Otto's engine to ABS: each story retold from a cited source.",
+    "chips": []
+  },
+  {
+    "file": "og/glossary.png",
+    "eyebrow": "Glossary",
+    "title": "Car Glossary: Automotive Terms Explained",
+    "text": "Plain-language definitions of 147 automotive terms, from compression ratio and torque to slip angle and regenerative braking, each linked to its lesson.",
+    "chips": []
+  },
+  {
+    "file": "og/about.png",
+    "eyebrow": "About",
+    "title": "About AutoVerse: Sources, Methods and Credits",
+    "text": "What AutoVerse is, how its original lessons are written and checked, how third-party sources are handled, and credits for the 3D models it uses.",
+    "chips": []
+  },
+  {
+    "file": "og/default.png",
+    "eyebrow": "Interactive automotive lessons",
+    "title": "Learn how cars work, in interactive 3D",
+    "text": "Free interactive lessons on how cars work: engines, gearboxes, brakes, suspension and more, with live 3D labs, quizzes and the engineers behind each part.",
+    "chips": [
+      "34 lessons",
+      "4 3D labs",
+      "15 vehicle systems"
+    ]
+  }
+]

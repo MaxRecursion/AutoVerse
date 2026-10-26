@@ -3,6 +3,10 @@
   "slug": "valves-and-camshaft",
   "title": "Valves, Camshafts and Valve Timing",
   "summary": "How spinning cam lobes open poppet valves at precisely the right crank angles: lift, duration, overlap, half-speed drive and why the valves open and close away from the dead centres.",
+  "seo": {
+    "title": "How Camshafts and Engine Valves Work",
+    "description": "How cam lobes open an engine's intake and exhaust valves at precise crank angles: lift, duration, valve overlap, and why the camshaft turns at half speed."
+  },
   "categoryId": "engine",
   "difficulty": "intermediate",
   "layer": "mechanism",
@@ -304,6 +308,24 @@
       "explanation": "Twice the teeth on the driven pulley gives a 2 : 1 reduction, so the cams turn once per two crank revolutions."
     }
   ],
+  "faq": [
+    {
+      "question": "What does a camshaft do?",
+      "answer": "It opens and closes the engine's valves. Egg-shaped lobes on the camshaft push the valves open as it turns and springs close them again, so the shape and timing of each lobe decide when a valve opens, how far and for how long."
+    },
+    {
+      "question": "Why does the camshaft turn at half crankshaft speed?",
+      "answer": "Each valve opens once per four-stroke cycle, and a cycle takes two crankshaft revolutions. The cam drive therefore turns the camshaft once for every two turns of the crankshaft."
+    },
+    {
+      "question": "What is valve overlap?",
+      "answer": "Overlap is the short period around top dead centre, at the end of the exhaust stroke, when the exhaust valve has not yet closed and the intake valve has already opened. The outgoing exhaust helps draw the fresh charge in, which improves breathing at higher engine speeds."
+    },
+    {
+      "question": "What does DOHC mean?",
+      "answer": "Double overhead camshaft: two camshafts in the cylinder head, one for the intake valves and one for the exhaust valves. It makes four valves per cylinder practical and lets intake and exhaust timing be set independently."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How engine timing works",
@@ -316,5 +338,19 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Camshaft",
+      "sameAs": "https://en.wikipedia.org/wiki/Camshaft"
+    },
+    {
+      "name": "Poppet valve",
+      "sameAs": "https://en.wikipedia.org/wiki/Poppet_valve"
+    },
+    {
+      "name": "Valve timing",
+      "sameAs": "https://en.wikipedia.org/wiki/Valve_timing"
+    }
+  ]
 }

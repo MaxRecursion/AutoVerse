@@ -3,6 +3,10 @@
   "slug": "pistons-and-crankshaft",
   "title": "Pistons, Connecting Rods and the Crankshaft",
   "summary": "How the slider-crank turns a straight push into rotation: piston, rings, wrist pin, connecting rod, crank throw, counterweights and flywheel — and why the piston does not move at a steady speed.",
+  "seo": {
+    "title": "How Pistons, Connecting Rods and Crankshafts Work",
+    "description": "How a crankshaft turns the pistons' up-and-down push into rotation: rings, wrist pin, connecting rod, crank throw, counterweights and flywheel explained."
+  },
   "categoryId": "engine",
   "difficulty": "intermediate",
   "layer": "mechanism",
@@ -303,6 +307,20 @@
       "explanation": "Compression rings seal gas pressure; the oil-control ring wipes excess oil back down."
     }
   ],
+  "faq": [
+    {
+      "question": "What does a crankshaft do?",
+      "answer": "It converts the up-and-down motion of the pistons into rotation. Each connecting rod is attached to an offset crankpin, so when combustion pushes a piston down, its rod turns the crank, much as a cyclist's leg turns a pedal."
+    },
+    {
+      "question": "What do piston rings do?",
+      "answer": "They seal the small gap between the piston and the cylinder wall. The top rings hold combustion pressure in and keep blow-by gas out of the crankcase, while the oil-control ring scrapes surplus oil off the wall so it is not burnt."
+    },
+    {
+      "question": "Why does an engine need a flywheel?",
+      "answer": "Power arrives in pulses, one per cylinder firing, so the crankshaft would speed up and slow down within every turn. The flywheel's inertia smooths those pulses, keeps the engine turning between power strokes and provides a friction face for the clutch."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "The engine",
@@ -315,5 +333,19 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Crankshaft",
+      "sameAs": "https://en.wikipedia.org/wiki/Crankshaft"
+    },
+    {
+      "name": "Piston",
+      "sameAs": "https://en.wikipedia.org/wiki/Piston"
+    },
+    {
+      "name": "Connecting rod",
+      "sameAs": "https://en.wikipedia.org/wiki/Connecting_rod"
+    }
+  ]
 }

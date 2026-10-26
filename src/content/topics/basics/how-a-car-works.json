@@ -3,6 +3,10 @@
   "slug": "how-a-car-works",
   "title": "How a Car Works: The Big Picture",
   "summary": "Follow energy from the fuel tank or battery to the tyre contact patch, and meet the supporting systems that keep that chain working safely.",
+  "seo": {
+    "title": "How Does a Car Work? The Big Picture, Explained",
+    "description": "How a car turns fuel or battery energy into motion: engine, transmission, driveline, brakes, steering and suspension, and how they work together."
+  },
   "categoryId": "basics",
   "difficulty": "beginner",
   "layer": "surface",
@@ -192,6 +196,20 @@
       "explanation": "Heat engines reject a large share of the fuel energy as heat; only a minority becomes useful work at the wheels."
     }
   ],
+  "faq": [
+    {
+      "question": "How does a car work, in simple terms?",
+      "answer": "An engine or electric motor turns stored energy into rotation. The transmission adjusts that rotation's speed and torque, the driveline carries it to the driven wheels, and the tyres push against the road. Brakes, steering and suspension control where the car goes and keep the tyres gripping."
+    },
+    {
+      "question": "What are the main systems of a car?",
+      "answer": "The powertrain (engine or motor, transmission and driveline) makes and delivers drive; the chassis systems (brakes, steering, suspension, wheels and tyres) control the car; and the electrical, cooling, fuel and climate systems support everything else."
+    },
+    {
+      "question": "Where does the energy in a car's fuel go?",
+      "answer": "In a petrol car much of the fuel's energy leaves as heat through the exhaust and cooling system; only part becomes work at the crankshaft. That work overcomes air resistance, tyre rolling resistance and friction, and the brakes turn the car's kinetic energy into heat when it slows."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "The engine",
@@ -211,5 +229,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Car",
+      "sameAs": "https://en.wikipedia.org/wiki/Car"
+    },
+    {
+      "name": "Automotive engineering",
+      "sameAs": "https://en.wikipedia.org/wiki/Automotive_engineering"
+    }
+  ]
 }

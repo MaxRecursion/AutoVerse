@@ -3,6 +3,10 @@
   "slug": "battery-and-starter",
   "title": "Battery and Starter Motor",
   "summary": "Turning the key or pressing start asks a 12-volt battery to deliver hundreds of amps to a small, powerful motor that spins the engine until it fires. Learn how the battery stores energy, how the starter engages the flywheel, and why cold mornings are hardest.",
+  "seo": {
+    "title": "How a Car Battery and Starter Motor Work",
+    "description": "How a 12-volt battery and starter motor crank the engine: solenoid, pinion and flywheel ring gear, cold cranking amps, and why cars won't start."
+  },
   "categoryId": "electrical",
   "difficulty": "beginner",
   "layer": "surface",
@@ -200,6 +204,20 @@
       "explanation": "It shifts the pinion via a fork and closes heavy contacts so battery current reaches the motor."
     }
   ],
+  "faq": [
+    {
+      "question": "How does a car starter motor work?",
+      "answer": "When you turn the key or press start, a solenoid pushes the starter's small pinion gear into mesh with the ring gear on the flywheel and closes a heavy switch, sending hundreds of amps from the battery through a powerful electric motor that spins the engine until it fires."
+    },
+    {
+      "question": "What does a clicking noise when starting mean?",
+      "answer": "A single click, or rapid clicking with no cranking, usually means the battery cannot deliver enough current: the solenoid engages but the motor cannot turn. A weak battery, poor connections or corroded terminals are the usual causes."
+    },
+    {
+      "question": "What are cold cranking amps (CCA)?",
+      "answer": "CCA is a battery rating: the current it can deliver for a set time at minus 18 °C while keeping its voltage above a minimum. Cold thickens the engine oil and slows the battery's chemistry at the same time, so a higher rating helps winter starting."
+    }
+  ],
   "sourceReferences": [
     {
       "title": "How to test a car battery",
@@ -219,5 +237,15 @@
   "licence": {
     "name": "AutoVerse original content"
   },
-  "contentStatus": "complete"
+  "contentStatus": "complete",
+  "about": [
+    {
+      "name": "Automotive battery",
+      "sameAs": "https://en.wikipedia.org/wiki/Automotive_battery"
+    },
+    {
+      "name": "Starter (engine)",
+      "sameAs": "https://en.wikipedia.org/wiki/Starter_(engine)"
+    }
+  ]
 }
