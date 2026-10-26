@@ -19,7 +19,7 @@ export function AnimationControls({ className }: { className?: string }) {
   const readout = config.formatProgress?.(progress) ?? `${Math.round(progress * 100)}%`
 
   return (
-    <div className={cn('panel flex flex-col gap-2 px-3 py-2.5', className)} role="group" aria-label="Animation controls">
+    <div className={cn('panel flex flex-col gap-2 px-3 py-2.5', className)} role="group" aria-label="Animation controls" data-tour="lab-transport">
       <div className="relative">
         <Slider
           value={[progress]}

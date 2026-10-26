@@ -103,7 +103,7 @@ export function LabWorkbench({
           <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] px-3 py-2">
             <TabsList>
               <TabsTrigger value="explain">Explain</TabsTrigger>
-              <TabsTrigger value="parts">Parts</TabsTrigger>
+              <TabsTrigger value="parts" data-tour="lab-parts">Parts</TabsTrigger>
               {extraTab && <TabsTrigger value={extraTab.id}>{extraTab.label}</TabsTrigger>}
             </TabsList>
             <LevelToggle compact />
@@ -152,7 +152,7 @@ function SceneToolbar() {
   const exploded = useLab((s) => s.exploded)
   const s = store.getState()
   return (
-    <div className="panel pointer-events-auto flex items-center gap-0.5 p-1" role="toolbar" aria-label="Scene tools">
+    <div className="panel pointer-events-auto flex items-center gap-0.5 p-1" role="toolbar" aria-label="Scene tools" data-tour="lab-toolbar">
       <ToolButton label={showLabels ? 'Hide part names' : 'Show part names'} active={showLabels} onClick={() => s.toggleLabels()}>
         <Tag />
       </ToolButton>

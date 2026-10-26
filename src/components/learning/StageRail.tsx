@@ -21,7 +21,7 @@ export function StageRail({
   onFinish: () => void
 }) {
   return (
-    <div className="flex min-w-0 flex-1 items-center gap-2">
+    <div className="flex min-w-0 flex-1 items-center gap-2" data-tour="stage-rail">
       <nav aria-label="Lesson stages" className="min-w-0 flex-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <ol className="flex w-max items-center gap-1 sm:gap-1.5">
           {stages.map((s, i) => {
@@ -49,7 +49,8 @@ export function StageRail({
                   >
                     {s.done ? <Check className="size-3" /> : i + 1}
                   </span>
-                  <span className={cn('whitespace-nowrap', isNext ? 'inline' : 'hidden lg:inline')}>{s.label}</span>
+                  {/* Visually hidden (never display:none) when narrow, so assistive tech always hears the stage name. */}
+                  <span className={cn('whitespace-nowrap', !isNext && 'sr-only lg:not-sr-only')}>{s.label}</span>
                   <span className="sr-only">
                     {s.done ? ' — done' : isNext ? ' — next' : ''}
                     {s.optional ? ' (optional)' : ''}. {s.detail}

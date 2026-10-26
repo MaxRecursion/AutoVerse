@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+import { isTourActive } from '@/lib/tourState'
 
 /**
  * Local-first learning progress (browser localStorage only — no account,
@@ -40,6 +41,8 @@ interface ProgressState {
   lessons: Record<string, LessonSignals>
   /** Lab id → ids of the lab missions completed (features/labs/missions.ts). */
   missions: Record<string, string[]>
+  /** Course id → when its certificate was earned. Awarded once, never withdrawn by later changes. */
+  certificates: Record<string, { earnedAt: string }>
   visit: (topicId: string) => void
   setCompleted: (topicId: string, done: boolean) => void
   toggleBookmark: (topicId: string) => void
@@ -47,17 +50,21 @@ interface ProgressState {
   signal: (topicId: string, key: SignalKey) => void
   seeStep: (topicId: string, stepId: string) => void
   completeMission: (labId: string, missionId: string) => void
+  awardCertificate: (courseId: string) => void
   clearAll: () => void
 }
 
 const MAX_RECENT = 12
-const empty = { recent: [], completed: {}, bookmarks: [], quizScores: {}, lessons: {}, missions: {} }
+const empty = { recent: [], completed: {}, bookmarks: [], quizScores: {}, lessons: {}, missions: {}, certificates: {} }
 
 export const useProgress = create<ProgressState>()(
   persist(
     (set, get) => ({
       ...empty,
+      // The first four record what the page observed on its own, so they are ignored while the product tour is
+      // showing pages to a learner who is not actually reading them.
       visit: (topicId) =>
+        isTourActive() ||
         set({
           recent: [{ topicId, at: new Date().toISOString() }, ...get().recent.filter((r) => r.topicId !== topicId)].slice(0, MAX_RECENT),
         }),
@@ -79,19 +86,26 @@ export const useProgress = create<ProgressState>()(
       },
       // Both no-op when the evidence is already recorded, so repeated scroll / click events never re-render subscribers.
       signal: (topicId, key) => {
+        if (isTourActive()) return
         const cur = get().lessons[topicId]
         if (cur?.[key]) return
         set({ lessons: { ...get().lessons, [topicId]: { ...cur, steps: cur?.steps ?? [], [key]: true } } })
       },
       seeStep: (topicId, stepId) => {
+        if (isTourActive()) return
         const cur = get().lessons[topicId]
         if (cur?.steps.includes(stepId)) return
         set({ lessons: { ...get().lessons, [topicId]: { ...cur, steps: [...(cur?.steps ?? []), stepId] } } })
       },
       completeMission: (labId, missionId) => {
+        if (isTourActive()) return
         const cur = get().missions[labId] ?? []
         if (cur.includes(missionId)) return
         set({ missions: { ...get().missions, [labId]: [...cur, missionId] } })
+      },
+      awardCertificate: (courseId) => {
+        if (get().certificates[courseId]) return
+        set({ certificates: { ...get().certificates, [courseId]: { earnedAt: new Date().toISOString() } } })
       },
       clearAll: () => set({ ...empty }),
     }),

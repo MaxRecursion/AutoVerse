@@ -6,6 +6,7 @@ import { engineLabConfig } from '@/features/engine-lab/config'
 import { createLabStore } from '@/lib/simulation/labStore'
 import { useProgress } from '@/stores/progress'
 import { useToasts } from '@/stores/toasts'
+import { useTour } from '@/features/tour/tourStore'
 import { LabMissions } from './LabMissions'
 import { MISSIONS } from './missions'
 
@@ -40,6 +41,17 @@ describe('LabMissions', () => {
     expect(useProgress.getState().missions.engine).toEqual(['pick-piston'])
     expect(useToasts.getState().toasts.at(-1)).toMatchObject({ title: 'Mission complete: Select the piston', description: `1 of ${MISSIONS.engine!.length} done.` })
     expect(screen.getByRole('button', { name: /lab missions/i })).toHaveTextContent(`1/${MISSIONS.engine!.length}`)
+  })
+
+  it('stays silent while the product tour is showing the lab', () => {
+    useTour.getState().start()
+    const store = setup()
+    act(() => {
+      for (const cue of ['intake', 'compression', 'power', 'exhaust']) store.getState().seekCue(cue)
+    })
+    useTour.getState().stop('interrupted')
+    expect(useProgress.getState().missions.engine).toBeUndefined()
+    expect(useToasts.getState().toasts).toEqual([])
   })
 
   it('does not tick for what the lab shows before it is touched', () => {

@@ -1,5 +1,5 @@
 import { useDeferredValue, useEffect, useMemo, useState } from 'react'
-import { BookOpen, Box, Clock, Cpu, FolderTree, History, Search } from 'lucide-react'
+import { BookOpen, Box, CircleHelp, Clock, Cpu, FolderTree, History, Search } from 'lucide-react'
 import { useNavigate } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command'
@@ -12,6 +12,7 @@ import { useProgress } from '@/stores/progress'
 import { OPEN_SEARCH_EVENT, type OpenSearchDetail } from './events'
 import { isApplePlatform, matchSearchShortcut } from './shortcuts'
 import { searchSite } from './siteIndex'
+import { useStartTour } from '@/features/tour/useStartTour'
 
 const GROUPS: { kind: SearchKind; heading: string; limit: number; icon: typeof BookOpen }[] = [
   { kind: 'topic', heading: 'Topics', limit: 8, icon: BookOpen },
@@ -34,6 +35,7 @@ export function SearchCommand() {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const navigate = useNavigate()
+  const startTour = useStartTour()
   const [apple] = useState(isApplePlatform)
 
   useEffect(() => {
@@ -73,6 +75,7 @@ export function SearchCommand() {
         className="h-9 gap-2 border-white/10 bg-graphite-900/60 px-2.5 text-steel-300 hover:text-paper sm:w-44 sm:justify-start lg:w-56"
         aria-label="Search lessons, labs and components"
         aria-keyshortcuts={apple ? 'Meta+K /' : 'Control+K /'}
+        data-tour="search"
       >
         <Search aria-hidden />
         <span className="hidden text-sm sm:inline">Search</span>
@@ -101,7 +104,17 @@ export function SearchCommand() {
               placeholder="Search lessons, labs, parts…"
               className="h-12 text-base text-paper placeholder:text-steel-500 sm:text-sm"
             />
-            {open && <SearchResults query={query} onSelect={go} />}
+            {open && (
+              <SearchResults
+                query={query}
+                onSelect={go}
+                onTour={() => {
+                  setOpen(false)
+                  // Let the palette finish closing so it does not take focus back from the tour.
+                  setTimeout(startTour, 150)
+                }}
+              />
+            )}
           </Command>
           <div className="hidden items-center gap-4 border-t border-white/[0.06] px-3 py-2 text-[11px] text-steel-500 sm:flex" aria-hidden>
             <span>
@@ -120,7 +133,7 @@ export function SearchCommand() {
   )
 }
 
-function SearchResults({ query, onSelect }: { query: string; onSelect: (href: string) => void }) {
+function SearchResults({ query, onSelect, onTour }: { query: string; onSelect: (href: string) => void; onTour: () => void }) {
   const deferred = useDeferredValue(query)
   const trimmed = deferred.trim()
   const grouped = useMemo(() => (trimmed ? groupByKind(searchSite(trimmed, { limit: 40 })) : null), [trimmed])
@@ -157,6 +170,10 @@ function SearchResults({ query, onSelect }: { query: string; onSelect: (href: st
           <CommandItem value="browse:progress" onSelect={() => onSelect('/progress')} className={ITEM}>
             <FolderTree aria-hidden className="text-steel-400" />
             My progress
+          </CommandItem>
+          <CommandItem value="browse:tour" onSelect={onTour} className={ITEM}>
+            <CircleHelp aria-hidden className="text-steel-400" />
+            Take the tour
           </CommandItem>
         </CommandGroup>
       </CommandList>

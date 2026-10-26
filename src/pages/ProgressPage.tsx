@@ -1,3 +1,5 @@
+import { CertificatesSection } from '@/features/certificate/CertificatesSection'
+import { usePreferences } from '@/stores/preferences'
 import { useMemo, useState, type ReactNode } from 'react'
 import { ArrowRight, BookmarkX, CircleCheck, HardDrive, Route, Trash2 } from 'lucide-react'
 import { Link } from 'react-router'
@@ -80,6 +82,10 @@ export default function ProgressPage() {
           value={quizRows.length ? `${Math.round((quizRows.reduce((s, r) => s + r.score / r.total, 0) / quizRows.length) * 100)}%` : '—'}
         />
       </dl>
+
+      <Block id="certificates" title="Certificates" description="Finish every lesson and take every quiz in a course to earn its certificate.">
+        <CertificatesSection />
+      </Block>
 
       {paths.length > 0 && (
         <Block id="paths" title="Learning paths" description="Curated sequences of lessons. Lessons not written yet are skipped and noted.">
@@ -329,7 +335,7 @@ function ClearAllButton({ disabled }: { disabled: boolean }) {
         <DialogHeader>
           <DialogTitle>Clear all progress?</DialogTitle>
           <DialogDescription>
-            This removes your recently viewed lessons, completed lessons, bookmarks and quiz scores from this browser. It cannot be undone.
+            This removes your recently viewed lessons, completed lessons, bookmarks, quiz scores, certificates and the name used on them from this browser. It cannot be undone.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -343,6 +349,7 @@ function ClearAllButton({ disabled }: { disabled: boolean }) {
             className="h-10"
             onClick={() => {
               clearAll()
+              usePreferences.getState().setLearnerName('')
               setOpen(false)
             }}
           >

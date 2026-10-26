@@ -24,6 +24,7 @@ export const routes: RouteObject[] = [
       { path: 'learn/:categorySlug', ...page(() => import('@/pages/CategoryPage')) },
       { path: 'topics/:slug', ...page(() => import('@/pages/TopicPage')) },
       { path: 'map', ...page(() => import('@/pages/SystemMapPage')) },
+      { path: 'certificate/:courseId', ...page(() => import('@/pages/CertificatePage')) },
       { path: 'pioneers', ...page(() => import('@/pages/PioneersPage')) },
       { path: 'progress', ...page(() => import('@/pages/ProgressPage')) },
       { path: 'about', ...page(() => import('@/pages/AboutPage')) },

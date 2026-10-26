@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import type { QuizQuestion } from '@/lib/schemas'
 import { cn } from '@/lib/utils'
+import { checkCertificates } from '@/features/certificate/award'
 import { useProgress } from '@/stores/progress'
 import { answerQuestion, isCorrectAnswer, nextUnanswered, scoreQuiz, scoreVerdict, type QuizAnswers } from './quiz'
 
@@ -46,7 +47,10 @@ export function LessonQuiz({ topicId, questions }: LessonQuizProps) {
     if (next === answers) return
     setAnswers(next)
     const s = scoreQuiz(questions, next)
-    if (s.finished) recordQuiz(topicId, s.correct, s.total)
+    if (s.finished) {
+      recordQuiz(topicId, s.correct, s.total)
+      checkCertificates()
+    }
   }
 
   const goTo = (i: number) => {

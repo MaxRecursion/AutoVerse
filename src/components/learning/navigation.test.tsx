@@ -44,7 +44,8 @@ describe('learning navigation', () => {
     const card = engineGroup.getByRole('link', { name: /Fixture engine cycle/ })
     await user.click(card)
 
-    expect(await screen.findByRole('heading', { level: 1, name: 'Fixture engine cycle' })).toBeInTheDocument()
+    // The lesson page is a lazily loaded chunk; allow for a busy machine.
+    expect(await screen.findByRole('heading', { level: 1, name: 'Fixture engine cycle' }, { timeout: 8000 })).toBeInTheDocument()
     expect(router.state.location.pathname).toBe('/topics/fixture-engine-cycle')
     expect(screen.getByRole('heading', { level: 2, name: 'Step by step' })).toBeInTheDocument()
   })

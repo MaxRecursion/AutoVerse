@@ -1,6 +1,8 @@
-import { ArrowRight, Box, Check, Circle } from 'lucide-react'
+import { ArrowRight, Award, Box, Check, Circle } from 'lucide-react'
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
+import { getCourses } from '@/features/certificate/award'
+import { useProgress } from '@/stores/progress'
 import type { NextUp } from '@/features/progress/curriculum'
 import type { Stage, StageSummary } from '@/features/progress/stages'
 import type { Topic } from '@/lib/schemas'
@@ -25,11 +27,13 @@ export function LessonFinish({
   onFinish: () => void
 }) {
   const target = next.topic && next.topic.id !== topic.id ? next.topic : undefined
+  const held = useProgress((s) => s.certificates)
+  const certificates = getCourses().filter((c) => held[c.id] && c.topics.some((t) => t.id === topic.id))
   const heading = complete ? 'Lesson complete' : summary.ready ? 'Ready to finish' : 'Almost there'
   return (
     <section id="finish" aria-labelledby="finish-heading" className="panel scroll-mt-28 p-5 sm:p-6">
-      <div className="grid gap-6 md:grid-cols-[1fr_minmax(0,22rem)]">
-        <div>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
+        <div className="min-w-0">
           <h2 id="finish-heading" className="text-xl font-semibold">
             {heading}
           </h2>
@@ -56,7 +60,7 @@ export function LessonFinish({
           <p className="mt-3 text-xs text-steel-500">Progress is stored only in this browser — there is no account.</p>
         </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex min-w-0 flex-col gap-3">
           {target ? (
             <Link
               to={topicHref(target)}
@@ -77,6 +81,18 @@ export function LessonFinish({
           ) : (
             <p className="rounded-xl border border-ok/30 bg-ok/[0.06] p-4 text-sm text-ok">You have finished everything on this route.</p>
           )}
+          {certificates.map((c) => (
+            <Link
+              key={c.id}
+              to={`/certificate/${c.id}`}
+              className="flex min-h-11 items-center gap-2.5 rounded-xl border border-amber/30 bg-amber/[0.05] px-4 py-2.5 text-sm text-amber hover:border-amber/60"
+            >
+              <Award aria-hidden className="size-4 shrink-0" />
+              <span>
+                Certificate earned: <span className="font-medium">{c.title}</span>
+              </span>
+            </Link>
+          ))}
           {next.skipped.length > 0 && (
             <p className="text-xs leading-relaxed text-steel-400">
               Earlier in this route you skipped{' '}

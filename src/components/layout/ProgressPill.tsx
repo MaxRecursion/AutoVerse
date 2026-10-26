@@ -27,6 +27,7 @@ export function ProgressPill() {
     <Link
       to={to}
       aria-label={accessible}
+      data-tour="progress-pill"
       title={accessible}
       className="group flex h-10 items-center gap-2.5 rounded-lg border border-white/[0.08] px-2 transition-colors hover:border-cyan/40 lg:px-3"
     >

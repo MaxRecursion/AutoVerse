@@ -15,13 +15,12 @@ export function ToastHost() {
       role="status"
       aria-live="polite"
       aria-relevant="additions"
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-[60] flex flex-col items-center gap-2 p-3 sm:items-end sm:p-5"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-[60] flex flex-col items-center gap-2 p-2 sm:items-end sm:p-5"
     >
       <AnimatePresence initial={false}>
         {toasts.map((t) => (
           <motion.div
             key={t.id}
-            layout={!reduced}
             initial={reduced ? false : { opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, y: 8 }}
@@ -59,14 +58,14 @@ function ToastCard({ toast }: { toast: Toast }) {
       onFocus={hold}
       onBlur={arm}
       className={cn(
-        'panel flex items-start gap-3 border-l-2 p-3.5 pr-2.5 shadow-xl',
+        'panel flex items-start gap-3 border-l-2 p-3 pr-2 shadow-xl sm:p-3.5 sm:pr-2.5',
         toast.tone === 'success' ? 'border-l-ok' : 'border-l-cyan',
       )}
     >
       <Icon aria-hidden className={cn('mt-0.5 size-4 shrink-0', toast.tone === 'success' ? 'text-ok' : 'text-cyan')} />
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium text-paper">{toast.title}</p>
-        {toast.description && <p className="mt-0.5 text-[13px] leading-snug text-steel-300">{toast.description}</p>}
+        {toast.description && <p className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-steel-300">{toast.description}</p>}
         {toast.action && (
           <Link
             to={toast.action.to}

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Check, ChevronDown, Circle, Target } from 'lucide-react'
 import { useLab, useLabStoreApi } from '@/components/three/LabContext'
 import { ProgressRing } from '@/components/learning/ProgressRing'
+import { isTourActive } from '@/lib/tourState'
 import { cn } from '@/lib/utils'
 import { useProgress } from '@/stores/progress'
 import { toast } from '@/stores/toasts'
@@ -27,6 +28,7 @@ export function LabMissions() {
     if (missions.length === 0) return
     evidence.current = observe(evidence.current, store.getState())
     const check = () => {
+      if (isTourActive()) return // the product tour is showing this lab, not the learner using it
       for (const id of completedMissions(labId, evidence.current)) {
         if (useProgress.getState().missions[labId]?.includes(id)) continue
         completeMission(labId, id)
@@ -52,7 +54,7 @@ export function LabMissions() {
   const count = missions.filter((m) => done.includes(m.id)).length
   const listId = `missions-${labId}`
   return (
-    <div className="border-b border-white/[0.06]" data-testid="lab-missions">
+    <div className="border-b border-white/[0.06]" data-testid="lab-missions" data-tour="lab-missions">
       <button
         type="button"
         aria-expanded={open}

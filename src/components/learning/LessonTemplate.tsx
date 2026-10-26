@@ -218,7 +218,7 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
             </>
           ),
           content: (
-            <div ref={sceneRef} className="scroll-mt-28">
+            <div ref={sceneRef} className="scroll-mt-28" data-tour="lesson-lab">
               <LabHost labId={lab.id} store={store} variant="embedded" />
             </div>
           ),

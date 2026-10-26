@@ -52,12 +52,29 @@ Home, lesson, and progress pages now resolve the same current path from the most
 
 **How to add a pioneer.** Add an entry in `scripts/content/build-pioneers.py` (it generates `pioneers.json`; re-run it), citing a source you fetched; link `topicIds` (required) and `componentIds` (optional, shown on the part); run `npm run validate:content -- --strict` and `npx vitest run src/lib/pioneers.test.ts`.
 
+## Shipped in the Fourth Slice: guided tour, certificates and browser tests
+
+**Product tour** (`features/tour/`). An 11-step spotlight tour across the header, a lesson and a lab: a dimmed page with a cut-out around the real element and a card beside it. Start it from the `?` button in the header, the mobile menu, the footer or the search palette (`Take the tour`); first-time visitors on the home page get a dismissible invitation that never starts anything by itself and is never shown again once answered.
+
+- Steps are data in `steps.ts`; targets are `data-tour="…"` anchors. `steps.test.ts` fails if an anchor or a visited route disappears, so a refactor cannot silently break the tour. Add a step by adding an anchor and a step.
+- It navigates to the page a step is about (a lesson, then a lab), waits for lazy content and 3D, and falls back to a centred card if a target never appears. It puts the learner back where they started when it ends, and stops quietly if they leave by themselves.
+- Accessible: modal dialog with a labelled heading that receives focus on each step, Esc / arrow keys, Tab kept inside the card, and the page behind made `inert`. Respects reduced motion (no transitions, no pulse). On phones the card fills the width and the menu button stands in for the hidden nav.
+- **It leaves no trace in progress.** While the tour is open, passive recording is suspended (`lib/tourState.ts`; `visit`, `signal`, `seeStep`, `completeMission` and lab-mission ticks are ignored). Without this, showing a demo lesson and lab counted as the learner's own reading.
+
+**Certificates** (`features/certificate/`). A "course" is each learning path plus the whole curriculum. A certificate needs **every lesson completed and every quiz taken**, so "Mark complete anyway" cannot skip the knowledge check; the average quiz score is printed on it. It is awarded once (the date is kept even if a lesson is reopened later), announced with a toast, and granted retroactively when the progress or certificate page opens. `/certificate/:courseId` shows the certificate (name entry, print or save as PDF) or exactly what is left. The document is drawn on light paper with container-query units and printed through a dedicated print stylesheet (A4 landscape, only the certificate). It states plainly that it is not independently verifiable: progress is local to the browser, and the certificate number is a reference, not a signature. Clearing progress removes certificates and the stored name.
+
+**Browser tests** (`tests/e2e/`, Playwright, desktop and a Pixel 7 profile, run against the production build): the full start → earn stages → finish → next-lesson → refresh → progress-page loop; the skipped-step regression; the hub; lab missions and the history chip; the whole tour with a check that every spotlight sits on its element; the invitation; certificates (awarding, name, print media, one-lesson-short); and a phone-width check that no page in the sitemap is wider than the screen. That last test exists because the suite caught a real bug: the finish card could widen a lesson page past a phone's width, which pushes fixed elements (toasts, the tour) out of place.
+
+Run them with `npm run test:e2e` (builds first). The first run needs `npx playwright install chromium`.
+
 ## Next Work
 
 1. **Cover the remaining lessons with stories.** 9 of 34 lessons have no linked engineer yet: alternator and charging, cooling, diagnosing warning signs, driveshafts and CV joints, gear ratios, lubrication, mechanical sympathy, pistons and crankshaft, routine maintenance. Add only where a source supports it (the Rzeppa CV joint was left out because the page read did not name his employer).
 2. **Deepen quiz and lab feedback.** Explain *why* a chosen wrong answer is wrong; show a short result after a lab mission set; link wrong answers back to the step that teaches it.
 3. **Build depth.** Expand sparse categories (tyres, HVAC, body/chassis, driving) with prerequisite-aware lessons at each layer.
 4. **Validate usability.** Test first-time navigation end to end in Playwright (start → stages → finish → next → refresh → progress page), keyboard and screen-reader feedback, narrow screens, direct links, and GitHub Pages subpaths (`/AutoVerse/`).
-5. **Carry layers into the system map and explorer** (completion rings on map nodes; "visited" markers on explorer systems).
+5. **Run the browser tests in CI** (a workflow step before deploy) and add a keyboard-only and screen-reader pass on the tour.
+6. **Optional certificate polish:** a downloadable image, and a per-system certificate if the curriculum grows.
+7. **Carry layers into the system map and explorer** (completion rings on map nodes; "visited" markers on explorer systems).
 
 Consider progress export or cross-device sync after the core learning flow is clear.
