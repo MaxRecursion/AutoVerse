@@ -106,6 +106,7 @@ test.describe('orientation', () => {
 
 test.describe('labs and stories', () => {
   test('selecting a part ticks a mission and shows who developed it', async ({ page }) => {
+    test.setTimeout(90_000) // the live 3D engine renders in software, so each click can take seconds while other workers run
     await open(page, '/labs/engine')
     await expect(page.getByRole('heading', { level: 1, name: 'Four-Stroke Engine Laboratory' })).toBeVisible()
 

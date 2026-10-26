@@ -10,6 +10,9 @@ const PORT = 4173
 export default defineConfig({
   testDir: 'tests/e2e',
   fullyParallel: true,
+  // Headless Chromium renders the 3D scenes in software, several cores per page; at the default (half the cores) the
+  // WebGL-heavy tests starve each other past their timeouts. The two longest tests set the suite's length anyway.
+  workers: '30%',
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? [['github'], ['html', { open: 'never' }]] : [['list']],
