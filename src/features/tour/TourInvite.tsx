@@ -32,7 +32,7 @@ export function TourInvite() {
   return (
     <section
       aria-label="Product tour invitation"
-      className="panel fixed bottom-3 left-3 right-3 z-50 flex max-w-sm flex-col gap-3 border-cyan/30 p-4 shadow-2xl sm:bottom-5 sm:left-5 sm:right-auto"
+      className="panel fixed bottom-[max(0.75rem,env(safe-area-inset-bottom))] left-[max(0.75rem,env(safe-area-inset-left))] right-[max(0.75rem,env(safe-area-inset-right))] z-50 flex max-w-sm flex-col gap-3 border-cyan/30 p-4 shadow-2xl sm:bottom-[max(1.25rem,env(safe-area-inset-bottom))] sm:left-[max(1.25rem,env(safe-area-inset-left))] sm:right-auto"
     >
       <div className="flex items-start gap-3">
         <span className="grid size-9 shrink-0 place-items-center rounded-full border border-cyan/40 bg-cyan/10 text-cyan">

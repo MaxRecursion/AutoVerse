@@ -71,7 +71,7 @@ export function MobileSheet() {
           </span>
         </span>
       </button>
-      <div id="explorer-sheet-body" className="flex min-h-0 flex-1 flex-col">
+      <div id="explorer-sheet-body" className="flex min-h-0 flex-1 flex-col pb-[env(safe-area-inset-bottom)]">
         <BodyFadeControl id="body-fade-mobile" className="border-b border-white/[0.06] px-4 pb-1" />
         <ExplorerPanel compact className="min-h-0 flex-1" />
       </div>

@@ -360,7 +360,7 @@ function LessonBar({ sections, rail }: { sections: SectionDef[]; rail: ReactNode
   const target = useRef<string | null>(null)
 
   return (
-    <div className="sticky top-14 z-30 border-y border-white/[0.06] bg-graphite-950/90 backdrop-blur-lg">
+    <div className="sticky top-[calc(3.5rem+env(safe-area-inset-top))] z-30 border-y border-white/[0.06] bg-graphite-950/90 backdrop-blur-lg">
       <div className="mx-auto flex h-12 max-w-6xl items-center gap-3 px-4 sm:px-6">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

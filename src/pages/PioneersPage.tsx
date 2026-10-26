@@ -80,7 +80,7 @@ export default function PioneersPage() {
         </p>
       </header>
 
-      <div className="z-20 -mx-4 mt-8 sm:sticky sm:top-14 border-y border-white/[0.06] bg-graphite-950/90 px-4 py-3 backdrop-blur-lg sm:-mx-6 sm:px-6">
+      <div className="z-20 -mx-4 mt-8 sm:sticky sm:top-[calc(3.5rem+env(safe-area-inset-top))] border-y border-white/[0.06] bg-graphite-950/90 px-4 py-3 backdrop-blur-lg sm:-mx-6 sm:px-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label className="relative block flex-1">
             <span className="sr-only">Search engineers</span>

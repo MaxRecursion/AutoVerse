@@ -15,7 +15,7 @@ export function Header() {
   const [open, setOpen] = useState(false)
   const startTour = useStartTour()
   return (
-    <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-graphite-950/85 backdrop-blur-lg">
+    <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-graphite-950/85 pt-[env(safe-area-inset-top)] backdrop-blur-lg">
       <div className="mx-auto flex h-14 max-w-[1600px] items-center gap-4 px-4 sm:px-6">
         <Logo />
         <nav aria-label="Primary" data-tour="nav" className="ml-4 hidden items-center gap-1 md:flex">

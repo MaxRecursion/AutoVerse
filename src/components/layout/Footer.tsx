@@ -5,7 +5,7 @@ import { Logo } from './Logo'
 export function Footer() {
   const startTour = useStartTour()
   return (
-    <footer className="border-t border-white/[0.06] bg-graphite-950">
+    <footer className="border-t border-white/[0.06] bg-graphite-950 pb-[env(safe-area-inset-bottom)]">
       <div className="mx-auto flex max-w-[1600px] flex-col gap-4 px-4 py-8 text-sm text-steel-400 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div className="flex items-center gap-4">
           <Logo />

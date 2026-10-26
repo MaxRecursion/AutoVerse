@@ -151,8 +151,8 @@ export function ExplorerView() {
         <div
           className={
             wide
-              ? 'grid h-[calc(100dvh-9rem)] min-h-[560px] grid-cols-[minmax(0,1fr)_minmax(340px,400px)] gap-3'
-              : 'flex h-[calc(100dvh-6.75rem)] min-h-[520px] flex-col'
+              ? 'grid h-[calc(100dvh-9rem-env(safe-area-inset-top))] min-h-[560px] grid-cols-[minmax(0,1fr)_minmax(340px,400px)] gap-3'
+              : 'flex h-[calc(100dvh-6.75rem-env(safe-area-inset-top))] min-h-[520px] flex-col'
           }
         >
           <section
