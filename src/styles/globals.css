@@ -114,6 +114,16 @@
   h1, h2, h3, h4 {
     @apply font-display tracking-tight;
   }
+  /*
+   * Even line lengths for headings, no lone last word in running text. The
+   * longhand leaves text-wrap-mode alone, so truncate / nowrap still win.
+   */
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap-style: balance;
+  }
+  p, li, dd, blockquote, figcaption {
+    text-wrap-style: pretty;
+  }
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-cyan;
   }
