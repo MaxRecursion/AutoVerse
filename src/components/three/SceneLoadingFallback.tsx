@@ -19,7 +19,7 @@ export function SceneLoadingFallback({ pending = false, label = 'Preparing 3D sc
   if (!pending && !loadingAssets) return null
   return (
     <div className="pointer-events-none absolute inset-0 z-10 grid place-items-center" role="status" aria-live="polite" data-testid="scene-loading">
-      <div className="panel flex w-56 flex-col gap-2 px-4 py-3">
+      <div className="skeleton-delay panel flex w-56 flex-col gap-2 px-4 py-3">
         <span className="flex items-center gap-2 text-xs text-steel-300">
           <span aria-hidden className="size-2 shrink-0 rounded-full bg-cyan motion-safe:animate-pulse" />
           {loadingAssets ? 'Loading model…' : label}

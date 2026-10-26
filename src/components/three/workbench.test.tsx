@@ -10,6 +10,7 @@ import { AnimationControls } from './AnimationControls'
 import { LabStoreContext } from './LabContext'
 import { LabWorkbench } from './LabWorkbench'
 import { SceneLoadingFallback } from './SceneLoadingFallback'
+import { workbenchGrid, workbenchScene } from './workbenchLayout'
 
 const config = defineLabConfig({ id: 'workbench-test', speeds: [0.5, 1, 2] })
 
@@ -114,6 +115,15 @@ describe('loading states', () => {
     render(<LabSkeleton variant="embedded" />)
     expect(screen.getByRole('status')).toHaveTextContent('Loading laboratory…')
     expect(screen.getByTestId('lab-loading')).toHaveClass('h-[52dvh]')
+  })
+
+  it('lays the skeleton out with the workbench classes and holds its contents back for ~300 ms', () => {
+    const { container } = render(<LabSkeleton variant="full" />)
+    expect(container.firstElementChild).toHaveClass(...workbenchGrid('full').split(' '))
+    expect(screen.getByTestId('lab-loading')).toHaveClass(...workbenchScene('full').split(' '))
+    // Everything visible inside the boxes waits for the delay; the boxes themselves do not.
+    expect(screen.getByTestId('lab-loading')).not.toHaveClass('skeleton-delay')
+    expect(screen.getByText('Loading laboratory…').closest('.skeleton-delay')).not.toBeNull()
   })
 
   it('gives the root route a HydrateFallback for the first lazy page load', () => {

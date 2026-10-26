@@ -92,7 +92,9 @@ function HeroLoading() {
   return (
     <div className="relative grid h-full place-items-center" role="status">
       <HeroBlueprint className="absolute inset-0 m-auto h-[82%] w-auto opacity-35" />
-      <span className="eyebrow relative rounded bg-graphite-950/70 px-2 py-1 motion-safe:animate-pulse">Starting the engine…</span>
+      <span className="skeleton-delay relative">
+        <span className="eyebrow block rounded bg-graphite-950/70 px-2 py-1 motion-safe:animate-pulse">Starting the engine…</span>
+      </span>
     </div>
   )
 }

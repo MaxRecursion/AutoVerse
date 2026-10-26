@@ -1,5 +1,6 @@
 import { lazy, Suspense, type ComponentType } from 'react'
 import { LabStoreContext } from '@/components/three/LabContext'
+import { workbenchAside, workbenchGrid, workbenchScene } from '@/components/three/workbenchLayout'
 import type { LabStore } from '@/lib/simulation/labStore'
 import { cn } from '@/lib/utils'
 import { labs } from './registry'
@@ -25,23 +26,23 @@ export function LabHost({ labId, store, variant = 'full' }: { labId: string; sto
 }
 
 /**
- * Placeholder while a lab's code (three.js and the scene) downloads. It has
- * the workbench's shape — scene box (same heights per variant) plus side
- * panel — and a loading status inside the scene, so the page does not jump
- * and the scene area is never an empty box.
+ * Placeholder while a lab's code (three.js and the scene) downloads. It is
+ * built from the workbench's own layout classes, so the page does not jump
+ * when the lab replaces it. The boxes take their space at once; the gray
+ * blocks and the status only fade in if loading takes longer than ~300 ms.
  */
 export function LabSkeleton({ variant = 'full' }: { variant?: LabViewProps['variant'] }) {
   return (
-    <div className={cn('grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(320px,400px)]', variant === 'full' && 'lg:h-[calc(100dvh-7.5rem)]')}>
-      <div
-        className={cn(
-          'relative grid place-items-center overflow-hidden rounded-xl border border-white/[0.07] bg-graphite-950 bg-blueprint',
-          variant === 'full' ? 'h-[58dvh] min-h-[340px] lg:h-full' : 'h-[52dvh] min-h-[320px] lg:h-[560px]',
-        )}
-        role="status"
-        data-testid="lab-loading"
-      >
-        <div className="panel flex w-56 flex-col gap-2 px-4 py-3">
+    <div className={workbenchGrid(variant)}>
+      <div className={cn(workbenchScene(variant), 'grid place-items-center')} role="status" data-testid="lab-loading">
+        <div aria-hidden className="skeleton-delay absolute inset-3 flex flex-col justify-between">
+          <div className="flex items-start justify-between gap-2">
+            <Bone className="h-24 w-32" />
+            <Bone className="h-11 w-40" />
+          </div>
+          <Bone className="h-24 w-full" />
+        </div>
+        <div className="skeleton-delay panel relative flex w-56 flex-col gap-2 px-4 py-3">
           <span className="flex items-center gap-2 text-xs text-steel-300">
             <span aria-hidden className="size-2 shrink-0 rounded-full bg-cyan motion-safe:animate-pulse" />
             Loading laboratory…
@@ -51,7 +52,22 @@ export function LabSkeleton({ variant = 'full' }: { variant?: LabViewProps['vari
           </div>
         </div>
       </div>
-      <div aria-hidden className="panel hidden min-h-40 lg:block" />
+      <div aria-hidden className={cn(workbenchAside, 'min-h-64 lg:min-h-0')}>
+        <div className="skeleton-delay flex flex-col gap-3 p-3">
+          <Bone className="h-11" />
+          <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] pb-2">
+            <Bone className="h-9 w-48" />
+            <Bone className="h-9 w-24" />
+          </div>
+          <Bone className="h-4 w-3/4" />
+          <Bone className="h-4" />
+          <Bone className="h-4 w-5/6" />
+          <Bone className="h-4 w-2/3" />
+        </div>
+      </div>
     </div>
   )
 }
+
+/** One gray block of the skeleton. */
+const Bone = ({ className }: { className?: string }) => <div className={cn('rounded-md bg-white/[0.05] motion-safe:animate-pulse', className)} />

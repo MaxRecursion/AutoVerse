@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 import { usePreferences } from '@/stores/preferences'
 import { LabMissions } from '@/features/labs/LabMissions'
 import { AnimationControls } from './AnimationControls'
+import { workbenchAside, workbenchGrid, workbenchScene } from './workbenchLayout'
 import { useLab, useLabStoreApi } from './LabContext'
 
 export interface LabWorkbenchProps {
@@ -57,14 +58,8 @@ export function LabWorkbench({
   const tuck = panelsTucked ? 'max-sm:hidden' : undefined
 
   return (
-    <div className={cn('grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(320px,400px)]', variant === 'full' && 'lg:h-[calc(100dvh-7.5rem)]')}>
-      <section
-        aria-label={`${title} 3D scene`}
-        className={cn(
-          'relative isolate overflow-hidden rounded-xl border border-white/[0.07] bg-graphite-950 bg-blueprint',
-          variant === 'full' ? 'h-[58dvh] min-h-[340px] lg:h-full' : 'h-[52dvh] min-h-[320px] lg:h-[560px]',
-        )}
-      >
+    <div className={workbenchGrid(variant)}>
+      <section aria-label={`${title} 3D scene`} className={cn(workbenchScene(variant), 'isolate')}>
         {scene}
         {/* z-30: keep overlays above in-scene part labels (drei <Html>, z-index ≤ 20). */}
         <div className="pointer-events-none absolute inset-x-3 top-3 z-30 flex items-start justify-between gap-2">
@@ -97,7 +92,7 @@ export function LabWorkbench({
         </div>
       </section>
 
-      <aside className="panel flex min-h-0 flex-col overflow-hidden" aria-label={`${title} explanation`}>
+      <aside className={workbenchAside} aria-label={`${title} explanation`}>
         <LabMissions />
         <Tabs defaultValue="explain" className="flex min-h-0 flex-1 flex-col gap-0">
           <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] px-3 py-2">

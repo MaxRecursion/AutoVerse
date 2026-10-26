@@ -194,6 +194,20 @@
   }
 }
 
+/*
+ * Loading placeholders: the box is laid out at once, so nothing jumps, but
+ * what is inside only fades in if loading takes longer than ~300 ms. Fast
+ * loads never flash a skeleton. (Reduced motion keeps the delay, drops the fade.)
+ */
+@utility skeleton-delay {
+  animation: skeleton-in 150ms ease-out 300ms both;
+}
+@keyframes skeleton-in {
+  from {
+    opacity: 0;
+  }
+}
+
 /* Product tour: a soft ring that pulses outward from the spotlit element. */
 @keyframes tour-pulse {
   0% {
