@@ -113,7 +113,7 @@ function Locked({ status }: { status: ReturnType<typeof courseStatus> }) {
         </h2>
         <p className="mt-1 text-sm text-steel-300">Finish every lesson in the course and take every quiz. Your quiz scores appear on the certificate.</p>
         <Progress value={status.percent} aria-label={`${status.percent}% of the way to the certificate`} className="mt-4 h-1.5 bg-graphite-700" />
-        <p className="mt-2 text-sm text-steel-300">
+        <p className="mt-2 text-sm tabular-nums text-steel-300">
           {status.lessonsDone} of {status.lessonsTotal} lessons · {status.quizzesTaken} of {status.quizzesTotal} quizzes
         </p>
 

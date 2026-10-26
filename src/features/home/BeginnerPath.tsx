@@ -49,7 +49,7 @@ export function BeginnerPath() {
             </div>
           </dl>
           <div>
-            <div className="mb-1.5 flex justify-between text-xs text-steel-300">
+            <div className="mb-1.5 flex justify-between text-xs tabular-nums text-steel-300">
               <span>
                 {progress.completed} of {progress.total} completed
               </span>

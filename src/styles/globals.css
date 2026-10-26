@@ -124,6 +124,10 @@
   p, li, dd, blockquote, figcaption {
     text-wrap-style: pretty;
   }
+  /* Digits of equal width wherever numbers line up or change in place. */
+  table, output, time {
+    font-variant-numeric: tabular-nums;
+  }
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-cyan;
   }

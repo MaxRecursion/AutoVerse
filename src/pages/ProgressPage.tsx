@@ -204,7 +204,7 @@ function Stat({ label, value, detail }: { label: string; value: string; detail?:
   return (
     <div className="panel flex flex-col gap-1 p-4">
       <dt className="text-xs text-steel-400">{label}</dt>
-      <dd className="font-display text-2xl text-paper">
+      <dd className="font-display text-2xl tabular-nums text-paper">
         {value}
         {detail && <span className="ml-1 text-sm text-steel-400">{detail}</span>}
       </dd>
@@ -279,7 +279,7 @@ function PathCard({
         <p className="mt-1 text-sm leading-relaxed text-steel-400">{path.summary}</p>
       </div>
       <div>
-        <div className="mb-1.5 flex justify-between text-xs text-steel-300">
+        <div className="mb-1.5 flex justify-between text-xs tabular-nums text-steel-300">
           <span>
             {progress.completed} of {progress.total} lessons
           </span>

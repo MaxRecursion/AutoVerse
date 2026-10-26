@@ -71,7 +71,7 @@ export function LessonQuiz({ topicId, questions }: LessonQuizProps) {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-steel-300" aria-live="polite">
+        <p className="text-sm tabular-nums text-steel-300" aria-live="polite">
           {score.answered} of {score.total} answered
           {score.answered > 0 && <span className="text-steel-400"> · {score.correct} correct</span>}
         </p>
@@ -160,7 +160,7 @@ export function LessonQuiz({ topicId, questions }: LessonQuizProps) {
         >
           <div>
             <p className="eyebrow">Your score</p>
-            <p className="mt-1 font-display text-3xl text-paper">
+            <p className="mt-1 font-display text-3xl tabular-nums text-paper">
               {score.correct}
               <span className="text-steel-400"> / {score.total}</span>
             </p>

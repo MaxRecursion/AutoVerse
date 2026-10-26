@@ -51,7 +51,7 @@ export function CertificatesSection() {
               ) : (
                 <>
                   <Progress value={status.percent} aria-label={`${course.title}: ${status.percent}% of the way to the certificate`} className="h-1.5 bg-graphite-700" />
-                  <p className="text-sm text-steel-300">
+                  <p className="text-sm tabular-nums text-steel-300">
                     {status.lessonsDone} of {status.lessonsTotal} lessons · {status.quizzesTaken} of {status.quizzesTotal} quizzes
                   </p>
                 </>
