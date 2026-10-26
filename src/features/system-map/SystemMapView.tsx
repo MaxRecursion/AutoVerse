@@ -132,7 +132,7 @@ export function SystemMapView({ map }: { map: SystemMap }) {
             type="button"
             aria-pressed={paused}
             onClick={() => setPaused((p) => !p)}
-            className="inline-flex min-h-10 items-center gap-1.5 rounded-md border border-white/10 px-3 text-sm text-steel-300 transition-colors hover:border-cyan/50 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
+            className="relative hit-area inline-flex min-h-10 items-center gap-1.5 rounded-md border border-white/10 px-3 text-sm text-steel-300 transition-colors hover:border-cyan/50 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
           >
             {paused ? <Play aria-hidden className="size-4" /> : <Pause aria-hidden className="size-4" />}
             {paused ? 'Play flow' : 'Pause flow'}
@@ -140,7 +140,7 @@ export function SystemMapView({ map }: { map: SystemMap }) {
         )}
         <Link
           to="/explore"
-          className="inline-flex min-h-10 items-center gap-1.5 rounded-md px-2 text-sm text-steel-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan sm:ml-auto"
+          className="relative hit-area inline-flex min-h-10 items-center gap-1.5 rounded-md px-2 text-sm text-steel-300 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan sm:ml-auto"
         >
           <Car aria-hidden className="size-4" />
           See the whole car in 3D

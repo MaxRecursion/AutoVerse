@@ -136,7 +136,7 @@ function ToolButton({ label, active, onClick, children }: { label: string; activ
           aria-label={label}
           aria-pressed={active}
           onClick={onClick}
-          className={cn('size-9', active && 'bg-cyan/15 text-cyan hover:bg-cyan/20 hover:text-cyan')}
+          className={cn('size-9 pointer-coarse:size-11', active && 'bg-cyan/15 text-cyan hover:bg-cyan/20 hover:text-cyan')}
         >
           {children}
         </Button>
@@ -152,7 +152,7 @@ function SceneToolbar() {
   const exploded = useLab((s) => s.exploded)
   const s = store.getState()
   return (
-    <div className="panel pointer-events-auto flex items-center gap-0.5 p-1" role="toolbar" aria-label="Scene tools" data-tour="lab-toolbar">
+    <div className="panel pointer-events-auto flex items-center gap-0.5 p-1 pointer-coarse:gap-1 pointer-coarse:max-sm:grid pointer-coarse:max-sm:grid-cols-2" role="toolbar" aria-label="Scene tools" data-tour="lab-toolbar">
       <ToolButton label={showLabels ? 'Hide part names' : 'Show part names'} active={showLabels} onClick={() => s.toggleLabels()}>
         <Tag />
       </ToolButton>
@@ -202,7 +202,7 @@ export function ComponentInspector({ componentIds }: { componentIds: string[] })
             <Link
               key={p.id}
               to={`/pioneers?focus=${p.id}`}
-              className="mt-2 flex min-h-9 items-center gap-2 rounded-md border border-amber/25 bg-amber/[0.05] px-2.5 py-1.5 text-xs text-amber hover:border-amber/60"
+              className="relative hit-area mt-2 flex min-h-9 items-center gap-2 rounded-md border border-amber/25 bg-amber/[0.05] px-2.5 py-1.5 text-xs text-amber hover:border-amber/60"
             >
               <History aria-hidden className="size-3.5 shrink-0" />
               <span className="min-w-0">
@@ -236,7 +236,7 @@ export function ComponentInspector({ componentIds }: { componentIds: string[] })
             <li key={id} className={cn('flex items-center gap-1 px-1.5 py-1', selectedId === id && 'bg-white/[0.04]')}>
               <button
                 type="button"
-                className={cn('min-h-9 flex-1 rounded px-2 text-left text-sm hover:text-cyan', selectedId === id ? 'text-cyan' : 'text-paper', isHidden && 'opacity-50')}
+                className={cn('min-h-9 pointer-coarse:min-h-12 flex-1 rounded px-2 text-left text-sm hover:text-cyan', selectedId === id ? 'text-cyan' : 'text-paper', isHidden && 'opacity-50')}
                 onClick={() => s.select(selectedId === id ? null : id)}
                 aria-pressed={selectedId === id}
               >

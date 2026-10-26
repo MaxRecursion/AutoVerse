@@ -101,7 +101,7 @@ function Hotspot({
         title={compact ? label : undefined}
         onClick={() => chooseSystem(store, id)}
         className={cn(
-          'group pointer-events-auto flex min-h-9 items-center rounded-full border border-white/15 bg-graphite-950/75 backdrop-blur-sm transition-colors hover:border-cyan/60 hover:text-paper',
+          'relative hit-area group pointer-events-auto flex min-h-9 items-center rounded-full border border-white/15 bg-graphite-950/75 backdrop-blur-sm transition-colors hover:border-cyan/60 hover:text-paper',
           compact ? 'size-9 justify-center border-transparent bg-transparent backdrop-blur-none' : 'gap-1.5 py-1 pl-1.5 pr-2.5 font-mono text-[10px] uppercase tracking-wider text-steel-300',
           hidden && 'invisible',
         )}

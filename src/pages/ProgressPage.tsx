@@ -174,7 +174,7 @@ export default function ProgressPage() {
                     return (
                       <tr key={r.topicId} className="border-t border-white/[0.05]">
                         <td className="px-4 py-2.5">
-                          <Link to={`${topicHref(r.topic)}#quiz`} className="inline-flex min-h-9 items-center text-paper hover:text-cyan">
+                          <Link to={`${topicHref(r.topic)}#quiz`} className="relative hit-area inline-flex min-h-9 items-center text-paper hover:text-cyan">
                             {r.topic.title}
                           </Link>
                         </td>
@@ -229,7 +229,7 @@ function TopicList({ items }: { items: { topic: Topic; meta?: ReactNode; action?
     <ul className="flex flex-col divide-y divide-white/[0.05] rounded-xl border border-white/[0.07] bg-graphite-900/50">
       {items.map(({ topic, meta, action }) => (
         <li key={topic.id} className="flex items-center gap-3 px-4 py-2">
-          <Link to={topicHref(topic)} className="flex min-h-11 min-w-0 flex-1 flex-col justify-center">
+          <Link to={topicHref(topic)} className="flex min-h-11 pointer-coarse:min-h-12 min-w-0 flex-1 flex-col justify-center">
             <span className="truncate text-sm text-paper hover:text-cyan">{topic.title}</span>
             <span className="mt-0.5 flex items-center gap-3 text-xs text-steel-400">
               <DifficultyMeter difficulty={topic.difficulty} className="text-[11px] text-steel-400" />
@@ -292,7 +292,7 @@ function PathCard({
           const done = !!completed[t.id]
           return (
             <li key={t.id}>
-              <Link to={topicHref(t)} className="flex min-h-9 items-center gap-3 rounded-md px-1 text-sm hover:bg-white/[0.03]">
+              <Link to={topicHref(t)} className="flex min-h-9 pointer-coarse:min-h-12 items-center gap-3 rounded-md px-1 text-sm hover:bg-white/[0.03]">
                 <span
                   aria-hidden
                   className={cn(

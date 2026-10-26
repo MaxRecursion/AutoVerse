@@ -175,6 +175,25 @@
   }
 }
 
+/*
+ * Hit slop: on touch screens an invisible ::before grows the tap target to at
+ * least 48 x 48 px (44 pt on iOS, 48 dp on Android) around its centre without
+ * moving anything. The element must be positioned (relative, absolute...).
+ */
+@utility hit-area {
+  @media (pointer: coarse) {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: max(100%, 48px);
+      height: max(100%, 48px);
+      translate: -50% -50%;
+    }
+  }
+}
+
 /* Product tour: a soft ring that pulses outward from the spotlit element. */
 @keyframes tour-pulse {
   0% {

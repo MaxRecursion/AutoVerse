@@ -113,7 +113,7 @@ export default function TopicIndexPage() {
                   <span className="font-mono text-xs font-normal text-steel-500">{list.length}</span>
                 </h2>
                 {category && (
-                  <Link to={`/learn/${category.slug}`} className="inline-flex min-h-9 items-center gap-1 text-sm text-steel-300 hover:text-cyan">
+                  <Link to={`/learn/${category.slug}`} className="relative hit-area inline-flex min-h-9 items-center gap-1 text-sm text-steel-300 hover:text-cyan">
                     View category <ArrowRight aria-hidden className="size-3.5" />
                   </Link>
                 )}
@@ -173,7 +173,7 @@ function FilterBar({ query, categoryId, difficulty, interactiveOnly, filtered, c
             placeholder="e.g. camshaft, torque, brake fluid"
             autoComplete="off"
             enterKeyHint="search"
-            className="h-11 w-full rounded-lg border border-white/10 bg-graphite-950 pl-9 pr-3 text-base text-paper placeholder:text-steel-500 focus-visible:border-cyan/60 sm:text-sm"
+            className="h-11 pointer-coarse:h-12 w-full rounded-lg border border-white/10 bg-graphite-950 pl-9 pr-3 text-base text-paper placeholder:text-steel-500 focus-visible:border-cyan/60 sm:text-sm"
           />
         </div>
       </div>
@@ -197,7 +197,7 @@ function FilterBar({ query, categoryId, difficulty, interactiveOnly, filtered, c
       </FilterSelect>
 
       <div className="flex items-center justify-between gap-3 md:h-11 md:justify-start">
-        <label htmlFor={`${uid}-int`} className="flex min-h-11 cursor-pointer items-center gap-2.5 text-sm text-steel-300">
+        <label htmlFor={`${uid}-int`} className="flex min-h-11 pointer-coarse:min-h-12 cursor-pointer items-center gap-2.5 text-sm text-steel-300">
           <Switch id={`${uid}-int`} checked={interactiveOnly} onCheckedChange={(v) => onChange({ interactive: v ? '1' : null })} />
           Interactive 3D only
         </label>
@@ -228,7 +228,7 @@ function FilterSelect({ id, label, value, onChange, children }: { id: string; la
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="h-11 w-full min-w-44 appearance-none rounded-lg border border-white/10 bg-graphite-950 pl-3 pr-9 text-base text-paper focus-visible:border-cyan/60 sm:text-sm"
+          className="h-11 pointer-coarse:h-12 w-full min-w-44 appearance-none rounded-lg border border-white/10 bg-graphite-950 pl-3 pr-9 text-base text-paper focus-visible:border-cyan/60 sm:text-sm"
         >
           {children}
         </select>
@@ -299,7 +299,7 @@ function AtoZIndex() {
           <a
             key={letter}
             href={`#az-${letter}`}
-            className="grid size-9 place-items-center rounded-md border border-white/[0.06] font-mono text-xs text-steel-300 hover:border-cyan/40 hover:text-cyan"
+            className="relative hit-area grid size-9 place-items-center rounded-md border border-white/[0.06] pointer-coarse:size-11 font-mono text-xs text-steel-300 hover:border-cyan/40 hover:text-cyan"
           >
             {letter}
           </a>
@@ -312,7 +312,7 @@ function AtoZIndex() {
             <ul className="mt-1.5">
               {list.map((t) => (
                 <li key={t.id}>
-                  <Link to={topicHref(t)} className="flex min-h-9 items-center text-sm text-steel-300 hover:text-paper">
+                  <Link to={topicHref(t)} className="flex min-h-9 pointer-coarse:min-h-12 items-center text-sm text-steel-300 hover:text-paper">
                     {t.title}
                   </Link>
                 </li>

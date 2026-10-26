@@ -90,7 +90,7 @@ export default function PioneersPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search a name, part or idea…"
-              className="h-10 w-full rounded-lg border border-input bg-graphite-900 pl-9 pr-3 text-sm placeholder:text-steel-500"
+              className="h-10 w-full rounded-lg border border-input bg-graphite-900 pl-9 pr-3 text-sm placeholder:text-steel-500 pointer-coarse:h-12"
             />
           </label>
           <Button
@@ -102,7 +102,7 @@ export default function PioneersPage() {
             {allOpen ? 'Collapse all' : 'Open all stories'}
           </Button>
         </div>
-        <div className="-mx-1 mt-3 flex gap-1.5 overflow-x-auto px-1 pb-1" role="group" aria-label="Filter by system">
+        <div className="-mx-1 mt-3 flex gap-1.5 overflow-x-auto px-1 pb-1 pointer-coarse:py-1" role="group" aria-label="Filter by system">
           <Chip active={system === 'all'} onClick={() => setSystem('all')}>
             All systems <span className="text-steel-500">{pioneers.length}</span>
           </Chip>
@@ -153,7 +153,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
       aria-pressed={active}
       onClick={onClick}
       className={cn(
-        'inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 text-sm transition-colors',
+        'relative hit-area inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 text-sm transition-colors',
         active ? 'border-amber/60 bg-amber/10 text-amber' : 'border-white/10 text-steel-300 hover:border-white/25 hover:text-paper',
       )}
     >

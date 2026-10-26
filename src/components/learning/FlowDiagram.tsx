@@ -248,7 +248,7 @@ export function FlowDiagram({ flow, label, currentTopicId, selectedComponentId, 
       </div>
 
       <details className="group text-sm text-steel-400">
-        <summary className="flex min-h-9 cursor-pointer items-center rounded px-1 hover:text-paper">Read the diagram as text</summary>
+        <summary className="relative hit-area flex min-h-9 cursor-pointer items-center rounded px-1 hover:text-paper">Read the diagram as text</summary>
         <ul className="mt-2 flex flex-col gap-1 pl-4">
           {flow.edges.map((e, i) => {
             const from = flow.nodes.find((n) => n.id === e.from)?.label ?? e.from

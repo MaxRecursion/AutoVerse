@@ -85,7 +85,7 @@ export function LessonFinish({
             <Link
               key={c.id}
               to={`/certificate/${c.id}`}
-              className="flex min-h-11 items-center gap-2.5 rounded-xl border border-amber/30 bg-amber/[0.05] px-4 py-2.5 text-sm text-amber hover:border-amber/60"
+              className="flex min-h-11 pointer-coarse:min-h-12 items-center gap-2.5 rounded-xl border border-amber/30 bg-amber/[0.05] px-4 py-2.5 text-sm text-amber hover:border-amber/60"
             >
               <Award aria-hidden className="size-4 shrink-0" />
               <span>

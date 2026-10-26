@@ -21,9 +21,9 @@ export function StageRail({
   onFinish: () => void
 }) {
   return (
-    <div className="flex min-w-0 flex-1 items-center gap-2" data-tour="stage-rail">
-      <nav aria-label="Lesson stages" className="min-w-0 flex-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <ol className="flex w-max items-center gap-1 sm:gap-1.5">
+    <div className="flex min-w-0 flex-1 items-center gap-2 self-stretch" data-tour="stage-rail">
+      <nav aria-label="Lesson stages" className="min-w-0 flex-1 self-stretch overflow-x-auto [scrollbar-width:none] pointer-coarse:px-1.5 [&::-webkit-scrollbar]:hidden">
+        <ol className="flex h-full w-max items-center gap-1 sm:gap-1.5 pointer-coarse:gap-3.5">
           {stages.map((s, i) => {
             const isNext = !complete && summary.next?.id === s.id
             return (
@@ -35,7 +35,7 @@ export function StageRail({
                   aria-current={isNext ? 'true' : undefined}
                   title={s.detail}
                   className={cn(
-                    'flex min-h-9 items-center gap-1.5 rounded-full border px-1.5 text-xs transition-colors sm:px-2.5',
+                    'relative hit-area flex min-h-9 items-center gap-1.5 rounded-full border px-1.5 text-xs transition-colors sm:px-2.5',
                     s.done
                       ? 'border-ok/35 bg-ok/[0.07] text-ok'
                       : isNext

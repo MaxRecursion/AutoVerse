@@ -186,7 +186,7 @@ export default function AboutPage() {
             <li key={s.id}>
               <a
                 href={`#${s.id}`}
-                className="inline-flex min-h-10 items-center rounded-full border border-white/[0.08] px-4 text-sm text-steel-300 hover:border-cyan/40 hover:text-cyan"
+                className="relative hit-area inline-flex min-h-10 items-center rounded-full border border-white/[0.08] px-4 text-sm text-steel-300 hover:border-cyan/40 hover:text-cyan"
               >
                 {s.label}
               </a>
@@ -263,7 +263,7 @@ export default function AboutPage() {
                         <ul className="border-t border-white/[0.06] px-4 py-2">
                           {g.articles.map((a) => (
                             <li key={a.url} className="flex flex-wrap items-baseline justify-between gap-x-3 border-b border-white/[0.04] py-2 last:border-0">
-                              <ExternalAnchor href={a.url} className="min-h-9 text-sm">
+                              <ExternalAnchor href={a.url} className="relative hit-area min-h-9 text-sm">
                                 {a.title}
                               </ExternalAnchor>
                               <span className="text-xs text-steel-500">

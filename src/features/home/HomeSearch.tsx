@@ -36,7 +36,7 @@ export function SearchEntry({ query, placeholder = 'Search lessons, labs and par
         </kbd>
       </button>
       {suggestions.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 pointer-coarse:gap-y-3">
           <span className="eyebrow mr-1">Try</span>
           {suggestions.map((s) => (
             <button
@@ -45,7 +45,7 @@ export function SearchEntry({ query, placeholder = 'Search lessons, labs and par
               aria-haspopup="dialog"
               aria-label={`Search for ${s}`}
               onClick={() => openSearch(s)}
-              className="inline-flex min-h-9 items-center rounded-full border border-white/[0.08] bg-graphite-900/70 px-3.5 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+              className="relative hit-area inline-flex min-h-9 items-center rounded-full border border-white/[0.08] bg-graphite-900/70 px-3.5 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
             >
               {s}
             </button>

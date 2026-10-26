@@ -46,7 +46,7 @@ export function PathAction({ progress, nextPath, started = false }: { progress: 
           </Link>
         </Button>
       ) : (
-        <Link to="/learn" className="inline-flex min-h-10 items-center gap-1.5 text-sm text-cyan hover:underline">
+        <Link to="/learn" className="relative hit-area inline-flex min-h-10 items-center gap-1.5 text-sm text-cyan hover:underline">
           Explore more lessons <ArrowRight aria-hidden className="size-4" />
         </Link>
       )}

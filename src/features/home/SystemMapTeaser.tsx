@@ -79,12 +79,12 @@ export function SystemMapTeaser() {
             {support.length > 0 && (
               <div className="mt-8 w-full">
                 <p className="eyebrow mb-2">Supporting systems</p>
-                <ul className="flex flex-wrap gap-1.5">
+                <ul className="flex flex-wrap gap-1.5 pointer-coarse:gap-y-3">
                   {support.map((s) => (
                     <li key={s.topicId}>
                       <Link
                         to={topicHref(s.topic)}
-                        className="inline-flex min-h-9 items-center rounded-full border border-white/[0.08] bg-graphite-950/70 px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+                        className="relative hit-area inline-flex min-h-9 items-center rounded-full border border-white/[0.08] bg-graphite-950/70 px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
                       >
                         {s.label}
                       </Link>

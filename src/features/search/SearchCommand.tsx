@@ -24,7 +24,7 @@ const GROUPS: { kind: SearchKind; heading: string; limit: number; icon: typeof B
 
 const KIND_LABEL: Record<SearchKind, string> = { topic: 'Lesson', lab: 'Lab', component: 'Component', category: 'Category', pioneer: 'Engineer' }
 
-const ITEM = 'min-h-11 gap-3 rounded-md px-2.5 py-2 data-[selected=true]:bg-white/[0.06] data-[selected=true]:text-paper'
+const ITEM = 'min-h-11 pointer-coarse:min-h-12 gap-3 rounded-md px-2.5 py-2 data-[selected=true]:bg-white/[0.06] data-[selected=true]:text-paper'
 
 /**
  * Global search: a header button plus a command palette opened with ⌘K /

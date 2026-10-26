@@ -77,7 +77,7 @@ function Overview({ focusRequest, compact }: { focusRequest: React.RefObject<Foc
                 chooseSystem(store, sys.id)
               }}
               onPointerEnter={() => store.getState().hover(null)}
-              className="group flex min-h-11 w-full items-center gap-3 rounded-lg border border-white/[0.06] bg-graphite-900/50 px-3 py-2 text-left transition-colors hover:border-cyan/40 hover:bg-cyan/[0.05] focus-visible:outline-2 focus-visible:outline-cyan"
+              className="group flex min-h-11 pointer-coarse:min-h-12 w-full items-center gap-3 rounded-lg border border-white/[0.06] bg-graphite-900/50 px-3 py-2 text-left transition-colors hover:border-cyan/40 hover:bg-cyan/[0.05] focus-visible:outline-2 focus-visible:outline-cyan"
             >
               <span className="min-w-0 flex-1">
                 <span className="block text-sm font-medium text-paper">{sys.name}</span>
@@ -129,7 +129,7 @@ function SystemDetail({
             focusRequest.current = { kind: 'list', systemId: system.id }
             chooseSystem(store, null)
           }}
-          className="-ml-2 inline-flex min-h-9 items-center gap-1.5 rounded-md px-2 text-xs text-steel-300 hover:bg-white/5 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
+          className="relative hit-area -ml-2 inline-flex min-h-9 items-center gap-1.5 rounded-md px-2 text-xs text-steel-300 hover:bg-white/5 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
         >
           <ArrowLeft aria-hidden className="size-3.5" />
           All systems
@@ -165,7 +165,7 @@ function SystemDetail({
                 onFocus={() => store.getState().hover(id)}
                 onBlur={() => store.getState().hoveredId === id && store.getState().hover(null)}
                 className={cn(
-                  'min-h-9 rounded-md border px-2.5 py-1.5 text-left text-xs transition-colors focus-visible:outline-2 focus-visible:outline-cyan',
+                  'relative hit-area min-h-9 rounded-md border px-2.5 py-1.5 text-left text-xs transition-colors focus-visible:outline-2 focus-visible:outline-cyan',
                   active ? 'border-cyan/60 bg-cyan/15 text-cyan' : 'border-white/10 text-steel-300 hover:border-cyan/40 hover:text-paper',
                 )}
               >
@@ -203,7 +203,7 @@ function LinkRow({ to, icon, meta, children }: { to: string; icon: ReactNode; me
     <li>
       <Link
         to={to}
-        className="group flex min-h-11 items-center gap-3 rounded-lg border border-white/[0.06] px-3 py-2 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
+        className="group flex min-h-11 pointer-coarse:min-h-12 items-center gap-3 rounded-lg border border-white/[0.06] px-3 py-2 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
       >
         <span className="text-steel-400 group-hover:text-cyan">{icon}</span>
         <span className="min-w-0 flex-1">
@@ -242,7 +242,7 @@ function ComponentCard({ id }: { id: string }) {
             <Link
               key={t.id}
               to={topicHref(t)}
-              className="inline-flex min-h-9 items-center rounded border border-white/10 px-2 text-xs text-steel-300 hover:border-cyan/50 hover:text-cyan"
+              className="relative hit-area inline-flex min-h-9 items-center rounded border border-white/10 px-2 text-xs text-steel-300 hover:border-cyan/50 hover:text-cyan"
             >
               {t.title} →
             </Link>
@@ -265,7 +265,7 @@ function Credits({ compact }: { compact: boolean }) {
     <footer className="max-h-[55%] shrink-0 overflow-y-auto overscroll-contain border-t border-white/[0.06] px-4 py-2 text-[11px] leading-snug text-steel-400">
       <p>{compact ? EXPLORER_DISCLAIMER_SHORT : EXPLORER_DISCLAIMER}</p>
       <details>
-        <summary className="inline-flex min-h-9 cursor-pointer items-center text-steel-300 hover:text-paper">
+        <summary className="relative hit-area inline-flex min-h-9 cursor-pointer items-center text-steel-300 hover:text-paper">
           {compact ? 'Model credit and notes' : `3D model credit: ${credit.title}`}
         </summary>
         {compact && <p className="mb-1">{EXPLORER_DISCLAIMER}</p>}

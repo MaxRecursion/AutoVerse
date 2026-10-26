@@ -46,7 +46,7 @@ export function PioneerCard({ pioneer: p, open, onOpenChange, currentTopicId, sh
             aria-expanded={open}
             aria-controls={bodyId}
             onClick={() => onOpenChange(!open)}
-            className="mt-3 inline-flex min-h-10 items-center gap-1.5 rounded-md text-sm font-medium text-amber hover:underline"
+            className="relative hit-area mt-3 inline-flex min-h-10 items-center gap-1.5 rounded-md text-sm font-medium text-amber hover:underline"
           >
             {open ? 'Hide the story' : 'Read the story'}
             <ChevronDown aria-hidden className={cn('size-4 transition-transform', open && 'rotate-180')} />
@@ -84,7 +84,7 @@ export function PioneerCard({ pioneer: p, open, onOpenChange, currentTopicId, sh
                         href={s.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex min-h-9 items-center gap-1.5 text-sm text-cyan underline-offset-4 hover:underline"
+                        className="relative hit-area inline-flex min-h-9 items-center gap-1.5 text-sm text-cyan underline-offset-4 hover:underline"
                       >
                         {s.publisher ? `${s.publisher}: ` : ''}
                         {s.title}

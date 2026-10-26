@@ -71,7 +71,7 @@ function Earned({ course, earnedAt, averageScore }: { course: NonNullable<Return
             autoComplete="name"
             onChange={(e) => setName(e.target.value)}
             placeholder="Your full name"
-            className="h-11 rounded-lg border border-input bg-graphite-900 px-3 text-base placeholder:text-steel-500"
+            className="h-11 pointer-coarse:h-12 rounded-lg border border-input bg-graphite-900 px-3 text-base placeholder:text-steel-500"
           />
         </label>
         <Button className="h-11" onClick={print} disabled={!ready}>
@@ -88,7 +88,7 @@ function Earned({ course, earnedAt, averageScore }: { course: NonNullable<Return
       </div>
 
       <p className="mt-8">
-        <Link to="/progress" className="inline-flex min-h-10 items-center gap-1.5 text-sm text-cyan underline-offset-4 hover:underline">
+        <Link to="/progress" className="relative hit-area inline-flex min-h-10 items-center gap-1.5 text-sm text-cyan underline-offset-4 hover:underline">
           Back to my progress <ArrowRight aria-hidden className="size-4" />
         </Link>
       </p>
@@ -143,7 +143,7 @@ function Checklist({ title, items }: { title: string; items: { id: string; label
       <ul className="mt-2 flex flex-col">
         {items.map((i) => (
           <li key={i.id}>
-            <Link to={i.to} className="flex min-h-10 items-center gap-2.5 text-sm text-steel-300 hover:text-cyan">
+            <Link to={i.to} className="relative hit-area flex min-h-10 items-center gap-2.5 text-sm text-steel-300 hover:text-cyan">
               <Circle aria-hidden className="size-4 shrink-0 text-steel-500" />
               {i.label}
             </Link>
@@ -163,7 +163,7 @@ function NotFound({ id }: { id: string }) {
       <ul className="mt-4 flex flex-col">
         {getCourses().map((c) => (
           <li key={c.id}>
-            <Link to={`/certificate/${c.id}`} className="flex min-h-11 items-center gap-2 text-cyan underline-offset-4 hover:underline">
+            <Link to={`/certificate/${c.id}`} className="flex min-h-11 pointer-coarse:min-h-12 items-center gap-2 text-cyan underline-offset-4 hover:underline">
               <Check aria-hidden className="size-4 opacity-0" />
               {c.title}
             </Link>

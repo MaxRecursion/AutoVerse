@@ -29,7 +29,7 @@ export function ProgressPill() {
       aria-label={accessible}
       data-tour="progress-pill"
       title={accessible}
-      className="group flex h-10 items-center gap-2.5 rounded-lg border border-white/[0.08] px-2 transition-colors hover:border-cyan/40 lg:px-3"
+      className="group relative hit-area flex h-10 items-center gap-2.5 rounded-lg border border-white/[0.08] px-2 transition-colors hover:border-cyan/40 lg:px-3"
     >
       <span className="relative grid place-items-center">
         <ProgressRing percent={total.percent} size={26} />

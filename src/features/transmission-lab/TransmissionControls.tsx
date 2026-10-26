@@ -74,7 +74,7 @@ export function ShiftGate({ value, onChange, className }: { value: GearId; onCha
         role="radiogroup"
         aria-labelledby={labelId}
         onKeyDown={onKeyDown}
-        className="relative grid grid-cols-[repeat(3,2.25rem)] grid-rows-[repeat(3,2.25rem)] gap-x-2 gap-y-0.5"
+        className="relative grid grid-cols-[repeat(3,2.25rem)] grid-rows-[repeat(3,2.25rem)] gap-x-2 gap-y-0.5 pointer-coarse:grid-cols-[repeat(3,2.75rem)] pointer-coarse:grid-rows-[repeat(3,2.75rem)] pointer-coarse:gap-1"
         data-testid="shift-gate"
       >
         {/* The gate itself: three slots joined by the cross-gate. */}
@@ -102,7 +102,7 @@ export function ShiftGate({ value, onChange, className }: { value: GearId; onCha
               onClick={() => choose(g)}
               style={{ gridColumn: GATE[g].col, gridRow: GATE[g].row }}
               className={cn(
-                'relative z-10 flex size-9 items-center justify-center rounded-full border font-mono text-sm font-semibold transition-colors',
+                'relative hit-area z-10 flex size-9 items-center justify-center rounded-full border pointer-coarse:size-11 font-mono text-sm font-semibold transition-colors',
                 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan',
                 checked
                   ? 'border-amber bg-amber text-graphite-950 shadow-[0_0_0_3px_rgb(246_166_58/0.25)]'

@@ -114,7 +114,7 @@ function PowerPath() {
         <p className="text-sm text-steel-400">No power path: every synchro collar is centred, so no gear is locked to the mainshaft and the output is free.</p>
       ) : (
         <>
-          <ol className="flex flex-wrap items-center gap-1">
+          <ol className="flex flex-wrap items-center gap-1 pointer-coarse:gap-y-3">
             {parts.map((id, i) => (
               <li key={id} className="flex items-center gap-1">
                 <button
@@ -122,7 +122,7 @@ function PowerPath() {
                   onClick={() => store.getState().select(selectedId === id ? null : id)}
                   aria-pressed={selectedId === id}
                   className={cn(
-                    'min-h-9 rounded-md border px-2 text-xs transition-colors',
+                    'relative hit-area min-h-9 rounded-md border px-2 text-xs transition-colors',
                     !released ? 'border-amber/40 bg-amber/[0.08] text-paper hover:border-amber' : 'border-white/[0.08] text-steel-500 hover:text-steel-300',
                     selectedId === id && 'border-cyan text-cyan',
                   )}
@@ -172,7 +172,7 @@ function ToothArithmetic() {
 function PedalShortcuts({ current }: { current: ClutchState }) {
   const store = useLabStoreApi()
   return (
-    <div role="group" aria-label="Clutch pedal positions" className="grid grid-cols-2 gap-1.5 sm:grid-cols-4 lg:grid-cols-2">
+    <div role="group" aria-label="Clutch pedal positions" className="grid grid-cols-2 gap-1.5 pointer-coarse:gap-2 sm:grid-cols-4 lg:grid-cols-2">
       {PEDAL_SHORTCUTS.map((s) => (
         <button
           key={s.cue}
@@ -180,7 +180,7 @@ function PedalShortcuts({ current }: { current: ClutchState }) {
           aria-pressed={current === s.state}
           onClick={() => store.getState().setParam(PARAM.clutch, cuePedal(s.cue))}
           className={cn(
-            'min-h-10 rounded-lg border px-2.5 text-left text-sm transition-colors',
+            'relative hit-area min-h-10 rounded-lg border px-2.5 text-left text-sm transition-colors',
             current === s.state ? 'border-amber/60 bg-amber/10 text-paper' : 'border-white/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
           )}
         >
@@ -240,12 +240,12 @@ function DeeperTopics() {
   return (
     <nav aria-label="Deeper lessons">
       <p className="eyebrow mb-1.5">Go deeper</p>
-      <ul className="flex flex-col gap-1">
+      <ul className="flex flex-col gap-1 pointer-coarse:gap-2">
         {topics.map((t) => (
           <li key={t.id}>
             <Link
               to={`/topics/${t.slug}`}
-              className="group flex min-h-10 items-center justify-between gap-2 rounded-md border border-white/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+              className="relative hit-area group flex min-h-10 items-center justify-between gap-2 rounded-md border border-white/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
             >
               {t.title}
               <ArrowRight className="size-4 text-steel-500 transition-transform group-hover:translate-x-0.5 group-hover:text-cyan" aria-hidden />

@@ -121,7 +121,7 @@ function StrokeButtons({ current }: { current: StrokeId }) {
           )
         })}
       </div>
-      <div role="group" aria-label="Jump to an event" className="flex flex-wrap gap-1.5">
+      <div role="group" aria-label="Jump to an event" className="flex flex-wrap gap-1.5 pointer-coarse:gap-y-3">
         {EVENT_CUES.map((id) => {
           const c = cues.find((x) => x.id === id)
           return c ? (
@@ -129,7 +129,7 @@ function StrokeButtons({ current }: { current: StrokeId }) {
               key={id}
               type="button"
               onClick={() => seek(id)}
-              className="min-h-9 rounded-md border border-white/[0.08] px-2.5 text-xs text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+              className="relative hit-area min-h-9 rounded-md border border-white/[0.08] px-2.5 text-xs text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
             >
               {c.label}
             </button>
@@ -231,12 +231,12 @@ function DeeperTopics() {
   return (
     <nav aria-label="Deeper lessons">
       <p className="eyebrow mb-1.5">Go deeper</p>
-      <ul className="flex flex-col gap-1">
+      <ul className="flex flex-col gap-1 pointer-coarse:gap-2">
         {topics.map((t) => (
           <li key={t.id}>
             <Link
               to={`/topics/${t.slug}`}
-              className="group flex min-h-10 items-center justify-between gap-2 rounded-md border border-white/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+              className="relative hit-area group flex min-h-10 items-center justify-between gap-2 rounded-md border border-white/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
             >
               {t.title}
               <ArrowRight className="size-4 text-steel-500 transition-transform group-hover:translate-x-0.5 group-hover:text-cyan" aria-hidden />

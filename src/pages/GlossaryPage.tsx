@@ -36,7 +36,7 @@ export default function GlossaryPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Filter terms, e.g. torque, slip, camshaft…"
-            className="h-11 w-full rounded-lg border border-input bg-graphite-900 pl-9 pr-3 text-base placeholder:text-steel-500"
+            className="h-11 pointer-coarse:h-12 w-full rounded-lg border border-input bg-graphite-900 pl-9 pr-3 text-base placeholder:text-steel-500"
           />
         </label>
         <nav aria-label="Jump to letter" className="flex flex-wrap gap-1">
@@ -44,7 +44,7 @@ export default function GlossaryPage() {
             <a
               key={g.letter}
               href={`#letter-${g.letter === '#' ? 'num' : g.letter}`}
-              className="grid size-9 place-items-center rounded-md border border-white/10 font-mono text-sm text-steel-300 hover:border-cyan/50 hover:text-cyan"
+              className="relative hit-area grid size-9 place-items-center rounded-md border border-white/10 pointer-coarse:size-11 font-mono text-sm text-steel-300 hover:border-cyan/50 hover:text-cyan"
             >
               {g.letter}
             </a>

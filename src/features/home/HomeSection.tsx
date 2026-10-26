@@ -34,7 +34,7 @@ export function HomeSection({ id, eyebrow, title, description, action, children,
             {description && <p className="mt-2 leading-relaxed text-steel-300">{description}</p>}
           </div>
           {action && (
-            <Link to={action.to} className="inline-flex min-h-10 items-center gap-1.5 rounded-md text-sm text-steel-300 transition-colors hover:text-cyan">
+            <Link to={action.to} className="relative hit-area inline-flex min-h-10 items-center gap-1.5 rounded-md text-sm text-steel-300 transition-colors hover:text-cyan">
               {action.label}
               <ArrowRight aria-hidden className="size-4" />
             </Link>

@@ -141,7 +141,7 @@ function PhaseButtons({ current }: { current: ResponsePhase }) {
             onClick={() => store.getState().seekCue(id)}
             aria-pressed={active}
             className={cn(
-              'flex min-h-11 items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-left text-sm transition-colors',
+              'flex min-h-11 pointer-coarse:min-h-12 items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-left text-sm transition-colors',
               active ? 'border-amber/60 bg-amber/10 text-paper' : 'border-white/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
             )}
           >
@@ -184,7 +184,7 @@ function ScenarioList() {
                 onClick={() => store.getState().seekCue(id)}
                 aria-pressed={on}
                 className={cn(
-                  'flex min-h-11 w-full flex-col items-start justify-center rounded-lg border px-3 py-1.5 text-left transition-colors',
+                  'flex min-h-11 pointer-coarse:min-h-12 w-full flex-col items-start justify-center rounded-lg border px-3 py-1.5 text-left transition-colors',
                   on ? 'border-cyan/50 bg-cyan/[0.08] text-paper' : 'border-white/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
                 )}
               >
@@ -274,12 +274,12 @@ function DeeperTopics() {
   return (
     <nav aria-label="Deeper lessons">
       <p className="eyebrow mb-1.5">Go deeper</p>
-      <ul className="flex flex-col gap-1">
+      <ul className="flex flex-col gap-1 pointer-coarse:gap-2">
         {topics.map((t) => (
           <li key={t.id}>
             <Link
               to={`/topics/${t.slug}`}
-              className="group flex min-h-10 items-center justify-between gap-2 rounded-md border border-white/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+              className="relative hit-area group flex min-h-10 items-center justify-between gap-2 rounded-md border border-white/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
             >
               {t.title}
               <ArrowRight className="size-4 text-steel-500 transition-transform group-hover:translate-x-0.5 group-hover:text-cyan" aria-hidden />

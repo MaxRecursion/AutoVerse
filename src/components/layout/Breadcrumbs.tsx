@@ -14,7 +14,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
           <li key={`${c.label}-${i}`} className="flex items-center gap-1">
             {i > 0 && <ChevronRight className="size-3 text-steel-500" aria-hidden />}
             {c.to && i < items.length - 1 ? (
-              <Link to={c.to} className="hover:text-cyan">
+              <Link to={c.to} className="relative hit-area hover:text-cyan">
                 {c.label}
               </Link>
             ) : (

@@ -76,7 +76,7 @@ export function LessonSteps({ steps, level, store, onShowCue, onSelectComponent,
                 <p className="mt-2 text-[15px] leading-relaxed text-steel-300">{level === 'beginner' ? step.beginner : step.technical}</p>
 
                 {(playable || parts.length > 0) && (
-                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <div className="mt-3 flex flex-wrap items-center gap-2 pointer-coarse:gap-y-3">
                     {playable && step.cue && (
                       <Button
                         variant={active ? 'default' : 'outline'}
@@ -99,7 +99,7 @@ export function LessonSteps({ steps, level, store, onShowCue, onSelectComponent,
                           onClick={() => onSelectComponent(c.id)}
                           aria-pressed={selectedId === c.id}
                           className={cn(
-                            'inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3 text-xs transition-colors',
+                            'relative hit-area inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3 text-xs transition-colors',
                             selectedId === c.id ? 'border-cyan/60 bg-cyan/10 text-cyan' : 'border-white/10 text-steel-300 hover:border-cyan/40 hover:text-paper',
                           )}
                         >

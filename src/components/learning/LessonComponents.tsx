@@ -50,7 +50,7 @@ export function LessonComponents({ components, store, onLocate }: LessonComponen
               onClick={() => toggle(c.id)}
               aria-pressed={selected}
               aria-controls={hasDetail ? detailId : undefined}
-              className="flex min-h-11 flex-col items-start gap-1 rounded-xl p-4 text-left"
+              className="flex min-h-11 pointer-coarse:min-h-12 flex-col items-start gap-1 rounded-xl p-4 text-left"
             >
               <span className="flex w-full items-center justify-between gap-2">
                 <span className={cn('font-medium', selected ? 'text-cyan' : 'text-paper')}>{c.name}</span>

@@ -20,7 +20,7 @@ interface SystemMapDetailsProps {
 }
 
 const ACTION =
-  'group flex min-h-11 items-center gap-3 rounded-lg border px-3 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-cyan'
+  'group flex min-h-11 pointer-coarse:min-h-12 items-center gap-3 rounded-lg border px-3 py-2 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-cyan'
 
 /** What the selected node is, what it connects to, and where to learn more or see it in 3D. */
 export function SystemMapDetails({ map, layout, graph, selectedId, onClear, headingRef, className }: SystemMapDetailsProps) {

@@ -11,14 +11,14 @@ export function Footer() {
           <Logo />
           <span className="text-xs">Original educational content. Simulations are illustrative, not validated engineering models.</span>
         </div>
-        <nav aria-label="Footer" className="flex gap-4 text-xs">
-          <Link to="/learn" className="hover:text-paper">Topic index</Link>
-          <Link to="/pioneers" className="hover:text-paper">Pioneers</Link>
-          <Link to="/glossary" className="hover:text-paper">Glossary</Link>
-          <Link to="/map" className="hover:text-paper">System map</Link>
-          <button type="button" onClick={startTour} className="hover:text-paper">Take the tour</button>
-          <Link to="/about" className="hover:text-paper">Sources &amp; credits</Link>
-          <Link to="/progress" className="hover:text-paper">Local progress</Link>
+        <nav aria-label="Footer" className="flex flex-wrap gap-x-4 gap-y-1 text-xs pointer-coarse:gap-y-0">
+          <Link to="/learn" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Topic index</Link>
+          <Link to="/pioneers" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Pioneers</Link>
+          <Link to="/glossary" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Glossary</Link>
+          <Link to="/map" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">System map</Link>
+          <button type="button" onClick={startTour} className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Take the tour</button>
+          <Link to="/about" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Sources &amp; credits</Link>
+          <Link to="/progress" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Local progress</Link>
         </nav>
       </div>
     </footer>

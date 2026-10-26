@@ -55,7 +55,7 @@ function ToolButton({ label, active, onClick, children }: { label: string; activ
           aria-label={label}
           aria-pressed={active}
           onClick={onClick}
-          className={cn('size-9', active && 'bg-cyan/15 text-cyan hover:bg-cyan/20 hover:text-cyan')}
+          className={cn('size-9 pointer-coarse:size-11', active && 'bg-cyan/15 text-cyan hover:bg-cyan/20 hover:text-cyan')}
         >
           {children}
         </Button>
@@ -71,7 +71,7 @@ export function SceneTools({ className }: { className?: string }) {
   const showLabels = useLab((s) => s.showLabels)
   const open = useLab((s) => s.params[P.open] === true)
   return (
-    <div className={cn('panel flex items-center gap-0.5 p-1', className)} role="toolbar" aria-label="Scene tools">
+    <div className={cn('panel flex items-center gap-0.5 p-1 pointer-coarse:gap-1 pointer-coarse:max-sm:flex-col', className)} role="toolbar" aria-label="Scene tools">
       <ToolButton label="Show names and hotspots" active={showLabels} onClick={() => store.getState().toggleLabels()}>
         <Tag />
       </ToolButton>

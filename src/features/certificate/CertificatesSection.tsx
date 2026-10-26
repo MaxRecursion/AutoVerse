@@ -59,18 +59,18 @@ export function CertificatesSection() {
 
               <div className="mt-auto flex flex-wrap items-center gap-3 pt-1">
                 {earned ? (
-                  <Link to={`/certificate/${course.id}`} className="inline-flex min-h-10 items-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+                  <Link to={`/certificate/${course.id}`} className="relative hit-area inline-flex min-h-10 items-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90">
                     View certificate
                   </Link>
                 ) : (
                   next && (
-                    <Link to={topicHref(next)} className="inline-flex min-h-10 items-center text-sm text-cyan underline-offset-4 hover:underline">
+                    <Link to={topicHref(next)} className="relative hit-area inline-flex min-h-10 items-center text-sm text-cyan underline-offset-4 hover:underline">
                       {status.remainingLessons.length ? 'Next lesson' : 'Take the quiz'}: {next.title}
                     </Link>
                   )
                 )}
                 {!earned && (
-                  <Link to={`/certificate/${course.id}`} className="inline-flex min-h-10 items-center text-sm text-steel-400 underline-offset-4 hover:text-paper hover:underline">
+                  <Link to={`/certificate/${course.id}`} className="relative hit-area inline-flex min-h-10 items-center text-sm text-steel-400 underline-offset-4 hover:text-paper hover:underline">
                     What’s needed
                   </Link>
                 )}

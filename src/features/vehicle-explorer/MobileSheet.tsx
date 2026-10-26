@@ -60,7 +60,7 @@ export function MobileSheet() {
           drag.current = null
           setExpanded((v) => !v)
         }}
-        className="flex min-h-11 w-full touch-none flex-col items-center gap-1 rounded-t-2xl px-4 pb-1 pt-2 focus-visible:outline-2 focus-visible:outline-cyan"
+        className="flex min-h-11 pointer-coarse:min-h-12 w-full touch-none flex-col items-center gap-1 rounded-t-2xl px-4 pb-1 pt-2 focus-visible:outline-2 focus-visible:outline-cyan"
       >
         <span aria-hidden className="h-1 w-10 rounded-full bg-steel-500/60" />
         <span className="flex w-full items-center justify-between gap-2 text-xs text-steel-300">

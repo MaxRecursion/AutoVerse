@@ -78,7 +78,7 @@ export function HeroEngine({ className }: { className?: string }) {
         <p className="flex flex-wrap items-center gap-x-2 text-xs text-steel-400">
           <MousePointerClick aria-hidden className="size-3.5 text-cyan" />
           <span>Every part is selectable.</span>
-          <Link to={ENGINE_LAB} className="inline-flex min-h-9 items-center gap-1 text-cyan hover:underline">
+          <Link to={ENGINE_LAB} className="relative hit-area inline-flex min-h-9 items-center gap-1 text-cyan hover:underline">
             Open the engine lab
             <ArrowRight aria-hidden className="size-3.5" />
           </Link>
@@ -108,11 +108,11 @@ function HeroUnavailable() {
           The drawing shows a single-cylinder section: valves and spark plug at the top, the piston below, and the crank turning underneath.
         </p>
         <div className="mt-2 flex flex-wrap justify-center gap-x-4">
-          <Link to={ENGINE_LAB} className="inline-flex min-h-9 items-center gap-1 text-sm text-cyan hover:underline">
+          <Link to={ENGINE_LAB} className="relative hit-area inline-flex min-h-9 items-center gap-1 text-sm text-cyan hover:underline">
             Try the engine lab <ArrowRight aria-hidden className="size-3.5" />
           </Link>
           {lesson && (
-            <Link to={topicHref(lesson)} className="inline-flex min-h-9 items-center gap-1 text-sm text-steel-300 hover:text-paper">
+            <Link to={topicHref(lesson)} className="relative hit-area inline-flex min-h-9 items-center gap-1 text-sm text-steel-300 hover:text-paper">
               Read the lesson
             </Link>
           )}

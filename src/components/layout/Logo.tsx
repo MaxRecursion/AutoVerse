@@ -2,7 +2,7 @@ import { Link } from 'react-router'
 
 export function Logo() {
   return (
-    <Link to="/" className="group flex items-center gap-2.5" aria-label="AutoVerse home">
+    <Link to="/" className="group relative hit-area flex items-center gap-2.5" aria-label="AutoVerse home">
       <svg viewBox="0 0 32 32" className="size-7" aria-hidden>
         <circle cx="16" cy="16" r="10" fill="none" stroke="var(--cyan)" strokeWidth="2" />
         <circle cx="16" cy="16" r="3.2" fill="var(--amber)" />

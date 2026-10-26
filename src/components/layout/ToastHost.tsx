@@ -70,7 +70,7 @@ function ToastCard({ toast }: { toast: Toast }) {
           <Link
             to={toast.action.to}
             onClick={() => dismiss(toast.id)}
-            className="mt-1.5 inline-flex min-h-8 items-center text-sm font-medium text-cyan underline-offset-4 hover:underline"
+            className="relative hit-area mt-1.5 inline-flex min-h-8 items-center text-sm font-medium text-cyan underline-offset-4 hover:underline"
           >
             {toast.action.label} →
           </Link>
@@ -80,7 +80,7 @@ function ToastCard({ toast }: { toast: Toast }) {
         type="button"
         onClick={() => dismiss(toast.id)}
         aria-label="Dismiss notification"
-        className="grid size-8 shrink-0 place-items-center rounded-md text-steel-400 hover:bg-white/[0.06] hover:text-paper"
+        className="relative hit-area grid size-8 shrink-0 place-items-center rounded-md text-steel-400 hover:bg-white/[0.06] hover:text-paper"
       >
         <X aria-hidden className="size-4" />
       </button>

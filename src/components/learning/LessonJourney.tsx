@@ -83,7 +83,7 @@ export function LessonJourney({
         <Link
           to={topicHref(next)}
           className={cn(
-            'group flex min-h-11 shrink-0 items-center gap-2 rounded-lg border border-white/[0.08] px-3 py-2 text-sm transition-colors hover:border-cyan/40',
+            'group flex min-h-11 pointer-coarse:min-h-12 shrink-0 items-center gap-2 rounded-lg border border-white/[0.08] px-3 py-2 text-sm transition-colors hover:border-cyan/40',
             'sm:max-w-64',
           )}
         >

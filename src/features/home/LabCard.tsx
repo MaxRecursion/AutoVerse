@@ -33,7 +33,7 @@ function LessonLink({ overview, className }: { overview: LabOverview; className?
     <Link
       to={topicHref(lesson)}
       aria-label={`Lesson: ${lesson.title}`}
-      className={cn('inline-flex min-h-9 items-center gap-1.5 text-xs text-steel-300 transition-colors hover:text-paper', className)}
+      className={cn('relative hit-area inline-flex min-h-9 items-center gap-1.5 text-xs text-steel-300 transition-colors hover:text-paper', className)}
     >
       <BookOpen aria-hidden className="size-3.5 shrink-0" />
       {lesson.title}
@@ -129,7 +129,7 @@ export function LabIndexCard({ overview }: { overview: LabOverview }) {
                 <Link
                   to={`/learn/${system.slug}`}
                   aria-label={`${system.title} lessons`}
-                  className="inline-flex min-h-9 items-center gap-1 text-steel-300 hover:text-cyan"
+                  className="relative hit-area inline-flex min-h-9 items-center gap-1 text-steel-300 hover:text-cyan"
                 >
                   {system.title}
                   <ArrowRight aria-hidden className="size-3.5" />
@@ -145,7 +145,7 @@ export function LabIndexCard({ overview }: { overview: LabOverview }) {
                 Parts explained <span className="text-steel-500">· {parts.length}</span>
               </dt>
               <dd>
-                <ul className="flex flex-wrap gap-1.5">
+                <ul className="flex flex-wrap gap-1.5 pointer-coarse:gap-y-3">
                   {parts.slice(0, PART_PREVIEW).map((p) => (
                     <li key={p.id} className="rounded-md border border-white/[0.08] bg-graphite-950/60 px-2 py-0.5 text-xs text-steel-300">
                       {p.name}
@@ -163,7 +163,7 @@ export function LabIndexCard({ overview }: { overview: LabOverview }) {
                 <ul className="flex flex-col">
                   {lessons.map((t) => (
                     <li key={t.id}>
-                      <Link to={topicHref(t)} className="inline-flex min-h-9 items-center py-1 leading-snug text-steel-300 hover:text-cyan">
+                      <Link to={topicHref(t)} className="inline-flex min-h-9 pointer-coarse:min-h-12 items-center py-1 leading-snug text-steel-300 hover:text-cyan">
                         {t.title}
                       </Link>
                     </li>

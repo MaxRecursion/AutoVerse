@@ -33,7 +33,7 @@ export function BrakingControls() {
           aria-controls={slidersId}
           onClick={() => setOpen((v) => !v)}
           className={cn(
-            'ml-auto inline-flex min-h-9 items-center gap-1.5 rounded-md border px-2.5 text-xs transition-colors sm:hidden',
+            'relative hit-area ml-auto inline-flex min-h-9 items-center gap-1.5 rounded-md border px-2.5 text-xs transition-colors sm:hidden',
             open ? 'border-cyan/50 bg-cyan/10 text-cyan' : 'border-white/[0.1] text-steel-300 hover:text-paper',
           )}
         >
@@ -126,7 +126,7 @@ function PedalButton() {
         onBlur={release}
         onContextMenu={(e) => e.preventDefault()}
         className={cn(
-          'relative inline-flex min-h-10 touch-none items-center gap-2 overflow-hidden rounded-lg border px-3 text-sm font-medium transition-colors select-none [-webkit-touch-callout:none]',
+          'relative inline-flex min-h-10 pointer-coarse:min-h-12 touch-none items-center gap-2 overflow-hidden rounded-lg border px-3 text-sm font-medium transition-colors select-none [-webkit-touch-callout:none]',
           held ? 'border-amber/70 bg-amber/15 text-paper' : 'border-amber/40 bg-graphite-850 text-paper hover:border-amber/70',
         )}
         data-testid="brake-pedal-button"
@@ -174,7 +174,7 @@ function SurfacePicker({ value }: { value: SurfaceId }) {
             />
             <span
               className={cn(
-                'flex min-h-9 min-w-10 cursor-pointer items-center justify-center rounded-md px-2 text-xs transition-colors',
+                'relative hit-area flex min-h-9 min-w-10 pointer-coarse:min-w-12 cursor-pointer items-center justify-center rounded-md px-2 text-xs transition-colors',
                 'peer-focus-visible:ring-2 peer-focus-visible:ring-cyan',
                 value === id ? 'bg-cyan/15 text-cyan' : 'text-steel-300 hover:text-paper',
               )}

@@ -109,7 +109,7 @@ function LabNotFound({ labId }: { labId: string }) {
       <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {sortLabs(labs).map((l) => (
           <li key={l.id} className="panel flex flex-col gap-1 p-4">
-            <Link to={labPath(l)} className="inline-flex min-h-9 items-center gap-1.5 font-medium text-paper hover:text-cyan">
+            <Link to={labPath(l)} className="relative hit-area inline-flex min-h-9 items-center gap-1.5 font-medium text-paper hover:text-cyan">
               {l.title}
               <ArrowRight aria-hidden className="size-4" />
             </Link>

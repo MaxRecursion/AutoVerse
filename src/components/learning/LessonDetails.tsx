@@ -118,7 +118,7 @@ export function SourcesAndAttribution({ topic }: { topic: Topic }) {
                   href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex min-h-9 flex-wrap items-baseline gap-x-2 text-cyan hover:underline"
+                  className="relative hit-area group inline-flex min-h-9 flex-wrap items-baseline gap-x-2 text-cyan hover:underline"
                 >
                   <span>{s.title}</span>
                   <span className="text-xs text-steel-400 group-hover:no-underline">

@@ -140,7 +140,7 @@ export function ExplorerView() {
           </div>
           <Link
             to="/map"
-            className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-md border border-white/10 px-2.5 text-xs text-steel-300 transition-colors hover:border-cyan/50 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
+            className="relative hit-area inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-md border border-white/10 px-2.5 text-xs text-steel-300 transition-colors hover:border-cyan/50 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
           >
             <Network aria-hidden className="size-4" />
             <span className="max-sm:hidden">How the systems connect</span>

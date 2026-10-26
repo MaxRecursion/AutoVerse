@@ -21,7 +21,7 @@ export function LessonStory({ pioneers, topicId, onOpened }: { pioneers: readonl
           }}
         />
       ))}
-      <Link to="/pioneers" className="inline-flex min-h-10 w-fit items-center gap-1.5 text-sm text-cyan underline-offset-4 hover:underline">
+      <Link to="/pioneers" className="relative hit-area inline-flex min-h-10 w-fit items-center gap-1.5 text-sm text-cyan underline-offset-4 hover:underline">
         Browse every engineer on the timeline <ArrowRight aria-hidden className="size-4" />
       </Link>
     </div>

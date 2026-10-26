@@ -31,13 +31,13 @@ export function Header() {
             </NavLink>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2 pointer-coarse:gap-2.5">
           <ProgressPill />
           <SearchCommand />
           <TourButton />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden" aria-label="Open menu" data-tour="menu-button">
+              <Button variant="ghost" size="icon" className="pointer-coarse:ml-0.5 md:hidden" aria-label="Open menu" data-tour="menu-button">
                 <Menu />
               </Button>
             </SheetTrigger>

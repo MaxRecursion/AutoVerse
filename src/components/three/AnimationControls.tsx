@@ -39,7 +39,7 @@ export function AnimationControls({ className }: { className?: string }) {
         </div>
       </div>
       {/* One row at every width (phones included), so the transport never steals a second row from the scene. */}
-      <div className="mt-1 flex items-center gap-1.5">
+      <div className="mt-1 flex items-center gap-1.5 pointer-coarse:mt-5 pointer-coarse:gap-3">
         <Button size="icon" variant="ghost" onClick={() => s.stepBy(-1)} aria-label="Step backward">
           <ChevronLeft />
         </Button>

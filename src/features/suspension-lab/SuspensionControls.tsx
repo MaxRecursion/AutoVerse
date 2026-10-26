@@ -26,7 +26,7 @@ export function SuspensionControls() {
     <div className="panel pointer-events-auto px-3 py-2" role="group" aria-label="Test setup" data-testid="suspension-controls">
       <button
         type="button"
-        className="flex min-h-9 w-full items-center gap-2 text-left sm:hidden"
+        className="relative hit-area flex min-h-9 w-full items-center gap-2 text-left sm:hidden"
         aria-expanded={open}
         aria-controls={bodyId}
         onClick={() => setOpen((o) => !o)}

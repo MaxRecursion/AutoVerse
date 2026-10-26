@@ -95,7 +95,7 @@ function LinkGroup({ icon, title, children }: { icon: ReactNode; title: string; 
 function NavItem({ to, label }: { to: string; label: string }) {
   return (
     <li>
-      <Link to={to} className="group flex min-h-11 items-center justify-between gap-3 py-2 text-sm text-steel-300 transition-colors hover:text-paper">
+      <Link to={to} className="group flex min-h-11 pointer-coarse:min-h-12 items-center justify-between gap-3 py-2 text-sm text-steel-300 transition-colors hover:text-paper">
         {label}
         <ArrowRight aria-hidden className="size-3.5 shrink-0 text-steel-500 transition-colors group-hover:text-cyan" />
       </Link>

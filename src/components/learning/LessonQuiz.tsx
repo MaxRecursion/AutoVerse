@@ -223,7 +223,7 @@ function QuestionCard({ question, number, total, choice, onAnswer, headingRef }:
                 aria-disabled={answered || undefined}
                 aria-describedby={answered ? feedbackId : undefined}
                 className={cn(
-                  'flex min-h-11 w-full items-center gap-3 rounded-lg border px-3 py-2.5 text-left text-sm transition-colors',
+                  'flex min-h-11 pointer-coarse:min-h-12 w-full items-center gap-3 rounded-lg border px-3 py-2.5 text-left text-sm transition-colors',
                   state === 'idle' && 'border-white/[0.1] bg-graphite-850 text-paper hover:border-cyan/50 hover:bg-graphite-800',
                   state === 'correct' && 'border-ok/50 bg-ok/[0.08] text-paper',
                   state === 'wrong' && 'border-danger/50 bg-danger/[0.08] text-paper',

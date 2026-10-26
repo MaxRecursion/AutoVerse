@@ -85,7 +85,7 @@ function HeroChrome() {
       {selected ? (
         <div className="panel pointer-events-auto max-w-xs px-3 py-2" aria-live="polite">
           <p className="text-sm font-medium text-paper">{selected.name}</p>
-          <Link to={LAB_PATH} className="mt-0.5 inline-flex min-h-9 items-center gap-1 text-xs text-cyan hover:underline">
+          <Link to={LAB_PATH} className="relative hit-area mt-0.5 inline-flex min-h-9 items-center gap-1 text-xs text-cyan hover:underline">
             Explore it in the engine lab <ArrowRight className="size-3.5" aria-hidden />
           </Link>
         </div>

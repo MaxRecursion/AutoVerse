@@ -152,7 +152,7 @@ export default function CategoryPage() {
                   </li>
                 ))}
               </ul>
-              <Link to="/pioneers" className="mt-2 inline-flex min-h-10 items-center text-sm text-cyan underline-offset-4 hover:underline">
+              <Link to="/pioneers" className="relative hit-area mt-2 inline-flex min-h-10 items-center text-sm text-cyan underline-offset-4 hover:underline">
                 All engineers on the timeline →
               </Link>
             </section>
@@ -172,7 +172,7 @@ export default function CategoryPage() {
 
       <nav aria-label="Other categories" className="mt-16 flex flex-col gap-2 border-t border-white/[0.06] pt-6 sm:flex-row sm:justify-between">
         {prev ? (
-          <Link to={`/learn/${prev.slug}`} className="group flex min-h-11 items-center gap-2 text-sm text-steel-300 hover:text-cyan">
+          <Link to={`/learn/${prev.slug}`} className="group flex min-h-11 pointer-coarse:min-h-12 items-center gap-2 text-sm text-steel-300 hover:text-cyan">
             <ArrowLeft aria-hidden className="size-4" />
             <span>
               <span className="eyebrow block">Previous</span>
@@ -183,7 +183,7 @@ export default function CategoryPage() {
           <span />
         )}
         {nextCategory && (
-          <Link to={`/learn/${nextCategory.slug}`} className="group flex min-h-11 items-center gap-2 text-sm text-steel-300 hover:text-cyan sm:text-right">
+          <Link to={`/learn/${nextCategory.slug}`} className="group flex min-h-11 pointer-coarse:min-h-12 items-center gap-2 text-sm text-steel-300 hover:text-cyan sm:text-right">
             <span>
               <span className="eyebrow block">Next</span>
               {nextCategory.title}
@@ -216,7 +216,7 @@ function FurtherReading({ articles }: { articles: readonly SourceArticle[] }) {
               href={a.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex min-h-11 items-start gap-2 py-2.5 text-sm text-steel-300 hover:text-cyan"
+              className="group flex min-h-11 pointer-coarse:min-h-12 items-start gap-2 py-2.5 text-sm text-steel-300 hover:text-cyan"
             >
               <span className="min-w-0 flex-1">
                 <span className="block leading-snug">{a.title}</span>
@@ -254,7 +254,7 @@ function CategoryNotFound({ slug }: { slug: string }) {
       <ul className="mt-6 grid gap-2 sm:grid-cols-2">
         {categories.map((c) => (
           <li key={c.id}>
-            <Link to={`/learn/${c.slug}`} className="flex min-h-11 items-center gap-3 rounded-lg border border-white/[0.06] px-3 text-sm text-paper hover:border-cyan/40">
+            <Link to={`/learn/${c.slug}`} className="flex min-h-11 pointer-coarse:min-h-12 items-center gap-3 rounded-lg border border-white/[0.06] px-3 text-sm text-paper hover:border-cyan/40">
               <CategoryIcon name={c.icon} className="text-steel-400" />
               {c.title}
             </Link>
