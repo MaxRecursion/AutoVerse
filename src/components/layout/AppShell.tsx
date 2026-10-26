@@ -1,5 +1,5 @@
 import { Suspense, useEffect, ViewTransition } from 'react'
-import { Outlet, ScrollRestoration } from 'react-router'
+import { Outlet, ScrollRestoration, useLocation } from 'react-router'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { TourHost } from '@/features/tour/TourHost'
@@ -7,6 +7,7 @@ import { TourInvite } from '@/features/tour/TourInvite'
 import { ToastHost } from './ToastHost'
 
 export function AppShell() {
+  const { pathname } = useLocation()
   // Marks the moment the app has taken over the prerendered HTML (buttons work from here on); used by browser tests.
   useEffect(() => {
     document.documentElement.dataset.app = 'ready'
@@ -18,8 +19,12 @@ export function AppShell() {
       </a>
       <Header />
       <main id="main" className="flex-1">
-        {/* The router updates inside React transitions, so a route change cross-fades the page (timing in globals.css). */}
-        <ViewTransition>
+        {/*
+          The router updates inside React transitions, so a new page cross-fades in (timing in globals.css). Keyed by
+          path, only a real page change (exit + enter) animates: the router's loading state, lazy parts appearing and
+          in-page updates do not start a transition, which would hold the next navigation until it finished.
+        */}
+        <ViewTransition key={pathname} update="none">
           <Suspense fallback={<div className="p-10 text-center text-steel-400" role="status">Loading…</div>}>
             <Outlet />
           </Suspense>
