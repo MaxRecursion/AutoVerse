@@ -50,6 +50,12 @@ function ToastCard({ toast }: { toast: Toast }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toast.id, toast.duration])
 
+  // A toast that replaces a control which just went away (a removed row) takes keyboard focus, so it is not lost.
+  const actionRef = useRef<HTMLButtonElement>(null)
+  useEffect(() => {
+    if (toast.focusAction) actionRef.current?.focus()
+  }, [toast.focusAction])
+
   const Icon = toast.tone === 'success' ? CircleCheck : Info
   return (
     <div
@@ -66,7 +72,7 @@ function ToastCard({ toast }: { toast: Toast }) {
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium text-paper">{toast.title}</p>
         {toast.description && <p className="mt-0.5 line-clamp-2 text-[13px] leading-snug text-steel-300">{toast.description}</p>}
-        {toast.action && (
+        {toast.action?.to && (
           <Link
             to={toast.action.to}
             onClick={() => dismiss(toast.id)}
@@ -74,6 +80,21 @@ function ToastCard({ toast }: { toast: Toast }) {
           >
             {toast.action.label} →
           </Link>
+        )}
+        {toast.action?.onClick && (
+          <button
+            ref={actionRef}
+            type="button"
+            onClick={() => {
+              // A toast already on its way out (exit animation) must not run its action twice.
+              if (!useToasts.getState().toasts.some((t) => t.id === toast.id)) return
+              toast.action?.onClick?.()
+              dismiss(toast.id)
+            }}
+            className="relative hit-area mt-1.5 inline-flex min-h-8 items-center text-sm font-medium text-cyan underline-offset-4 hover:underline"
+          >
+            {toast.action.label}
+          </button>
         )}
       </div>
       <button

@@ -33,7 +33,8 @@ export interface LessonSignals {
 }
 export type SignalKey = Exclude<keyof LessonSignals, 'steps'>
 
-interface ProgressState {
+/** Everything the store records, without its actions: what clearAll removes and restore puts back. */
+export interface ProgressData {
   recent: { topicId: string; at: string }[]
   completed: Record<string, string>
   bookmarks: string[]
@@ -43,19 +44,26 @@ interface ProgressState {
   missions: Record<string, string[]>
   /** Course id → when its certificate was earned. Awarded once, never withdrawn by later changes. */
   certificates: Record<string, { earnedAt: string }>
+}
+
+interface ProgressState extends ProgressData {
   visit: (topicId: string) => void
   setCompleted: (topicId: string, done: boolean) => void
   toggleBookmark: (topicId: string) => void
+  /** Undo of removing a bookmark: puts it back at its old place in the list. */
+  restoreBookmark: (topicId: string, index: number) => void
   recordQuiz: (topicId: string, score: number, total: number) => void
   signal: (topicId: string, key: SignalKey) => void
   seeStep: (topicId: string, stepId: string) => void
   completeMission: (labId: string, missionId: string) => void
   awardCertificate: (courseId: string) => void
   clearAll: () => void
+  /** Undo of clearAll: puts back data taken just before it. */
+  restore: (data: ProgressData) => void
 }
 
 const MAX_RECENT = 12
-const empty = { recent: [], completed: {}, bookmarks: [], quizScores: {}, lessons: {}, missions: {}, certificates: {} }
+const empty: ProgressData = { recent: [], completed: {}, bookmarks: [], quizScores: {}, lessons: {}, missions: {}, certificates: {} }
 
 export const useProgress = create<ProgressState>()(
   persist(
@@ -77,6 +85,11 @@ export const useProgress = create<ProgressState>()(
       toggleBookmark: (topicId) => {
         const b = get().bookmarks
         set({ bookmarks: b.includes(topicId) ? b.filter((x) => x !== topicId) : [topicId, ...b] })
+      },
+      restoreBookmark: (topicId, index) => {
+        const b = get().bookmarks
+        if (b.includes(topicId)) return
+        set({ bookmarks: [...b.slice(0, index), topicId, ...b.slice(index)] })
       },
       recordQuiz: (topicId, score, total) => {
         const prev = get().quizScores[topicId]
@@ -108,7 +121,14 @@ export const useProgress = create<ProgressState>()(
         set({ certificates: { ...get().certificates, [courseId]: { earnedAt: new Date().toISOString() } } })
       },
       clearAll: () => set({ ...empty }),
+      restore: (data) => set({ ...data }),
     }),
     { name: 'autoverse.progress', version: 1, storage: createJSONStorage(() => localStorage) },
   ),
 )
+
+/** The recorded data as it is now, to hand back to `restore` (state is never mutated, so no deep copy is needed). */
+export function progressSnapshot(): ProgressData {
+  const { recent, completed, bookmarks, quizScores, lessons, missions, certificates } = useProgress.getState()
+  return { recent, completed, bookmarks, quizScores, lessons, missions, certificates }
+}

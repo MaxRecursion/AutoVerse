@@ -26,6 +26,22 @@ describe('ToastHost', () => {
     await waitFor(() => expect(screen.queryByText('Saved')).not.toBeInTheDocument())
   })
 
+  it('runs a button action such as Undo, then closes', async () => {
+    const user = userEvent.setup()
+    let undone = 0
+    renderHost()
+    act(() => void toast({ title: 'Bookmark removed', action: { label: 'Undo', onClick: () => undone++ } }))
+    await user.click(screen.getByRole('button', { name: 'Undo' }))
+    expect(undone).toBe(1)
+    await waitFor(() => expect(screen.queryByText('Bookmark removed')).not.toBeInTheDocument())
+  })
+
+  it('moves focus to the action when asked, for a toast that replaces a control that went away', () => {
+    renderHost()
+    act(() => void toast({ title: 'Progress cleared', action: { label: 'Undo', onClick: () => {} }, focusAction: true }))
+    expect(screen.getByRole('button', { name: 'Undo' })).toHaveFocus()
+  })
+
   it('dismisses itself after its duration', async () => {
     renderHost()
     act(() => void toast({ title: 'Quick note', duration: 150 }))

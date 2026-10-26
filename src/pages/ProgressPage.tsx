@@ -1,14 +1,13 @@
 import { CertificatesSection } from '@/features/certificate/CertificatesSection'
-import { usePreferences } from '@/stores/preferences'
-import { useMemo, useState, type ReactNode } from 'react'
+import { useMemo, type ReactNode } from 'react'
 import { ArrowRight, BookmarkX, CircleCheck, HardDrive, Route, Trash2 } from 'lucide-react'
 import { Link } from 'react-router'
 import { DifficultyMeter } from '@/components/learning/TopicMeta'
 import { DIFFICULTY_LABEL, topicHref } from '@/components/learning/labels'
 import { useDocumentTitle } from '@/components/learning/useDocumentTitle'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Progress } from '@/components/ui/progress'
+import { clearAllProgress, removeBookmark } from '@/features/progress/actions'
 import { PathAction } from '@/features/progress/PathAction'
 import { resolveCurrentPathProgress, resolveNextPathProgress, resolvePathProgress, type PathProgress } from '@/features/progress/paths'
 import { formatDate, formatRelativeTime } from '@/features/progress/time'
@@ -244,9 +243,15 @@ function TopicList({ items }: { items: { topic: Topic; meta?: ReactNode; action?
 }
 
 function RemoveBookmark({ topic }: { topic: Topic }) {
-  const toggleBookmark = useProgress((s) => s.toggleBookmark)
   return (
-    <Button variant="ghost" size="icon" className="size-10 text-steel-400 hover:text-paper" onClick={() => toggleBookmark(topic.id)} aria-label={`Remove bookmark: ${topic.title}`}>
+    <Button
+      variant="ghost"
+      size="icon"
+      className="size-10 text-steel-400 hover:text-paper"
+      // The row goes with the bookmark, so a keyboard press hands focus to the toast's Undo.
+      onClick={(e) => removeBookmark(topic.id, { fromKeyboard: e.detail === 0 })}
+      aria-label={`Remove bookmark: ${topic.title}`}
+    >
       <BookmarkX aria-hidden />
     </Button>
   )
@@ -321,42 +326,17 @@ function PathCard({
   )
 }
 
+/** Clears at once; the toast that follows offers Undo instead of a confirm dialog up front. */
 function ClearAllButton({ disabled }: { disabled: boolean }) {
-  const clearAll = useProgress((s) => s.clearAll)
-  const [open, setOpen] = useState(false)
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" className="h-10 self-start border-danger/40 text-danger hover:bg-danger/10 hover:text-danger" disabled={disabled}>
-          <Trash2 aria-hidden /> Clear all progress
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="border-white/10 bg-graphite-900">
-        <DialogHeader>
-          <DialogTitle>Clear all progress?</DialogTitle>
-          <DialogDescription>
-            This removes your recently viewed lessons, completed lessons, bookmarks, quiz scores, certificates and the name used on them from this browser. It cannot be undone.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline" className="h-10">
-              Cancel
-            </Button>
-          </DialogClose>
-          <Button
-            variant="destructive"
-            className="h-10"
-            onClick={() => {
-              clearAll()
-              usePreferences.getState().setLearnerName('')
-              setOpen(false)
-            }}
-          >
-            Clear everything
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <Button
+      variant="outline"
+      className="h-10 self-start border-danger/40 text-danger hover:bg-danger/10 hover:text-danger"
+      disabled={disabled}
+      // detail is 0 when Enter / Space pressed the button: the button is about to be disabled, so the Undo takes focus.
+      onClick={(e) => clearAllProgress({ fromKeyboard: e.detail === 0 })}
+    >
+      <Trash2 aria-hidden /> Clear all progress
+    </Button>
   )
 }

@@ -1,9 +1,11 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { ToastHost } from '@/components/layout/ToastHost'
 import ProgressPage from '@/pages/ProgressPage'
 import { useProgress } from '@/stores/progress'
+import { useToasts } from '@/stores/toasts'
 
 vi.mock('@/lib/content', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@/lib/content')>()
@@ -36,11 +38,15 @@ const renderPage = () =>
   render(
     <MemoryRouter>
       <ProgressPage />
+      <ToastHost />
     </MemoryRouter>,
   )
 
 describe('ProgressPage', () => {
-  beforeEach(() => useProgress.getState().clearAll())
+  beforeEach(() => {
+    useProgress.getState().clearAll()
+    useToasts.getState().clear()
+  })
 
   it('explains that progress stays in this browser and shows an empty state', () => {
     renderPage()
@@ -82,7 +88,7 @@ describe('ProgressPage', () => {
     expect(within(path).getByRole('link', { name: /Start next path: Next path/ })).toHaveAttribute('href', '/topics/fixture-outline')
   })
 
-  it('removes a bookmark and clears everything after confirmation', async () => {
+  it('removes a bookmark and clears everything at once, each with an Undo toast instead of a confirm step', async () => {
     const user = userEvent.setup()
     useProgress.getState().toggleBookmark('fixture-outline')
     useProgress.getState().toggleBookmark('fixture-ignition')
@@ -90,15 +96,16 @@ describe('ProgressPage', () => {
 
     await user.click(screen.getByRole('button', { name: 'Remove bookmark: Fixture outline' }))
     expect(useProgress.getState().bookmarks).toEqual(['fixture-ignition'])
+    expect(screen.getByText('Bookmark removed')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Undo' }))
+    expect(useProgress.getState().bookmarks).toEqual(['fixture-ignition', 'fixture-outline'])
+    await waitFor(() => expect(screen.queryByText('Bookmark removed')).not.toBeInTheDocument())
 
     await user.click(screen.getByRole('button', { name: /Clear all progress/ }))
-    const dialog = await screen.findByRole('dialog', { name: 'Clear all progress?' })
-    await user.click(within(dialog).getByRole('button', { name: 'Cancel' }))
-    expect(useProgress.getState().bookmarks).toHaveLength(1)
-
-    await user.click(screen.getByRole('button', { name: /Clear all progress/ }))
-    await user.click(within(await screen.findByRole('dialog')).getByRole('button', { name: 'Clear everything' }))
+    expect(screen.queryByRole('dialog')).toBeNull()
     expect(useProgress.getState().bookmarks).toEqual([])
     expect(screen.getByText('Nothing here yet.')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Undo' }))
+    expect(useProgress.getState().bookmarks).toEqual(['fixture-ignition', 'fixture-outline'])
   })
 })

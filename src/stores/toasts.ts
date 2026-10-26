@@ -1,11 +1,21 @@
 import { create } from 'zustand'
 
+export interface ToastAction {
+  label: string
+  /** A page to go to… */
+  to?: string
+  /** …or something to do, such as Undo. The toast closes after it runs. */
+  onClick?: () => void
+}
+
 export interface Toast {
   id: number
   title: string
   description?: string
   tone: 'info' | 'success'
-  action?: { label: string; to: string }
+  action?: ToastAction
+  /** Move keyboard focus to the action when the control that raised the toast has gone (e.g. the removed row). */
+  focusAction?: boolean
   /** Milliseconds before auto-dismiss; 0 keeps it until dismissed. */
   duration: number
 }
