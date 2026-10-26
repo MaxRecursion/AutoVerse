@@ -37,6 +37,9 @@ export const sortLabs = (list: readonly LabDefinition[]): LabDefinition[] => [..
 
 export const labPath = (lab: Pick<LabDefinition, 'id'>) => `/labs/${lab.id}`
 
+/** View-transition name shared by a lab's title on its cards and on its page, so the title moves between them. */
+export const labTitleTransition = (labId: string) => `lab-title-${labId}`
+
 export function systemCategory(systemId: string, list: readonly Category[]): Category | undefined {
   return [...list].sort((a, b) => a.order - b.order).find((c) => c.systemId === systemId)
 }

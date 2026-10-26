@@ -15,7 +15,7 @@ export function ToastHost() {
       role="status"
       aria-live="polite"
       aria-relevant="additions"
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-[60] flex flex-col items-center gap-2 p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))] sm:items-end sm:p-5 sm:pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:pr-[max(1.25rem,env(safe-area-inset-right))]"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-[60] flex [view-transition-name:toasts] flex-col items-center gap-2 p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pl-[max(0.5rem,env(safe-area-inset-left))] pr-[max(0.5rem,env(safe-area-inset-right))] sm:items-end sm:p-5 sm:pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:pr-[max(1.25rem,env(safe-area-inset-right))]"
     >
       <AnimatePresence initial={false}>
         {toasts.map((t) => (

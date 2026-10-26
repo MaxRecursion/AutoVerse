@@ -1,5 +1,6 @@
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import type { ExplanationLevel } from '@/lib/schemas'
+import { withViewTransition } from '@/lib/viewTransition'
 import { usePreferences } from '@/stores/preferences'
 
 const ITEM = 'h-9 px-3 text-xs data-[state=on]:bg-cyan/15 data-[state=on]:text-cyan'
@@ -18,7 +19,8 @@ export function LevelToggle({ compact = false, className }: { compact?: boolean;
       size="sm"
       variant="outline"
       value={level}
-      onValueChange={(v) => v && setLevel(v as ExplanationLevel)}
+      // The page's text is rewritten for the new level: cross-fade it rather than swap it abruptly.
+      onValueChange={(v) => v && withViewTransition(() => setLevel(v as ExplanationLevel))}
       aria-label="Explanation level"
       className={className}
     >

@@ -208,6 +208,33 @@
   }
 }
 
+/*
+ * View transitions: route changes (React's <ViewTransition> in AppShell),
+ * full page loads and same-page swaps such as the explanation level
+ * cross-fade in 200 ms; a lab's title moves between its card and its page.
+ * Clicks pass through while it runs, and reduced motion switches it off.
+ * The header, toasts and tour carry their own names so the page's snapshot
+ * never paints over them.
+ */
+@view-transition {
+  navigation: auto;
+}
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 200ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* Product tour: a soft ring that pulses outward from the spotlit element. */
 @keyframes tour-pulse {
   0% {

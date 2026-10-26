@@ -159,7 +159,7 @@ function TourOverlay() {
   const waiting = status === 'waiting' || (!onRoute && selectors.length > 0)
 
   return (
-    <div className="fixed inset-0 z-[80]" data-testid="tour">
+    <div className="fixed inset-0 z-[80] [view-transition-name:tour]" data-testid="tour">
       {/* Scrim: dims everything; the spotlight is a transparent hole cut by a very large shadow. */}
       {spot ? (
         <div

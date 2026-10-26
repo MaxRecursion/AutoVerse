@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, ViewTransition } from 'react'
 import { Outlet, ScrollRestoration } from 'react-router'
 import { Header } from './Header'
 import { Footer } from './Footer'
@@ -18,9 +18,12 @@ export function AppShell() {
       </a>
       <Header />
       <main id="main" className="flex-1">
-        <Suspense fallback={<div className="p-10 text-center text-steel-400" role="status">Loading…</div>}>
-          <Outlet />
-        </Suspense>
+        {/* The router updates inside React transitions, so a route change cross-fades the page (timing in globals.css). */}
+        <ViewTransition>
+          <Suspense fallback={<div className="p-10 text-center text-steel-400" role="status">Loading…</div>}>
+            <Outlet />
+          </Suspense>
+        </ViewTransition>
       </main>
       <Footer />
       <ToastHost />

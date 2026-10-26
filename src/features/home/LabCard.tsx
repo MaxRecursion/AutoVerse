@@ -1,3 +1,4 @@
+import { ViewTransition } from 'react'
 import { ArrowRight, BookOpen } from 'lucide-react'
 import { Link } from 'react-router'
 import { topicHref } from '@/components/learning/labels'
@@ -5,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import type { LabDefinition } from '@/features/labs/types'
 import { cn } from '@/lib/utils'
 import { LabGlyph } from './LabGlyph'
-import { LAB_STATUS_LABEL, labPath, type LabOverview } from './labOverview'
+import { LAB_STATUS_LABEL, labPath, labTitleTransition, type LabOverview } from './labOverview'
 
 const labNumber = (lab: Pick<LabDefinition, 'order'>) => `Lab ${String(lab.order).padStart(2, '0')}`
 
@@ -56,14 +57,16 @@ export function LabCard({ overview, headingLevel: Heading = 'h3' }: { overview: 
       </div>
       <div className="flex flex-1 flex-col gap-2 p-4">
         {system && <p className="eyebrow">{system.title}</p>}
-        <Heading className="text-lg font-semibold leading-snug text-paper transition-colors group-hover:text-cyan">
-          <Link
-            to={labPath(lab)}
-            className="outline-none after:absolute after:inset-0 after:rounded-xl after:content-[''] focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-cyan"
-          >
-            {lab.title}
-          </Link>
-        </Heading>
+        <ViewTransition name={labTitleTransition(lab.id)}>
+          <Heading className="text-lg font-semibold leading-snug text-paper transition-colors group-hover:text-cyan">
+            <Link
+              to={labPath(lab)}
+              className="outline-none after:absolute after:inset-0 after:rounded-xl after:content-[''] focus-visible:after:outline-2 focus-visible:after:-outline-offset-2 focus-visible:after:outline-cyan"
+            >
+              {lab.title}
+            </Link>
+          </Heading>
+        </ViewTransition>
         <p className="line-clamp-3 text-sm leading-relaxed text-steel-400">{lab.summary}</p>
         <div className="mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-1 pt-3">
           <span aria-hidden className="inline-flex items-center gap-1 text-sm font-medium text-cyan">
@@ -97,9 +100,11 @@ export function LabIndexCard({ overview }: { overview: LabOverview }) {
             {system ? <p className="eyebrow">{system.title}</p> : <span />}
             <LabStatus status={lab.status} showComplete />
           </div>
-          <h2 id={titleId} className="text-xl font-semibold leading-snug text-paper">
-            {lab.title}
-          </h2>
+          <ViewTransition name={labTitleTransition(lab.id)}>
+            <h2 id={titleId} className="text-xl font-semibold leading-snug text-paper">
+              {lab.title}
+            </h2>
+          </ViewTransition>
           <p className="text-sm leading-relaxed text-steel-300">{lab.summary}</p>
           <div className="mt-auto flex flex-wrap items-center gap-2 pt-2">
             <Button asChild className="h-10">

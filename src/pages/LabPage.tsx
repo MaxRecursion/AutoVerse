@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, ViewTransition } from 'react'
 import { ArrowRight, BookOpen, Search, X } from 'lucide-react'
 import { Link, useParams, useSearchParams } from 'react-router'
 import { useStore } from 'zustand'
@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { LabStatus } from '@/features/home/LabCard'
 import { queryFromPath } from '@/features/home/homeData'
 import { applyLabDeepLink, resolveLabDeepLink, type DeepLinkSources } from '@/features/home/labDeepLink'
-import { labPath, primaryLesson, sortLabs } from '@/features/home/labOverview'
+import { labPath, labTitleTransition, primaryLesson, sortLabs } from '@/features/home/labOverview'
 import { LabHost } from '@/features/labs/LabHost'
 import { useLabInstance } from '@/features/labs/useLabInstance'
 import { getLab, labs } from '@/features/labs/registry'
@@ -53,7 +53,9 @@ function LabScreen({ lab }: { lab: LabDefinition }) {
         <div className="min-w-0">
           <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Labs', to: '/labs' }, { label: lab.shortTitle }]} />
           <div className="-mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-            <h1 className="text-xl font-semibold text-paper sm:text-2xl">{lab.title}</h1>
+            <ViewTransition name={labTitleTransition(lab.id)}>
+              <h1 className="text-xl font-semibold text-paper sm:text-2xl">{lab.title}</h1>
+            </ViewTransition>
             <LabStatus status={lab.status} />
           </div>
         </div>
