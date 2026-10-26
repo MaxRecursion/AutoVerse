@@ -79,4 +79,28 @@ describe('ExplorePage', () => {
     fireEvent.click(doors)
     expect(doors).toHaveAttribute('aria-pressed', 'true')
   })
+
+  it('opens and closes the phone sheet by dragging its handle, and by tapping it', () => {
+    renderAt('/explore')
+    const handle = within(screen.getByTestId('explorer-sheet')).getAllByRole('button')[0]!
+    expect(handle).toHaveAttribute('aria-expanded', 'false')
+    // jsdom has no pointer capture; the sheet only needs the events.
+    handle.setPointerCapture = vi.fn()
+    const drag = (fromY: number, toY: number) => {
+      fireEvent.pointerDown(handle, { clientY: fromY, button: 0, pointerId: 1 })
+      fireEvent.pointerMove(handle, { clientY: (fromY + toY) / 2, pointerId: 1 })
+      fireEvent.pointerMove(handle, { clientY: toY, pointerId: 1 })
+      fireEvent.pointerUp(handle, { clientY: toY, pointerId: 1 })
+      fireEvent.click(handle)
+    }
+    drag(400, 300)
+    expect(handle).toHaveAttribute('aria-expanded', 'true')
+    drag(300, 420)
+    expect(handle).toHaveAttribute('aria-expanded', 'false')
+    // A press that barely moves is a tap: it toggles, as Enter or Space do.
+    drag(300, 302)
+    expect(handle).toHaveAttribute('aria-expanded', 'true')
+    fireEvent.click(handle)
+    expect(handle).toHaveAttribute('aria-expanded', 'false')
+  })
 })
