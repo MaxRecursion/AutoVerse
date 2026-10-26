@@ -128,6 +128,13 @@
   table, output, time {
     font-variant-numeric: tabular-nums;
   }
+  /*
+   * Continuous (squircle) corners next to every border-radius except circles
+   * and pills. Chromium draws them; other browsers ignore corner-shape.
+   */
+  :where([class*='rounded']:not([class*='rounded-full']), .panel) {
+    corner-shape: squircle;
+  }
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-cyan;
   }
