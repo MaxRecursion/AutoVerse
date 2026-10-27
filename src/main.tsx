@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { App } from '@/app/App'
 import { installRoutePrefetch } from '@/app/prefetch'
 import { router, routerReady, routes } from '@/app/router'
+import { startHostedAnalytics } from '@/lib/analytics'
 import { setStaticFirstPaint } from '@/lib/boot'
 import '@/styles/globals.css'
 
@@ -27,3 +28,5 @@ createRoot(container).render(
     <App />
   </StrictMode>,
 )
+
+startHostedAnalytics()
