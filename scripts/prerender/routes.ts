@@ -132,6 +132,8 @@ export function buildSiteJsonLd(siteUrl: string, logoPath = '/icons/autoverse-51
       url: join(siteUrl, '/'),
       description: 'AutoVerse is a free, interactive guide to how cars work, written from the surface down with live 3D laboratories.',
       logo: { '@type': 'ImageObject', url: join(siteUrl, logoPath), width: 512, height: 512 },
+      // Credited in the footer of every page, so the markup names the same person.
+      founder: { '@type': 'Person', name: 'Akshay Kulkarni', url: 'https://maxrecursion.dev' },
     },
     {
       '@type': 'WebSite',

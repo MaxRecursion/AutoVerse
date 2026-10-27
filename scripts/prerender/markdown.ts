@@ -74,6 +74,7 @@ const INTRO =
 export function buildLlmsTxt(ctx: MarkdownContext): string {
   const url = (path: string) => join(ctx.siteUrl, path)
   const out: string[] = ['# AutoVerse', '', `> ${INTRO}`, '']
+  out.push('Made by [Akshay Kulkarni](https://maxrecursion.dev).', '')
   out.push(
     'Every lesson is original writing with a beginner explanation, an engineering explanation, steps, key concepts, common misconceptions and common questions. Each has a plain Markdown version (linked below). Values shown in the interactive labs are illustrative teaching values, not data for a specific vehicle.',
     '',

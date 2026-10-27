@@ -19,6 +19,7 @@ export function Footer() {
           <button type="button" onClick={startTour} className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Take the tour</button>
           <Link to="/about" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Sources &amp; credits</Link>
           <Link to="/progress" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Local progress</Link>
+          <a href="https://maxrecursion.dev" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Made by Akshay Kulkarni</a>
         </nav>
       </div>
     </footer>
