@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/router.ts": { "maxDuration": 30 }
+  },
+  "rewrites": [
+    { "source": "/api/analyze", "destination": "/api/router?route=analyze" },
+    { "source": "/api/source", "destination": "/api/router?route=source" },
+    { "source": "/api/health", "destination": "/api/router?route=health" },
+    { "source": "/((?!api/|assets/).*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    { "source": "/assets/(.*)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }] }
+  ]
+}

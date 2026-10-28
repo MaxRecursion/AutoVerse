@@ -1,0 +1,16 @@
+export const BUDGETS = Object.freeze({
+  maxRequestBytes: 8_192,
+  maxTreeEntries: 2_500,
+  maxAnalyzedFiles: 180,
+  maxFileBytes: 80 * 1_024,
+  maxTotalSourceBytes: 1 * 1_024 * 1_024,
+  maxConcurrentBlobs: 8,
+  maxGraphNodes: 500,
+  maxGraphEdges: 1_200,
+  maxGraphEvidence: 2_000,
+  maxAnalysisResponseBytes: 3_600_000,
+  maxAnalysisMs: 25_000,
+  maxGitHubRequestMs: 8_000,
+  maxGitHubJsonBytes: 12 * 1_024 * 1_024,
+  maxSourceResponseBytes: 96 * 1_024,
+})
