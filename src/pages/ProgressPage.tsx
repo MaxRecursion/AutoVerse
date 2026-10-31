@@ -8,6 +8,7 @@ import { useDocumentTitle } from '@/components/learning/useDocumentTitle'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { clearAllProgress, removeBookmark } from '@/features/progress/actions'
+import { GettingStarted } from '@/features/progress/GettingStarted'
 import { PathAction } from '@/features/progress/PathAction'
 import { resolveCurrentPathProgress, resolveNextPathProgress, resolvePathProgress, type PathProgress } from '@/features/progress/paths'
 import { formatDate, formatRelativeTime } from '@/features/progress/time'
@@ -81,6 +82,10 @@ export default function ProgressPage() {
           value={quizRows.length ? `${Math.round((quizRows.reduce((s, r) => s + r.score / r.total, 0) / quizRows.length) * 100)}%` : '—'}
         />
       </dl>
+
+      <div className="mt-10">
+        <GettingStarted variant="page" />
+      </div>
 
       <Block id="certificates" title="Certificates" description="Finish every lesson and take every quiz in a course to earn its certificate.">
         <CertificatesSection />

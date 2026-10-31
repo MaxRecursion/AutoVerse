@@ -1,11 +1,14 @@
 import { useEffect, useId, useRef, useState, type Ref } from 'react'
+import { motion } from 'motion/react'
 import { ArrowLeft, ArrowRight, Check, RotateCcw, X } from 'lucide-react'
+import { AnimatedNumber } from '@/components/ui/animated-number'
+import { Burst } from '@/components/ui/burst'
 import { Button } from '@/components/ui/button'
 import { Segmented } from '@/components/ui/segmented'
 import type { QuizQuestion } from '@/lib/schemas'
 import { cn } from '@/lib/utils'
 import { checkCertificates } from '@/features/certificate/award'
-import { useProgress } from '@/stores/progress'
+import { useProgress, type QuizResult } from '@/stores/progress'
 import { answerQuestion, isCorrectAnswer, nextUnanswered, scoreQuiz, scoreVerdict, type QuizAnswers } from './quiz'
 
 type QuizMode = 'single' | 'all'
@@ -29,6 +32,8 @@ export function LessonQuiz({ topicId, questions }: LessonQuizProps) {
   const [attempt, setAttempt] = useState(0)
   const recordQuiz = useProgress((s) => s.recordQuiz)
   const best = useProgress((s) => s.quizScores[topicId])
+  // The best score before this attempt began: "New best" means beating it (recording keeps the higher of the two).
+  const [baseline, setBaseline] = useState<QuizResult | undefined>(best)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const summaryRef = useRef<HTMLElement>(null)
   const focusPending = useRef(false)
@@ -62,6 +67,7 @@ export function LessonQuiz({ topicId, questions }: LessonQuizProps) {
     focusPending.current = true
     setAnswers({})
     setIndex(0)
+    setBaseline(best)
     setAttempt((a) => a + 1)
   }
 
@@ -95,6 +101,7 @@ export function LessonQuiz({ topicId, questions }: LessonQuizProps) {
 
       {mode === 'single' && !showSummary && current && (
         <div className="flex flex-col gap-3">
+          <QuestionDots questions={questions} answers={answers} index={index} onGo={goTo} />
           <QuestionCard
             key={`${attempt}-${current.id}`}
             question={current}
@@ -154,8 +161,13 @@ export function LessonQuiz({ topicId, questions }: LessonQuizProps) {
           <div>
             <p className="eyebrow">Your score</p>
             <p className="mt-1 font-display text-3xl tabular-nums text-paper">
-              {score.correct}
+              <AnimatedNumber value={score.correct} from={0} />
               <span className="text-steel-400"> / {score.total}</span>
+              {baseline && score.correct / score.total > baseline.score / baseline.total && (
+                <span className="ml-3 inline-block -translate-y-1 rounded-full border border-amber/40 bg-amber/10 px-2.5 py-0.5 align-middle font-mono text-[11px] uppercase tracking-wider text-amber">
+                  New best
+                </span>
+              )}
             </p>
             <p className="mt-1 text-sm text-steel-300">{scoreVerdict(score.percent)}</p>
             {best && (
@@ -190,6 +202,8 @@ interface QuestionCardProps {
 
 function QuestionCard({ question, number, total, choice, onAnswer, headingRef }: QuestionCardProps) {
   const uid = useId()
+  // True only for an answer given while this card was on screen: coming back to a question must not replay the celebration.
+  const [fresh, setFresh] = useState(false)
   const answered = choice !== undefined
   const correct = isCorrectAnswer(question, choice)
   const promptId = `${uid}-prompt`
@@ -210,9 +224,15 @@ function QuestionCard({ question, number, total, choice, onAnswer, headingRef }:
           const state = !answered ? 'idle' : isAnswer ? 'correct' : isChoice ? 'wrong' : 'dim'
           return (
             <li key={i}>
-              <button
+              <motion.button
                 type="button"
-                onClick={() => onAnswer(i)}
+                onClick={() => {
+                  if (!answered) setFresh(true)
+                  onAnswer(i)
+                }}
+                // A wrong pick shakes once (a transform, so reduced motion leaves it still).
+                animate={fresh && state === 'wrong' ? { x: [0, -6, 6, -4, 4, 0] } : { x: 0 }}
+                transition={{ duration: 0.3 }}
                 aria-disabled={answered || undefined}
                 aria-describedby={answered ? feedbackId : undefined}
                 className={cn(
@@ -227,16 +247,17 @@ function QuestionCard({ question, number, total, choice, onAnswer, headingRef }:
                 <span
                   aria-hidden
                   className={cn(
-                    'grid size-6 shrink-0 place-items-center rounded-md border font-mono text-[11px]',
+                    'relative grid size-6 shrink-0 place-items-center rounded-md border font-mono text-[11px]',
                     state === 'correct' ? 'border-ok/60 text-ok' : state === 'wrong' ? 'border-danger/60 text-danger' : 'border-white/15 text-steel-300',
                   )}
                 >
                   {state === 'correct' ? <Check className="size-3.5" /> : state === 'wrong' ? <X className="size-3.5" /> : LETTERS[i]}
+                  {fresh && isChoice && isAnswer && <Burst />}
                 </span>
                 <span className="flex-1">{option}</span>
                 {answered && isAnswer && <span className="sr-only">(correct answer)</span>}
                 {answered && isChoice && <span className="sr-only">(your answer)</span>}
-              </button>
+              </motion.button>
             </li>
           )
         })}
@@ -250,5 +271,43 @@ function QuestionCard({ question, number, total, choice, onAnswer, headingRef }:
         )}
       </div>
     </div>
+  )
+}
+
+/** One dot per question, in order: answered right, answered wrong, or open; the current one is ringed. Each jumps to its question. */
+function QuestionDots({
+  questions,
+  answers,
+  index,
+  onGo,
+}: {
+  questions: readonly QuizQuestion[]
+  answers: QuizAnswers
+  index: number
+  onGo: (i: number) => void
+}) {
+  return (
+    <ol className="flex flex-wrap items-center gap-3 px-1" aria-label="Questions">
+      {questions.map((q, i) => {
+        const choice = answers[q.id]
+        const status = choice === undefined ? 'not answered' : isCorrectAnswer(q, choice) ? 'answered correctly' : 'answered incorrectly'
+        return (
+          <li key={q.id}>
+            <button
+              type="button"
+              onClick={() => onGo(i)}
+              aria-label={`Question ${i + 1}, ${status}`}
+              // 'true', not 'step': the lesson's own steps already use aria-current="step" and the page keeps exactly one.
+              aria-current={i === index ? 'true' : undefined}
+              className={cn(
+                'relative hit-area block size-3 rounded-full transition-all',
+                choice === undefined ? 'bg-white/20 hover:bg-white/40' : isCorrectAnswer(q, choice) ? 'bg-ok' : 'bg-danger',
+                i === index && 'scale-125 ring-2 ring-cyan ring-offset-2 ring-offset-graphite-950',
+              )}
+            />
+          </li>
+        )
+      })}
+    </ol>
   )
 }

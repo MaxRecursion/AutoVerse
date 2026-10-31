@@ -2,6 +2,7 @@ import { Bookmark, BookmarkCheck, CircleCheck, Circle, Info } from 'lucide-react
 import { completeLesson, reopenLesson } from '@/features/progress/actions'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { Button } from '@/components/ui/button'
+import { IconSwap } from '@/components/ui/icon-swap'
 import type { Category, ContentStatus, Topic } from '@/lib/schemas'
 import { cn } from '@/lib/utils'
 import { useProgress } from '@/stores/progress'
@@ -60,7 +61,7 @@ export function LessonActions({ topicId, className, showComplete = true }: { top
         aria-pressed={bookmarked}
         onClick={() => toggleBookmark(topicId)}
       >
-        {bookmarked ? <BookmarkCheck aria-hidden /> : <Bookmark aria-hidden />}
+        <IconSwap id={bookmarked ? 'on' : 'off'}>{bookmarked ? <BookmarkCheck /> : <Bookmark />}</IconSwap>
         {bookmarked ? 'Bookmarked' : 'Bookmark'}
       </Button>
       {showComplete && <Button
@@ -69,7 +70,7 @@ export function LessonActions({ topicId, className, showComplete = true }: { top
         aria-pressed={completed}
         onClick={() => (completed ? reopenLesson(topicId) : completeLesson(topicId))}
       >
-        {completed ? <CircleCheck aria-hidden /> : <Circle aria-hidden />}
+        <IconSwap id={completed ? 'on' : 'off'}>{completed ? <CircleCheck /> : <Circle />}</IconSwap>
         {completed ? 'Completed' : 'Mark complete'}
       </Button>}
     </div>

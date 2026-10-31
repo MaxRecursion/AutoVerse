@@ -10,6 +10,11 @@ screen-reader support); the ideas and visual language are Watermelon's.
 | AutoVerse file | Adapted from (Watermelon UI slug) |
 |---|---|
 | `src/components/ui/segmented.tsx` | `continuous-tabs` |
+| `src/components/learning/LessonIsland.tsx` | `scroll-island`, `step-indicator` |
+| `src/components/ui/burst.tsx` | `emoji-spree-choice-chips` |
+| `src/components/ui/animated-number.tsx` | `run-widget`, `stepper` |
+| `src/components/ui/icon-swap.tsx` | `save-toggle` |
+| `src/features/progress/GettingStarted.tsx` | `onboarding-checklist` |
 
 Source: <https://github.com/WatermelonCorp/watermellon-registry>
 

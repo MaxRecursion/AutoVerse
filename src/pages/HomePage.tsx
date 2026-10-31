@@ -6,6 +6,7 @@ import { FeaturedLabs } from '@/features/home/FeaturedLabs'
 import { HeroSection } from '@/features/home/HeroSection'
 import { LearningJourney } from '@/features/home/LearningJourney'
 import { HomeSearch } from '@/features/home/HomeSearch'
+import { GettingStarted } from '@/features/progress/GettingStarted'
 import { HOME_DOCUMENT_TITLE } from '@/features/home/homeData'
 import { HomeMotion } from '@/features/home/Reveal'
 import { SystemMapTeaser } from '@/features/home/SystemMapTeaser'
@@ -34,6 +35,9 @@ export default function HomePage() {
         <HeroSection />
         <div className="flex flex-col gap-16 pt-10 lg:gap-24 lg:pt-14">
           <LearningJourney />
+          <div className="mx-auto w-full max-w-[1400px] px-4 empty:hidden sm:px-6">
+            <GettingStarted variant="home" />
+          </div>
           <ContinueLearning />
           <HomeSearch />
           <FeaturedLabs />

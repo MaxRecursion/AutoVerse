@@ -13,6 +13,9 @@ interface PreferencesState {
   /** Name printed on certificates. Stays in this browser. */
   learnerName: string
   setLearnerName: (name: string) => void
+  /** The learner hid the "Getting started" checklist on the home page. */
+  checklistDismissed: boolean
+  setChecklistDismissed: (dismissed: boolean) => void
 }
 
 /** UI preferences persisted locally (explanation level survives navigation and reloads). */
@@ -25,6 +28,8 @@ export const usePreferences = create<PreferencesState>()(
       setTourStatus: (tourStatus) => set({ tourStatus }),
       learnerName: '',
       setLearnerName: (learnerName) => set({ learnerName: learnerName.slice(0, 60) }),
+      checklistDismissed: false,
+      setChecklistDismissed: (checklistDismissed) => set({ checklistDismissed }),
     }),
     { name: 'autoverse.preferences' },
   ),

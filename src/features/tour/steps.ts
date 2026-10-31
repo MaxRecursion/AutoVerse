@@ -61,7 +61,7 @@ export const TOUR_STEPS: readonly TourStep[] = [
     route: '/topics/four-stroke-cycle',
     target: anchor('stage-rail'),
     title: 'Five stages, earned by doing',
-    body: 'Overview, See it work, Go deeper, Check, Story. A stage ticks only when you actually read, try or answer. When the core stages are done, a Finish button appears.',
+    body: 'Overview, See it work, Go deeper, Check, Story. A stage ticks only when you actually read, try or answer. Tap the ring for what is left and an outline of the page. When the core stages are done, a Finish button appears.',
     tip: 'Optional stages never block you from finishing.',
   },
   {

@@ -1,16 +1,14 @@
 import { useEffect, useMemo, useRef, type ReactNode } from 'react'
-import { Check, ListTree } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { Link } from 'react-router'
-import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { completeLesson } from '@/features/progress/actions'
 import { resolveNextUp } from '@/features/progress/curriculum'
 import { LabHost } from '@/features/labs/LabHost'
 import { useLabInstance } from '@/features/labs/useLabInstance'
 import { getLab } from '@/features/labs/registry'
-import type { LessonFacts, Stage } from '@/features/progress/stages'
+import type { LessonFacts } from '@/features/progress/stages'
 import { useLessonStages } from '@/features/progress/useLessonStages'
-import { useIsMobile, usePrefersReducedMotion } from '@/hooks/useMediaQuery'
+import { usePrefersReducedMotion } from '@/hooks/useMediaQuery'
 import { getCategory, getComponent, getPioneersForTopic, getRelatedTopics, getTopic, learningPaths, topics } from '@/lib/content'
 import type { FlowDiagram as FlowDiagramData, Topic } from '@/lib/schemas'
 import type { LabStore } from '@/lib/simulation/labStore'
@@ -22,14 +20,13 @@ import { KeyConcepts, Misconceptions, PracticalExamples, RelatedTopics, SourcesA
 import { LessonDeeper, type DeeperPanel } from './LessonDeeper'
 import { LessonFinish } from './LessonFinish'
 import { LessonHeader } from './LessonHeader'
+import { LessonIsland } from './LessonIsland'
 import { LessonJourney } from './LessonJourney'
 import { LessonComponents } from './LessonComponents'
 import { LessonQuiz } from './LessonQuiz'
 import { LessonSection } from './LessonSection'
 import { LessonSteps } from './LessonSteps'
 import { LessonStory } from './LessonStory'
-import { LevelToggle } from './LevelToggle'
-import { StageRail } from './StageRail'
 import { paragraphs } from './labels'
 import { revealElement, useOptionalLab } from './labSync'
 import { useLevelScrollAnchor } from './useLevelScrollAnchor'
@@ -129,16 +126,6 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
     store.getState().select(componentId)
     revealScene()
   }
-  const goToStage = (stage: Stage) => {
-    const section = document.getElementById(stage.target)
-    section?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
-    const heading = document.getElementById(`${stage.target}-heading`)
-    if (heading) {
-      heading.tabIndex = -1
-      heading.focus({ preventScroll: true })
-    }
-  }
-
   const flowOnly = hasFlow && !lab && topic.steps.length === 0
   const flowDiagram = hasFlow && (
     <div className="relative">
@@ -328,9 +315,12 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
         </div>
       </div>
 
-      <LessonBar
+      <LessonIsland
         sections={visible}
-        rail={<StageRail stages={stages} summary={summary} complete={complete} onGo={goToStage} onFinish={() => completeLesson(topic.id)} />}
+        stages={stages}
+        summary={summary}
+        complete={complete}
+        onFinish={() => completeLesson(topic.id)}
       />
 
       <article className="mx-auto flex max-w-6xl flex-col gap-14 px-4 py-10 sm:px-6">
@@ -349,55 +339,6 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
           ),
         )}
       </article>
-    </div>
-  )
-}
-
-/** Sticky bar under the site header: section menu, lesson title, level toggle. */
-function LessonBar({ sections, rail }: { sections: SectionDef[]; rail: ReactNode }) {
-  const mobile = useIsMobile()
-  const reduced = usePrefersReducedMotion()
-  const target = useRef<string | null>(null)
-
-  return (
-    <div className="sticky top-[calc(3.5rem+env(safe-area-inset-top))] z-30 border-y border-white/[0.06] bg-graphite-950/90 backdrop-blur-lg">
-      <div className="mx-auto flex h-12 max-w-6xl items-center gap-3 px-4 sm:px-6">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="h-9 shrink-0 px-2 text-steel-300">
-              <ListTree aria-hidden />
-              <span className={mobile ? 'sr-only' : undefined}>On this page</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="start"
-            className="w-64 border-white/10 bg-graphite-850"
-            onCloseAutoFocus={(e) => {
-              const id = target.current
-              target.current = null
-              if (!id) return
-              e.preventDefault()
-              const section = document.getElementById(id)
-              section?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
-              const heading = document.getElementById(`${id}-heading`)
-              if (heading) {
-                heading.tabIndex = -1
-                heading.focus({ preventScroll: true })
-              }
-            }}
-          >
-            <DropdownMenuLabel className="eyebrow">Sections</DropdownMenuLabel>
-            {sections.map((s, i) => (
-              <DropdownMenuItem key={s.id} className="min-h-9" onSelect={() => (target.current = s.id)}>
-                <span className="w-5 font-mono text-[11px] text-steel-500">{String(i + 1).padStart(2, '0')}</span>
-                {s.title}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-        {rail}
-        <LevelToggle compact={mobile} className="ml-auto shrink-0" />
-      </div>
     </div>
   )
 }

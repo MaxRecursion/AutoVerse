@@ -1,6 +1,9 @@
-import { ArrowRight, Award, Box, Check, Circle } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
+import { ArrowRight, Award, Box, Check, Circle, CircleCheck } from 'lucide-react'
 import { Link } from 'react-router'
+import { AnimatedNumber } from '@/components/ui/animated-number'
 import { Button } from '@/components/ui/button'
+import { Progress } from '@/components/ui/progress'
 import { getCourses } from '@/features/certificate/award'
 import { useProgress } from '@/stores/progress'
 import type { NextUp } from '@/features/progress/curriculum'
@@ -34,8 +37,15 @@ export function LessonFinish({
     <section id="finish" aria-labelledby="finish-heading" className="panel scroll-mt-28 p-5 sm:p-6">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
         <div className="min-w-0">
-          <h2 id="finish-heading" className="text-xl font-semibold">
+          <h2 id="finish-heading" className="flex items-center gap-2 text-xl font-semibold">
             {heading}
+            <AnimatePresence initial={false}>
+              {complete && (
+                <motion.span aria-hidden initial={{ scale: 0, rotate: -40 }} animate={{ scale: 1, rotate: 0 }} transition={{ type: 'spring', stiffness: 420, damping: 18 }} className="inline-flex">
+                  <CircleCheck className="size-5 text-ok" />
+                </motion.span>
+              )}
+            </AnimatePresence>
           </h2>
           <ul className="mt-3 flex flex-col gap-1.5">
             {stages.map((s) => (
@@ -70,9 +80,17 @@ export function LessonFinish({
                 <span className="eyebrow block">{next.label}</span>
                 <span className="block truncate font-medium text-paper group-hover:text-cyan">{target.title}</span>
                 {next.route && (
-                  <span className="block truncate text-xs text-steel-400">
-                    {next.route.title} · {next.route.completed} of {next.route.topics.length} done
-                  </span>
+                  <>
+                    <span className="block truncate text-xs text-steel-400">
+                      {next.route.title} · <AnimatedNumber value={next.route.completed} /> of {next.route.topics.length} done
+                    </span>
+                    {/* The bar slides forward when finishing this lesson adds to the route. */}
+                    <Progress
+                      value={Math.round((next.route.completed / Math.max(1, next.route.topics.length)) * 100)}
+                      aria-label={`${next.route.title}: ${next.route.completed} of ${next.route.topics.length} lessons done`}
+                      className="mt-2 h-1 bg-graphite-700"
+                    />
+                  </>
                 )}
               </span>
               {target.labId ? <Box aria-hidden className="ml-auto size-4 shrink-0 text-cyan" /> : null}
@@ -85,7 +103,7 @@ export function LessonFinish({
             <Link
               key={c.id}
               to={`/certificate/${c.id}`}
-              className="flex min-h-11 pointer-coarse:min-h-12 items-center gap-2.5 rounded-xl border border-amber/30 bg-amber/[0.05] px-4 py-2.5 text-sm text-amber hover:border-amber/60"
+              className="shimmer flex min-h-11 pointer-coarse:min-h-12 items-center gap-2.5 rounded-xl border border-amber/30 bg-amber/[0.05] px-4 py-2.5 text-sm text-amber shadow-[0_0_28px_-10px_rgb(246_166_58/0.6)] hover:border-amber/60"
             >
               <Award aria-hidden className="size-4 shrink-0" />
               <span>
