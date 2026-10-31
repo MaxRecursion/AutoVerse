@@ -1,4 +1,5 @@
 import { Suspense, useEffect, ViewTransition } from 'react'
+import { MotionConfig } from 'motion/react'
 import { Outlet, ScrollRestoration, useLocation } from 'react-router'
 import { Header } from './Header'
 import { Footer } from './Footer'
@@ -13,6 +14,8 @@ export function AppShell() {
     document.documentElement.dataset.app = 'ready'
   }, [])
   return (
+    // Readers who ask for less motion get jumps instead of springs from every motion animation (the sliding toggle thumb, the lesson island...).
+    <MotionConfig reducedMotion="user">
     <div className="flex min-h-dvh flex-col">
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded focus:bg-cyan focus:px-3 focus:py-2 focus:text-ink">
         Skip to content
@@ -37,5 +40,6 @@ export function AppShell() {
       {/* Key by path on the initial load so a fresh (or prerendered) page never inherits another page's scroll offset. */}
       <ScrollRestoration getKey={(loc) => (loc.key === 'default' ? loc.pathname + loc.search : loc.key)} />
     </div>
+    </MotionConfig>
   )
 }

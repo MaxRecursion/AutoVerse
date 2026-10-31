@@ -153,16 +153,88 @@
       linear-gradient(90deg, rgb(255 255 255 / 0.018) 1px, transparent 1px);
     background-size: 96px 96px, 96px 96px, 16px 16px, 16px 16px;
   }
-  /* Restrained metallic panel */
+  /* Restrained metallic panel, with a faint sheen along its top edge */
   .panel {
     @apply rounded-xl border border-white/[0.07] bg-graphite-900/80 backdrop-blur-md;
-    box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.04) inset, 0 20px 40px -24px rgb(0 0 0 / 0.8);
+    background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.025), transparent 40%);
+    box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.05) inset, 0 20px 40px -24px rgb(0 0 0 / 0.8);
   }
   .eyebrow {
     @apply font-mono text-[11px] uppercase tracking-[0.18em] text-steel-400;
   }
   .annotation {
     @apply font-mono text-[11px] tracking-wide text-steel-300;
+  }
+}
+
+/*
+ * Tactile controls: raised keys, lit keys, inset wells and glass, after
+ * Watermelon UI's control styling (MIT, see THIRD_PARTY_NOTICES.md). The base
+ * colour stays a normal bg-* class, so call sites can still tint it; shadows go
+ * through Tailwind's shadow variables, so focus rings (ring-*) compose on top.
+ */
+@utility tactile {
+  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.075), rgb(255 255 255 / 0.015) 55%, rgb(0 0 0 / 0.14));
+  --tw-inset-shadow: inset 0 1px 0 rgb(255 255 255 / 0.09), inset 0 -2px 3px rgb(0 0 0 / 0.35);
+  --tw-shadow: 0 6px 14px -8px rgb(0 0 0 / 0.85);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+/* A lit key: pair with a bright bg-* (cyan by default); glow-* picks the halo colour. */
+@utility tactile-lit {
+  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.34), rgb(255 255 255 / 0.05) 50%, rgb(0 0 0 / 0.12));
+  --tw-inset-shadow: inset 0 1px 0 rgb(255 255 255 / 0.55), inset 0 -2px 4px rgb(0 0 0 / 0.2);
+  --tw-shadow: 0 0 0 1px rgb(var(--glow-rgb, 56 215 242) / 0.35), 0 8px 22px -10px rgb(var(--glow-rgb, 56 215 242) / 0.7);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+@utility tactile-pressed {
+  --tw-inset-shadow: inset 0 2px 5px rgb(0 0 0 / 0.5), inset 0 -1px 0 rgb(255 255 255 / 0.04);
+  --tw-shadow: 0 0 #0000;
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+/* An inset well for segmented controls, progress bars and slider tracks. */
+@utility track {
+  background-image: linear-gradient(to bottom, rgb(0 0 0 / 0.4), rgb(0 0 0 / 0.12));
+  --tw-inset-shadow: inset 0 2px 4px rgb(0 0 0 / 0.55), inset 0 -1px 0 rgb(255 255 255 / 0.05);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
+}
+@utility glass {
+  background-color: rgb(16 18 22 / 0.66);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  --tw-inset-shadow: inset 0 1px 0 rgb(255 255 255 / 0.07);
+  --tw-shadow: 0 24px 48px -24px rgb(0 0 0 / 0.85);
+  box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+@utility glow-amber {
+  --glow-rgb: 246 166 58;
+}
+@utility glow-ok {
+  --glow-rgb: 79 213 138;
+}
+@utility glow-danger {
+  --glow-rgb: 255 92 77;
+}
+/* A light sweep across a lit key on hover (pointer devices, motion allowed). */
+@utility shimmer {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.4) 50%, transparent 65%);
+    transform: translateX(-130%);
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    &:hover::after {
+      animation: shimmer-sweep 0.9s ease-out;
+    }
+  }
+}
+@keyframes shimmer-sweep {
+  to {
+    transform: translateX(130%);
   }
 }
 

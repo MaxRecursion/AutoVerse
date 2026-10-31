@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState, type Ref } from 'react'
 import { ArrowLeft, ArrowRight, Check, RotateCcw, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { Segmented } from '@/components/ui/segmented'
 import type { QuizQuestion } from '@/lib/schemas'
 import { cn } from '@/lib/utils'
 import { checkCertificates } from '@/features/certificate/award'
@@ -75,29 +75,22 @@ export function LessonQuiz({ topicId, questions }: LessonQuizProps) {
           {score.answered} of {score.total} answered
           {score.answered > 0 && <span className="text-steel-400"> · {score.correct} correct</span>}
         </p>
-        <ToggleGroup
-          type="single"
-          size="sm"
-          variant="outline"
+        <Segmented<QuizMode>
           value={mode}
           onValueChange={(v) => {
-            if (!v) return
             focusPending.current = false
-            setMode(v as QuizMode)
+            setMode(v)
             if (v === 'single') {
               const missing = nextUnanswered(questions, answers)
               setIndex(missing === -1 ? questions.length : missing)
             }
           }}
           aria-label="Quiz layout"
-        >
-          <ToggleGroupItem value="single" className="h-9 px-3 text-xs data-[state=on]:bg-cyan/15 data-[state=on]:text-cyan">
-            One at a time
-          </ToggleGroupItem>
-          <ToggleGroupItem value="all" className="h-9 px-3 text-xs data-[state=on]:bg-cyan/15 data-[state=on]:text-cyan">
-            All questions
-          </ToggleGroupItem>
-        </ToggleGroup>
+          options={[
+            { value: 'single', label: 'One at a time' },
+            { value: 'all', label: 'All questions' },
+          ]}
+        />
       </div>
 
       {mode === 'single' && !showSummary && current && (

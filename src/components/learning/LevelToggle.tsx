@@ -1,9 +1,7 @@
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { Segmented } from '@/components/ui/segmented'
 import type { ExplanationLevel } from '@/lib/schemas'
 import { withViewTransition } from '@/lib/viewTransition'
 import { usePreferences } from '@/stores/preferences'
-
-const ITEM = 'h-9 px-3 text-xs data-[state=on]:bg-cyan/15 data-[state=on]:text-cyan'
 
 /**
  * Beginner / Technical switch. A global preference (persisted locally), so it
@@ -14,22 +12,16 @@ export function LevelToggle({ compact = false, className }: { compact?: boolean;
   const level = usePreferences((p) => p.level)
   const setLevel = usePreferences((p) => p.setLevel)
   return (
-    <ToggleGroup
-      type="single"
-      size="sm"
-      variant="outline"
+    <Segmented<ExplanationLevel>
       value={level}
       // The page's text is rewritten for the new level: cross-fade it rather than swap it abruptly.
-      onValueChange={(v) => v && withViewTransition(() => setLevel(v as ExplanationLevel))}
+      onValueChange={(v) => withViewTransition(() => setLevel(v))}
       aria-label="Explanation level"
       className={className}
-    >
-      <ToggleGroupItem value="beginner" className={ITEM}>
-        {compact ? 'Basic' : 'Beginner'}
-      </ToggleGroupItem>
-      <ToggleGroupItem value="technical" className={ITEM}>
-        {compact ? 'Tech' : 'Technical'}
-      </ToggleGroupItem>
-    </ToggleGroup>
+      options={[
+        { value: 'beginner', label: compact ? 'Basic' : 'Beginner' },
+        { value: 'technical', label: compact ? 'Tech' : 'Technical' },
+      ]}
+    />
   )
 }
