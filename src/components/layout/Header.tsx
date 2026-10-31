@@ -18,7 +18,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-graphite-950/85 pt-[env(safe-area-inset-top)] backdrop-blur-lg [view-transition-name:site-header]">
       <div className="mx-auto flex h-14 max-w-[1600px] items-center gap-4 px-4 sm:px-6">
         <Logo />
-        <nav aria-label="Primary" data-tour="nav" className="ml-4 hidden items-center gap-1 md:flex">
+        <nav aria-label="Primary" data-tour="nav" className="ml-4 hidden items-center gap-1 lg:flex">
           {primaryNav.map((item) => (
             <NavLink
               key={item.to}
@@ -37,7 +37,7 @@ export function Header() {
           <TourButton />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="pointer-coarse:ml-0.5 md:hidden" aria-label="Open menu" data-tour="menu-button">
+              <Button variant="ghost" size="icon" className="pointer-coarse:ml-0.5 lg:hidden" aria-label="Open menu" data-tour="menu-button">
                 <Menu />
               </Button>
             </SheetTrigger>
