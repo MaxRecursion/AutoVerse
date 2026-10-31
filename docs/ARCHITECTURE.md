@@ -78,4 +78,15 @@ Also: `features/tour/` (steps, geometry, host, invite), `features/certificate/` 
 
 ## Design system
 
-Graphite surfaces (`bg-graphite-950/900/850/800/700`), warm white text (`text-paper`), steel greys (`text-steel-300/400/500`), electric cyan for interaction (`cyan`), amber for energy / motion paths (`amber`), `danger` / `ok` for technical states. Utilities: `.panel` (metallic glass panel), `.eyebrow` (mono uppercase label), `.annotation` (mono caption), `.bg-blueprint` (engineering grid). Display font `font-display` (Space Grotesk), body Inter, mono JetBrains Mono. Restrained motion (`motion/react`), respect `prefers-reduced-motion` (`usePrefersReducedMotion`). Touch targets ≥ 36px. shadcn primitives live in `src/components/ui`.
+Graphite surfaces (`bg-graphite-950/900/850/800/700`), warm white text (`text-paper`), steel greys (`text-steel-300/400/500`), electric cyan for interaction (`cyan`), amber for energy / motion paths (`amber`), `danger` / `ok` for technical states. Utilities: `.panel` (metallic glass panel), `.eyebrow` (mono uppercase label), `.annotation` (mono caption), `.bg-blueprint` (engineering grid). Display font `font-display` (Space Grotesk), body Inter, mono JetBrains Mono. Restrained motion (`motion/react`), respect `prefers-reduced-motion` (`usePrefersReducedMotion`). Touch targets ≥ 36px (`hit-area` grows a small control's touch target to 48px). shadcn primitives live in `src/components/ui`.
+
+### Tactile controls and adapted components
+
+Controls have a raised, tactile look: `tactile` (a raised key), `tactile-lit` (a lit key, tinted by `glow-amber` / `glow-ok` / `glow-danger`), `tactile-pressed`, `track` (an inset well for toggles, bars and slider tracks), `glass`, `shimmer` (a light sweep on hover) and `.panel`'s top sheen, all in `globals.css`. Their shadows go through Tailwind's shadow variables, so focus rings still draw on top. `Button`, `Progress`, `Slider` and `Switch` use them; `Segmented` (`ui/segmented.tsx`) is the single-choice control with a sliding thumb (Beginner/Technical, quiz layout).
+
+Several components are adapted from [Watermelon UI](https://ui.watermelon.sh) (MIT; credit in each file's header and in `THIRD_PARTY_NOTICES.md`): the lesson island, `Segmented`, `Burst`, `AnimatedNumber`, `IconSwap`, the Getting started checklist, the flashcards and the activity calendar. Rules for adapting a component:
+
+- Read its source from the registry and **rebuild** it on our parts (Radix primitives, design tokens, `lucide-react`); do not run `shadcn add` for it, which would add icon and theme packages. No new runtime dependency.
+- It must render on the server (no `window` during render, no "render nothing until mounted"), keep collapsed content in the DOM where it matters for search, and use `useId()` for any shared `layoutId`.
+- Every gesture has a button and a key. Semantics come from Radix or real buttons; changes are announced with `aria-live` where the text alone would not say.
+- Motion honours `prefers-reduced-motion`: `MotionConfig reducedMotion="user"` in `AppShell` turns springs into jumps, and decorative effects (`Burst`) check `usePrefersReducedMotion()` and draw nothing.

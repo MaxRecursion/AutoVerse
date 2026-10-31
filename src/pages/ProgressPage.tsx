@@ -5,14 +5,18 @@ import { Link } from 'react-router'
 import { DifficultyMeter } from '@/components/learning/TopicMeta'
 import { DIFFICULTY_LABEL, topicHref } from '@/components/learning/labels'
 import { useDocumentTitle } from '@/components/learning/useDocumentTitle'
+import { AnimatedNumber } from '@/components/ui/animated-number'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import { clearAllProgress, removeBookmark } from '@/features/progress/actions'
+import { ActivityCalendar } from '@/features/progress/ActivityCalendar'
 import { GettingStarted } from '@/features/progress/GettingStarted'
+import { PracticeButton } from '@/features/practice/PracticeButton'
 import { PathAction } from '@/features/progress/PathAction'
 import { resolveCurrentPathProgress, resolveNextPathProgress, resolvePathProgress, type PathProgress } from '@/features/progress/paths'
 import { formatDate, formatRelativeTime } from '@/features/progress/time'
 import { getTopic, learningPaths, topics } from '@/lib/content'
+import { glossary } from '@/lib/glossaryData'
 import type { Topic } from '@/lib/schemas'
 import { cn } from '@/lib/utils'
 import { useProgress } from '@/stores/progress'
@@ -30,6 +34,7 @@ export default function ProgressPage() {
   const completed = useProgress((s) => s.completed)
   const bookmarks = useProgress((s) => s.bookmarks)
   const quizScores = useProgress((s) => s.quizScores)
+  const practice = useProgress((s) => s.practice)
 
   const recentTopics = useMemo(() => withTopic(recent), [recent])
   const completedTopics = useMemo(
@@ -53,6 +58,9 @@ export default function ProgressPage() {
         .sort((a, b) => Number(b.path.id === currentPath?.path.id) - Number(a.path.id === currentPath?.path.id)),
     [completed, currentPath],
   )
+  const termsKnown = useMemo(() => glossary.filter((e) => practice[e.slug]?.known), [practice])
+  const termsToRevisit = useMemo(() => glossary.filter((e) => practice[e.slug] && !practice[e.slug]!.known), [practice])
+  const averageBest = quizRows.length ? Math.round((quizRows.reduce((s, r) => s + r.score / r.total, 0) / quizRows.length) * 100) : null
   const hasAny = recentTopics.length + completedTopics.length + bookmarkTopics.length + quizRows.length > 0
 
   return (
@@ -74,18 +82,31 @@ export default function ProgressPage() {
       </p>
 
       <dl className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
-        <Stat label="Lessons completed" value={`${completedTopics.length}`} detail={`of ${topics.length}`} />
-        <Stat label="Bookmarks" value={`${bookmarkTopics.length}`} />
-        <Stat label="Quizzes taken" value={`${quizRows.length}`} />
-        <Stat
-          label="Average best score"
-          value={quizRows.length ? `${Math.round((quizRows.reduce((s, r) => s + r.score / r.total, 0) / quizRows.length) * 100)}%` : '—'}
-        />
+        <Stat label="Lessons completed" value={<AnimatedNumber value={completedTopics.length} />} detail={`of ${topics.length}`} />
+        <Stat label="Bookmarks" value={<AnimatedNumber value={bookmarkTopics.length} />} />
+        <Stat label="Quizzes taken" value={<AnimatedNumber value={quizRows.length} />} />
+        <Stat label="Average best score" value={averageBest === null ? '—' : <><AnimatedNumber value={averageBest} />%</>} />
       </dl>
 
       <div className="mt-10">
         <GettingStarted variant="page" />
       </div>
+
+      <Block id="activity" title="Activity" description="Days you finished a lesson, took a quiz, earned a certificate or practised terms.">
+        <ActivityCalendar />
+      </Block>
+
+      <Block id="practice" title="Practice" description="Flashcards for the car glossary: say whether you knew each term and it comes back until you do.">
+        <div className="panel flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+          <p className="font-display text-2xl text-paper">
+            <AnimatedNumber value={termsKnown.length} /> <span className="text-sm text-steel-400">of {glossary.length} terms known</span>
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <PracticeButton entries={glossary} label="Practise all terms" className="h-10" />
+            {termsToRevisit.length > 0 && <PracticeButton entries={termsToRevisit} label={`Revisit ${termsToRevisit.length} to review`} className="h-10" />}
+          </div>
+        </div>
+      </Block>
 
       <Block id="certificates" title="Certificates" description="Finish every lesson and take every quiz in a course to earn its certificate.">
         <CertificatesSection />
@@ -204,7 +225,7 @@ export default function ProgressPage() {
   )
 }
 
-function Stat({ label, value, detail }: { label: string; value: string; detail?: string }) {
+function Stat({ label, value, detail }: { label: string; value: ReactNode; detail?: string }) {
   return (
     <div className="panel flex flex-col gap-1 p-4">
       <dt className="text-xs text-steel-400">{label}</dt>

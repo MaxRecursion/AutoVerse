@@ -1,4 +1,6 @@
 import { ArrowUpRight, CircleAlert, CircleCheck, ExternalLink } from 'lucide-react'
+import { PracticeButton } from '@/features/practice/PracticeButton'
+import { glossaryEntriesFor } from '@/lib/glossaryData'
 import type { Topic } from '@/lib/schemas'
 import { TopicCard } from './TopicCard'
 import { ORIGINAL_LICENCE_NAME } from './labels'
@@ -6,22 +8,26 @@ import { ORIGINAL_LICENCE_NAME } from './labels'
 /* Small presentational sections of the lesson template (all pure props → markup). */
 
 export function KeyConcepts({ concepts }: { concepts: Topic['keyConcepts'] }) {
+  const entries = glossaryEntriesFor(concepts.map((k) => k.term))
   return (
-    <dl className="grid gap-3 sm:grid-cols-2">
-      {concepts.map((k) => (
-        <div key={k.term} data-anchor className="panel flex min-w-0 flex-col gap-2 p-4">
-          <dt className="font-medium text-paper">{k.term}</dt>
-          <dd className="text-sm leading-relaxed text-steel-300">{k.definition}</dd>
-          {k.equation && (
-            <dd>
-              <code className="block overflow-x-auto whitespace-pre rounded-md border border-white/[0.06] bg-graphite-950 px-3 py-2 font-mono text-[13px] text-amber">
-                {k.equation}
-              </code>
-            </dd>
-          )}
-        </div>
-      ))}
-    </dl>
+    <div className="flex flex-col gap-4">
+      <dl className="grid gap-3 sm:grid-cols-2">
+        {concepts.map((k) => (
+          <div key={k.term} data-anchor className="panel flex min-w-0 flex-col gap-2 p-4">
+            <dt className="font-medium text-paper">{k.term}</dt>
+            <dd className="text-sm leading-relaxed text-steel-300">{k.definition}</dd>
+            {k.equation && (
+              <dd>
+                <code className="block overflow-x-auto whitespace-pre rounded-md border border-white/[0.06] bg-graphite-950 px-3 py-2 font-mono text-[13px] text-amber">
+                  {k.equation}
+                </code>
+              </dd>
+            )}
+          </div>
+        ))}
+      </dl>
+      <PracticeButton entries={entries} label="Practise this lesson’s terms" className="h-10 self-start" />
+    </div>
   )
 }
 

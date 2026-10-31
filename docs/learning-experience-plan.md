@@ -67,6 +67,16 @@ Home, lesson, and progress pages now resolve the same current path from the most
 
 Run them with `npm run test:e2e` (builds first). The first run needs `npx playwright install chromium`.
 
+## Shipped in the Fifth Slice: tactile controls, a lesson island and practice
+
+A UI pass using ideas from Watermelon UI (see `docs/ARCHITECTURE.md`, "Tactile controls and adapted components").
+
+- **Lesson island** (`components/learning/LessonIsland.tsx`). The sticky lesson bar is now a progress ring that opens a panel (what is left in each stage, and an outline of the page with the section being read marked), the five stages joined by a line that fills as they are done, Finish when the core stages are, and the level switch. On phones the active stage is kept in view and the outline replaces the old "On this page" menu. The stage buttons keep their names and `aria-current`, so tests and the tour still find them.
+- **Quiz and finish feedback.** One dot per question (jumps between them), a spark for a correct answer given now and a shake for a wrong one (neither on reduced motion, neither replayed when you return to a question), a counting score and a "New best" mark, a finish heading that checks itself, a route progress bar that moves forward when a lesson is finished, icon morphs on Bookmark and Mark complete, and a glowing certificate card.
+- **Getting started** (`features/progress/GettingStarted.tsx`, `checklist.ts`). Six first steps (take the tour, open a lesson, try a lab, answer a quiz, finish a lesson, earn a certificate) on Home (hideable, gone once done) and Progress. A step is done only from the stored record: skipping the tour is not taking it, and opening a lab page is not trying a lab.
+- **Flashcards** (`features/practice/`). Glossary terms as cards: flip (button or Space), "Got it" / "Again" (buttons, arrow keys or a swipe), "Again" cards come back a few cards later, unseen terms first. Opened from the glossary (all or filtered terms), a lesson's Key concepts and the Progress page; the last answer per term is stored in `practice`, which never touches lesson stages or completion.
+- **Progress page.** Counting stat tiles, an activity calendar (days with a finished lesson, quiz, certificate or practised terms, with current and best streak in the learner's own days) and a Practice block with terms known and terms to revisit.
+
 ## Next Work
 
 1. **Cover the remaining lessons with stories.** 9 of 34 lessons have no linked engineer yet: alternator and charging, cooling, diagnosing warning signs, driveshafts and CV joints, gear ratios, lubrication, mechanical sympathy, pistons and crankshaft, routine maintenance. Add only where a source supports it (the Rzeppa CV joint was left out because the page read did not name his employer).

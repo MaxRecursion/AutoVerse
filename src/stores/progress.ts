@@ -44,6 +44,14 @@ export interface ProgressData {
   missions: Record<string, string[]>
   /** Course id → when its certificate was earned. Awarded once, never withdrawn by later changes. */
   certificates: Record<string, { earnedAt: string }>
+  /** Glossary term slug → the last flashcard answer. Practice only: it never changes lesson stages or completion. */
+  practice: Record<string, TermReview>
+}
+
+/** The last time a term came up in the flashcards, and whether the learner said they knew it. */
+export interface TermReview {
+  known: boolean
+  reviewedAt: string
 }
 
 interface ProgressState extends ProgressData {
@@ -57,13 +65,15 @@ interface ProgressState extends ProgressData {
   seeStep: (topicId: string, stepId: string) => void
   completeMission: (labId: string, missionId: string) => void
   awardCertificate: (courseId: string) => void
+  /** Records a flashcard answer for a glossary term. */
+  reviewTerm: (slug: string, known: boolean) => void
   clearAll: () => void
   /** Undo of clearAll: puts back data taken just before it. */
   restore: (data: ProgressData) => void
 }
 
 const MAX_RECENT = 12
-const empty: ProgressData = { recent: [], completed: {}, bookmarks: [], quizScores: {}, lessons: {}, missions: {}, certificates: {} }
+const empty: ProgressData = { recent: [], completed: {}, bookmarks: [], quizScores: {}, lessons: {}, missions: {}, certificates: {}, practice: {} }
 
 export const useProgress = create<ProgressState>()(
   persist(
@@ -120,6 +130,7 @@ export const useProgress = create<ProgressState>()(
         if (get().certificates[courseId]) return
         set({ certificates: { ...get().certificates, [courseId]: { earnedAt: new Date().toISOString() } } })
       },
+      reviewTerm: (slug, known) => set({ practice: { ...get().practice, [slug]: { known, reviewedAt: new Date().toISOString() } } }),
       clearAll: () => set({ ...empty }),
       restore: (data) => set({ ...data }),
     }),
@@ -129,6 +140,6 @@ export const useProgress = create<ProgressState>()(
 
 /** The recorded data as it is now, to hand back to `restore` (state is never mutated, so no deep copy is needed). */
 export function progressSnapshot(): ProgressData {
-  const { recent, completed, bookmarks, quizScores, lessons, missions, certificates } = useProgress.getState()
-  return { recent, completed, bookmarks, quizScores, lessons, missions, certificates }
+  const { recent, completed, bookmarks, quizScores, lessons, missions, certificates, practice } = useProgress.getState()
+  return { recent, completed, bookmarks, quizScores, lessons, missions, certificates, practice }
 }

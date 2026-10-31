@@ -15,6 +15,8 @@ screen-reader support); the ideas and visual language are Watermelon's.
 | `src/components/ui/animated-number.tsx` | `run-widget`, `stepper` |
 | `src/components/ui/icon-swap.tsx` | `save-toggle` |
 | `src/features/progress/GettingStarted.tsx` | `onboarding-checklist` |
+| `src/features/practice/FlashcardDialog.tsx` | `card-swipe` |
+| `src/features/progress/ActivityCalendar.tsx` | `calendar-widget` |
 
 Source: <https://github.com/WatermelonCorp/watermellon-registry>
 

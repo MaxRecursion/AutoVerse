@@ -1,16 +1,17 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Search } from 'lucide-react'
 import { Link } from 'react-router'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
 import { useDocumentTitle } from '@/components/learning/useDocumentTitle'
-import { topics } from '@/lib/content'
-import { buildGlossary, groupByLetter } from '@/lib/glossary'
+import { PracticeButton } from '@/features/practice/PracticeButton'
+import { groupByLetter } from '@/lib/glossary'
+import { glossary } from '@/lib/glossaryData'
 import { normalizeText } from '@/lib/search'
 
 /** /glossary — every key concept from every lesson, defined in plain language and linked to where it is explained. */
 export default function GlossaryPage() {
   useDocumentTitle('Car glossary')
-  const all = useMemo(() => buildGlossary(topics), [])
+  const all = glossary
   const [query, setQuery] = useState('')
   const q = normalizeText(query.trim())
   const shown = q ? all.filter((e) => normalizeText(`${e.term} ${e.definition}`).includes(q)) : all
@@ -28,7 +29,8 @@ export default function GlossaryPage() {
       </header>
 
       <div className="mt-8 flex flex-col gap-4">
-        <label className="relative block">
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <label className="relative block sm:flex-1">
           <span className="sr-only">Filter terms</span>
           <Search aria-hidden className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-steel-500" />
           <input
@@ -39,6 +41,8 @@ export default function GlossaryPage() {
             className="h-11 pointer-coarse:h-12 w-full rounded-lg border border-input bg-graphite-900 pl-9 pr-3 text-base placeholder:text-steel-500"
           />
         </label>
+          <PracticeButton entries={shown} label={q ? 'Practise these terms' : 'Practise all terms'} className="h-11 pointer-coarse:h-12" />
+        </div>
         <nav aria-label="Jump to letter" className="flex flex-wrap gap-1">
           {groupByLetter(all).map((g) => (
             <a
