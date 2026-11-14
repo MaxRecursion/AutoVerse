@@ -103,6 +103,55 @@ test('starting a course from its progress card selects that course for a shared 
   await expect(panel.getByLabel('Course', { exact: true })).toHaveValue('inside-the-engine')
 })
 
+test('choosing a course without the open lesson previews it and never leaves the page', async ({ page }) => {
+  test.setTimeout(90_000)
+  const savedCourse = () => page.evaluate(() => JSON.parse(localStorage.getItem('autoverse.preferences') ?? '{"state":{}}').state.courseId)
+  await open(page, '/topics/four-stroke-cycle')
+  let panel = await coursePanel(page)
+  const course = panel.getByLabel('Course', { exact: true })
+  const lessons = panel.getByRole('navigation', { name: 'Course lessons', exact: true })
+  const route = page.getByRole('region', { name: 'Your place in this learning route' })
+  await expect(course).toHaveValue('how-a-car-moves')
+
+  // On Windows the arrow keys change a closed list one course at a time: every step must stay on this lesson.
+  await course.focus()
+  for (const label of ['Stopping, steering and grip', 'Inside the engine', 'Stopping, steering and grip']) {
+    await course.selectOption({ label })
+    await expect(page).toHaveURL(/\/topics\/four-stroke-cycle$/)
+    await expect(course).toBeFocused()
+  }
+
+  // The course without this lesson is only previewed: its outline and next lesson, nothing saved.
+  const preview = panel.getByTestId('course-preview')
+  await expect(preview).toContainText('The Four-Stroke Cycle')
+  await expect(course).toHaveValue('stopping-steering-and-grip')
+  await expect(lessons.getByRole('link')).toHaveCount(7)
+  await expect(lessons.locator('a[aria-current="page"]')).toHaveCount(0)
+  await expect(panel.getByRole('link', { name: /Start here\s*Brake Hydraulics/ })).toHaveAttribute('href', /\/topics\/brake-hydraulics$/)
+  await expect(route).toContainText('Inside the engine')
+  expect(await savedCourse()).toBe('inside-the-engine')
+
+  await preview.getByRole('button', { name: 'Back to Inside the engine', exact: true }).click()
+  await expect(preview).toHaveCount(0)
+  await expect(course).toHaveValue('inside-the-engine')
+  await expect(course).toBeFocused()
+  await expect(lessons.locator('a[aria-current="page"]')).toContainText('The Four-Stroke Cycle')
+
+  // Opening one of the previewed course's lessons keeps that course.
+  await course.selectOption({ label: 'Stopping, steering and grip' })
+  await lessons.getByRole('link', { name: /Disc Brakes/ }).click()
+  await expect(page).toHaveURL(/\/topics\/disc-brakes$/)
+  await expect(courseDialog(page)).not.toBeVisible()
+  // The new lesson has rendered, and its own route follows the course kept from the preview.
+  await expect(route).toContainText('Stopping, steering and grip')
+  await expect(route).toContainText('Step 2 of 7')
+  panel = await coursePanel(page)
+  await expect(panel.getByLabel('Course', { exact: true })).toHaveValue('stopping-steering-and-grip')
+  await expect(panel.getByTestId('course-position')).toContainText('Lesson 2 of 7')
+  expect(await savedCourse()).toBe('stopping-steering-and-grip')
+  expect(await page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('autoverse.progress') ?? '{"state":{}}').state.completed ?? {}).length)).toBe(0)
+})
+
 test('the narrow-screen course drawer keeps navigation reachable, returns focus and closes after a lesson link', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 820 })
   await open(page, '/topics/how-a-car-works')

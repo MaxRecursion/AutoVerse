@@ -1,7 +1,7 @@
 /** Original course outline: native nested lists and disclosures, with a Radix drawer on phones. */
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react'
-import { ArrowRight, BookOpen, Check, ChevronDown, Circle, LocateFixed, PanelLeftClose, PanelLeftOpen, Search, X } from 'lucide-react'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router'
+import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronDown, Circle, LocateFixed, PanelLeftClose, PanelLeftOpen, Search, X } from 'lucide-react'
+import { Link, NavLink, useLocation } from 'react-router'
 import { CategoryIcon } from '@/components/learning/CategoryIcon'
 import { topicHref } from '@/components/learning/labels'
 import { Button } from '@/components/ui/button'
@@ -17,7 +17,6 @@ import { buildCourseNavigation, type NavigationEntry } from './navigationModel'
 
 export function CourseNavigationProvider({ children }: { children: ReactNode }) {
   const { pathname } = useLocation()
-  const navigate = useNavigate()
   const completed = useProgress((state) => state.completed)
   const lessons = useProgress((state) => state.lessons)
   const recent = useProgress((state) => state.recent)
@@ -26,9 +25,16 @@ export function CourseNavigationProvider({ children }: { children: ReactNode }) 
   const collapsed = usePreferences((state) => state.courseNavigationCollapsed)
   const setCollapsed = usePreferences((state) => state.setCourseNavigationCollapsed)
   const [mobile, setMobile] = useState({ pathname, open: false })
+  // A course picked on this page that leaves out the open lesson. Only shown, never saved, and dropped by the next page.
+  const [picked, setPicked] = useState({ pathname, courseId: '' })
   const desktop = useMediaQuery('(min-width: 1280px)')
   const input = useMemo(() => ({ pathname, topics, paths: learningPaths, categories, completed, lessons, recent, preferredCourseId: courseId }), [pathname, completed, lessons, recent, courseId])
-  const model = useMemo(() => buildCourseNavigation(input), [input])
+  const current = useMemo(() => buildCourseNavigation(input), [input])
+  const previewId = picked.pathname === pathname ? picked.courseId : ''
+  // Seen from outside any lesson: the picked course's own outline, progress and resume point.
+  const previewed = useMemo(() => (previewId ? buildCourseNavigation({ ...input, pathname: '', preferredCourseId: previewId }) : undefined), [input, previewId])
+  const preview = previewed && current.currentTopic ? { lesson: current.currentTopic, from: current.activeCourse } : undefined
+  const model = preview && previewed ? previewed : current
   const closeMobile = () => setMobile({ pathname, open: false })
   const collapse = (value: boolean) => {
     setCollapsed(value)
@@ -36,18 +42,24 @@ export function CourseNavigationProvider({ children }: { children: ReactNode }) 
     requestAnimationFrame(() => document.querySelector<HTMLButtonElement>(`[data-course-nav-toggle="${value ? 'expand' : 'collapse'}"]`)?.focus())
   }
   const chooseCourse = (id: string) => {
-    setCourseId(id)
-    const chosen = model.courses.find((course) => course.id === id)
-    // Keep reading an overlapping lesson; otherwise open the chosen course's resume point.
-    if (model.currentTopic && chosen && !chosen.topics.some((topic) => topic.id === model.currentTopic?.id)) {
-      const next = buildCourseNavigation({ ...input, pathname: '', preferredCourseId: id }).nextUp.topic
-      const target = chosen.topics.find((topic) => topic.id === next?.id) ?? chosen.topics[0]
-      if (target) navigate(topicHref(target))
+    const lesson = current.currentTopic
+    const chosen = current.courses.find((course) => course.id === id)
+    // Choosing never leaves the page (on Windows the arrow keys change a closed list one course at a time). A course
+    // with the open lesson is saved at once; one without it is previewed until the learner opens one of its lessons.
+    if (lesson && chosen && !chosen.topics.some((topic) => topic.id === lesson.id)) {
+      setPicked({ pathname, courseId: id })
+    } else {
+      setPicked({ pathname, courseId: '' })
+      setCourseId(id)
     }
   }
+  const keepPreview = () => {
+    if (preview) setCourseId(model.activeCourse.id)
+  }
+  const endPreview = () => setPicked({ pathname, courseId: '' })
 
   return (
-    <CourseNavigationContext.Provider value={{ model, collapsed, collapse, chooseCourse, closeMobile }}>
+    <CourseNavigationContext.Provider value={{ model, preview, collapsed, collapse, chooseCourse, keepPreview, endPreview, closeMobile }}>
       <Sheet open={mobile.open && mobile.pathname === pathname && !desktop} onOpenChange={(open) => setMobile({ pathname, open })}>
         {children}
         <SheetContent side="left" className="w-[min(22rem,calc(100vw-1rem))] gap-0 border-white/10 bg-graphite-950 sm:max-w-[22rem] motion-reduce:animate-none motion-reduce:transition-none">
@@ -96,16 +108,32 @@ export function CourseNavigationSidebar() {
 
 function CourseOutline() {
   const navigation = useCourseNavigation()!
-  const { model, chooseCourse, closeMobile } = navigation
+  const { model, preview, chooseCourse, keepPreview, endPreview, closeMobile } = navigation
   const { activeCourse, currentTopic, position, nextUp } = model
   const uid = useId()
   const [query, setQuery] = useState('')
   const [closedGroups, setClosedGroups] = useState<ReadonlySet<string>>(new Set())
   const [locateRequest, setLocateRequest] = useState(0)
   const scroller = useRef<HTMLDivElement>(null)
+  const select = useRef<HTMLSelectElement>(null)
   const normalized = query.trim().toLocaleLowerCase()
   const groups = model.groups.map((group) => ({ ...group, entries: group.entries.filter((entry) => !normalized || `${entry.topic.title} ${group.title}`.toLocaleLowerCase().includes(normalized)) })).filter((group) => group.entries.length > 0)
   const resultCount = groups.reduce((count, group) => count + group.entries.length, 0)
+  const outlineStatus = query
+    ? `${resultCount} ${resultCount === 1 ? 'lesson matches' : 'lessons match'}`
+    : `${activeCourse.title}: ${activeCourse.total} lessons.${preview ? ` ${preview.lesson.title} is not part of this course.` : ''}`
+
+  // A different course starts at the top of its outline; the effect below then brings the current lesson into view.
+  const resetOutline = () => {
+    setQuery('')
+    setClosedGroups(new Set())
+    if (scroller.current) scroller.current.scrollTop = 0
+  }
+  const openLesson = () => {
+    keepPreview()
+    setQuery('')
+    closeMobile()
+  }
 
   const revealCurrent = () => {
     const container = scroller.current
@@ -127,7 +155,7 @@ function CourseOutline() {
         <div>
           <label htmlFor={`${uid}-course`} className="eyebrow block text-[10px]">Course</label>
           <div className="relative mt-2">
-            <select id={`${uid}-course`} value={activeCourse.id} onChange={(event) => { setQuery(''); setClosedGroups(new Set()); chooseCourse(event.target.value) }} className="tactile h-11 w-full min-w-0 appearance-none truncate rounded-lg border border-white/10 bg-graphite-900 pl-3 pr-8 text-sm font-medium text-paper focus-visible:border-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/25">
+            <select ref={select} id={`${uid}-course`} value={activeCourse.id} onChange={(event) => { resetOutline(); chooseCourse(event.target.value) }} className="tactile h-11 w-full min-w-0 appearance-none truncate rounded-lg border border-white/10 bg-graphite-900 pl-3 pr-8 text-sm font-medium text-paper focus-visible:border-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan/25">
               {model.courses.map((course) => <option key={course.id} value={course.id}>{course.title}</option>)}
             </select>
             <ChevronDown aria-hidden className="pointer-events-none absolute right-3 top-3.5 size-4 text-steel-400" />
@@ -143,6 +171,14 @@ function CourseOutline() {
           </div>
           <Progress value={activeCourse.percent} aria-label={`${activeCourse.title} course progress`} className="mt-1.5 h-1 bg-graphite-700" />
         </div>
+        {preview && (
+          <div data-testid="course-preview" className="rounded-lg border border-amber/25 bg-amber/[0.06] px-2.5 py-2 text-[11px] leading-relaxed text-steel-300">
+            <p>You’re reading <span className="font-medium text-paper">{preview.lesson.title}</span>, which isn’t part of this course.</p>
+            <button type="button" onClick={() => { resetOutline(); endPreview(); select.current?.focus() }} className="relative hit-area mt-1 inline-flex min-h-8 items-center gap-1.5 font-medium text-cyan hover:text-paper">
+              <ArrowLeft aria-hidden className="size-3" />Back to {preview.from.title}
+            </button>
+          </div>
+        )}
         <div className="relative">
           <Search aria-hidden className="pointer-events-none absolute left-3 top-3 size-3.5 text-steel-500" />
           <input aria-label="Filter course lessons" type="search" value={query} onChange={(event) => { setQuery(event.target.value); setClosedGroups(new Set()) }} placeholder="Find a lesson in this course" className="h-10 w-full min-w-0 rounded-lg border border-white/[0.08] bg-graphite-900/60 pl-8 pr-8 text-base text-paper placeholder:text-steel-500 focus-visible:border-cyan focus-visible:outline-none xl:text-xs" />
@@ -152,9 +188,9 @@ function CourseOutline() {
 
       <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-4 [scrollbar-width:thin]">
         <nav aria-label="Course lessons">
-          <p className={cn('px-3 pb-2 text-[11px] text-steel-500', !query && 'sr-only')} role="status" aria-live="polite">{query ? `${resultCount} ${resultCount === 1 ? 'lesson matches' : 'lessons match'}` : 'Course outline'}</p>
+          <p className={cn('px-3 pb-2 text-[11px] text-steel-500', !query && 'sr-only')} role="status" aria-live="polite">{outlineStatus}</p>
           {groups.length && activeCourse.kind === 'path' ? (
-            <ol className="px-1">{groups.flatMap((group) => group.entries).map((entry) => <LessonRow key={entry.topic.id} entry={entry} onNavigate={() => { setQuery(''); closeMobile() }} />)}</ol>
+            <ol className="px-1">{groups.flatMap((group) => group.entries).map((entry) => <LessonRow key={entry.topic.id} entry={entry} onNavigate={openLesson} />)}</ol>
           ) : groups.length ? (
             <ul className="space-y-2">
               {groups.map((group) => {
@@ -169,7 +205,7 @@ function CourseOutline() {
                       <span className="font-mono text-[10px] font-normal text-steel-500">{group.entries.filter((entry) => entry.status === 'done').length}/{group.entries.length}</span>
                     </button>
                     <ol id={groupId} hidden={!expanded} className="ml-3 border-l border-white/[0.08] py-1 pl-2" style={!expanded ? { display: 'none' } : undefined}>
-                      {group.entries.map((entry) => <LessonRow key={entry.topic.id} entry={entry} onNavigate={() => { setQuery(''); closeMobile() }} />)}
+                      {group.entries.map((entry) => <LessonRow key={entry.topic.id} entry={entry} onNavigate={openLesson} />)}
                     </ol>
                   </li>
                 )
@@ -180,7 +216,7 @@ function CourseOutline() {
       </div>
 
       <div className="shrink-0 space-y-2 border-t border-white/[0.07] bg-graphite-950 p-3">
-        <Link to={nextUp.topic ? topicHref(nextUp.topic) : '/progress'} onClick={closeMobile} className="tactile relative hit-area flex min-h-12 items-center gap-3 rounded-lg border border-cyan/20 bg-cyan/[0.06] px-3 py-2.5 hover:border-cyan/50">
+        <Link to={nextUp.topic ? topicHref(nextUp.topic) : '/progress'} onClick={openLesson} className="tactile relative hit-area flex min-h-12 items-center gap-3 rounded-lg border border-cyan/20 bg-cyan/[0.06] px-3 py-2.5 hover:border-cyan/50">
           <span className="min-w-0 flex-1"><span className="block text-[10px] font-medium text-cyan">{nextUp.topic ? nextUp.label : activeCourse.completed === activeCourse.total ? 'Course complete' : 'Course progress'}</span><span className="mt-0.5 block text-xs font-medium leading-relaxed text-paper">{nextUp.topic?.title ?? 'Review your progress'}</span></span><ArrowRight aria-hidden className="size-4 shrink-0 text-cyan" />
         </Link>
         <div className="flex items-center justify-between gap-2 text-[11px]">
