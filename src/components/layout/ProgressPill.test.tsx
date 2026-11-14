@@ -1,14 +1,19 @@
 import { act, render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { topics } from '@/lib/content'
+import { categories, topics } from '@/lib/content'
+import { curriculumOrder } from '@/features/progress/curriculum'
 import { useProgress } from '@/stores/progress'
+import { usePreferences } from '@/stores/preferences'
 import { ProgressPill } from './ProgressPill'
 
 const renderPill = () => render(<MemoryRouter><ProgressPill /></MemoryRouter>)
 
 describe('ProgressPill', () => {
-  beforeEach(() => useProgress.getState().clearAll())
+  beforeEach(() => {
+    useProgress.getState().clearAll()
+    usePreferences.getState().setCourseId('')
+  })
 
   it('points a brand-new learner at the first lesson', () => {
     renderPill()
@@ -38,5 +43,21 @@ describe('ProgressPill', () => {
     renderPill()
     expect(screen.getByRole('link')).toHaveAttribute('href', '/progress')
     expect(screen.getByRole('link')).toHaveAccessibleName(/All lessons done/)
+  })
+
+  it('follows the open lesson when a direct link leaves the saved course', () => {
+    usePreferences.getState().setCourseId('how-a-car-moves')
+    render(<MemoryRouter initialEntries={['/topics/spark-ignition']}><ProgressPill /></MemoryRouter>)
+    expect(screen.getByRole('link')).toHaveAttribute('href', '/topics/fuel-injection')
+    expect(screen.getByRole('link')).toHaveAccessibleName(/^After this lesson: Fuel Injection/)
+  })
+
+  it('does not call the curriculum complete while its last lesson is still open', () => {
+    const last = curriculumOrder(topics, categories).at(-1)!
+    usePreferences.getState().setCourseId('complete-curriculum')
+    for (const topic of topics) if (topic.id !== last.id) useProgress.getState().setCompleted(topic.id, true)
+    render(<MemoryRouter initialEntries={[`/topics/${last.slug}`]}><ProgressPill /></MemoryRouter>)
+    expect(screen.getByRole('link')).not.toHaveAccessibleName(/All lessons done/)
+    expect(screen.getByRole('link')).toHaveAccessibleName(new RegExp(`${topics.length - 1} of ${topics.length} lessons complete`))
   })
 })

@@ -19,7 +19,7 @@ export function ProgressPill() {
   const next = useCourseNextUp()
 
   const to = next.topic ? topicHref(next.topic) : '/progress'
-  const eyebrow = next.kind === 'done' ? 'All lessons done' : next.label
+  const eyebrow = total.completed === total.total ? 'All lessons done' : next.kind === 'done' ? 'Your progress' : next.label
   const title = next.topic?.title ?? 'Review your progress'
   const accessible = `${eyebrow}: ${title}. ${total.completed} of ${total.total} lessons complete.`
 
