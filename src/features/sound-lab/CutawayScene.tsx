@@ -176,7 +176,7 @@ function Cylinder({ cylinder, spec, bankAngle, sense, bus, geo, mats, selectionG
   // Gas colour is per-cylinder; sharing it would make all ten cylinders show the same stroke.
   const gases = useMemo(() => createGasMaterials(), [])
   useEffect(() => () => Object.values(gases).forEach((material) => material.dispose()), [gases])
-  const last = useRef({ playhead: Number.NaN, bank: Number.NaN, animate: false })
+  const last = useRef({ playhead: Number.NaN, bank: Number.NaN, firingAngle: Number.NaN, sense, animate: false })
   const diesel = spec.ignition === 'compression'
   const initial = cutawayState(0, cylinder.event.angle, sense)
 
@@ -185,8 +185,10 @@ function Cylinder({ cylinder, spec, bankAngle, sense, bus, geo, mats, selectionG
     const playhead = frame?.playhead ?? 0
     const drawnBank = detail ? 0 : spec.layout === 'flat' ? 180 : frame?.bank ?? bankAngle
     const animate = frame?.animate ?? false
-    if (last.current.playhead === playhead && last.current.bank === drawnBank && last.current.animate === animate) return
-    last.current = { playhead, bank: drawnBank, animate }
+    // A crankpin experiment can change a cylinder's phase while the crank is stopped.
+    const firingAngle = cylinder.event.angle
+    if (last.current.playhead === playhead && last.current.bank === drawnBank && last.current.firingAngle === firingAngle && last.current.sense === sense && last.current.animate === animate) return
+    last.current = { playhead, bank: drawnBank, firingAngle, sense, animate }
     const state = cutawayState(playhead, cylinder.event.angle, sense)
     if (bank.current) bank.current.rotation.x = detail ? 0 : bankAxis(cylinder.side, drawnBank) * DEG
     if (piston.current) piston.current.position.y = state.pistonY
