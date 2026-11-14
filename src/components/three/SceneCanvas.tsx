@@ -44,6 +44,8 @@ export interface SceneCanvasProps {
   ready?: boolean
   /** Called once the WebGL renderer exists, with the canvas size, camera and renderer. */
   onCreated?: (state: RootState) => void
+  /** Static views can sleep between interaction or simulation updates. */
+  frameloop?: 'always' | 'demand'
 }
 
 /**
@@ -66,6 +68,7 @@ export function SceneCanvas({
   loadingLabel = 'Preparing 3D scene…',
   ready = true,
   onCreated,
+  frameloop = 'always',
 }: SceneCanvasProps) {
   const store = useOptionalLabStoreApi()
   const tier = useQualityTier()
@@ -89,6 +92,7 @@ export function SceneCanvas({
         {/* Before the Canvas, so its ref is attached before the scene (and its labels) first render; z-[1] draws it above the canvas. */}
         <div ref={htmlLayer} className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" data-testid="scene-html-layer" />
         <Canvas
+          frameloop={frameloop}
           dpr={tier === 'low' ? [1, 1.25] : [1, 2]}
           camera={{ position: cameraPosition, fov, near: 0.05, far: 200 }}
           gl={{ antialias: tier !== 'low', powerPreference: 'high-performance' }}
@@ -183,10 +187,12 @@ const FRAMES_TO_DRAWN = 2
 /** Reports once the scene content has rendered its first frames (hides the loading overlay). */
 function FirstFrames({ onDrawn }: { onDrawn: () => void }) {
   const frames = useRef(0)
+  const invalidate = useThree((state) => state.invalidate)
   useFrame(() => {
     if (frames.current > FRAMES_TO_DRAWN) return
     frames.current += 1
     if (frames.current > FRAMES_TO_DRAWN) onDrawn()
+    else invalidate()
   })
   return null
 }

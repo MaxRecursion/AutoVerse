@@ -68,6 +68,8 @@ export interface EngineSpec {
   pairedV?: PairedV
   /** Each bank has its own exhaust (heard as left and right). */
   separateBanks: boolean
+  /** How combustion starts: a spark plug (default), or diesel fuel injected into hot compressed air. */
+  ignition?: 'spark' | 'compression'
   idleRpm: number
   redlineRpm: number
   /** One or two sentences: why it sounds the way it does. */
@@ -422,6 +424,7 @@ export const engines: EngineSpec[] = [
     bankB: range(6, 10),
     ...pairedV(10, { bankAngle: 90, split: -18, startWithPair: true }),
     separateBanks: true,
+    ignition: 'compression',
     idleRpm: 750,
     redlineRpm: 4500,
     character: 'Volkswagen split the crankpins by 18° to obtain even 72° firing from a 90° diesel block. Two turbochargers and a balance shaft distinguish this low-revving production V10; the softened exhaust voice here is illustrative.',

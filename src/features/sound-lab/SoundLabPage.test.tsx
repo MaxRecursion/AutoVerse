@@ -47,6 +47,22 @@ describe('SoundLabPage', () => {
     expect(screen.getByTestId('sound-lab-intervals')).toHaveTextContent('54°')
   })
 
+  it('draws an injector, not a spark plug, for the diesel', () => {
+    renderAt('/sound-lab?engine=v10-tdi')
+    const layout = screen.getByTestId('cylinder-layout')
+    expect(layout).toHaveTextContent('Injection and flame (diesel)')
+    expect(layout).not.toHaveTextContent('Spark and flame')
+  })
+
+  it('keeps the diagrams still and the rev counter at zero until the engine starts', () => {
+    renderAt('/sound-lab?engine=v8-cross')
+    expect(screen.getByTestId('sound-lab-tach')).toHaveTextContent('0')
+    expect(screen.getByTestId('sound-lab-limiter')).toHaveAttribute('data-on', 'false')
+    expect(screen.getByTestId('cylinder-layout')).toHaveTextContent('Spark and flame')
+    expect(screen.getByTestId('cylinder-layout').querySelectorAll('[data-firing="true"]')).toHaveLength(0)
+    expect(screen.getByText('Press Start to watch it turn')).toBeInTheDocument()
+  })
+
   it('falls back to the default engine for an unknown id', () => {
     renderAt('/sound-lab?engine=nope')
     expect(screen.getByRole('heading', { level: 2, name: '90° V10 odd-fire' })).toBeInTheDocument()

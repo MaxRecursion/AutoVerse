@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { getEngine } from './engines'
-import { buildSynthConfig, EngineSound, FADE_OUT_MS, runnerReach } from './synth'
+import { buildSynthConfig, CYCLE_BINS, EngineSound, FADE_OUT_MS, idealTrace, runnerReach } from './synth'
 
 /* ---------------------------------------------------------------- config */
 
@@ -77,7 +77,7 @@ class FakeContext {
 }
 let worklets: FakeWorkletNode[] = []
 class FakeWorkletNode extends FakeNode {
-  port = { postMessage: vi.fn() }
+  port: { postMessage: ReturnType<typeof vi.fn>; onmessage: ((event: { data: unknown }) => void) | null } = { postMessage: vi.fn(), onmessage: null }
   constructor() {
     super()
     worklets.push(this)
@@ -158,5 +158,54 @@ describe('EngineSound lifecycle', () => {
     expect(sent).toContainEqual({ type: 'rpm', value: 2500 })
     expect(sent).toContainEqual({ type: 'throttle', value: 0.5 })
     expect(sent.at(-1)).toEqual({ type: 'rpm', value: 3000 })
+    expect(sent).toContainEqual({ type: 'telemetry', on: true })
+  })
+
+  it('keeps what the worklet reports for the diagrams, and ignores malformed reports', async () => {
+    const sound = new EngineSound()
+    await sound.start(config, 2500, 0.5)
+    const port = worklets[0]!.port
+    expect(sound.telemetry).toBeNull()
+    port.onmessage!({ data: { type: 'state', rpm: 2480, throttle: 0.5, limiting: false } })
+    expect(sound.telemetry).toMatchObject({ rpm: 2480, throttle: 0.5, limiting: false, cycle: null })
+    const a = new Float32Array(CYCLE_BINS).fill(0.1)
+    const b = new Float32Array(CYCLE_BINS)
+    port.onmessage!({ data: { type: 'cycle', a, b } })
+    port.onmessage!({ data: { type: 'cycle', a, b } })
+    expect(sound.telemetry?.cycle).toMatchObject({ a, b, seq: 2 })
+    port.onmessage!({ data: { type: 'state', rpm: Number.NaN } })
+    port.onmessage!({ data: { type: 'cycle', a: new Float32Array(3), b } })
+    port.onmessage!({ data: 'noise' })
+    expect(sound.telemetry).toMatchObject({ rpm: 2480, cycle: { seq: 2 } })
+    port.onmessage!({ data: { type: 'state', rpm: 9000, throttle: 1, limiting: true } })
+    expect(sound.telemetry).toMatchObject({ rpm: 9000, limiting: true, cycle: { seq: 2 } })
+  })
+
+  it('never lets a stopped engine’s late reports reach its replacement', async () => {
+    const sound = new EngineSound()
+    await sound.start(config, 1000, 0.3)
+    const oldPort = worklets[0]!.port
+    const listener = oldPort.onmessage!
+    const stopping = sound.stop()
+    await sound.start(config, 1000, 0.3)
+    worklets[1]!.port.onmessage!({ data: { type: 'state', rpm: 1100, throttle: 0.3, limiting: false } })
+    listener({ data: { type: 'state', rpm: 7777, throttle: 1, limiting: true } })
+    expect(sound.telemetry?.rpm).toBe(1100)
+    await vi.advanceTimersByTimeAsync(FADE_OUT_MS + 10)
+    await stopping
+    expect(oldPort.onmessage).toBeNull()
+    expect(sound.telemetry?.rpm).toBe(1100)
+  })
+})
+
+describe('idealTrace', () => {
+  it('draws one pulse per firing on its own exhaust lane', () => {
+    const spec = getEngine('v8-cross')!
+    const { a, b } = idealTrace(buildSynthConfig(spec))
+    const rises = (lane: Float32Array) => lane.reduce((n, v, i) => n + (v > 0.05 && (lane[(i + lane.length - 1) % lane.length] ?? 0) <= 0.05 ? 1 : 0), 0)
+    expect(a).toHaveLength(CYCLE_BINS)
+    expect(rises(a)).toBeGreaterThanOrEqual(3)
+    expect(rises(b)).toBeGreaterThanOrEqual(3)
+    expect(idealTrace(buildSynthConfig(getEngine('inline-4')!)).b.every((v) => v === 0)).toBe(true)
   })
 })

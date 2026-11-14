@@ -62,7 +62,7 @@ function LabScreen({ lab }: { lab: LabDefinition }) {
         <div className="flex flex-wrap items-center gap-2">
           {lab.id === 'engine' && (
             <Button asChild variant="outline" size="sm" className="h-9">
-              <Link to="/sound-lab"><AudioLines aria-hidden /> Hear engine layouts</Link>
+              <Link to="/sound-lab"><AudioLines aria-hidden /> 3D engines + sound</Link>
             </Button>
           )}
           {store && componentId && <LinkedPart store={store} componentId={componentId} />}

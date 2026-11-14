@@ -34,7 +34,7 @@ export function Header() {
         <div className="ml-auto flex items-center gap-2 pointer-coarse:gap-2.5">
           <ProgressPill />
           <SearchCommand />
-          <TourButton />
+          <span className="hidden min-[360px]:contents"><TourButton /></span>
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="pointer-coarse:ml-0.5 xl:hidden" aria-label="Open menu" data-tour="menu-button">

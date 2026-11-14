@@ -7,6 +7,12 @@
  *
  * The rhythm is the engine's own (firing gaps, order, which bank, header
  * delays); the tone is tuned, not recorded.
+ *
+ * When the page asks (`{ type: 'telemetry', on: true }`), the worklet also
+ * reports what it is actually doing, so the diagrams move with the sound: its
+ * smoothed engine speed about 60 times a second, and the exhaust pressure of
+ * each bank over one whole 720° cycle (binned, locked to the first firing)
+ * up to 30 times a second. Without that message it posts nothing.
  */
 import { bankOf, type EngineSpec, type EngineVoice } from './engines'
 import { firingEvents } from './firing'
@@ -44,6 +50,47 @@ export function buildSynthConfig(spec: EngineSpec, intervals: number[] = spec.in
     }
   })
   return { events, separateBanks: spec.separateBanks, voice: spec.voice, idleRpm: spec.idleRpm, redlineRpm: spec.redlineRpm }
+}
+
+/** Bins per 720° cycle in the worklet's waveform snapshots (3° each). Must match the worklet source. */
+export const CYCLE_BINS = 240
+
+/** One cycle of exhaust pressure per bank, as averaged by the worklet. */
+export interface CycleSnapshot {
+  a: Float32Array
+  b: Float32Array
+  /** Increases with every snapshot received. */
+  seq: number
+}
+
+/** What the running worklet last reported. */
+export interface EngineTelemetry {
+  rpm: number
+  throttle: number
+  /** At or over the redline, where the limiter cuts fuel. */
+  limiting: boolean
+  cycle: CycleSnapshot | null
+}
+
+/**
+ * Idealised exhaust pulses over one 720° cycle, binned like the worklet's
+ * snapshots: the same pulse shape at every firing angle, before any pipe
+ * resonance. Shown before the engine starts.
+ */
+export function idealTrace(config: SynthConfig, bins = CYCLE_BINS): { a: Float32Array; b: Float32Array } {
+  const a = new Float32Array(bins)
+  const b = new Float32Array(bins)
+  const width = Math.max(1, config.voice.pulseDeg)
+  for (const e of config.events) {
+    const lane = e.ch === 1 ? b : a
+    for (let i = 0; i < bins; i++) {
+      const u = ((((i + 0.5) * 720) / bins - e.angle + 720) % 720) / width
+      if (u >= 1) continue
+      const s = Math.sin(Math.PI * u)
+      lane[i]! += e.gain * s * s * Math.exp(-2.5 * u)
+    }
+  }
+  return { a, b }
 }
 
 /** Illustrative runner spread for engines without their own value. */
@@ -86,6 +133,9 @@ class EngineProcessor extends AudioWorkletProcessor {
     this.sr = sampleRate; this.theta = 0; this.rpm = 800; this.rpmTarget = 800; this.throttle = 0.15; this.throttleTarget = 0.15;
     this.cfg = null; this.pulses = []; this.pipes = [new Pipe(sampleRate), new Pipe(sampleRate)];
     this.intake = [0,0,0,0]; this.kIntake = biquad('bp', 1400, 1.2, 0, sampleRate); this.block = 0;
+    // Telemetry for the page's diagrams: off until asked for.
+    this.telemetry = false; this.sinceState = 0; this.sinceCycle = 0;
+    this.snapA = new Float32Array(240); this.snapB = new Float32Array(240); this.snapN = new Uint32Array(240);
     this.port.onmessage = (e) => this.message(e.data);
   }
   message(m) {
@@ -96,6 +146,7 @@ class EngineProcessor extends AudioWorkletProcessor {
       if (m.reset) { this.rpm = m.config.idleRpm; this.rpmTarget = m.config.idleRpm; }
     } else if (m.type === 'rpm') this.rpmTarget = m.value;
     else if (m.type === 'throttle') this.throttleTarget = m.value;
+    else if (m.type === 'telemetry') this.telemetry = !!m.on;
   }
   process(_in, outputs) {
     const out = outputs[0], L = out[0], R = out[1] || out[0], cfg = this.cfg;
@@ -140,10 +191,37 @@ class EngineProcessor extends AudioWorkletProcessor {
       const intake = run(this.kIntake, this.intake, noise);
       const y0 = this.pipe(this.pipes[0], x0, v, kLp, drive, norm);
       const y1 = this.pipe(this.pipes[1], x1, v, kLp, drive, norm);
+      if (this.telemetry) {
+        // Bin each bank's pressure by crank angle (3° bins), one 720° cycle at a time.
+        if (wrapped) this.flushCycle();
+        const bin = Math.min(239, Math.floor(this.theta / 3));
+        this.snapA[bin] += y0; this.snapB[bin] += y1; this.snapN[bin]++;
+      }
       if (cfg.separateBanks) { L[i] = (y0 * 0.85 + y1 * 0.35 + intake) * 0.5; R[i] = (y1 * 0.85 + y0 * 0.35 + intake) * 0.5; }
       else { const m = (y0 + y1) * 0.6 + intake; L[i] = m * 0.5; R[i] = m * 0.5; }
     }
+    if (this.telemetry) {
+      this.sinceState += L.length; this.sinceCycle += L.length;
+      if (this.sinceState >= sr / 60) {
+        this.sinceState -= sr / 60;
+        this.port.postMessage({ type: 'state', rpm: this.rpm, throttle: this.throttle, limiting: this.rpm >= red });
+      }
+    }
     return true;
+  }
+  flushCycle() {
+    if (this.sinceCycle >= this.sr / 30) {
+      this.sinceCycle = 0;
+      const a = new Float32Array(240), b = new Float32Array(240);
+      let la = 0, lb = 0;
+      for (let i = 0; i < 240; i++) {
+        const n = this.snapN[i];
+        if (n) { la = this.snapA[i] / n; lb = this.snapB[i] / n; }
+        a[i] = la; b[i] = lb;
+      }
+      this.port.postMessage({ type: 'cycle', a, b }, [a.buffer, b.buffer]);
+    }
+    this.snapA.fill(0); this.snapB.fill(0); this.snapN.fill(0);
   }
   pipe(p, x, v, kLp, drive, norm) {
     const j = (p.i - p.d + p.buf.length) % p.buf.length;
@@ -179,6 +257,8 @@ interface Graph {
   node: AudioWorkletNode | null
   gain: GainNode | null
   analyser: AnalyserNode | null
+  telemetry: EngineTelemetry | null
+  cycleSeq: number
 }
 
 /**
@@ -199,11 +279,16 @@ export class EngineSound {
     return this.graph?.analyser ?? null
   }
 
+  /** What the worklet last reported, while running (null before its first report). */
+  get telemetry(): EngineTelemetry | null {
+    return this.graph?.telemetry ?? null
+  }
+
   async start(config: SynthConfig, rpm: number, throttle: number): Promise<void> {
     if (this.graph) return
     const ctx = new AudioContext({ latencyHint: 'interactive' })
     const url = URL.createObjectURL(new Blob([PROCESSOR], { type: 'text/javascript' }))
-    const graph: Graph = { ctx, url, node: null, gain: null, analyser: null }
+    const graph: Graph = { ctx, url, node: null, gain: null, analyser: null, telemetry: null, cycleSeq: 0 }
     this.graph = graph
     try {
       await ctx.audioWorklet.addModule(url)
@@ -216,9 +301,12 @@ export class EngineSound {
       node.connect(gain).connect(analyser).connect(ctx.destination)
       gain.gain.setTargetAtTime(0.9, ctx.currentTime, 0.08)
       Object.assign(graph, { node, gain, analyser })
+      // Reports land on this graph only, so a stopped engine's late messages can never reach its replacement.
+      node.port.onmessage = (event: MessageEvent) => receive(graph, event.data)
       this.configure(config, true)
       this.setRpm(rpm)
       this.setThrottle(throttle)
+      node.port.postMessage({ type: 'telemetry', on: true })
       if (ctx.state === 'suspended') await ctx.resume()
     } catch (error) {
       if (this.graph === graph) this.graph = null
@@ -249,7 +337,20 @@ export class EngineSound {
   }
 }
 
+function receive(graph: Graph, data: unknown) {
+  if (!data || typeof data !== 'object') return
+  const m = data as { type?: unknown; rpm?: unknown; throttle?: unknown; limiting?: unknown; a?: unknown; b?: unknown }
+  if (m.type === 'state' && typeof m.rpm === 'number' && Number.isFinite(m.rpm)) {
+    const throttle = typeof m.throttle === 'number' && Number.isFinite(m.throttle) ? m.throttle : 0
+    graph.telemetry = { rpm: m.rpm, throttle, limiting: m.limiting === true, cycle: graph.telemetry?.cycle ?? null }
+  } else if (m.type === 'cycle' && m.a instanceof Float32Array && m.b instanceof Float32Array && m.a.length === CYCLE_BINS && m.b.length === CYCLE_BINS) {
+    const cycle = { a: m.a, b: m.b, seq: ++graph.cycleSeq }
+    graph.telemetry = { ...(graph.telemetry ?? { rpm: 0, throttle: 0, limiting: false }), cycle }
+  }
+}
+
 function teardown(graph: Graph) {
+  if (graph.node) graph.node.port.onmessage = null
   graph.node?.disconnect()
   graph.gain?.disconnect()
   graph.analyser?.disconnect()

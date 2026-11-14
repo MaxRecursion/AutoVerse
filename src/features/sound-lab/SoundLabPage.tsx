@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, type KeyboardEvent } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, type KeyboardEvent } from 'react'
 import { ExternalLink, Gauge, Play, RotateCcw, Square, Volume2, Wand2 } from 'lucide-react'
 import { Link, useSearchParams } from 'react-router'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
@@ -8,20 +8,22 @@ import { Slider } from '@/components/ui/slider'
 import { usePrefersReducedMotion } from '@/hooks/useMediaQuery'
 import { cn } from '@/lib/utils'
 import { bankOf, cylinderGroups, DEFAULT_ENGINE_ID, engines, getEngine, soundLabReference, soundLabSources, type EngineSpec } from './engines'
+import { createFrameBus, rotationSense, VISUAL_SLOWDOWN, type EngineFrame } from './animation'
 import { bankGaps, describeIntervals, evenFiringSplit, firingEvents, firingFrequency, isEvenFiring, pairedVIntervals } from './firing'
 import { FiringRing } from './FiringRing'
 import { CylinderLayout } from './CylinderLayout'
+import { LiveText } from './LiveText'
 import { Oscilloscope } from './Oscilloscope'
 import { audioSupported, buildSynthConfig, EngineSound } from './synth'
+import { Tachometer } from './Tachometer'
+import { useEngineFrames } from './useEngineFrames'
 
 export const SOUND_LAB_TITLE = 'Engine Sound Lab: Inline-3 to V10 Simulator'
-
-/** How much slower than real time the firing ring turns, so the eye can follow it. */
-const VISUAL_SLOWDOWN = 40
 
 /** Range of the bank-angle experiment. */
 const BANK_MIN = 45
 const BANK_MAX = 120
+const EngineCutaway = lazy(() => import('./EngineCutaway'))
 
 const LAYOUT_LABEL = { inline: 'Inline', flat: 'Flat (boxer)', v: 'V' } as const
 
@@ -57,6 +59,14 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
   )
   const events = useMemo(() => firingEvents(intervals, spec.order, bankOf(spec)), [intervals, spec])
   const config = useMemo(() => buildSynthConfig(spec, intervals), [spec, intervals])
+  // The crank turns the same way in every drawing of this engine, set by its production firing order.
+  const sense = useMemo(() => rotationSense(spec, firingEvents(spec.intervals, spec.order, bankOf(spec))), [spec])
+  const drawnBank = spec.layout === 'inline' ? 0 : spec.layout === 'flat' ? 180 : bankAngle
+  // One frame loop moves every diagram, at the engine speed the synthesiser reports.
+  const bus = useMemo(() => createFrameBus(), [])
+  const animating = sound.running && !reduced
+  useEngineFrames(bus, { running: sound.running, reduced, events, bank: drawnBank, telemetry: sound.telemetry })
+  const pulsesText = useCallback((frame: EngineFrame) => `${Math.round(firingFrequency(spec.cylinders, frame.rpm))} per second`, [spec.cylinders])
   const targetRpm = revving ? Math.round(spec.redlineRpm * 1.03) : rpm
   const targetThrottle = revving ? 1 : throttle
 
@@ -70,8 +80,6 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
   useEffect(() => {
     sound.setThrottle(targetThrottle)
   }, [sound, targetThrottle])
-
-  const playhead = usePlayhead(sound.running && !reduced, sound.running ? targetRpm : 0)
 
   const toggle = () => (sound.running ? sound.stop() : sound.start(config, targetRpm, targetThrottle))
   const revKey = (down: boolean) => (e: KeyboardEvent) => {
@@ -123,23 +131,49 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
               <p className="mt-1 text-steel-300">{spec.engine}</p>
               <p className="mt-1 text-sm text-steel-400">{spec.cars.join(' · ')}</p>
             </div>
-            <Button size="lg" className="h-12 min-w-36 px-5 text-[15px]" onClick={toggle} disabled={!sound.supported || sound.loading} data-testid="sound-lab-start" aria-pressed={sound.running}>
-              {sound.running ? <Square aria-hidden /> : <Play aria-hidden />}
-              {sound.loading ? 'Starting…' : sound.running ? 'Stop engine' : 'Start engine'}
-            </Button>
+            <div role="group" aria-label="Engine playback controls" className="grid w-full max-w-[320px] shrink-0 grid-cols-[minmax(0,96px)_minmax(0,1fr)] items-center gap-3 sm:grid-cols-[120px_minmax(0,1fr)]">
+              <Tachometer bus={bus} redlineRpm={spec.redlineRpm} reduced={reduced} />
+              <div className="flex min-w-0 flex-col gap-2">
+                <Button size="lg" className="h-11 w-full min-w-0 px-2 text-sm sm:h-12 sm:px-4 sm:text-[15px]" onClick={toggle} disabled={!sound.supported || sound.loading} data-testid="sound-lab-start" aria-pressed={sound.running}>
+                  {sound.running ? <Square aria-hidden /> : <Play aria-hidden />}
+                  {sound.loading ? 'Starting…' : sound.running ? 'Stop engine' : 'Start engine'}
+                </Button>
+                <Button
+                  variant="outline"
+                  className={cn('h-11 w-full min-w-0 select-none touch-none px-2 text-sm sm:px-4', revving && 'border-amber/60 text-amber')}
+                  aria-pressed={revving}
+                  onPointerDown={() => setRevving(true)}
+                  onPointerUp={() => setRevving(false)}
+                  onPointerLeave={() => setRevving(false)}
+                  onPointerCancel={() => setRevving(false)}
+                  onKeyDown={revKey(true)}
+                  onKeyUp={revKey(false)}
+                  onBlur={() => setRevving(false)}
+                >
+                  <Gauge aria-hidden /> Hold to rev
+                </Button>
+              </div>
+            </div>
           </div>
           {!sound.supported && <p className="rounded-md border border-amber/30 bg-amber/[0.06] p-3 text-sm text-paper">This browser cannot run the audio synthesiser: it needs Web Audio worklets on a secure (https) page. The diagrams still work.</p>}
           {sound.error && <p className="rounded-md border border-amber/30 bg-amber/[0.06] p-3 text-sm text-paper" role="alert">{sound.error}</p>}
 
-          <p className="leading-relaxed text-steel-200">{spec.character}</p>
+          <p className="leading-relaxed text-paper/90">{spec.character}</p>
 
-          <CylinderLayout spec={spec} events={events} bankAngle={bankAngle} playhead={playhead} />
+          <Suspense fallback={<div className="grid min-h-[420px] place-items-center rounded-xl border border-cyan/20 bg-graphite-950/60 p-5 text-center text-steel-400" role="status">Preparing the 3D mechanical cutaway…</div>}>
+            <EngineCutaway spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} reduced={reduced} />
+          </Suspense>
+
+          <details className="rounded-xl border border-white/[0.08] p-3">
+            <summary className="relative hit-area min-h-9 cursor-pointer py-2 text-sm font-medium text-steel-300">Piston timing diagram</summary>
+            <div className="mt-3"><CylinderLayout spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} animating={animating} /></div>
+          </details>
 
           <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-[300px_minmax(0,1fr)]">
             <div className="mx-auto w-full max-w-[300px]">
-              <FiringRing events={events} playhead={playhead} />
+              <FiringRing events={events} bus={bus} reduced={reduced} />
               <p className="mt-1 text-center text-xs text-steel-500">
-                {sound.running && !reduced ? `Slowed ${VISUAL_SLOWDOWN}× so you can follow it` : 'Press Start to watch it turn'}
+                {animating ? `Slowed ${VISUAL_SLOWDOWN}× so you can follow it` : sound.running ? 'Still view (reduced motion)' : 'Press Start to watch it turn'}
               </p>
             </div>
             <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
@@ -151,36 +185,30 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
                   <Fact label={spec.separateBanks ? 'Right exhaust hears' : 'Bank B fires at gaps of'} value={`${bankGaps(events, 'B').join(', ')}°`} mono />
                 </>
               )}
-              <Fact label="Engine speed" value={`${targetRpm.toLocaleString('en-GB')} rpm`} mono />
-              <Fact label="Firing pulses" value={`${Math.round(firingFrequency(spec.cylinders, targetRpm))} per second`} mono />
+              <Fact label="Firing pulses" mono>
+                <LiveText bus={bus} fallback={`${Math.round(firingFrequency(spec.cylinders, targetRpm))} per second`} format={pulsesText} />
+              </Fact>
               <Fact label="Exhaust" value={spec.separateBanks ? 'One per bank (left / right)' : 'Shared'} />
               <Fact label="Simulation RPM range" value={`${spec.idleRpm.toLocaleString('en-GB')}–${spec.redlineRpm.toLocaleString('en-GB')} rpm`} mono />
             </dl>
           </div>
 
-          <Oscilloscope analyser={sound.analyser} still={reduced} />
+          <figure className="flex flex-col gap-2">
+            <Oscilloscope bus={bus} events={events} config={config} reduced={reduced} />
+            <figcaption className="text-xs leading-relaxed text-steel-500">
+              {sound.running
+                ? `Exhaust pressure over one 720° cycle, held still on the first firing${reduced ? ' and refreshed once a second' : ''}. Faint lines mark each firing.`
+                : 'Idealised exhaust pulses over one 720° cycle, one per firing. Start the engine to see the synthesised pressure, pipe resonance included.'}
+            </figcaption>
+          </figure>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] md:items-end">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
             <Control label="Engine speed" value={`${rpm.toLocaleString('en-GB')} rpm`}>
               <Slider value={[rpm]} min={spec.idleRpm} max={spec.redlineRpm} step={50} onValueChange={([v]) => setRpm(v!)} aria-label="Engine speed in rpm" data-testid="sound-lab-rpm" />
             </Control>
             <Control label="Throttle" value={`${Math.round(throttle * 100)}%`}>
               <Slider value={[throttle * 100]} min={0} max={100} step={1} onValueChange={([v]) => setThrottle(v! / 100)} aria-label="Throttle opening in percent" />
             </Control>
-            <Button
-              variant="outline"
-              className={cn('h-11 select-none px-4 touch-none', revving && 'border-amber/60 text-amber')}
-              aria-pressed={revving}
-              onPointerDown={() => setRevving(true)}
-              onPointerUp={() => setRevving(false)}
-              onPointerLeave={() => setRevving(false)}
-              onPointerCancel={() => setRevving(false)}
-              onKeyDown={revKey(true)}
-              onKeyUp={revKey(false)}
-              onBlur={() => setRevving(false)}
-            >
-              <Gauge aria-hidden /> Hold to rev
-            </Button>
           </div>
 
           {spec.pairedV && (
@@ -324,11 +352,11 @@ function Compare({ a, b, onPick, children }: { a: string; b: string; onPick: (id
   return (
     <li className="rounded-lg border border-white/[0.06] p-3">
       <div className="flex flex-wrap items-center gap-2">
-        <Button variant="outline" size="sm" className="h-auto min-h-9 whitespace-normal py-1.5 text-left" onClick={() => onPick(a)}>
+        <Button variant="outline" size="sm" className="h-auto min-h-9 max-w-full whitespace-normal py-1.5 text-left" onClick={() => onPick(a)}>
           {ea.name} · {ea.cars[0]}
         </Button>
         <span className="text-steel-500">vs</span>
-        <Button variant="outline" size="sm" className="h-auto min-h-9 whitespace-normal py-1.5 text-left" onClick={() => onPick(b)}>
+        <Button variant="outline" size="sm" className="h-auto min-h-9 max-w-full whitespace-normal py-1.5 text-left" onClick={() => onPick(b)}>
           {eb.name} · {eb.cars[0]}
         </Button>
       </div>
@@ -337,12 +365,12 @@ function Compare({ a, b, onPick, children }: { a: string; b: string; onPick: (id
   )
 }
 
-function Fact({ label, value, mono, testId }: { label: string; value: string; mono?: boolean; testId?: string }) {
+function Fact({ label, value, mono, testId, children }: { label: string; value?: string; mono?: boolean; testId?: string; children?: React.ReactNode }) {
   return (
     <div className="flex min-w-0 flex-col gap-0.5">
       <dt className="font-mono text-[10px] uppercase tracking-[0.14em] text-steel-500">{label}</dt>
       <dd className={cn('break-words text-paper', mono && 'font-mono text-[13px]')} data-testid={testId}>
-        {value}
+        {children ?? value}
       </dd>
     </div>
   )
@@ -360,30 +388,6 @@ function Control({ label, value, children }: { label: string; value: string; chi
   )
 }
 
-/** A slowed crank angle (0–720) for the firing ring while sound plays; null when still. */
-function usePlayhead(active: boolean, rpm: number): number | null {
-  const [angle, setAngle] = useState<number | null>(null)
-  const rpmRef = useRef(rpm)
-  useEffect(() => {
-    rpmRef.current = rpm
-  }, [rpm])
-  useEffect(() => {
-    if (!active) return
-    let frame = 0
-    let last = performance.now()
-    let theta = 0
-    const tick = (now: number) => {
-      theta = (theta + ((rpmRef.current * 6) / VISUAL_SLOWDOWN) * ((now - last) / 1000)) % 720
-      last = now
-      setAngle(theta)
-      frame = requestAnimationFrame(tick)
-    }
-    frame = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(frame)
-  }, [active])
-  return active ? angle : null
-}
-
 const noSubscribe = () => () => {}
 
 /** Owns one EngineSound for the page; stops it on unmount. */
@@ -392,7 +396,6 @@ function useSoundEngine() {
   const [running, setRunning] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [analyser, setAnalyser] = useState<AnalyserNode | null>(null)
   // Assume support while prerendering; the browser answers on hydration.
   const supported = useSyncExternalStore(noSubscribe, audioSupported, () => true)
 
@@ -406,7 +409,6 @@ function useSoundEngine() {
       await ref.current.start(config, rpm, throttle)
       if (!ref.current.running) return // stopped while the worklet was loading
       setRunning(true)
-      setAnalyser(ref.current.analyser)
     } catch {
       setRunning(false)
       setError('The audio could not start. Check that sound is allowed for this site and try again.')
@@ -417,7 +419,6 @@ function useSoundEngine() {
 
   const stop = useCallback(async () => {
     setRunning(false)
-    setAnalyser(null)
     await ref.current?.stop()
   }, [])
 
@@ -433,9 +434,11 @@ function useSoundEngine() {
   const configure = useCallback((c: Parameters<EngineSound['configure']>[0]) => ref.current?.configure(c), [])
   const setRpm = useCallback((v: number) => ref.current?.setRpm(v), [])
   const setThrottle = useCallback((v: number) => ref.current?.setThrottle(v), [])
+  /** What the worklet last reported (engine speed, limiter, one-cycle waveform), read by the frame loop. */
+  const telemetry = useCallback(() => ref.current?.telemetry ?? null, [])
 
   return useMemo(
-    () => ({ running, loading, error, analyser, supported, start, stop, configure, setRpm, setThrottle }),
-    [running, loading, error, analyser, supported, start, stop, configure, setRpm, setThrottle],
+    () => ({ running, loading, error, supported, start, stop, configure, setRpm, setThrottle, telemetry }),
+    [running, loading, error, supported, start, stop, configure, setRpm, setThrottle, telemetry],
   )
 }

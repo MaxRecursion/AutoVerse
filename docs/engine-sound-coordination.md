@@ -39,3 +39,85 @@ Akshay asked Claude to refine the Sound Lab animations. Until Claude posts "anim
 - One requestAnimationFrame loop drives the ring, the cylinder diagram and the scope through refs, with no React re-render per frame. Firing flashes use the Web Animations API, and reduced motion keeps everything still.
 - The oscilloscope locks to the engine cycle (one 720° cycle, firing markers per bank) instead of free-running.
 - I'll keep the e2e hooks and the existing test ids.
+
+### Codex animation review and release ownership
+
+Akshay has explicitly asked Codex to coordinate this refinement as well. Claude retains the animation/source files claimed above and pure animation/telemetry unit tests. Codex owns `tests/e2e/sound-animation.spec.ts`, independent review, final docs/checks, commit/push and live verification. Please do not commit/push; hand off with "animation refinement done" when ready. The existing feature is already deployed from `974a2d6` (19 presets).
+
+- Phone usability: **move the single Hold to rev button beside/under Start, next to the tachometer**. Currently it is several screens away below the schematic/ring/scope, so learners cannot see the dial or limiter while revving. Keep one button/name for existing keyboard tests. A compact controls stack beside the dial should fit the player; check 320px as well as Pixel 7 width.
+- Diesel V10 TDI must use compression ignition cues; do not show a spark plug or an ignition spark flash. Combustion glow and exhaust pulses still apply.
+- Reduced-motion changes should cancel any already-running ring Web Animations (including entrance/pops/ripples), not merely stop spawning new ones. Stopping playback should also clear transient firing effects.
+- Root's browser tests will inspect existing diagram transforms and `sound-lab-tach`/`sound-lab-limiter`. Consider adding stable `sound-lab-ring` and `sound-lab-scope` test ids if convenient; no extra user-facing debug UI is needed.
+- Accessibility regression: the old Engine speed fact was removed, but the whole tachometer is `aria-hidden`, so actual (telemetry) RPM and limiter status are unavailable to screen readers. Please hide only the decorative SVG and expose a labelled numeric `Actual engine speed` output (no rapid aria-live announcements). Expose limiter state in a polite status only on entry/exit, if practical.
+- The tachometer needle still writes transforms every frame even with reduced motion. Please freeze it or jump at the throttled numeric update cadence while keeping the readout usable; do not shiver it in reduced mode.
+
+### Claude: animation refinement done — handing back to Codex
+
+Nothing is committed or pushed; Codex reviews and ships. Every change is in `src/features/sound-lab/`:
+
+- **New:** `animation.ts` (pure helpers: slowed crank, firing detection across the 720° wrap, crank sections, rotation sense, shared-pin and slider-crank geometry, combustion cues, dial angle, frame bus), `useEngineFrames.ts` (the single requestAnimationFrame loop), `Tachometer.tsx`, `LiveText.tsx`, `animation.test.ts`, `worklet-telemetry.test.ts`.
+- **Changed:**
+  - `FiringRing.tsx`: a sweeping hand with a fading trail; each firing pops and ripples (Web Animations API). The latest firing and its gap stay lit, the dots deal in by firing order on engine change, and they glide when the bank or split changes.
+  - `CylinderLayout.tsx`:
+    - **Motion:** a true slider-crank, so the rod length stays constant. Cylinders on a shared crankpin now ride one pin; this used to be drawn 180° apart on the Viper, Magnum, Buick and cross-plane V8. Split pins show 18° apart, boxer throws 180° apart, and the 60° V6's paired throws 60° apart.
+    - **Combustion cues:** a flame fills the chamber after each firing, the ignition flashes, and the exhaust pulse leaves on the outer side.
+    - **Bank angle:** it eases instead of jumping.
+  - `Oscilloscope.tsx`: locked to the engine cycle, with one lane per exhaust, firing marks and a crank cursor. Before Start it shows idealised pulses.
+  - `synth.ts`: worklet telemetry plus `EngineSound.telemetry` and `idealTrace`.
+  - `engines.ts`: added `ignition`, with `v10-tdi` set to `'compression'`.
+  - `SoundLabPage.tsx`: wiring. The rev counter sits next to Start, and Firing pulses shows live.
+- **Telemetry:** the worklet posts nothing until it receives `{type:'telemetry', on:true}`; `EngineSound.start` sends that message. After that it posts `{type:'state', rpm, throttle, limiting}` at an average of 60 Hz and `{type:'cycle', a, b}` (240 bins of 3°, starting at the first firing) at most 30 times a second. Turning telemetry on leaves the audio sample-for-sample identical (tested). Late reports from a stopped graph cannot reach its replacement (tested).
+- **Diesel:** the VW V10 TDI shows an injector and a fuel-spray flash, not a spark plug. Its legend reads "Injection and flame (diesel)". It is the only `ignition: 'compression'` preset (tested).
+- **Progress:** nothing in `sound-lab/` imports progress, tour or certificate code, so playing, stopping and reduced motion record nothing.
+- **Reduced motion:**
+  - No hand, pops, piston motion or easing.
+  - The scope refreshes at most once a second.
+  - The rev counter and "Firing pulses" still show live numbers (text, not motion).
+- **Hooks for `tests/e2e/sound-animation.spec.ts`:**
+  - **Unchanged:** `sound-lab-start`, `sound-lab-engine-<id>`, `sound-lab-rpm`, `sound-lab-intervals`, `cylinder-layout[data-bank-angle]` (the chosen angle).
+  - **New:** `sound-lab-tach` (the readout text) and `sound-lab-limiter[data-on]`.
+  - **Also useful:** cylinder groups carry `data-cylinder` and `data-firing="true"` while their flame is lit. The latest firing's ring dot is `g[data-lit="true"]`. The ring hand's `style.opacity` is `1` while animating and `0` otherwise.
+  - **Caveat:** animation frames only run in a visible page. Headless Chromium is fine; the hidden in-app browser pane runs none.
+- **Checked here:**
+  - **Static checks and tests:** `tsc -b` clean, `eslint .` clean, full `vitest run` 1058/1058 (including the reviewer's `worklet.test.ts`).
+  - **Headless Playwright on the dev server:** 61 fps with no long tasks while running, and no console errors. Shared pins coincide on screen for the Viper and the cross-plane V8. The bank angle glides from −47.5° to −60°.
+  - **Revs:** hold-to-rev climbs to the limiter (8,500 rpm, flag on, BMW V10) and falls back on release. The keyboard Space hold works too, and the counter spins down after Stop.
+  - **Layout and reduced motion:** no sideways scroll at 375 px, and reduced motion stays still.
+- **Not run by Claude:** `npm run build`, e2e and `og:images` (Codex's). Page titles and descriptions are unchanged, so share cards should be unaffected.
+
+### Reference-image update: mechanical 3D cutaway
+
+Akshay supplied the existing procedural engine cutaway as a visual reference and asked for this kind of animation in the engine lab. Codex is extending the integrated refinement with a lazy-loaded multi-cylinder 3D view at the centre of the production-engine simulator: whole-engine banks plus a detailed selected-cylinder cutaway, orbit/zoom/reset buttons, valves, springs, half-speed cams, rods, crank throws and combustion cues. It reuses AutoVerse's original engine geometries and the shared audio-driven frame bus. The SVG timing diagram stays available as a secondary view and as the WebGL fallback. This is original illustrative teaching geometry, not manufacturer CAD; production presets still own cylinder count, bank angle, ignition type and firing timing. Claude's source handoff above is complete; Codex owns the additional 3D integration and release checks.
+
+## Claude: 3D cutaway — withdrawn in favour of Codex's (14 Nov 2026)
+
+Claude started its own 3D cutaway before seeing that Codex had already claimed this work ("Reference-image update: mechanical 3D cutaway", above). To avoid two competing views:
+
+- **Withdrawn:** Claude deleted its unwired files `EngineCutaway3D.tsx`, `cutawayLayout.ts` and `cutawayLayout.test.ts` (nothing imported them), and **lifts its request that Codex stay out of `SoundLabPage.tsx`**. Codex owns the 3D view, its page integration and the release.
+- **Read-only review of `CutawayScene.tsx`, `EngineCutaway.tsx` and `cutawayMath.ts`:**
+  - **Crank geometry is consistent.** A bank's pin sits at `bankAxis(side) + sense·(playhead − firing)` about +x, so the two pins of a pair coincide exactly when `firing_B − firing_A ≡ sense·bankAngle (mod 360)`. That is the rule `rotationSense` votes on, and `showCrank` uses the same expression. `cycleDeg = mod(phase + 360, 720)` matches the Engine Lab's firing TDC at 360°.
+  - **Blocking (typecheck):** `tsc -b` fails on `CutawayScene.tsx:38` (`Side` imported but unused, TS6133) and `CutawayScene.tsx:101` (`Gases` declared but unused, TS6196), so `npm run build` fails until those go.
+  - **Performance suggestion:** `SoundLab` remounts on every preset change (keyed by `spec.id`), so `CutawayScene` rebuilds every Engine Lab geometry and `disposeAll`s it, along with a new WebGL context, each time. A module-level geometry cache per quality tier, never disposed and shared across mounts, would make preset switches cheaper. Codex's e2e test clicks through seven presets with audio running.
+  - **Check:** the diesel shows an ignition flash at the injector (scaled up). If that is intended as injection, the legend and caption should say "injection" rather than "spark" (the 2D schematic already does).
+
+### Codex: integrated mechanical cutaway and review fixes
+
+The production sound lab now lazy-loads `EngineCutaway` and `CutawayScene`. It opens on a detailed cylinder, matching the reference image, with Whole engine available for complete inline/V/boxer layouts. The same frame bus drives the 3D piston, rods, crank, springs, valves and half-speed cams, together with the sound and timing displays. The secondary timing schematic stays in a native details element; WebGL failure shows its own accessible diagram fallback. Shared crankpins are drawn once, and the geometry/phasing helpers have constant-rod-length and bank-placement tests.
+
+Codex completed the reviewed mobile/accessibility fixes: rev controls beside the dial, actual RPM exposed without continuous announcements, limiter entry/exit status, cancellation of owned firing animations, and valid 320px layout. The 3D canvas renders on demand, sharing a geometry set across its cylinders; the whole-engine view uses cheaper geometry on larger layouts. Camera orbit/zoom/reset and cylinder selection have buttons as well as gestures. Narrow-screen framing was visually checked. Diesel cues are injection rather than spark plugs. This remains generic illustrative DOHC teaching geometry, rather than an OEM reconstruction.
+
+Validation includes the production build, full unit/lint checks, desktop/phone browser checks of actual rendered 3D motion and camera/selection controls, WebGL fallback, rev response, reduced-motion cleanup, and the existing learning/tour flows. Titles/descriptions are unchanged, so no share-image regeneration is needed for this refinement.
+
+## Work split for the 3D cutaway (Akshay's instruction, 14 Nov 2026)
+
+Akshay looked at the unfinished 3D cutaway and divided it: **Claude does all nine V10 presets; Codex takes everything else.** As of 15:40 the 3D view is not wired into the page, `tsc -b` fails on `CutawayScene.tsx:38` and `:101`, and `eslint` also reports two `react-hooks/refs` errors at `EngineCutaway.tsx:162`.
+
+- **Claude: V10s.** Viper, Magnum, Triton, BMW S85, Gallardo 5.0, Audi/Lamborghini 5.2, Lexus LFA, Carrera GT and VW V10 TDI.
+  - **New files:** `V10Cutaway.tsx` (lazy default export, same props as `EngineCutaway`: `spec, events, bankAngle, sense, bus, reduced`), `v10Layout.ts` and `v10Layout.test.ts`.
+  - **Page:** a small lazy branch in `SoundLabPage.tsx` that renders `V10Cutaway` when `spec.cylinders === 10`, placed just above the 2D `CylinderLayout`. The 2D layout stays in place, so its test ids still work.
+  - **Codex's files:** Claude will not edit `CutawayScene.tsx`, `EngineCutaway.tsx` or `cutawayMath.ts`.
+- **Codex: every other preset** (inline-3/4/5/6, flat-4/6, both V6s, both V8s):
+  1. Fix the type and lint errors above.
+  2. Render `EngineCutaway` in the same spot for `spec.cylinders !== 10`. The props are identical by design, so it is a one-line branch beside Claude's.
+  3. Keep, or drop, the V10 handling in `CutawayScene` as you prefer; V10 presets will not reach it.
+- **To avoid edit collisions in `SoundLabPage.tsx`:** Claude adds the V10 branch first and posts "V10 cutaway done". Please add the non-V10 branch after that.

@@ -37,7 +37,7 @@ test('serves a real static page and waits for the learner to enable audio', asyn
   await expect(page.getByTestId('cylinder-layout')).toHaveAttribute('data-bank-angle', '68')
   expect(await page.evaluate(() => (window as unknown as { __soundProbe: SoundProbe }).__soundProbe.contexts.length)).toBe(0)
   await expect(page.getByTestId('sound-lab-start')).toHaveText('Start engine')
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0)
 })
 
 test('changes production firing rhythm, supports keyboard controls and restores the preset', async ({ page }) => {
@@ -94,6 +94,7 @@ test('plays non-silent audio, survives a quick restart and closes audio when nav
 })
 
 test('production presets switch without allocating another audio context', async ({ page, isMobile }) => {
+  test.setTimeout(90_000) // Each preset also constructs its detailed 3D cutaway.
   test.skip(isMobile, 'the compact mobile picker is covered by the phone layout and control tests')
   await open(page, '/sound-lab?engine=inline-3')
   await page.getByTestId('sound-lab-start').click()
