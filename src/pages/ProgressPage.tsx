@@ -12,6 +12,7 @@ import { clearAllProgress, removeBookmark } from '@/features/progress/actions'
 import { ActivityCalendar } from '@/features/progress/ActivityCalendar'
 import { GettingStarted } from '@/features/progress/GettingStarted'
 import { PracticeButton } from '@/features/practice/PracticeButton'
+import { useCourseNextUp } from '@/features/course-navigation/useCourseNextUp'
 import { PathAction } from '@/features/progress/PathAction'
 import { resolveCurrentPathProgress, resolveNextPathProgress, resolvePathProgress, type PathProgress } from '@/features/progress/paths'
 import { formatDate, formatRelativeTime } from '@/features/progress/time'
@@ -20,6 +21,7 @@ import { glossary } from '@/lib/glossaryData'
 import type { Topic } from '@/lib/schemas'
 import { cn } from '@/lib/utils'
 import { useProgress } from '@/stores/progress'
+import { usePreferences } from '@/stores/preferences'
 
 const withTopic = <T extends { topicId: string }>(items: T[]) =>
   items.flatMap((item) => {
@@ -35,6 +37,8 @@ export default function ProgressPage() {
   const bookmarks = useProgress((s) => s.bookmarks)
   const quizScores = useProgress((s) => s.quizScores)
   const practice = useProgress((s) => s.practice)
+  const nextUp = useCourseNextUp()
+  const curriculum = nextUp.route?.kind === 'curriculum' ? nextUp.route : undefined
 
   const recentTopics = useMemo(() => withTopic(recent), [recent])
   const completedTopics = useMemo(
@@ -47,16 +51,21 @@ export default function ProgressPage() {
     [quizScores],
   )
   const currentPath = useMemo(
-    () => resolveCurrentPathProgress(learningPaths, recent.map((item) => item.topicId), getTopic, completed),
-    [recent, completed],
+    () => curriculum ? undefined : nextUp.route?.path ?? resolveCurrentPathProgress(learningPaths, recent.map((item) => item.topicId), getTopic, completed),
+    [nextUp, curriculum, recent, completed],
   )
   const paths = useMemo(
     () =>
       learningPaths
-        .map((path) => resolvePathProgress(path, getTopic, completed))
+        .map((path) => {
+          const progress = resolvePathProgress(path, getTopic, completed)
+          return path.id === currentPath?.path.id && nextUp.topic && progress.topics.some((topic) => topic.id === nextUp.topic!.id)
+            ? { ...progress, next: nextUp.topic }
+            : progress
+        })
         .filter((progress) => progress.total > 0)
         .sort((a, b) => Number(b.path.id === currentPath?.path.id) - Number(a.path.id === currentPath?.path.id)),
-    [completed, currentPath],
+    [completed, currentPath, nextUp],
   )
   const termsKnown = useMemo(() => glossary.filter((e) => practice[e.slug]?.known), [practice])
   const termsToRevisit = useMemo(() => glossary.filter((e) => practice[e.slug] && !practice[e.slug]!.known), [practice])
@@ -87,6 +96,23 @@ export default function ProgressPage() {
         <Stat label="Quizzes taken" value={<AnimatedNumber value={quizRows.length} />} />
         <Stat label="Average best score" value={averageBest === null ? '—' : <><AnimatedNumber value={averageBest} />%</>} />
       </dl>
+
+      {curriculum && (
+        <Block id="current-course" title="Current course" description="The same course and next lesson as your navigation outline.">
+          <div className="panel flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-w-0 flex-1">
+              <h3 className="font-display text-xl font-semibold text-paper">All lessons</h3>
+              <p className="mt-1 text-sm text-steel-300">{curriculum.completed} of {curriculum.topics.length} lessons complete</p>
+              <Progress value={curriculum.topics.length ? Math.round((curriculum.completed / curriculum.topics.length) * 100) : 0} aria-label="All lessons progress" className="mt-3 h-1.5 bg-graphite-700" />
+            </div>
+            {nextUp.topic ? (
+              <Button asChild className="h-auto min-h-11 whitespace-normal py-2.5 text-left sm:max-w-80">
+                <Link to={topicHref(nextUp.topic)}>{nextUp.label}: {nextUp.topic.title} <ArrowRight aria-hidden /></Link>
+              </Button>
+            ) : <p className="text-sm text-ok">Every lesson is complete.</p>}
+          </div>
+        </Block>
+      )}
 
       <div className="mt-10">
         <GettingStarted variant="page" />
@@ -122,7 +148,7 @@ export default function ProgressPage() {
                   completed={completed}
                   current={p.path.id === currentPath?.path.id}
                   started={p.completed > 0 || recent.some((item) => p.path.topicIds.includes(item.topicId))}
-                  nextPath={p.path.id === currentPath?.path.id ? resolveNextPathProgress(learningPaths, p.path.id, getTopic, completed) : undefined}
+                  nextPath={!p.next ? resolveNextPathProgress(learningPaths, p.path.id, getTopic, completed) : undefined}
                 />
               </li>
             ))}
@@ -297,6 +323,7 @@ function PathCard({
   nextPath?: PathProgress
 }) {
   const { path, topics: list, missing, percent } = progress
+  const setCourseId = usePreferences((state) => state.setCourseId)
   return (
     <article className="panel flex h-full flex-col gap-4 p-5" aria-labelledby={`path-${path.id}`}>
       <div>
@@ -323,7 +350,7 @@ function PathCard({
           const done = !!completed[t.id]
           return (
             <li key={t.id}>
-              <Link to={topicHref(t)} className="flex min-h-9 pointer-coarse:min-h-12 items-center gap-3 rounded-md px-1 text-sm hover:bg-white/[0.03]">
+              <Link to={topicHref(t)} onClick={() => setCourseId(path.id)} className="flex min-h-9 pointer-coarse:min-h-12 items-center gap-3 rounded-md px-1 text-sm hover:bg-white/[0.03]">
                 <span
                   aria-hidden
                   className={cn(

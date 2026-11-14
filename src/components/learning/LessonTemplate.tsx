@@ -2,14 +2,14 @@ import { useEffect, useMemo, useRef, type ReactNode } from 'react'
 import { Check } from 'lucide-react'
 import { Link } from 'react-router'
 import { completeLesson } from '@/features/progress/actions'
-import { resolveNextUp } from '@/features/progress/curriculum'
+import { useCourseNextUp } from '@/features/course-navigation/useCourseNextUp'
 import { LabHost } from '@/features/labs/LabHost'
 import { useLabInstance } from '@/features/labs/useLabInstance'
 import { getLab } from '@/features/labs/registry'
 import type { LessonFacts } from '@/features/progress/stages'
 import { useLessonStages } from '@/features/progress/useLessonStages'
 import { usePrefersReducedMotion } from '@/hooks/useMediaQuery'
-import { getCategory, getComponent, getPioneersForTopic, getRelatedTopics, getTopic, learningPaths, topics } from '@/lib/content'
+import { getCategory, getComponent, getPioneersForTopic, getRelatedTopics, getTopic } from '@/lib/content'
 import type { FlowDiagram as FlowDiagramData, Topic } from '@/lib/schemas'
 import type { LabStore } from '@/lib/simulation/labStore'
 import { usePreferences } from '@/stores/preferences'
@@ -67,7 +67,6 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
   const visit = useProgress((s) => s.visit)
   const signal = useProgress((s) => s.signal)
   const seeStep = useProgress((s) => s.seeStep)
-  const completed = useProgress((s) => s.completed)
   useEffect(() => {
     visit(topic.id)
   }, [topic.id, visit])
@@ -78,10 +77,7 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
   const prereqIds = new Set(prerequisites.map((t) => t.id))
   const related = getRelatedTopics(topic).filter((t) => !prereqIds.has(t.id))
   const pioneers = useMemo(() => getPioneersForTopic(topic.id), [topic.id])
-  const nextUp = useMemo(
-    () => resolveNextUp({ topics, paths: learningPaths, completed, recent: [], getTopic, currentTopicId: topic.id }),
-    [completed, topic.id],
-  )
+  const nextUp = useCourseNextUp(topic.id)
   const routeTopics = nextUp.route?.topics ?? [topic]
 
   const hasFlow = !!topic.flow && topic.flow.nodes.length > 0
@@ -307,6 +303,7 @@ export function LessonTemplate({ topic }: { topic: Topic }) {
             topic={topic}
             category={category}
             routeTopics={routeTopics}
+            courseTitle={nextUp.route?.kind === 'curriculum' ? nextUp.route.title : undefined}
             path={nextUp.route?.path}
             next={nextUp.topic}
             nextLabel={nextUp.label}

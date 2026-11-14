@@ -13,6 +13,7 @@ export function LessonJourney({
   topic,
   category,
   routeTopics,
+  courseTitle,
   path,
   next,
   nextLabel,
@@ -21,6 +22,7 @@ export function LessonJourney({
   topic: Topic
   category?: Category
   routeTopics: Topic[]
+  courseTitle?: string
   path?: PathProgress
   next?: Topic
   nextLabel: string
@@ -32,7 +34,7 @@ export function LessonJourney({
   const isComplete = !!completed[topic.id]
   const completedCount = routeTopics.filter((item) => !!completed[item.id]).length
   const percent = routeTopics.length ? Math.round((completedCount / routeTopics.length) * 100) : 0
-  const routeTitle = path ? displayPathTitle(path.path) : category?.title ?? 'Lesson sequence'
+  const routeTitle = courseTitle ?? (path ? displayPathTitle(path.path) : category?.title ?? 'Lesson sequence')
   const allComplete = routeTopics.length > 0 && completedCount === routeTopics.length
 
   return (
@@ -40,7 +42,7 @@ export function LessonJourney({
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           {path ? <Route aria-hidden className="size-4 text-amber" /> : null}
-          <p className="eyebrow">{path ? 'Your learning path' : 'Suggested lesson order'}</p>
+          <p className="eyebrow">{courseTitle ? 'Your course' : path ? 'Your learning path' : 'Suggested lesson order'}</p>
           <span className="text-xs text-steel-500">·</span>
           <p className="text-xs text-steel-300">
             Step {currentIndex + 1} of {routeTopics.length}

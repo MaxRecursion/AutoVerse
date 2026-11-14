@@ -1,21 +1,17 @@
-import { useMemo } from 'react'
 import { ArrowRight, AudioLines, Car, GraduationCap } from 'lucide-react'
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { labs } from '@/features/labs/registry'
-import { resolveNextUp } from '@/features/progress/curriculum'
-import { getTopic, learningPaths, sceneComponents, topics } from '@/lib/content'
-import { useProgress } from '@/stores/progress'
+import { useCourseNextUp } from '@/features/course-navigation/useCourseNextUp'
+import { sceneComponents, topics } from '@/lib/content'
 import { HeroEngine } from './HeroEngine'
 import { startLearningHref } from './homeData'
 import { Reveal } from './Reveal'
 
 /** Above the fold: the signature sound lab, learning entry, and live engine. */
 export function HeroSection() {
-  const completed = useProgress((s) => s.completed)
-  const recent = useProgress((s) => s.recent)
   // The same answer as the header's progress pill, so the page never gives two different "next" lessons.
-  const nextUp = useMemo(() => resolveNextUp({ topics, paths: learningPaths, completed, recent, getTopic }), [completed, recent])
+  const nextUp = useCourseNextUp()
   const nextTopic = nextUp.topic
   const startHref = startLearningHref(nextTopic)
   const startLabel =

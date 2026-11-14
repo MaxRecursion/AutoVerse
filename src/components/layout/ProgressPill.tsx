@@ -3,8 +3,9 @@ import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router'
 import { ProgressRing } from '@/components/learning/ProgressRing'
 import { topicHref } from '@/components/learning/labels'
-import { overallProgress, resolveNextUp } from '@/features/progress/curriculum'
-import { getTopic, learningPaths, topics } from '@/lib/content'
+import { overallProgress } from '@/features/progress/curriculum'
+import { useCourseNextUp } from '@/features/course-navigation/useCourseNextUp'
+import { topics } from '@/lib/content'
 import { useProgress } from '@/stores/progress'
 
 /**
@@ -14,9 +15,8 @@ import { useProgress } from '@/stores/progress'
  */
 export function ProgressPill() {
   const completed = useProgress((s) => s.completed)
-  const recent = useProgress((s) => s.recent)
   const total = useMemo(() => overallProgress(topics, completed), [completed])
-  const next = useMemo(() => resolveNextUp({ topics, paths: learningPaths, completed, recent, getTopic }), [completed, recent])
+  const next = useCourseNextUp()
 
   const to = next.topic ? topicHref(next.topic) : '/progress'
   const eyebrow = next.kind === 'done' ? 'All lessons done' : next.label

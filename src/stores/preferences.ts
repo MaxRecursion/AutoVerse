@@ -16,6 +16,11 @@ interface PreferencesState {
   /** The learner hid the "Getting started" checklist on the home page. */
   checklistDismissed: boolean
   setChecklistDismissed: (dismissed: boolean) => void
+  /** The course chosen in the navigation; an empty value follows recent learning. */
+  courseId: string
+  setCourseId: (courseId: string) => void
+  courseNavigationCollapsed: boolean
+  setCourseNavigationCollapsed: (collapsed: boolean) => void
 }
 
 /** UI preferences persisted locally (explanation level survives navigation and reloads). */
@@ -30,6 +35,10 @@ export const usePreferences = create<PreferencesState>()(
       setLearnerName: (learnerName) => set({ learnerName: learnerName.slice(0, 60) }),
       checklistDismissed: false,
       setChecklistDismissed: (checklistDismissed) => set({ checklistDismissed }),
+      courseId: '',
+      setCourseId: (courseId) => set({ courseId }),
+      courseNavigationCollapsed: false,
+      setCourseNavigationCollapsed: (courseNavigationCollapsed) => set({ courseNavigationCollapsed }),
     }),
     { name: 'autoverse.preferences' },
   ),

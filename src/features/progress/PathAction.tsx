@@ -4,15 +4,17 @@ import { Button } from '@/components/ui/button'
 import { displayPathTitle } from '@/features/home/homeData'
 import type { PathProgress } from './paths'
 import { topicHref } from '@/components/learning/labels'
+import { usePreferences } from '@/stores/preferences'
 
 /** Shared start, continue, and completion states for home and progress path cards. */
 export function PathAction({ progress, nextPath, started = false }: { progress: PathProgress; nextPath?: PathProgress; started?: boolean }) {
   const { next } = progress
+  const setCourseId = usePreferences((state) => state.setCourseId)
 
   if (next) {
     return (
       <Button asChild className="h-auto min-h-11 justify-start whitespace-normal py-2.5 text-left">
-        <Link to={topicHref(next)}>
+        <Link to={topicHref(next)} onClick={() => setCourseId(progress.path.id)}>
           <Route aria-hidden />
           <span className="flex-1">{started || progress.completed ? 'Continue with' : 'Start with'} {next.title}</span>
           <ArrowRight aria-hidden />
@@ -39,7 +41,7 @@ export function PathAction({ progress, nextPath, started = false }: { progress: 
       </div>
       {nextPath?.next ? (
         <Button asChild variant="outline" className="h-auto min-h-10 justify-start whitespace-normal text-left">
-          <Link to={topicHref(nextPath.next)}>
+          <Link to={topicHref(nextPath.next)} onClick={() => setCourseId(nextPath.path.id)}>
             <Route aria-hidden />
             <span>Start next path: {displayPathTitle(nextPath.path)}</span>
             <ArrowRight aria-hidden />

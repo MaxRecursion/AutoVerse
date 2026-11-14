@@ -1,13 +1,14 @@
 import { useMemo } from 'react'
-import { CircleCheck, Clock } from 'lucide-react'
+import { ArrowRight, CircleCheck, Clock } from 'lucide-react'
 import { Link } from 'react-router'
 import { DifficultyMeter } from '@/components/learning/TopicMeta'
 import { DIFFICULTY_LABEL, topicHref } from '@/components/learning/labels'
 import { Progress } from '@/components/ui/progress'
-import { resolveNextUp } from '@/features/progress/curriculum'
+import { Button } from '@/components/ui/button'
+import { useCourseNextUp } from '@/features/course-navigation/useCourseNextUp'
 import { PathAction } from '@/features/progress/PathAction'
 import { resolveCurrentPathProgress, resolveNextPathProgress } from '@/features/progress/paths'
-import { getTopic, learningPaths, topics } from '@/lib/content'
+import { getTopic, learningPaths } from '@/lib/content'
 import { cn } from '@/lib/utils'
 import { useProgress } from '@/stores/progress'
 import { HomeSection } from './HomeSection'
@@ -17,12 +18,34 @@ import { displayPathTitle, totalMinutes } from './homeData'
 export function BeginnerPath() {
   const completed = useProgress((s) => s.completed)
   const recent = useProgress((s) => s.recent)
+  const nextUp = useCourseNextUp()
   // The highlighted step follows the same global answer as the header pill and the hero, when it lies on this path.
   const progress = useMemo(() => {
-    const base = resolveCurrentPathProgress(learningPaths, recent.map((item) => item.topicId), getTopic, completed)
-    const focus = resolveNextUp({ topics, paths: learningPaths, completed, recent, getTopic }).topic
+    const base = nextUp.route?.path ?? resolveCurrentPathProgress(learningPaths, recent.map((item) => item.topicId), getTopic, completed)
+    const focus = nextUp.topic
     return base && focus && base.topics.some((t) => t.id === focus.id) ? { ...base, next: focus } : base
-  }, [recent, completed])
+  }, [nextUp, recent, completed])
+
+  if (nextUp.route?.kind === 'curriculum') {
+    const route = nextUp.route
+    const percent = route.topics.length ? Math.round((route.completed / route.topics.length) * 100) : 0
+    return (
+      <HomeSection id="path" eyebrow="Your selected course" title="All lessons" description="Work through every system, from the big picture to the engineering detail. Your course outline keeps your place.">
+        <div className="panel flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0 flex-1">
+            <p className="font-medium text-paper">{route.completed} of {route.topics.length} lessons complete</p>
+            <p className="mt-1 text-sm text-steel-400">~{totalMinutes(route.topics)} min of lessons · Progress stays in this browser.</p>
+            <Progress value={percent} aria-label="All lessons progress" className="mt-3 h-1.5 bg-graphite-700" />
+          </div>
+          <Button asChild className="h-auto min-h-11 whitespace-normal py-2.5 text-left sm:max-w-80">
+            <Link to={nextUp.topic ? topicHref(nextUp.topic) : '/progress'}>
+              {nextUp.topic ? `${nextUp.label}: ${nextUp.topic.title}` : 'Review your completed course'} <ArrowRight aria-hidden />
+            </Link>
+          </Button>
+        </div>
+      </HomeSection>
+    )
+  }
   if (!progress || progress.total === 0) return null
 
   const { path, topics: stops, next, missing, percent } = progress

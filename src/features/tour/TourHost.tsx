@@ -5,10 +5,12 @@ import { useLocation, useNavigate } from 'react-router'
 import { topicHref } from '@/components/learning/labels'
 import { Button } from '@/components/ui/button'
 import { resolveNextUp } from '@/features/progress/curriculum'
+import { resolveNavigationCourseId } from '@/features/course-navigation/navigationModel'
 import { useIsMobile, usePrefersReducedMotion } from '@/hooks/useMediaQuery'
-import { getTopic, learningPaths, topics } from '@/lib/content'
+import { categories, getTopic, learningPaths, topics } from '@/lib/content'
 import { cn } from '@/lib/utils'
 import { useProgress } from '@/stores/progress'
+import { usePreferences } from '@/stores/preferences'
 import { clampToViewport, padBox, placeCard, type Size } from './geometry'
 import { TOUR_LENGTH, TOUR_STEPS } from './steps'
 import { useTour, type TourOutcome } from './tourStore'
@@ -150,7 +152,8 @@ function TourOverlay() {
 
   const startLearning = () => {
     const { completed, recent } = useProgress.getState()
-    const target = resolveNextUp({ topics, paths: learningPaths, completed, recent, getTopic }).topic
+    const context = { topics, paths: learningPaths, categories, completed, recent, getTopic, preferredCourseId: usePreferences.getState().courseId }
+    const target = resolveNextUp({ ...context, preferredCourseId: resolveNavigationCourseId(context) }).topic
     close('completed', target ? topicHref(target) : '/learn')
   }
 

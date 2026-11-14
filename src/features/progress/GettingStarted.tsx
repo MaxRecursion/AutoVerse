@@ -11,11 +11,11 @@ import { Link } from 'react-router'
 import { topicHref } from '@/components/learning/labels'
 import { Button } from '@/components/ui/button'
 import { useStartTour } from '@/features/tour/useStartTour'
-import { getTopic, learningPaths, topics } from '@/lib/content'
+import { useCourseNextUp } from '@/features/course-navigation/useCourseNextUp'
+import { topics } from '@/lib/content'
 import { cn } from '@/lib/utils'
 import { usePreferences } from '@/stores/preferences'
 import { useProgress } from '@/stores/progress'
-import { resolveNextUp } from './curriculum'
 import { gettingStartedDone, gettingStartedSteps, type GettingStartedId } from './checklist'
 
 /**
@@ -44,7 +44,7 @@ export function GettingStarted({ variant }: { variant: 'home' | 'page' }) {
   // Open while there is something to do; the learner can fold it away.
   const [open, setOpen] = useState(!allDone)
 
-  const next = useMemo(() => resolveNextUp({ topics, paths: learningPaths, completed, recent, getTopic }), [completed, recent])
+  const next = useCourseNextUp()
   const lessonHref = next.topic ? topicHref(next.topic) : '/learn'
   const labLesson = topics.find((t) => t.labId)
   const where: Record<GettingStartedId, { to?: string; label: string; onClick?: () => void }> = {

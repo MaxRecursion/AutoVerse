@@ -6,8 +6,8 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
 import { labs } from '@/features/labs/registry'
 import { topicHref } from '@/components/learning/labels'
-import { resolveNextUp } from '@/features/progress/curriculum'
-import { getTopic, learningPaths, topics } from '@/lib/content'
+import { useCourseNextUp } from '@/features/course-navigation/useCourseNextUp'
+import { getTopic } from '@/lib/content'
 import { groupByKind, type SearchDoc, type SearchKind } from '@/lib/search'
 import type { Topic } from '@/lib/schemas'
 import { usePreferences } from '@/stores/preferences'
@@ -232,11 +232,9 @@ function SearchResults({ query, onSelect, onTour }: { query: string; onSelect: (
 
 /** What the menu can do from any page: carry on learning, change the explanation level, take the tour. */
 function useActions(onSelect: (href: string) => void, onTour: () => void): ActionCommand[] {
-  const completed = useProgress((s) => s.completed)
-  const recent = useProgress((s) => s.recent)
+  const next = useCourseNextUp()
   const level = usePreferences((p) => p.level)
   return useMemo(() => {
-    const next = resolveNextUp({ topics, paths: learningPaths, completed, recent, getTopic })
     const other = level === 'beginner' ? 'technical' : 'beginner'
     return [
       {
@@ -259,7 +257,7 @@ function useActions(onSelect: (href: string) => void, onTour: () => void): Actio
       },
       { id: 'action:tour', label: 'Take the tour', keywords: 'help guide introduction how to use', icon: CircleHelp, run: onTour },
     ]
-  }, [completed, recent, level, onSelect, onTour])
+  }, [next, level, onSelect, onTour])
 }
 
 function ResultItem({ doc, icon: Icon, onSelect }: { doc: SearchDoc; icon: typeof BookOpen; onSelect: (href: string) => void }) {

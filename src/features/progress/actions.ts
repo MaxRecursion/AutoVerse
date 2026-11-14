@@ -1,9 +1,10 @@
 import { topicHref } from '@/components/learning/labels'
-import { getTopic, learningPaths, topics } from '@/lib/content'
+import { categories, getTopic, learningPaths, topics } from '@/lib/content'
 import { usePreferences } from '@/stores/preferences'
 import { progressSnapshot, useProgress } from '@/stores/progress'
 import { toast } from '@/stores/toasts'
 import { checkCertificates } from '@/features/certificate/award'
+import { resolveNavigationCourseId } from '@/features/course-navigation/navigationModel'
 import { overallProgress, resolveNextUp } from './curriculum'
 
 /** Marks a lesson complete and tells the learner what it changed and where to go next. */
@@ -11,7 +12,8 @@ export function completeLesson(topicId: string) {
   useProgress.getState().setCompleted(topicId, true)
   const { completed, recent } = useProgress.getState()
   const total = overallProgress(topics, completed)
-  const next = resolveNextUp({ topics, paths: learningPaths, completed, recent, getTopic, currentTopicId: topicId })
+  const context = { topics, paths: learningPaths, categories, completed, recent, getTopic, currentTopicId: topicId, preferredCourseId: usePreferences.getState().courseId }
+  const next = resolveNextUp({ ...context, preferredCourseId: resolveNavigationCourseId(context) })
   const done = getTopic(topicId)
   const routeNote =
     next.kind === 'new-route' ? 'You finished this learning path. ' : next.kind === 'done' ? 'Every lesson is complete. ' : ''

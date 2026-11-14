@@ -1,7 +1,9 @@
-import type { Layer, LearningPath, Topic } from '@/lib/schemas'
+import { CURRICULUM_COURSE_ID } from '@/features/certificate/courses'
+import type { Category, Layer, LearningPath, Topic } from '@/lib/schemas'
 import {
   resolveCurrentPathProgress,
   resolveNextPathProgress,
+  resolvePathProgress,
   resolveTopicPathProgress,
   type PathProgress,
 } from './paths'
@@ -50,6 +52,20 @@ export function ladderOrder(topics: readonly Topic[]): Topic[] {
   )
 }
 
+/** Every system in display order, retaining its surface → mechanism → engineering ladder. */
+export function curriculumOrder(topics: readonly Topic[], categories: readonly Category[] = []): Topic[] {
+  const bySystem = new Map<string, Topic[]>()
+  for (const topic of topics) {
+    const list = bySystem.get(topic.categoryId) ?? []
+    if (!list.some((item) => item.id === topic.id)) list.push(topic)
+    bySystem.set(topic.categoryId, list)
+  }
+  const order = new Map(categories.map((category) => [category.id, category.order]))
+  return [...bySystem]
+    .sort(([a], [b]) => (order.get(a) ?? Number.MAX_SAFE_INTEGER) - (order.get(b) ?? Number.MAX_SAFE_INTEGER) || a.localeCompare(b))
+    .flatMap(([, list]) => ladderOrder(list))
+}
+
 export interface LadderRung {
   layer: LayerInfo
   topics: Topic[]
@@ -89,7 +105,7 @@ export function layerProgress(topics: readonly Topic[], completed: Readonly<Reco
 }
 
 export interface Route {
-  kind: 'path' | 'system'
+  kind: 'path' | 'system' | 'curriculum'
   title: string
   topics: Topic[]
   /** Set when the route is a learning path. */
@@ -113,15 +129,26 @@ export interface NextUp {
 export interface NextUpContext {
   topics: readonly Topic[]
   paths: readonly LearningPath[]
+  categories?: readonly Category[]
   completed: Readonly<Record<string, string>>
   recent: readonly { topicId: string }[]
   getTopic: (id: string) => Topic | undefined
   /** Lesson the learner is on right now; omit for the global answer (header, home). */
   currentTopicId?: string
+  /** Explicit sidebar course choice. A lesson outside it still uses its own route. */
+  preferredCourseId?: string
 }
 
 /** The route a lesson belongs to: its best learning path, else its system ladder. */
 export function resolveRoute(topic: Topic, ctx: NextUpContext): Route {
+  if (ctx.preferredCourseId === CURRICULUM_COURSE_ID) {
+    return { kind: 'curriculum', title: 'All lessons', topics: curriculumOrder(ctx.topics, ctx.categories) }
+  }
+  const preferred = ctx.paths.find((path) => path.id === ctx.preferredCourseId && path.topicIds.includes(topic.id))
+  if (preferred) {
+    const progress = resolvePathProgress(preferred, ctx.getTopic, ctx.completed)
+    return { kind: 'path', title: preferred.title, topics: progress.topics, path: progress }
+  }
   const path = resolveTopicPathProgress(topic.id, ctx.paths, ctx.getTopic, ctx.completed)
   if (path) return { kind: 'path', title: path.path.title, topics: path.topics, path }
   const system = ctx.topics.filter((t) => t.categoryId === topic.categoryId)
@@ -149,9 +176,21 @@ export function resolveNextUp(ctx: NextUpContext): NextUp {
   }
 
   const empty = { skipped: [], unmetPrerequisites: [] }
-  const anyDone = Object.keys(completed).length > 0
-  const lastOpen = ctx.recent.map((r) => ctx.getTopic(r.topicId)).find((t): t is Topic => !!t && !completed[t.id])
-  const current_ = resolveCurrentPathProgress(ctx.paths, ctx.recent.map((r) => r.topicId), ctx.getTopic, completed)
+  if (ctx.preferredCourseId === CURRICULUM_COURSE_ID) {
+    const ordered = curriculumOrder(ctx.topics, ctx.categories)
+    const recent = ctx.recent.map((r) => ctx.getTopic(r.topicId)).find((topic): topic is Topic => !!topic && ordered.some((item) => item.id === topic.id) && !completed[topic.id])
+    const target = recent ?? ordered.find((topic) => !completed[topic.id])
+    const done = ordered.filter((topic) => completed[topic.id]).length
+    const route = { kind: 'curriculum' as const, title: 'All lessons', topics: ordered, index: target ? ordered.findIndex((topic) => topic.id === target.id) : 0, completed: done }
+    if (!target) return { ...empty, route, kind: 'done', label: 'Everything complete' }
+    return { ...empty, route, kind: recent ? 'continue' : done ? 'next' : 'start', topic: target, label: recent ? 'Continue' : done ? 'Next lesson' : 'Start here' }
+  }
+  const preferredPath = ctx.paths.find((path) => path.id === ctx.preferredCourseId)
+  const preferredProgress = preferredPath ? resolvePathProgress(preferredPath, ctx.getTopic, completed) : undefined
+  const preferred = preferredProgress?.total ? preferredProgress : undefined
+  const anyDone = preferred ? preferred.completed > 0 : Object.keys(completed).length > 0
+  const lastOpen = ctx.recent.map((r) => ctx.getTopic(r.topicId)).find((t): t is Topic => !!t && !completed[t.id] && (!preferred || preferred.topics.some((topic) => topic.id === t.id)))
+  const current_ = preferred ?? resolveCurrentPathProgress(ctx.paths, ctx.recent.map((r) => r.topicId), ctx.getTopic, completed)
   const withRoute = (p?: PathProgress, topic?: Topic) =>
     p ? { route: { kind: 'path' as const, title: p.path.title, topics: p.topics, path: p, index: topic ? p.topics.findIndex((t) => t.id === topic.id) : 0, completed: p.completed } } : {}
 
@@ -159,7 +198,7 @@ export function resolveNextUp(ctx: NextUpContext): NextUp {
     const first = current_?.next ?? ctx.topics.find((t) => layerOf(t) === 'surface')
     return { ...empty, ...withRoute(current_, first), kind: 'start', topic: first, label: 'Start here' }
   }
-  if (lastOpen) return { ...empty, ...withRoute(resolveTopicPathProgress(lastOpen.id, ctx.paths, ctx.getTopic, completed), lastOpen), kind: 'continue', topic: lastOpen, label: 'Continue' }
+  if (lastOpen) return { ...empty, ...withRoute(preferred ?? resolveTopicPathProgress(lastOpen.id, ctx.paths, ctx.getTopic, completed), lastOpen), kind: 'continue', topic: lastOpen, label: 'Continue' }
   if (current_?.next) return { ...empty, ...withRoute(current_, current_.next), kind: 'next', topic: current_.next, label: 'Next lesson' }
   const other = current_ ? resolveNextPathProgress(ctx.paths, current_.path.id, ctx.getTopic, completed) : undefined
   if (other?.next) return { ...empty, ...withRoute(other, other.next), kind: 'new-route', topic: other.next, label: `Start “${other.path.title}”` }

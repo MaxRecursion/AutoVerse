@@ -10,6 +10,7 @@ import { primaryNav, secondaryNav } from './nav'
 import { TourButton } from '@/features/tour/TourButton'
 import { useStartTour } from '@/features/tour/useStartTour'
 import { ProgressPill } from './ProgressPill'
+import { CourseNavigationTrigger } from '@/features/course-navigation/CourseNavigation'
 
 export function Header() {
   const [open, setOpen] = useState(false)
@@ -17,14 +18,15 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-graphite-950/85 pt-[env(safe-area-inset-top)] backdrop-blur-lg [view-transition-name:site-header]">
       <div className="mx-auto flex h-14 max-w-[1600px] items-center gap-4 px-4 sm:px-6">
-        <Logo />
+        <CourseNavigationTrigger />
+        <Logo compactOnPhone />
         <nav aria-label="Primary" data-tour="nav" className="ml-4 hidden items-center gap-1 xl:flex">
           {primaryNav.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                cn('rounded-md px-3 py-1.5 text-sm text-steel-300 transition-colors hover:text-paper', isActive && 'bg-white/[0.06] text-paper')
+                cn('rounded-md px-2 py-1.5 text-sm text-steel-300 transition-colors hover:text-paper', isActive && 'bg-white/[0.06] text-paper')
               }
             >
               {item.label}

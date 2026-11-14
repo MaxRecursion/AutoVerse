@@ -77,6 +77,16 @@ A UI pass using ideas from Watermelon UI (see `docs/ARCHITECTURE.md`, "Tactile c
 - **Flashcards** (`features/practice/`). Glossary terms as cards: flip (button or Space), "Got it" / "Again" (buttons, arrow keys or a swipe), "Again" cards come back a few cards later, unseen terms first. Opened from the glossary (all or filtered terms), a lesson's Key concepts and the Progress page; the last answer per term is stored in `practice`, which never touches lesson stages or completion.
 - **Progress page.** Counting stat tiles, an activity calendar (days with a finished lesson, quiz, certificate or practised terms, with current and best streak in the learner's own days) and a Practice block with terms known and terms to revisit.
 
+## Course navigation: keep the learner's place visible
+
+The app has a course outline beside the page, inspired by a documentation sidebar. It keeps the selected course accessible while moving between lessons, system hubs, labs and other pages. At desktop widths it stays available while the page scrolls and can be collapsed for more reading space; below 1280px, **Open course navigation** opens the same outline in a left drawer. The global app menu and each lesson's stage bar keep their separate purposes.
+
+The outline names the selected course, shows completed versus total lessons, and marks the current lesson with its position in the course. The current location is distinct from completion: opening or switching a course does not finish lessons. Completed states come from `progress.completed`, and an in-progress state requires recorded lesson evidence. **All lessons** provides a system-grouped view of the entire curriculum, including lessons outside the three curated paths.
+
+Course selection is a browser-local preference. It must remain selected when a learner opens a lesson shared by several courses and when they refresh. The sidebar, lesson journey, header and continuation actions use the same selected-course context and `resolveNextUp`; they must not independently calculate conflicting next lessons. An unrelated direct lesson link falls back to a route containing that lesson rather than showing an incorrect position in the previously selected course. Course progress counts completed lessons; certificate eligibility still requires both every lesson complete and every quiz taken.
+
+Keep the active lesson visible within the outline without scrolling the document. Disclosure controls have explicit expanded states; current links expose `aria-current="page"`. The narrow-screen drawer traps focus, closes after a lesson link, and returns focus to its trigger on Escape. Browser checks cover choosing an overlapping course, refresh, explicit completion, keyboard collapse, the drawer at 320px, and complete coverage of published lesson links.
+
 ## Next Work
 
 ### Engine Sound Lab: the signature experience

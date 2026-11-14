@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { topics as realTopics, learningPaths as realPaths } from '@/lib/content'
-import type { LearningPath, Topic } from '@/lib/schemas'
-import { buildLadder, ladderOrder, layerOf, layerProgress, overallProgress, resolveNextUp, type NextUpContext } from './curriculum'
+import { CURRICULUM_COURSE_ID } from '@/features/certificate/courses'
+import type { Category, LearningPath, Topic } from '@/lib/schemas'
+import { buildLadder, curriculumOrder, ladderOrder, layerOf, layerProgress, overallProgress, resolveNextUp, type NextUpContext } from './curriculum'
 
 const mk = (id: string, o: Partial<Topic> = {}): Topic =>
   ({
@@ -152,5 +153,60 @@ describe('real content', () => {
       const n = resolveNextUp({ topics: realTopics, paths: realPaths, completed: {}, recent: [], getTopic: (id) => realTopics.find((q) => q.id === id), currentTopicId: t.id })
       expect(n.topic?.id).not.toBe(t.id)
     }
+  })
+})
+
+describe('explicit course navigation', () => {
+  const enginePath: LearningPath = { id: 'engine-path', title: 'Engine path', summary: 's', level: 'intermediate', order: 1, topicIds: ['b', 'x'] }
+
+  it('keeps an overlapping lesson inside the chosen course', () => {
+    const n = resolveNextUp(ctx({ paths: [path, enginePath], currentTopicId: 'b', preferredCourseId: enginePath.id }))
+    expect(n.route?.path?.path.id).toBe(enginePath.id)
+    expect(n.route?.index).toBe(0)
+    expect(n.topic?.id).toBe('x')
+  })
+
+  it('falls back to a lesson’s normal course when the chosen course does not contain it', () => {
+    const n = resolveNextUp(ctx({ paths: [path, enginePath], currentTopicId: 'a', preferredCourseId: enginePath.id }))
+    expect(n.route?.path?.path.id).toBe(path.id)
+    expect(n.topic?.id).toBe('b')
+  })
+
+  it('starts the chosen course instead of resuming recent activity from another course', () => {
+    const n = resolveNextUp(ctx({ paths: [path, enginePath], preferredCourseId: enginePath.id, recent: [{ topicId: 'a' }], completed: done('a') }))
+    expect([n.kind, n.topic?.id, n.route?.path?.path.id]).toEqual(['start', 'b', enginePath.id])
+  })
+
+  it('continues recent activity inside the chosen course without changing its route on an overlap', () => {
+    const n = resolveNextUp(ctx({ paths: [path, enginePath], preferredCourseId: enginePath.id, recent: [{ topicId: 'a' }, { topicId: 'b' }] }))
+    expect([n.kind, n.topic?.id, n.route?.path?.path.id]).toEqual(['continue', 'b', enginePath.id])
+  })
+
+  it('still hands off from a finished chosen course to an unfinished course', () => {
+    const n = resolveNextUp(ctx({ paths: [path, enginePath], preferredCourseId: enginePath.id, completed: done('b', 'x') }))
+    expect([n.kind, n.topic?.id]).toEqual(['new-route', 'a'])
+  })
+
+  it('ignores an unavailable course preference', () => {
+    expect(resolveNextUp(ctx({ preferredCourseId: 'removed-course', recent: [{ topicId: 'b' }] }))).toEqual(resolveNextUp(ctx({ recent: [{ topicId: 'b' }] })))
+    const emptyPath = { ...enginePath, topicIds: ['unwritten-lesson'] }
+    expect(resolveNextUp(ctx({ paths: [path, emptyPath], preferredCourseId: emptyPath.id, recent: [{ topicId: 'b' }] }))).toEqual(resolveNextUp(ctx({ paths: [path, emptyPath], recent: [{ topicId: 'b' }] })))
+  })
+
+  it('orders all lessons by system and then the existing depth ladder', () => {
+    const categories = [{ id: 'brakes', order: 0 }, { id: 'engine', order: 1 }] as Category[]
+    expect(curriculumOrder([c, a, x, b, a], categories).map((topic) => topic.id)).toEqual(['x', 'a', 'b', 'c'])
+    const n = resolveNextUp(ctx({ categories, currentTopicId: 'b', preferredCourseId: CURRICULUM_COURSE_ID }))
+    expect(n.route?.kind).toBe('curriculum')
+    expect(n.route?.index).toBe(2)
+    expect(n.topic?.id).toBe('c')
+    expect(n.skipped.map((topic) => topic.id)).toEqual(['x', 'a'])
+  })
+
+  it('continues outside-path lessons within All lessons and reports full completion', () => {
+    const next = resolveNextUp(ctx({ preferredCourseId: CURRICULUM_COURSE_ID, recent: [{ topicId: 'x' }] }))
+    expect([next.kind, next.topic?.id, next.route?.kind]).toEqual(['continue', 'x', 'curriculum'])
+    const complete = resolveNextUp(ctx({ preferredCourseId: CURRICULUM_COURSE_ID, completed: done('a', 'b', 'c', 'x') }))
+    expect([complete.kind, complete.topic, complete.route?.completed]).toEqual(['done', undefined, 4])
   })
 })

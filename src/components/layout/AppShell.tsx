@@ -6,6 +6,7 @@ import { Footer } from './Footer'
 import { TourHost } from '@/features/tour/TourHost'
 import { TourInvite } from '@/features/tour/TourInvite'
 import { ToastHost } from './ToastHost'
+import { CourseNavigationProvider, CourseNavigationSidebar } from '@/features/course-navigation/CourseNavigation'
 
 export function AppShell() {
   const { pathname } = useLocation()
@@ -16,12 +17,16 @@ export function AppShell() {
   return (
     // Readers who ask for less motion get jumps instead of springs from every motion animation (the sliding toggle thumb, the lesson island...).
     <MotionConfig reducedMotion="user">
+    <CourseNavigationProvider>
     <div className="flex min-h-dvh flex-col">
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded focus:bg-cyan focus:px-3 focus:py-2 focus:text-ink">
         Skip to content
       </a>
       <Header />
-      <main id="main" className="flex-1">
+      <div className="flex min-w-0 flex-1">
+      <CourseNavigationSidebar />
+      <div className="flex min-w-0 flex-1 flex-col">
+      <main id="main" className="min-w-0 flex-1">
         {/*
           The router updates inside React transitions, so a new page cross-fades in (timing in globals.css). Keyed by
           path, only a real page change (exit + enter) animates: the router's loading state, lazy parts appearing and
@@ -34,12 +39,15 @@ export function AppShell() {
         </ViewTransition>
       </main>
       <Footer />
+      </div>
+      </div>
       <ToastHost />
       <TourInvite />
       <TourHost />
       {/* Key by path on the initial load so a fresh (or prerendered) page never inherits another page's scroll offset. */}
       <ScrollRestoration getKey={(loc) => (loc.key === 'default' ? loc.pathname + loc.search : loc.key)} />
     </div>
+    </CourseNavigationProvider>
     </MotionConfig>
   )
 }
