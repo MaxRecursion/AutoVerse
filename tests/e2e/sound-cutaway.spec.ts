@@ -20,7 +20,10 @@ test('renders a moving mechanical cutaway, selects cylinders and offers keyboard
   await open(page, '/sound-lab?engine=v10-viper')
   const view = await ready(page)
   await expect(view).toHaveAttribute('data-view', 'detail')
-  await expect(page.getByRole('img', { name: /3D mechanical cutaway of cylinder 1/ })).toBeVisible()
+  // V10 presets use the dedicated V10 scene: the selected cylinder's whole crank throw, both banks.
+  await expect(view).toHaveAttribute('data-scene', 'v10')
+  await expect(page.getByRole('img', { name: /3D mechanical cutaway of cylinder 1 and its crank-throw partner, cylinder 2/ })).toBeVisible()
+  await expect(page.getByTestId('v10-throw-note')).toContainText('shared crankpin')
   await page.getByTestId('sound-lab-start').click()
   await expect.poll(async () => Number((await page.getByTestId('sound-lab-tach').innerText()).replace(/\D/g, ''))).toBeGreaterThan(900)
   const canvas = view.locator('canvas')

@@ -15,6 +15,8 @@ import { CylinderLayout } from './CylinderLayout'
 import { CutawayScene } from './CutawayScene'
 import type { EngineSpec } from './engines'
 import type { FiringEvent } from './firing'
+import { describeThrow, isV10, throwPinOffset, v10Framing, v10Model } from './v10Layout'
+import { V10Scene } from './V10Scene'
 
 type Vec3 = [number, number, number]
 type CutawayView = 'engine' | 'detail'
@@ -71,8 +73,19 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, red
   const cameraReady = useStore(store, (state) => state.camera !== null)
   const mounted = useSyncExternalStore(noSubscribe, () => true, () => false)
   const tier = useQualityTier()
-  const home = useMemo(() => framing(spec, view, aspect), [spec, view, aspect])
+  // V10 presets get the dedicated V10 scene (both banks per throw, exhausts); the rest use the generic scene.
+  const v10 = useMemo(() => (isV10(spec) ? v10Model(spec) : null), [spec])
+  // Framed for a wide bank angle, so the camera does not move while the bank-angle experiment eases.
+  const home = useMemo(() => (v10 ? v10Framing(view === 'engine' ? 'engine' : 'pair', Math.max(spec.bankAngle, 90), aspect) : framing(spec, view, aspect)), [v10, spec, view, aspect])
   const selected = events.find((event) => event.index === selectedIndex) ?? events[0]!
+  const partner = v10?.cylinders.find((c) => c.event.index !== selected.index && c.throwIndex === v10.cylinders.find((x) => x.event.index === selected.index)?.throwIndex)
+  const pinNote = useMemo(() => {
+    if (!v10) return ''
+    const throwIndex = v10.cylinders.find((c) => c.event.index === selected.index)?.throwIndex ?? 0
+    // Current (perhaps experimental) firing, so the note matches what the scene draws.
+    const current = v10.cylinders.map((c) => ({ ...c, event: events[c.event.index] ?? c.event }))
+    return describeThrow(throwPinOffset(current, throwIndex, bankAngle, sense))
+  }, [v10, selected.index, events, bankAngle, sense])
 
   useEffect(() => {
     const el = viewport.current
@@ -128,7 +141,7 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, red
   )
 
   return (
-    <section className="min-w-0 overflow-hidden rounded-xl border border-cyan/20 bg-graphite-950/60" aria-labelledby="engine-cutaway-heading" data-testid="engine-cutaway" data-view={view}>
+    <section className="min-w-0 overflow-hidden rounded-xl border border-cyan/20 bg-graphite-950/60" aria-labelledby="engine-cutaway-heading" data-testid="engine-cutaway" data-view={view} data-scene={v10 ? 'v10' : 'generic'}>
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] p-3 sm:p-4">
         <div>
           <h3 id="engine-cutaway-heading" className="flex items-center gap-2 font-semibold text-paper"><Box aria-hidden className="size-4 text-cyan" />3D engine cutaway</h3>
@@ -141,7 +154,15 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, red
         <div ref={viewport} className="h-[420px] min-w-0 bg-[radial-gradient(ellipse_at_center,rgb(56_215_242/0.035),transparent_70%)] sm:h-[520px]" data-testid="engine-cutaway-canvas">
           {mounted ? (
             <SceneCanvas
-              label={view === 'detail' ? `3D mechanical cutaway of ${cylinderName(selected)} in ${spec.engine}, showing the piston, connecting rod, crankshaft, camshafts and valves.` : `3D mechanical cutaway of the ${spec.cylinders}-cylinder ${spec.engine}: its ${spec.layout} layout, pistons, connecting rods, crankshaft and valvetrain.`}
+              label={
+                view === 'detail'
+                  ? v10 && partner
+                    ? `3D mechanical cutaway of ${cylinderName(selected)} and its crank-throw partner, ${cylinderName(partner.event)}, in ${spec.engine}: both banks at ${spec.bankAngle}°, with pistons, connecting rods, crankpins, camshafts, valves and exhaust headers.`
+                    : `3D mechanical cutaway of ${cylinderName(selected)} in ${spec.engine}, showing the piston, connecting rod, crankshaft, camshafts and valves.`
+                  : v10
+                    ? `3D mechanical cutaway of the ${spec.cylinders}-cylinder ${spec.engine}: five crank throws, banks ${spec.bankAngle}° apart, with each bank's exhaust headers and the pulses travelling through them in firing order.`
+                    : `3D mechanical cutaway of the ${spec.cylinders}-cylinder ${spec.engine}: its ${spec.layout} layout, pistons, connecting rods, crankshaft and valvetrain.`
+              }
               cameraPosition={home.position}
               target={home.target}
               minDistance={MIN_DISTANCE}
@@ -152,7 +173,11 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, red
               loadingLabel="Preparing mechanical cutaway…"
               onCreated={({ camera }) => { liveCamera.current = camera }}
             >
-              <CutawayScene spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} tier={tier} view={view} selectedIndex={selected.index} onSelect={inspect} />
+              {v10 ? (
+                <V10Scene spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} tier={tier} view={view} selectedIndex={selected.index} onSelect={inspect} />
+              ) : (
+                <CutawayScene spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} tier={tier} view={view} selectedIndex={selected.index} onSelect={inspect} />
+              )}
             </SceneCanvas>
           ) : (
             <div className="flex h-full flex-col items-center justify-center gap-3 px-5 text-center text-steel-400" role="status">
@@ -186,7 +211,16 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, red
               </button>
             ))}
           </div>
-          <p role="status" aria-live="polite" className="mt-2 text-xs leading-relaxed text-steel-400">{view === 'detail' ? `Inspecting ${cylinderName(selected)}.` : `Showing all ${spec.cylinders} cylinders.`}{spec.order === null ? ' Labels identify banks and firing events; a verified cylinder order is not published here.' : ''}</p>
+          <p role="status" aria-live="polite" className="mt-2 text-xs leading-relaxed text-steel-400">
+            {view === 'detail' ? `Inspecting ${cylinderName(selected)}${partner ? ` and ${cylinderName(partner.event)}, its partner on the same crank throw` : ''}.` : `Showing all ${spec.cylinders} cylinders.`}
+            {spec.order === null ? ' Labels identify banks and firing events; a verified cylinder order is not published here.' : ''}
+          </p>
+          {v10 && (
+            <p className="mt-1 text-xs leading-relaxed text-steel-400" data-testid="v10-throw-note">
+              {view === 'detail' ? pinNote : 'Glowing pulses leave each cylinder as its exhaust valve opens; pulses sharing a pipe are spaced by their firing gaps.'}{' '}
+              {spec.separateBanks ? 'Each bank has its own exhaust.' : 'Both banks join one exhaust behind the engine.'}
+            </p>
+          )}
         </div>
         <p className="text-xs leading-relaxed text-steel-500">Illustrative cutaway: firing and bank geometry follow the production preset; dimensions and the DOHC valvetrain are teaching examples.</p>
       </div>

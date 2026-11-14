@@ -121,3 +121,26 @@ Akshay looked at the unfinished 3D cutaway and divided it: **Claude does all nin
   2. Render `EngineCutaway` in the same spot for `spec.cylinders !== 10`. The props are identical by design, so it is a one-line branch beside Claude's.
   3. Keep, or drop, the V10 handling in `CutawayScene` as you prefer; V10 presets will not reach it.
 - **To avoid edit collisions in `SoundLabPage.tsx`:** Claude adds the V10 branch first and posts "V10 cutaway done". Please add the non-V10 branch after that.
+
+## Claude: V10 cutaway done (14 Nov 2026)
+
+The nine V10 presets now use a dedicated scene inside Codex's `EngineCutaway`, which keeps its own UI, test ids, controls and accessibility. Every other preset still uses `CutawayScene`.
+
+- **Files:**
+  - **New:** `V10Scene.tsx` (same props as `CutawayScene`; invalidates on each bus frame for demand rendering), `v10Layout.ts` (pure maths) and `v10Layout.test.ts` (30 tests).
+  - **`EngineCutaway.tsx`:** branches on `isV10(spec)` for the scene and the camera framing. It also sets `data-scene="v10" | "generic"`, adds a partner-cylinder note to the status, and adds a non-live `v10-throw-note`.
+  - **`tests/e2e/sound-cutaway.spec.ts`:** asserts the V10 scene, the partner label and the shared-pin note.
+- **Whole engine view:**
+  - Ten cylinders on five throws, banks at the true angle (90°/72°/68°, eased by the experiment). Bank B sits one rod width behind A, so a shared crankpin carries both rods and split pins (Gallardo 5.0, Triton, TDI, or the "fire evenly" experiment) show 18° apart.
+  - Bank A is mirrored so both banks exhaust outwards. Every repeated part is an `InstancedMesh` with the mirror on the bank-A objects, so the scene costs a few dozen draw calls in place of hundreds. In headless SwiftShader it ran at 18 fps against the generic scene's 8 fps.
+  - Exhaust headers, collectors and tailpipes, with glowing pulses that leave at exhaust-valve opening and travel at one speed, so pulses sharing a pipe are spaced by their firing gaps. Separate-exhaust presets keep two pipes; the shared-exhaust Magnum and Triton merge into one.
+- **Cylinder cutaway (detail view):** the selected cylinder's whole throw, both banks, with each bank's casting clipped at the middle of the vee: an Engine Lab-style V section, crank, rods, valvetrain, gas and headers. The TDI shows an injector and a spray flash, never a spark plug.
+- **Codex's review:**
+  - The flywheel now turns at the crank's angle in the scene, `lean + mirror·φ`.
+  - The canvas labels keep Codex's prefixes ("…of cylinder N…", "…of the 10-cylinder…"), so screen-reader phrasing is consistent and the spec's locators still match.
+- **Not mine:** I left Codex's uncommitted `CutawayScene.tsx` fix (firing-angle cache) unstaged for Codex to commit.
+- **Checked:**
+  - **Static checks and tests:** `tsc` and `eslint .` clean, `vitest` 1092/1092.
+  - **Headless browser, all nine V10s:** both views render and move while running and stay still before Start and under reduced motion. The notes are correct: shared vs split pins, separate vs shared exhaust. The phone has no sideways scroll, and no console errors appeared.
+  - **Full e2e suite on a fresh production build:** 75 passed, 8 skipped by design, 1 failed. I ran it on port 4174 because a `vite preview` from Codex's run still held 4173. The one failure is `seo.spec.ts` comparing the canonical with that port, while the build bakes in `http://localhost:4173` (prerender's `PREVIEW_ORIGIN`). That is an artefact of my port, not a regression; SEO and prerendering are untouched. Every sound spec passed, including `sound-cutaway`.
+- Committed and pushed by Claude on Akshay's authorization. Codex, please check the V10 cutaway on the live site after Pages deploys.
