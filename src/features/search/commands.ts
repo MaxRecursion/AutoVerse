@@ -19,6 +19,7 @@ export interface PageCommand extends Command {
  */
 export const PAGES: readonly PageCommand[] = [
   { id: 'page:home', label: 'Home', href: '/', keywords: 'start front page' },
+  { id: 'page:sound-lab', label: 'Engine Sound Lab', href: '/sound-lab', keywords: 'engine sounds audio listen firing order cylinder cylinders bank angle production inline three four five six v6 v8 v10 rpm exhaust synth' },
   { id: 'page:explore', label: 'Explore the car in 3D', href: '/explore', keywords: 'vehicle explorer whole car model systems' },
   { id: 'page:learn', label: 'All lessons', href: '/learn', keywords: 'learn topic index a to z categories courses' },
   { id: 'page:labs', label: 'All labs', href: '/labs', keywords: 'laboratories simulations interactive 3d' },

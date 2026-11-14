@@ -36,8 +36,8 @@ export const TOUR_STEPS: readonly TourStep[] = [
     chapter: 'Find your way',
     target: anchor('nav'),
     narrowTarget: anchor('menu-button'),
-    title: 'Five doors, in order',
-    body: 'Explore the Car shows the whole vehicle. Learn is the curriculum, surface to depth. Labs run live 3D machinery. Pioneers tells who developed each part. My Progress keeps score.',
+    title: 'Find your way around',
+    body: 'Sound Lab lets you hear production engine rhythms. Explore the Car shows the whole vehicle. Learn is the curriculum, surface to depth. Labs run live 3D machinery. Pioneers tells who developed each part. My Progress keeps score.',
   },
   {
     id: 'progress-pill',

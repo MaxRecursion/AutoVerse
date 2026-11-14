@@ -10,6 +10,7 @@ import { GettingStarted } from '@/features/progress/GettingStarted'
 import { HOME_DOCUMENT_TITLE } from '@/features/home/homeData'
 import { HomeMotion } from '@/features/home/Reveal'
 import { SystemMapTeaser } from '@/features/home/SystemMapTeaser'
+import { EngineSoundSpotlight } from '@/features/home/EngineSoundSpotlight'
 
 /** Keep the site title on `/` (the same one index.html and the prerendered page carry). */
 function useHomeTitle() {
@@ -34,6 +35,7 @@ export default function HomePage() {
       <div className="pb-16 lg:pb-24">
         <HeroSection />
         <div className="flex flex-col gap-16 pt-10 lg:gap-24 lg:pt-14">
+          <EngineSoundSpotlight />
           <LearningJourney />
           <div className="mx-auto w-full max-w-[1400px] px-4 empty:hidden sm:px-6">
             <GettingStarted variant="home" />

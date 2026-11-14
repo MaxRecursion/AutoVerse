@@ -79,6 +79,14 @@ A UI pass using ideas from Watermelon UI (see `docs/ARCHITECTURE.md`, "Tactile c
 
 ## Next Work
 
+### Engine Sound Lab: the signature experience
+
+`/sound-lab` is the main home-page invitation and a primary navigation destination. It connects production engine layouts from inline-3 to V10 to an animated firing cycle, RPM/throttle controls and audio generated from cylinder firing events. The existing single-cylinder 3D lab remains the place to inspect the four strokes; its header links directly to the sound lab, and the sound lab points back to the engine-layout lesson and cutaway.
+
+Production presets keep their real bank angles, crankpin geometry and verified firing sequences. Geometry experiments must be labelled as experiments, rather than implying every slider combination was sold in a vehicle. Audio starts only on a learner's explicit action and is stopped when leaving the page. The firing rhythm is grounded in engine data; exhaust tone and runner transfer settings are illustrative synthesis, not measured recordings. Keep that distinction visible when promoting the feature. The reference is Hagerty's Jason Cammisa V10 episode; it is credited and linked, with no copied audio.
+
+This is an exploration tool, so simply visiting or listening does not complete lessons or award stages. The curriculum resolver and evidence rules above continue to own learning progress.
+
 1. **Cover the remaining lessons with stories.** 9 of 34 lessons have no linked engineer yet: alternator and charging, cooling, diagnosing warning signs, driveshafts and CV joints, gear ratios, lubrication, mechanical sympathy, pistons and crankshaft, routine maintenance. Add only where a source supports it (the Rzeppa CV joint was left out because the page read did not name his employer).
 2. **Deepen quiz and lab feedback.** Explain *why* a chosen wrong answer is wrong; show a short result after a lab mission set; link wrong answers back to the step that teaches it.
 3. **Build depth.** Expand sparse categories (tyres, HVAC, body/chassis, driving) with prerequisite-aware lessons at each layer.

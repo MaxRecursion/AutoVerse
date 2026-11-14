@@ -108,7 +108,8 @@ describe('SearchCommand', () => {
     const router = setup()
     await user.keyboard('{Control>}k{/Control}')
     const dialog = await screen.findByRole('dialog')
-    expect(within(within(dialog).getByRole('group', { name: 'Pages' })).getAllByRole('option')).toHaveLength(9)
+    expect(within(within(dialog).getByRole('group', { name: 'Pages' })).getAllByRole('option')).toHaveLength(10)
+    expect(within(dialog).getByRole('option', { name: 'Engine Sound Lab' })).toBeInTheDocument()
     expect(within(dialog).getByRole('option', { name: 'Switch to technical explanations' })).toBeInTheDocument()
 
     await user.keyboard('technical{Enter}')

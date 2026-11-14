@@ -50,6 +50,9 @@ function Slider({
         <SliderPrimitive.Thumb
           data-slot="slider-thumb"
           key={index}
+          aria-label={props["aria-label"]}
+          aria-labelledby={props["aria-labelledby"]}
+          aria-describedby={props["aria-describedby"]}
           className="relative hit-area block size-5 shrink-0 rounded-full border border-black/30 bg-paper shadow-[0_2px_6px_rgb(0_0_0/0.55),inset_0_1px_0_rgb(255_255_255/0.9),inset_0_-2px_3px_rgb(0_0_0/0.2)] ring-ring/50 transition-[color,box-shadow] active:scale-95 hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50"
         />
       ))}

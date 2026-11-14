@@ -78,6 +78,7 @@ describe('routes', () => {
         '/topics/diesel-engines',
         '/labs',
         '/labs/engine',
+        '/sound-lab',
         '/explore',
         '/map',
         '/progress',

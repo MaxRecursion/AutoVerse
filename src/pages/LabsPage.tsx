@@ -2,6 +2,7 @@ import { Info, MonitorSmartphone } from 'lucide-react'
 import { useDocumentTitle } from '@/components/learning/useDocumentTitle'
 import { LabIndexCard } from '@/features/home/LabCard'
 import { getLabOverviews } from '@/features/home/labOverview'
+import { SoundLabFeatureCard } from '@/features/home/EngineSoundSpotlight'
 
 /** /labs — every registered laboratory with what it covers and where its lesson is. */
 export default function LabsPage() {
@@ -19,6 +20,8 @@ export default function LabsPage() {
           explains it step by step.
         </p>
       </header>
+
+      <SoundLabFeatureCard className="mt-8" />
 
       <ul className="mt-6 grid grid-cols-1 gap-2 text-sm leading-relaxed text-steel-300 md:grid-cols-2">
         <li className="flex items-start gap-3 rounded-lg border border-white/[0.07] bg-graphite-900/60 px-4 py-3">

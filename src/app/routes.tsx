@@ -25,6 +25,7 @@ export const routes: RouteObject[] = [
       { index: true, ...page(() => import('@/pages/HomePage')) },
       { path: 'explore', ...page(() => import('@/pages/ExplorePage')) },
       { path: 'labs', ...page(() => import('@/pages/LabsPage')) },
+      { path: 'sound-lab', ...page(() => import('@/features/sound-lab/SoundLabPage')) },
       { path: 'labs/:labId', ...page(() => import('@/pages/LabPage')) },
       { path: 'learn', ...page(() => import('@/pages/TopicIndexPage')) },
       { path: 'learn/:categorySlug', ...page(() => import('@/pages/CategoryPage')) },

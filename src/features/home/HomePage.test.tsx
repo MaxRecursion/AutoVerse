@@ -36,11 +36,12 @@ beforeEach(() => {
 afterEach(() => vi.restoreAllMocks())
 
 describe('HomePage', () => {
-  it('renders the hero heading, the three calls to action and the lazy engine', async () => {
+  it('features the sound lab alongside learning and the lazy engine', async () => {
     renderHome()
-    expect(screen.getByRole('heading', { level: 1, name: 'Understand Every Moving Part.' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'See it move. Hear it fire.' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Open Engine Sound Lab' })).toHaveAttribute('href', '/sound-lab')
+    expect(screen.getByRole('link', { name: 'Compare production engines' })).toHaveAttribute('href', '/sound-lab')
     expect(screen.getByRole('link', { name: 'Explore the Car' })).toHaveAttribute('href', '/explore')
-    expect(screen.getByRole('link', { name: 'Explore Systems' })).toHaveAttribute('href', '/map')
 
     const path = pickBeginnerPath(learningPaths)!
     const expectedStart = startLearningHref(resolvePathProgress(path, getTopic, {}).next)

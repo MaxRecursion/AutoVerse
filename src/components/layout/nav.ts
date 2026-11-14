@@ -1,5 +1,6 @@
-/** Ordered like the descent: the whole car → the systems → the mechanisms → the people → you. */
+/** Signature experience first, followed by the learning journey. */
 export const primaryNav = [
+  { to: '/sound-lab', label: 'Sound Lab' },
   { to: '/explore', label: 'Explore the Car' },
   { to: '/learn', label: 'Learn' },
   { to: '/labs', label: 'Labs' },

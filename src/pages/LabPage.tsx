@@ -1,5 +1,5 @@
 import { useEffect, useMemo, ViewTransition } from 'react'
-import { ArrowRight, BookOpen, Search, X } from 'lucide-react'
+import { ArrowRight, AudioLines, BookOpen, Search, X } from 'lucide-react'
 import { Link, useParams, useSearchParams } from 'react-router'
 import { useStore } from 'zustand'
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs'
@@ -60,6 +60,11 @@ function LabScreen({ lab }: { lab: LabDefinition }) {
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-2">
+          {lab.id === 'engine' && (
+            <Button asChild variant="outline" size="sm" className="h-9">
+              <Link to="/sound-lab"><AudioLines aria-hidden /> Hear engine layouts</Link>
+            </Button>
+          )}
           {store && componentId && <LinkedPart store={store} componentId={componentId} />}
           {lesson && (
             <Button asChild variant="outline" size="sm" className="h-9">

@@ -1,13 +1,24 @@
 [
   {
     "file": "og/home.png",
-    "eyebrow": "Interactive automotive lessons",
-    "title": "Learn how cars work, in interactive 3D",
-    "text": "Free interactive lessons on how cars work: engines, gearboxes, brakes, suspension and more, with live 3D labs, quizzes and the engineers behind each part.",
+    "eyebrow": "Hear it. See it. Understand it.",
+    "title": "Hear engines. Understand every moving part.",
+    "text": "Hear production engine rhythms from inline-3 to V10. Explore bank angles, firing orders and live sound synthesis, then learn how cars work in 3D.",
     "chips": [
-      "34 lessons",
-      "4 3D labs",
-      "15 vehicle systems"
+      "Inline-3 to V10",
+      "Live sound synthesis",
+      "34 lessons"
+    ]
+  },
+  {
+    "file": "og/sound-lab.png",
+    "eyebrow": "Engine Sound Lab",
+    "title": "What makes an engine sound like itself?",
+    "text": "Hear production engine rhythms from inline-3 to V10. Compare bank angles, firing orders, even and odd firing, with live synthesized audio and visuals.",
+    "chips": [
+      "Inline-3 to V10",
+      "Bank angles",
+      "Firing orders"
     ]
   },
   {
@@ -583,13 +594,13 @@
   },
   {
     "file": "og/default.png",
-    "eyebrow": "Interactive automotive lessons",
-    "title": "Learn how cars work, in interactive 3D",
-    "text": "Free interactive lessons on how cars work: engines, gearboxes, brakes, suspension and more, with live 3D labs, quizzes and the engineers behind each part.",
+    "eyebrow": "Hear it. See it. Understand it.",
+    "title": "Hear engines. Understand every moving part.",
+    "text": "Hear production engine rhythms from inline-3 to V10. Explore bank angles, firing orders and live sound synthesis, then learn how cars work in 3D.",
     "chips": [
-      "34 lessons",
-      "4 3D labs",
-      "15 vehicle systems"
+      "Inline-3 to V10",
+      "Live sound synthesis",
+      "34 lessons"
     ]
   }
 ]

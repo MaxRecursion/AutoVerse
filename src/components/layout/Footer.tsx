@@ -12,6 +12,7 @@ export function Footer() {
           <span className="text-xs">Original educational content. Simulations are illustrative, not validated engineering models.</span>
         </div>
         <nav aria-label="Footer" className="flex flex-wrap gap-x-4 gap-y-1 text-xs pointer-coarse:gap-y-0">
+          <Link to="/sound-lab" className="relative hit-area inline-flex items-center text-cyan hover:text-paper pointer-coarse:min-h-12">Engine Sound Lab</Link>
           <Link to="/learn" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Topic index</Link>
           <Link to="/pioneers" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Pioneers</Link>
           <Link to="/glossary" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Glossary</Link>

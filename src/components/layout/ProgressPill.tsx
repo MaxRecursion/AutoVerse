@@ -37,11 +37,11 @@ export function ProgressPill() {
           {total.percent}
         </span>
       </span>
-      <span className="hidden min-w-0 flex-col leading-tight xl:flex">
+      <span className="hidden min-w-0 flex-col leading-tight 2xl:flex">
         <span className="eyebrow text-[10px] tracking-[0.14em]">{eyebrow}</span>
         <span className="max-w-44 truncate text-[13px] font-medium text-paper group-hover:text-cyan">{title}</span>
       </span>
-      <ArrowRight aria-hidden className="hidden size-4 text-steel-400 group-hover:text-cyan xl:block" />
+      <ArrowRight aria-hidden className="hidden size-4 text-steel-400 group-hover:text-cyan 2xl:block" />
     </Link>
   )
 }

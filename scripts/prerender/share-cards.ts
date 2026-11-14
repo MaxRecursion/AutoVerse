@@ -18,7 +18,8 @@ export interface ShareCard {
 
 const LEVEL: Record<Topic['difficulty'], string> = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' }
 const EYEBROW: Record<string, string> = {
-  '/': 'Interactive automotive lessons',
+  '/': 'Hear it. See it. Understand it.',
+  '/sound-lab': 'Engine Sound Lab',
   '/learn': 'Every lesson',
   '/labs': 'Interactive 3D labs',
   '/explore': 'Explore the car',
@@ -60,10 +61,12 @@ export function shareCards(routes: PrerenderRoute[], content: { categories: Cate
       cards.push({
         file,
         eyebrow: EYEBROW['/']!,
-        title: 'Learn how cars work, in interactive 3D',
+        title: 'Hear engines. Understand every moving part.',
         text: r.description,
-        chips: [`${topics.length} lessons`, `${labs.length} 3D labs`, `${categories.length} vehicle systems`],
+        chips: ['Inline-3 to V10', 'Live sound synthesis', `${topics.length} lessons`],
       })
+    } else if (r.path === '/sound-lab') {
+      cards.push({ file, eyebrow: EYEBROW[r.path]!, title: 'What makes an engine sound like itself?', text: r.description, chips: ['Inline-3 to V10', 'Bank angles', 'Firing orders'] })
     } else {
       cards.push({ file, eyebrow: EYEBROW[r.path] ?? '', title: withoutSiteName(r.title), text: r.description, chips: [] })
     }

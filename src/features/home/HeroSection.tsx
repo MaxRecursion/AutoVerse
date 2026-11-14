@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { ArrowRight, Car, GraduationCap, Network } from 'lucide-react'
+import { ArrowRight, AudioLines, Car, GraduationCap } from 'lucide-react'
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { labs } from '@/features/labs/registry'
@@ -10,7 +10,7 @@ import { HeroEngine } from './HeroEngine'
 import { startLearningHref } from './homeData'
 import { Reveal } from './Reveal'
 
-/** Above the fold: brand, promise, the three ways in, and the live engine. */
+/** Above the fold: the signature sound lab, learning entry, and live engine. */
 export function HeroSection() {
   const completed = useProgress((s) => s.completed)
   const recent = useProgress((s) => s.recent)
@@ -49,42 +49,42 @@ export function HeroSection() {
         <div className="max-w-xl lg:col-start-1 lg:row-start-1 lg:self-end">
           <p className="eyebrow flex items-center gap-2">
             <span aria-hidden className="h-px w-6 bg-cyan" />
-            AutoVerse · Automotive engineering
+            AutoVerse · See the motion. Hear the difference.
           </p>
           <h1
             id="home-heading"
             className="mt-4 text-[2.65rem] font-semibold leading-[1.02] tracking-tight text-paper sm:text-6xl xl:text-[4.5rem]"
           >
-            Understand Every Moving Part<span className="text-amber">.</span>
+            See it move.<br />{' '}Hear it fire<span className="text-amber">.</span>
           </h1>
           <p className="mt-5 max-w-lg text-base leading-relaxed text-steel-300 sm:text-lg">
-            Interactive 3D laboratories and plain-language lessons that take a car apart one system at a time, from the four-stroke cycle to
-            the tyre’s contact patch.
-            {/* The engine's own hint says this on phones, where the model is just below. */}
-            <span className="hidden sm:inline"> Watch it run, slow it down, and select any part to see what it does.</span>
+            From an inline-three to a V10: hear how production engine layouts, bank angles and firing orders shape the rhythm.
+            Then take the machinery apart with interactive 3D labs and plain-language lessons.
           </p>
 
           <div className="mt-8 grid gap-2.5 sm:flex sm:flex-wrap">
             <Button asChild size="lg" className="h-11 px-5 text-[15px]">
+              <Link to="/sound-lab">
+                <AudioLines aria-hidden />
+                Open Engine Sound Lab
+                <ArrowRight aria-hidden />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="h-11 border-white/12 bg-graphite-900/60 px-5 text-[15px] hover:border-cyan/40">
               <Link to={startHref}>
                 <GraduationCap aria-hidden />
                 {startLabel}
                 <ArrowRight aria-hidden />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="h-11 border-white/12 bg-graphite-900/60 px-5 text-[15px] hover:border-cyan/40">
+            <Button asChild size="lg" variant="ghost" className="h-11 px-4 text-[15px] text-paper hover:text-cyan">
               <Link to="/explore">
                 <Car aria-hidden />
                 Explore the Car
               </Link>
             </Button>
-            <Button asChild size="lg" variant="ghost" className="h-11 px-4 text-[15px] text-paper hover:text-cyan">
-              <Link to="/map">
-                <Network aria-hidden />
-                Explore Systems
-              </Link>
-            </Button>
           </div>
+          <p className="mt-3 text-xs leading-relaxed text-steel-400">Live synthesized audio · Starts only when you press play</p>
           {nextTopic && (
             <p className="mt-3 text-sm text-steel-400">
               <span className="eyebrow mr-2">Next up</span>

@@ -9,9 +9,9 @@ import { buildGlossary } from '../../src/lib/glossary'
 import type { Category, Pioneer, Topic } from '../../src/lib/schemas'
 
 export const SITE_NAME = 'AutoVerse'
-export const HOME_TITLE = 'AutoVerse — Learn How Cars Work in Interactive 3D'
+export const HOME_TITLE = 'AutoVerse — Hear Engines, Learn How Cars Work'
 export const HOME_DESCRIPTION =
-  'Free interactive lessons on how cars work: engines, gearboxes, brakes, suspension and more, with live 3D labs, quizzes and the engineers behind each part.'
+  'Hear production engine rhythms from inline-3 to V10. Explore bank angles, firing orders and live sound synthesis, then learn how cars work in 3D.'
 export const LANGUAGE = 'en-GB'
 
 export interface LabMeta {
@@ -102,6 +102,7 @@ const NAV = `<nav aria-label="Site">${list([
   link('/', 'Home'),
   link('/learn', 'All topics'),
   link('/labs', 'Labs'),
+  link('/sound-lab', 'Engine Sound Lab'),
   link('/pioneers', 'Pioneers'),
   link('/glossary', 'Glossary'),
   link('/about', 'About & credits'),
@@ -236,10 +237,10 @@ export function buildRoutes({ categories, topics, labs, pioneers = [], siteUrl =
       ogType: 'website',
       bodyHtml: doc(
         'AutoVerse — understand every moving part',
-        `<p>Original lessons, interactive 3D laboratories and quizzes that explain how cars work, from the four-stroke cycle to tyre grip.</p><h2>Learn by system</h2>${list(categoryItems)}<h2>Laboratories</h2>${list(labItems)}`,
+        `<p>Hear how engine design becomes sound in the ${link('/sound-lab', 'Engine Sound Lab')}: production rhythms from inline-3 to V10, cylinder-bank geometry and firing orders, with live synthesized audio.</p><p>Original lessons, interactive 3D laboratories and quizzes explain how cars work, from the four-stroke cycle to tyre grip.</p><h2>Learn by system</h2>${list(categoryItems)}<h2>Laboratories</h2>${list(labItems)}`,
       ),
       priority: 1,
-      image: image('/', 'AutoVerse — learn how cars work in interactive 3D'),
+      image: image('/', 'AutoVerse — hear engines and learn how cars work'),
       modified: newest(sortedTopics),
     },
     (imageUrl) => [
@@ -531,6 +532,30 @@ export function buildRoutes({ categories, topics, labs, pioneers = [], siteUrl =
 
   return [
     home,
+    simplePage(
+      '/sound-lab',
+      'Engine Sound Lab',
+      pageTitle('Engine Sound Lab: Inline-3 to V10 Simulator'),
+      'Hear production engine rhythms from inline-3 to V10. Compare bank angles, firing orders, even and odd firing, with live synthesized audio and visuals.',
+      `<p>Explore how cylinder count, bank angle, crankshaft design and exhaust routing shape an engine’s rhythm. Select production-engine presets from three cylinders to V10, change RPM and throttle, and follow each firing through a 720-degree four-stroke cycle.</p><p>Compare an even-firing 72-degree Lexus LFA V10 with 90-degree V10 designs, including the uneven firing of a Dodge Viper. See why bank angle alone does not determine firing intervals: crankpin offsets matter too.</p><p>The audio is generated in your browser from the firing model, with illustrative exhaust and resonance settings. It is a teaching simulation, rather than a recording or a measured acoustic replica of a particular car. Sound starts only when you choose to enable it.</p><p>Inspired by ${link('https://www.youtube.com/watch?v=F4-RPcSGVFI', 'Hagerty’s V10 history with Jason Cammisa')}. Continue with ${link('/topics/engine-layouts', 'Engine Layouts')} or the ${link('/labs/engine', 'Four-Stroke Engine Laboratory')}.</p>`,
+      0.95,
+      {
+        mainEntity: '#simulation',
+        extraNodes: (pageUrl) => [{
+          '@type': 'LearningResource',
+          '@id': `${pageUrl}#simulation`,
+          name: 'Engine Sound Lab',
+          url: pageUrl,
+          description: 'An interactive firing-order and engine-sound simulation using production-engine presets from inline-3 to V10.',
+          learningResourceType: 'Simulation',
+          interactivityType: 'active',
+          isAccessibleForFree: true,
+          inLanguage: LANGUAGE,
+          citation: 'https://www.youtube.com/watch?v=F4-RPcSGVFI',
+          teaches: ['Four-stroke firing intervals', 'Cylinder bank angles', 'Firing orders', 'Exhaust pulse timing'],
+        }],
+      },
+    ),
     learn,
     ...categoryRoutes,
     ...topicRoutes,

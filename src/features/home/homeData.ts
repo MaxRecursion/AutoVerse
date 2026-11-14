@@ -7,7 +7,7 @@ import type { Category, LearningPath, Topic } from '@/lib/schemas'
  */
 
 /** Document title for `/` — the same site title index.html and the prerendered page use. */
-export const HOME_DOCUMENT_TITLE = 'AutoVerse — Understand Every Moving Part'
+export const HOME_DOCUMENT_TITLE = 'AutoVerse — Hear Engines, Learn How Cars Work'
 
 export interface CategoryTile {
   category: Category

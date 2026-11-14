@@ -13,6 +13,7 @@ describe('command menu pages', () => {
     expect(matchCommands(PAGES, 'inventors')[0]?.href).toBe('/pioneers')
     expect(matchCommands(PAGES, 'certificates')[0]?.href).toBe('/progress')
     expect(matchCommands(PAGES, 'systme map')[0]?.href).toBe('/map')
+    expect(matchCommands(PAGES, 'v10 firing order')[0]?.href).toBe('/sound-lab')
   })
 
   it('needs every word to match, and matches nothing for an empty query', () => {

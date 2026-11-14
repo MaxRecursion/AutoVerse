@@ -95,12 +95,12 @@ describe('TourHost', () => {
     act(() => useTour.getState().start('/'))
     expect(screen.getByRole('button', { name: /back/i })).toBeDisabled()
     await user.keyboard('{ArrowRight}')
-    expect(screen.getByRole('dialog', { name: 'Five doors, in order' })).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: 'Find your way around' })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /^next/i }))
     expect(screen.getByRole('dialog', { name: 'Always know what is next' })).toBeInTheDocument()
     await user.keyboard('{ArrowLeft}')
-    expect(screen.getByRole('dialog', { name: 'Five doors, in order' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Five doors, in order' })).toHaveFocus()
+    expect(screen.getByRole('dialog', { name: 'Find your way around' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Find your way around' })).toHaveFocus()
   })
 
   it('Esc closes, remembers it was skipped, restores the page and puts the learner back where they were', async () => {

@@ -18,9 +18,9 @@ test('the header and page never run wider than the window', async ({ page }) => 
   }
 })
 
-test('the primary navigation shows from 1024px; below that the menu button stands in for it', async ({ page }) => {
+test('the primary navigation shows from 1280px; below that the menu button stands in for it', async ({ page }) => {
   await open(page, '/')
-  for (const [width, navVisible] of [[1023, false], [1024, true]] as const) {
+  for (const [width, navVisible] of [[1024, false], [1279, false], [1280, true]] as const) {
     await page.setViewportSize({ width, height: 800 })
     await expect(page.getByRole('navigation', { name: 'Primary' })).toBeVisible({ visible: navVisible })
     await expect(page.getByRole('button', { name: 'Open menu' })).toBeVisible({ visible: !navVisible })

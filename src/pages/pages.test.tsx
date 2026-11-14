@@ -45,7 +45,7 @@ describe('LabPage (/labs/:labId)', () => {
 describe('HomePage (/)', () => {
   it('lazy-mounts the engine hero with its own transport', async () => {
     renderAt('/')
-    expect(await screen.findByRole('heading', { level: 1, name: /Understand Every Moving Part/ })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: /See it move\. Hear it fire/ })).toBeInTheDocument()
     expect(await screen.findByRole('button', { name: /(Play|Pause) engine animation/ }, { timeout: 5000 })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Open the engine lab/ })).toHaveAttribute('href', '/labs/engine')
   })
