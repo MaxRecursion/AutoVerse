@@ -1,5 +1,5 @@
 /** Original course outline: native nested lists and disclosures, with a Radix drawer on phones. */
-import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useId, useMemo, useRef, useState, type MouseEvent, type ReactNode } from 'react'
 import { ArrowLeft, ArrowRight, BookOpen, Check, ChevronDown, Circle, LocateFixed, PanelLeftClose, PanelLeftOpen, Search, X } from 'lucide-react'
 import { Link, NavLink, useLocation } from 'react-router'
 import { CategoryIcon } from '@/components/learning/CategoryIcon'
@@ -9,6 +9,7 @@ import { Progress } from '@/components/ui/progress'
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import { categories, learningPaths, topics } from '@/lib/content'
+import type { Topic } from '@/lib/schemas'
 import { cn } from '@/lib/utils'
 import { usePreferences } from '@/stores/preferences'
 import { useProgress } from '@/stores/progress'
@@ -16,7 +17,8 @@ import { CourseNavigationContext, useCourseNavigation } from './context'
 import { buildCourseNavigation, type NavigationEntry } from './navigationModel'
 
 export function CourseNavigationProvider({ children }: { children: ReactNode }) {
-  const { pathname } = useLocation()
+  const location = useLocation()
+  const { pathname } = location
   const completed = useProgress((state) => state.completed)
   const lessons = useProgress((state) => state.lessons)
   const recent = useProgress((state) => state.recent)
@@ -25,12 +27,14 @@ export function CourseNavigationProvider({ children }: { children: ReactNode }) 
   const collapsed = usePreferences((state) => state.courseNavigationCollapsed)
   const setCollapsed = usePreferences((state) => state.setCourseNavigationCollapsed)
   const [mobile, setMobile] = useState({ pathname, open: false })
-  // A course picked on this page that leaves out the open lesson. Only shown, never saved, and dropped by the next page.
-  const [picked, setPicked] = useState({ pathname, courseId: '' })
+  // A course picked on this visit that leaves out the open lesson. Only shown, never saved, and ended by any navigation:
+  // a later visit to the same lesson, through a link or the browser's Back button, has a different location key.
+  const [picked, setPicked] = useState({ key: location.key, courseId: '' })
+  if (picked.courseId && picked.key !== location.key) setPicked({ key: location.key, courseId: '' })
   const desktop = useMediaQuery('(min-width: 1280px)')
   const input = useMemo(() => ({ pathname, topics, paths: learningPaths, categories, completed, lessons, recent, preferredCourseId: courseId }), [pathname, completed, lessons, recent, courseId])
   const current = useMemo(() => buildCourseNavigation(input), [input])
-  const previewId = picked.pathname === pathname ? picked.courseId : ''
+  const previewId = picked.key === location.key ? picked.courseId : ''
   // Seen from outside any lesson: the picked course's own outline, progress and resume point.
   const previewed = useMemo(() => (previewId ? buildCourseNavigation({ ...input, pathname: '', preferredCourseId: previewId }) : undefined), [input, previewId])
   const preview = previewed && current.currentTopic ? { lesson: current.currentTopic, from: current.activeCourse } : undefined
@@ -47,16 +51,16 @@ export function CourseNavigationProvider({ children }: { children: ReactNode }) 
     // Choosing never leaves the page (on Windows the arrow keys change a closed list one course at a time). A course
     // with the open lesson is saved at once; one without it is previewed until the learner opens one of its lessons.
     if (lesson && chosen && !chosen.topics.some((topic) => topic.id === lesson.id)) {
-      setPicked({ pathname, courseId: id })
+      setPicked({ key: location.key, courseId: id })
     } else {
-      setPicked({ pathname, courseId: '' })
+      setPicked({ key: location.key, courseId: '' })
       setCourseId(id)
     }
   }
   const keepPreview = () => {
     if (preview) setCourseId(model.activeCourse.id)
   }
-  const endPreview = () => setPicked({ pathname, courseId: '' })
+  const endPreview = () => setPicked({ key: location.key, courseId: '' })
 
   return (
     <CourseNavigationContext.Provider value={{ model, preview, collapsed, collapse, chooseCourse, keepPreview, endPreview, closeMobile }}>
@@ -129,8 +133,11 @@ function CourseOutline() {
     setClosedGroups(new Set())
     if (scroller.current) scroller.current.scrollTop = 0
   }
-  const openLesson = () => {
-    keepPreview()
+  const openLesson = (event: MouseEvent, topic?: Topic) => {
+    // A new tab or window leaves this page, and its preview, as they are.
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+    // Only a lesson of the previewed course keeps it; the footer can also lead to another course or to progress.
+    if (topic && activeCourse.topics.some((item) => item.id === topic.id)) keepPreview()
     setQuery('')
     closeMobile()
   }
@@ -171,14 +178,6 @@ function CourseOutline() {
           </div>
           <Progress value={activeCourse.percent} aria-label={`${activeCourse.title} course progress`} className="mt-1.5 h-1 bg-graphite-700" />
         </div>
-        {preview && (
-          <div data-testid="course-preview" className="rounded-lg border border-amber/25 bg-amber/[0.06] px-2.5 py-2 text-[11px] leading-relaxed text-steel-300">
-            <p>You’re reading <span className="font-medium text-paper">{preview.lesson.title}</span>, which isn’t part of this course.</p>
-            <button type="button" onClick={() => { resetOutline(); endPreview(); select.current?.focus() }} className="relative hit-area mt-1 inline-flex min-h-8 items-center gap-1.5 font-medium text-cyan hover:text-paper">
-              <ArrowLeft aria-hidden className="size-3" />Back to {preview.from.title}
-            </button>
-          </div>
-        )}
         <div className="relative">
           <Search aria-hidden className="pointer-events-none absolute left-3 top-3 size-3.5 text-steel-500" />
           <input aria-label="Filter course lessons" type="search" value={query} onChange={(event) => { setQuery(event.target.value); setClosedGroups(new Set()) }} placeholder="Find a lesson in this course" className="h-10 w-full min-w-0 rounded-lg border border-white/[0.08] bg-graphite-900/60 pl-8 pr-8 text-base text-paper placeholder:text-steel-500 focus-visible:border-cyan focus-visible:outline-none xl:text-xs" />
@@ -187,6 +186,25 @@ function CourseOutline() {
       </div>
 
       <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pb-4 [scrollbar-width:thin]">
+        {/* Inside the scrolling list, so on a short phone the note never squeezes out the lessons being previewed. */}
+        {preview && (
+          <div data-testid="course-preview" className="mx-1 mb-2 rounded-lg border border-amber/25 bg-amber/[0.06] px-2.5 py-2 text-[11px] leading-relaxed text-steel-300">
+            <p>You’re reading <span className="font-medium text-paper">{preview.lesson.title}</span>, which isn’t part of this course.</p>
+            <button
+              type="button"
+              onClick={(event) => {
+                // Hand focus back only if the button had it: focusing a select during a tap opens its picker on iOS.
+                const hadFocus = document.activeElement === event.currentTarget
+                resetOutline()
+                endPreview()
+                if (hadFocus) select.current?.focus()
+              }}
+              className="relative hit-area mt-1 inline-flex min-h-8 items-center gap-1.5 font-medium text-cyan hover:text-paper"
+            >
+              <ArrowLeft aria-hidden className="size-3" />Back to {preview.from.title}
+            </button>
+          </div>
+        )}
         <nav aria-label="Course lessons">
           <p className={cn('px-3 pb-2 text-[11px] text-steel-500', !query && 'sr-only')} role="status" aria-live="polite">{outlineStatus}</p>
           {groups.length && activeCourse.kind === 'path' ? (
@@ -216,7 +234,7 @@ function CourseOutline() {
       </div>
 
       <div className="shrink-0 space-y-2 border-t border-white/[0.07] bg-graphite-950 p-3">
-        <Link to={nextUp.topic ? topicHref(nextUp.topic) : '/progress'} onClick={openLesson} className="tactile relative hit-area flex min-h-12 items-center gap-3 rounded-lg border border-cyan/20 bg-cyan/[0.06] px-3 py-2.5 hover:border-cyan/50">
+        <Link to={nextUp.topic ? topicHref(nextUp.topic) : '/progress'} onClick={(event) => openLesson(event, nextUp.topic)} className="tactile relative hit-area flex min-h-12 items-center gap-3 rounded-lg border border-cyan/20 bg-cyan/[0.06] px-3 py-2.5 hover:border-cyan/50">
           <span className="min-w-0 flex-1"><span className="block text-[10px] font-medium text-cyan">{nextUp.topic ? nextUp.label : activeCourse.completed === activeCourse.total ? 'Course complete' : 'Course progress'}</span><span className="mt-0.5 block text-xs font-medium leading-relaxed text-paper">{nextUp.topic?.title ?? 'Review your progress'}</span></span><ArrowRight aria-hidden className="size-4 shrink-0 text-cyan" />
         </Link>
         <div className="flex items-center justify-between gap-2 text-[11px]">
@@ -228,12 +246,12 @@ function CourseOutline() {
   )
 }
 
-function LessonRow({ entry, onNavigate }: { entry: NavigationEntry; onNavigate: () => void }) {
+function LessonRow({ entry, onNavigate }: { entry: NavigationEntry; onNavigate: (event: MouseEvent, topic: Topic) => void }) {
   const { topic, position, status, isCurrent } = entry
   const label = status === 'done' ? 'Completed' : status === 'started' ? 'In progress' : 'Not started'
   return (
     <li>
-      <Link to={topicHref(topic)} aria-current={isCurrent ? 'page' : undefined} aria-label={`${position}. ${topic.title}. ${isCurrent ? 'Current lesson. ' : ''}${label}.`} onClick={onNavigate} className={cn('relative hit-area my-0.5 flex min-h-11 items-start gap-2 rounded-md border px-2 py-2.5 text-xs transition-colors', isCurrent ? 'border-cyan/25 bg-cyan/[0.09] text-paper' : 'border-transparent text-steel-300 hover:bg-white/[0.04] hover:text-paper')}>
+      <Link to={topicHref(topic)} aria-current={isCurrent ? 'page' : undefined} aria-label={`${position}. ${topic.title}. ${isCurrent ? 'Current lesson. ' : ''}${label}.`} onClick={(event) => onNavigate(event, topic)} className={cn('relative hit-area my-0.5 flex min-h-11 items-start gap-2 rounded-md border px-2 py-2.5 text-xs transition-colors', isCurrent ? 'border-cyan/25 bg-cyan/[0.09] text-paper' : 'border-transparent text-steel-300 hover:bg-white/[0.04] hover:text-paper')}>
         <span aria-hidden className={cn('mt-0.5 grid size-4 shrink-0 place-items-center font-mono text-[10px]', status === 'done' ? 'text-ok' : isCurrent ? 'text-cyan' : status === 'started' ? 'text-amber' : 'text-steel-500')}>
           {status === 'done' ? <Check className="size-3.5" /> : status === 'started' ? <Circle className="size-2.5 fill-current" /> : String(position).padStart(2, '0')}
         </span>

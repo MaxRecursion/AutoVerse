@@ -152,6 +152,35 @@ test('choosing a course without the open lesson previews it and never leaves the
   expect(await page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('autoverse.progress') ?? '{"state":{}}').state.completed ?? {}).length)).toBe(0)
 })
 
+test('a preview ends with its page visit, and its next-lesson link keeps the course', async ({ page }) => {
+  test.setTimeout(90_000)
+  const savedCourse = () => page.evaluate(() => JSON.parse(localStorage.getItem('autoverse.preferences') ?? '{"state":{}}').state.courseId)
+  const heading = page.getByRole('heading', { level: 1 })
+  const route = page.getByRole('region', { name: 'Your place in this learning route' })
+  await open(page, '/topics/four-stroke-cycle')
+  let panel = await coursePanel(page)
+  await panel.getByLabel('Course', { exact: true }).selectOption({ label: 'Stopping, steering and grip' })
+  await expect(panel.getByTestId('course-preview')).toBeVisible()
+
+  // Leave through the lesson's own route panel, then come back with the browser's Back button.
+  if (page.viewportSize()!.width < 1280) await page.keyboard.press('Escape')
+  await route.getByRole('link', { name: /After this lesson.*Torque and Power/ }).click()
+  await expect(heading).toHaveText('Torque and Power')
+  await page.goBack()
+  await expect(heading).toHaveText('The Four-Stroke Cycle')
+  panel = await coursePanel(page)
+  await expect(panel.getByTestId('course-preview')).toHaveCount(0)
+  await expect(panel.getByLabel('Course', { exact: true })).toHaveValue('how-a-car-moves')
+  await expect(panel.getByRole('navigation', { name: 'Course lessons', exact: true }).locator('a[aria-current="page"]')).toContainText('The Four-Stroke Cycle')
+
+  // The preview's own next-lesson link opens a lesson of that course and keeps it.
+  await panel.getByLabel('Course', { exact: true }).selectOption({ label: 'Stopping, steering and grip' })
+  await panel.getByRole('link', { name: /Start here\s*Brake Hydraulics/ }).click()
+  await expect(heading).toHaveText('Brake Hydraulics')
+  expect(await savedCourse()).toBe('stopping-steering-and-grip')
+  await expect(route).toContainText('Stopping, steering and grip')
+})
+
 test('the narrow-screen course drawer keeps navigation reachable, returns focus and closes after a lesson link', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 820 })
   await open(page, '/topics/how-a-car-works')
