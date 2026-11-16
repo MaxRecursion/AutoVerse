@@ -73,16 +73,16 @@ export default function ProgressPage() {
   const hasAny = recentTopics.length + completedTopics.length + bookmarkTopics.length + quizRows.length > 0
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
+    <div className="mx-auto max-w-6xl px-4 py-5 sm:px-6 lg:py-6">
       <header className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div className="max-w-2xl">
           <p className="eyebrow">My progress</p>
-          <h1 className="mt-2 text-3xl font-semibold text-paper sm:text-4xl">Your learning so far</h1>
+          <h1 className="mt-1 text-2xl font-semibold text-paper sm:text-3xl">Your learning so far</h1>
         </div>
         <ClearAllButton disabled={!hasAny} />
       </header>
 
-      <p className="mt-5 flex max-w-3xl items-start gap-3 rounded-lg border border-line/[0.07] bg-graphite-900/60 px-4 py-3 text-sm leading-relaxed text-steel-300">
+      <p className="mt-3 flex max-w-3xl items-start gap-2 rounded-lg border border-line/[0.07] bg-graphite-900/60 px-3 py-2 text-xs leading-relaxed text-steel-300">
         <HardDrive aria-hidden className="mt-0.5 size-4 shrink-0 text-cyan" />
         <span>
           Progress is stored only in this browser on this device. There is no account and nothing is sent to a server, so it does not sync between
@@ -90,7 +90,7 @@ export default function ProgressPage() {
         </span>
       </p>
 
-      <dl className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
+      <dl className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-4">
         <Stat label="Lessons completed" value={<AnimatedNumber value={completedTopics.length} />} detail={`of ${topics.length}`} />
         <Stat label="Bookmarks" value={<AnimatedNumber value={bookmarkTopics.length} />} />
         <Stat label="Quizzes taken" value={<AnimatedNumber value={quizRows.length} />} />
@@ -114,13 +114,14 @@ export default function ProgressPage() {
         </Block>
       )}
 
-      <div className="mt-10">
+      <div className="mt-6 grid grid-cols-1 items-start gap-6 lg:grid-cols-2" data-testid="progress-workspace">
+        <section aria-labelledby="activity-heading">
+          <h2 id="activity-heading" className="text-lg font-semibold text-paper">Activity</h2>
+          <p className="mb-3 mt-1 text-sm text-steel-400">Lessons, quizzes, certificates and practice by day.</p>
+          <ActivityCalendar />
+        </section>
         <GettingStarted variant="page" />
       </div>
-
-      <Block id="activity" title="Activity" description="Days you finished a lesson, took a quiz, earned a certificate or practised terms.">
-        <ActivityCalendar />
-      </Block>
 
       <Block id="practice" title="Practice" description="Flashcards for the car glossary: say whether you knew each term and it comes back until you do.">
         <div className="panel flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
@@ -140,7 +141,7 @@ export default function ProgressPage() {
 
       {paths.length > 0 && (
         <Block id="paths" title="Learning paths" description="Curated sequences of lessons. Lessons not written yet are skipped and noted.">
-          <ul className="grid gap-4 lg:grid-cols-2">
+          <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {paths.map((p) => (
               <li key={p.path.id}>
                 <PathCard
@@ -168,7 +169,7 @@ export default function ProgressPage() {
         </div>
       )}
 
-      <div className="grid gap-x-10 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-x-10 lg:grid-cols-2">
         {recentTopics.length > 0 && (
           <Block id="recent" title="Recently viewed">
             <TopicList
@@ -253,9 +254,9 @@ export default function ProgressPage() {
 
 function Stat({ label, value, detail }: { label: string; value: ReactNode; detail?: string }) {
   return (
-    <div className="panel flex flex-col gap-1 p-4">
+    <div className="panel flex flex-col gap-1 px-3 py-2.5">
       <dt className="text-xs text-steel-400">{label}</dt>
-      <dd className="font-display text-2xl tabular-nums text-paper">
+      <dd className="font-display text-xl tabular-nums text-paper">
         {value}
         {detail && <span className="ml-1 text-sm text-steel-400">{detail}</span>}
       </dd>
@@ -265,12 +266,12 @@ function Stat({ label, value, detail }: { label: string; value: ReactNode; detai
 
 function Block({ id, title, description, children }: { id: string; title: string; description?: string; children: ReactNode }) {
   return (
-    <section aria-labelledby={`${id}-heading`} className="mt-12">
+    <section aria-labelledby={`${id}-heading`} className="mt-6">
       <h2 id={`${id}-heading`} className="text-lg font-semibold text-paper">
         {title}
       </h2>
       {description && <p className="mt-1 text-sm text-steel-400">{description}</p>}
-      <div className="mt-4">{children}</div>
+      <div className="mt-3">{children}</div>
     </section>
   )
 }

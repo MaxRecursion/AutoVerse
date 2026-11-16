@@ -59,9 +59,9 @@ export function ActivityCalendar() {
   const atCurrentMonth = cursor.year === nowMonth.getFullYear() && cursor.month === nowMonth.getMonth()
 
   return (
-    <div className="panel flex flex-col gap-5 p-4 sm:p-5" data-testid="activity-calendar">
+    <div className="panel flex flex-col gap-3 p-3 sm:p-4" data-testid="activity-calendar">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="font-display text-lg text-paper" aria-live="polite">
+        <h3 className="font-display text-base text-paper" aria-live="polite">
           {monthName.format(new Date(cursor.year, cursor.month, 1))}
         </h3>
         <div className="flex items-center gap-1.5">
@@ -77,7 +77,7 @@ export function ActivityCalendar() {
         </div>
       </div>
 
-      <dl className="grid grid-cols-2 gap-3">
+      <dl className="grid grid-cols-2 gap-2">
         <div className="track flex items-center gap-3 rounded-lg border border-line/[0.06] px-3 py-2">
           <Flame aria-hidden className={cn('size-5', current > 0 ? 'text-amber' : 'text-steel-500')} />
           <div>
@@ -97,7 +97,7 @@ export function ActivityCalendar() {
         </div>
       </dl>
 
-      <div>
+      <div className="mx-auto w-full max-w-sm" data-testid="activity-month">
         <div aria-hidden className="mb-1.5 grid grid-cols-7 gap-1.5 text-center font-mono text-[11px] uppercase tracking-wider text-steel-500">
           {WEEKDAYS.map((d) => (
             <span key={d}>{d}</span>
@@ -118,7 +118,7 @@ export function ActivityCalendar() {
                   disabled={!cell.inMonth}
                   onClick={() => setChosen(cell.key)}
                   className={cn(
-                    'relative flex aspect-square w-full items-center justify-center rounded-lg font-mono text-xs tabular-nums outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan',
+                    'relative flex h-9 w-full items-center justify-center rounded-md font-mono text-xs tabular-nums outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan pointer-coarse:h-11',
                     cell.inMonth ? SHADE[Math.min(items.length, 3)] : 'opacity-25',
                     items.length > 0 ? 'text-paper' : 'text-steel-400',
                     cell.inMonth && 'hover:ring-1 hover:ring-line/30',
@@ -134,7 +134,7 @@ export function ActivityCalendar() {
         </ul>
       </div>
 
-      <div aria-live="polite" className="min-h-14">
+      <div aria-live="polite" className="min-h-10 border-t border-line/[0.06] pt-3">
         {shown ? (
           <>
             <p className="eyebrow">{longDay.format(parseKey(shown))}</p>
@@ -152,10 +152,13 @@ export function ActivityCalendar() {
           <p className="text-sm text-steel-400">Choose a day to see what you did.</p>
         )}
       </div>
-      <p className="text-xs leading-relaxed text-steel-500">
-        Built from your progress in this browser. Finished lessons, quizzes, certificates and practised terms are kept with their dates, but only your last 12
-        lesson visits are, so days further back can look quieter than they were.
-      </p>
+      <details className="text-xs text-steel-500">
+        <summary className="relative hit-area w-fit cursor-pointer py-1 hover:text-paper">What activity includes</summary>
+        <p className="mt-2 leading-relaxed">
+          Built from your progress in this browser. Finished lessons, quizzes, certificates and practised terms are kept with their dates, but only your last 12
+          lesson visits are, so days further back can look quieter than they were.
+        </p>
+      </details>
     </div>
   )
 }

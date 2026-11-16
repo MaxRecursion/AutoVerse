@@ -17,10 +17,10 @@ export function Header() {
   const startTour = useStartTour()
   return (
     <header className="sticky top-0 z-40 border-b border-line/[0.06] bg-graphite-950/85 pt-[env(safe-area-inset-top)] backdrop-blur-lg [view-transition-name:site-header]">
-      <div className="mx-auto flex h-14 max-w-[1600px] items-center gap-2 px-3 sm:gap-4 sm:px-6">
+      <div className="mx-auto flex h-14 max-w-[1600px] items-center gap-2 px-3 sm:gap-2.5 sm:px-4">
         <CourseNavigationTrigger />
         <Logo compactOnPhone />
-        <nav aria-label="Primary" data-tour="nav" className="ml-4 hidden items-center gap-1 xl:flex">
+        <nav aria-label="Primary" data-tour="nav" className="ml-2 hidden items-center gap-0.5 xl:flex">
           {primaryNav.map((item) => <NavigationLink key={item.to} item={item} />)}
         </nav>
         <div className="ml-auto flex items-center gap-1 sm:gap-2 pointer-coarse:gap-2.5">

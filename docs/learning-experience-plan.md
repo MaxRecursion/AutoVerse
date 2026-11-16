@@ -124,3 +124,10 @@ This is an exploration tool, so simply visiting or listening does not complete l
 7. **Carry layers into the system map and explorer** (completion rings on map nodes; "visited" markers on explorer systems).
 
 Consider progress export or cross-device sync after the core learning flow is clear.
+
+
+## Compact workspaces
+
+Use space for the task: keep a logical control group together within a typical laptop viewport, rather than scaling decorative cards with the screen width. The progress calendar has bounded day heights and a bounded month width; activity and the getting-started checklist sit side by side on desktop and stack on phones. Keep selected-day details below the month, with recording limitations available in an expandable note. Course navigation uses a 256 px outline with compact rows, preserving the current lesson, completion state and continuation action.
+
+The Sound Lab starts with a short instruction and an expandable introduction that always identifies the audio as synthesised. Engine selection is a bounded scrolling list on desktop and a horizontal strip on phones. Keep engine identity, playback, speed/throttle and the 3D cutaway in one workspace; put firing analysis and bank experiments in distinct sections below. Default the cutaway to a compact viewport-relative height, with an explicit Expand view control for close inspection that preserves the canvas, running engine and settings. Group camera and cylinder controls beneath it; longer mechanism/exhaust explanations remain available in the view guide. Preserve readable text, keyboard actions, touch targets, theme contrast, reduced-motion behaviour and all progress evidence rules when making layouts denser.

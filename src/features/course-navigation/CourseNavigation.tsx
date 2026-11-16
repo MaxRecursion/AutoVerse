@@ -101,10 +101,10 @@ export function CourseNavigationSidebar() {
   const { pathname } = useLocation()
   if (!navigation) return null
   return (
-    <aside aria-label="Course navigation" data-testid="course-sidebar" className={cn('sticky top-[calc(3.5rem+env(safe-area-inset-top))] h-[calc(100dvh-3.5rem-env(safe-area-inset-top))] w-[280px] shrink-0 self-start flex-col border-r border-line/[0.07] bg-graphite-950/80 print:hidden', navigation.collapsed ? 'hidden' : 'hidden xl:flex')}>
-      <div className="flex h-12 shrink-0 items-center gap-2 border-b border-line/[0.06] px-4">
+    <aside aria-label="Course navigation" data-testid="course-sidebar" className={cn('sticky top-[calc(3.5rem+env(safe-area-inset-top))] h-[calc(100dvh-3.5rem-env(safe-area-inset-top))] w-64 shrink-0 self-start flex-col border-r border-line/[0.07] bg-graphite-950/80 print:hidden', navigation.collapsed ? 'hidden' : 'hidden xl:flex')}>
+      <div className="flex h-10 shrink-0 items-center gap-2 border-b border-line/[0.06] px-3">
         <BookOpen aria-hidden className="size-4 text-nav-learn" />
-        <p className="flex-1 text-sm font-semibold text-paper">Your learning space</p>
+        <p className="flex-1 text-xs font-semibold text-paper">Your learning space</p>
         <Button data-course-nav-toggle="collapse" variant="ghost" size="icon" className="size-8" aria-label="Collapse course navigation" title="Collapse course navigation" onClick={() => navigation.collapse(true)}><PanelLeftClose aria-hidden className="size-4" /></Button>
       </div>
       <CourseOutline key={`${pathname}:desktop`} />
@@ -160,17 +160,17 @@ function CourseOutline() {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      <div className="shrink-0 space-y-3 p-4">
+      <div className="shrink-0 space-y-2 p-3">
         <div>
           <label htmlFor={`${uid}-course`} className="eyebrow block text-[10px]">Course</label>
-          <div className="relative mt-2">
-            <select ref={select} id={`${uid}-course`} value={activeCourse.id} onChange={(event) => { resetOutline(); chooseCourse(event.target.value) }} className="tactile h-11 w-full min-w-0 appearance-none truncate rounded-lg border border-line/10 bg-graphite-900 pl-3 pr-8 text-sm font-medium text-paper focus-visible:border-nav-learn focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-nav-learn/25">
+          <div className="relative mt-1">
+            <select ref={select} id={`${uid}-course`} value={activeCourse.id} onChange={(event) => { resetOutline(); chooseCourse(event.target.value) }} className="tactile h-9 w-full min-w-0 appearance-none truncate rounded-md border border-line/10 bg-graphite-900 pl-2.5 pr-8 text-sm font-medium text-paper focus-visible:border-nav-learn focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-nav-learn/25 pointer-coarse:h-11">
               {model.courses.map((course) => <option key={course.id} value={course.id}>{course.title}</option>)}
             </select>
-            <ChevronDown aria-hidden className="pointer-events-none absolute right-3 top-3.5 size-4 text-steel-400" />
+            <ChevronDown aria-hidden className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-steel-400" />
           </div>
         </div>
-        <div className="rounded-lg border border-nav-learn/15 bg-nav-learn/[0.035] p-2.5" data-testid="course-position">
+        <div className="rounded-md border border-nav-learn/15 bg-nav-learn/[0.035] px-2 py-1.5" data-testid="course-position">
           <div className="flex items-center justify-between gap-2">
             <p className="font-mono text-[11px] font-medium text-nav-learn">{position ? `Lesson ${position} of ${activeCourse.total}` : `${activeCourse.total} lessons in this course`}</p>
             {currentTopic && <Button variant="ghost" size="icon" className="size-7 shrink-0 text-nav-learn" aria-label="Find current lesson" title="Find current lesson" onClick={() => { setQuery(''); setClosedGroups(new Set()); setLocateRequest((request) => request + 1) }}><LocateFixed aria-hidden className="size-3.5" /></Button>}
@@ -181,8 +181,8 @@ function CourseOutline() {
           <Progress value={activeCourse.percent} aria-label={`${activeCourse.title} course progress`} className="mt-1.5 h-1 bg-graphite-700" />
         </div>
         <div className="relative">
-          <Search aria-hidden className="pointer-events-none absolute left-3 top-3 size-3.5 text-steel-500" />
-          <input aria-label="Filter course lessons" type="search" value={query} onChange={(event) => { setQuery(event.target.value); setClosedGroups(new Set()) }} placeholder="Find a lesson in this course" className="h-10 w-full min-w-0 rounded-lg border border-line/[0.08] bg-graphite-900/60 pl-8 pr-8 text-base text-paper placeholder:text-steel-500 focus-visible:border-nav-learn focus-visible:outline-none xl:text-xs" />
+          <Search aria-hidden className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-steel-500" />
+          <input aria-label="Filter course lessons" type="search" value={query} onChange={(event) => { setQuery(event.target.value); setClosedGroups(new Set()) }} placeholder="Find a lesson" className="h-9 w-full min-w-0 rounded-md border border-line/[0.08] bg-graphite-900/60 pl-8 pr-8 text-base text-paper placeholder:text-steel-500 focus-visible:border-nav-learn focus-visible:outline-none xl:text-xs pointer-coarse:h-11" />
           {query && <button type="button" aria-label="Clear lesson filter" onClick={() => setQuery('')} className="absolute right-1 top-1 grid size-8 place-items-center rounded text-steel-400 hover:text-paper"><X aria-hidden className="size-3.5" /></button>}
         </div>
       </div>
@@ -235,8 +235,8 @@ function CourseOutline() {
         </nav>
       </div>
 
-      <div className="shrink-0 space-y-2 border-t border-line/[0.07] bg-graphite-950 p-3">
-        <Link to={nextUp.topic ? topicHref(nextUp.topic) : '/progress'} onClick={(event) => openLesson(event, nextUp.topic)} className="tactile relative hit-area flex min-h-12 items-center gap-3 rounded-lg border border-nav-learn/20 bg-nav-learn/[0.06] px-3 py-2.5 hover:border-nav-learn/50">
+      <div className="shrink-0 space-y-1 border-t border-line/[0.07] bg-graphite-950 p-2">
+        <Link to={nextUp.topic ? topicHref(nextUp.topic) : '/progress'} onClick={(event) => openLesson(event, nextUp.topic)} className="tactile relative hit-area flex min-h-11 items-center gap-2 rounded-md border border-nav-learn/20 bg-nav-learn/[0.06] px-2.5 py-2 hover:border-nav-learn/50">
           <span className="min-w-0 flex-1"><span className="block text-[10px] font-medium text-nav-learn">{nextUp.topic ? nextUp.label : activeCourse.completed === activeCourse.total ? 'Course complete' : 'Course progress'}</span><span className="mt-0.5 block text-xs font-medium leading-relaxed text-paper">{nextUp.topic?.title ?? 'Review your progress'}</span></span><ArrowRight aria-hidden className="size-4 shrink-0 text-nav-learn" />
         </Link>
         <div className="flex items-center justify-between gap-2 text-[11px]">
@@ -253,7 +253,7 @@ function LessonRow({ entry, onNavigate }: { entry: NavigationEntry; onNavigate: 
   const label = status === 'done' ? 'Completed' : status === 'started' ? 'In progress' : 'Not started'
   return (
     <li>
-      <Link to={topicHref(topic)} aria-current={isCurrent ? 'page' : undefined} aria-label={`${position}. ${topic.title}. ${isCurrent ? 'Current lesson. ' : ''}${label}.`} onClick={(event) => onNavigate(event, topic)} className={cn('relative hit-area my-0.5 flex min-h-11 items-start gap-2 rounded-md border px-2 py-2.5 text-xs transition-colors', isCurrent ? 'navigation-course-current border-l-[3px]' : 'border-transparent text-steel-300 hover:bg-tint/[0.04] hover:text-paper')}>
+      <Link to={topicHref(topic)} aria-current={isCurrent ? 'page' : undefined} aria-label={`${position}. ${topic.title}. ${isCurrent ? 'Current lesson. ' : ''}${label}.`} onClick={(event) => onNavigate(event, topic)} className={cn('relative hit-area my-0.5 flex min-h-8 items-start gap-2 rounded-md border px-2 py-1.5 text-xs transition-colors pointer-coarse:min-h-11', isCurrent ? 'navigation-course-current border-l-[3px]' : 'border-transparent text-steel-300 hover:bg-tint/[0.04] hover:text-paper')}>
         <span aria-hidden className={cn('mt-0.5 grid size-4 shrink-0 place-items-center font-mono text-[10px]', status === 'done' ? 'text-ok' : isCurrent ? 'text-nav-learn' : status === 'started' ? 'text-amber' : 'text-steel-500')}>
           {status === 'done' ? <Check className="size-3.5" /> : status === 'started' ? <Circle className="size-2.5 fill-current" /> : String(position).padStart(2, '0')}
         </span>

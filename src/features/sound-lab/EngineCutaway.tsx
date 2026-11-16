@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react'
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Box, RotateCcw, ZoomIn, ZoomOut } from 'lucide-react'
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Box, Maximize2, Minimize2, RotateCcw, ZoomIn, ZoomOut } from 'lucide-react'
 import { useStore } from 'zustand'
 import type { Camera } from 'three'
 import { LabStoreContext } from '@/components/three/LabContext'
@@ -90,6 +90,7 @@ const cylinderName = (event: FiringEvent) => event.cylinder === null ? `bank ${e
 export default function EngineCutaway({ spec, events, bankAngle, sense, bus, running, reduced }: EngineCutawayProps) {
   const [store] = useState(() => createLabStore(engineLabConfig, { autoplay: false }))
   const [view, setView] = useState<CutawayView>('detail')
+  const [expanded, setExpanded] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [aspect, setAspect] = useState(1.4)
   const viewport = useRef<HTMLDivElement>(null)
@@ -167,16 +168,20 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, run
 
   return (
     <section className="min-w-0 overflow-hidden rounded-xl border border-cyan/20 bg-graphite-950/60" aria-labelledby="engine-cutaway-heading" data-testid="engine-cutaway" data-view={view} data-scene={v10 ? 'v10' : 'generic'}>
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line/[0.06] p-3 sm:p-4">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line/[0.06] px-3 py-2">
         <div>
-          <h3 id="engine-cutaway-heading" className="flex items-center gap-2 font-semibold text-paper"><Box aria-hidden className="size-4 text-cyan" />3D engine cutaway</h3>
-          <p className="mt-1 text-xs leading-relaxed text-steel-400">Follow the pistons, rods, crankshaft, cams and valves.</p>
+          <h3 id="engine-cutaway-heading" className="flex items-center gap-2 text-sm font-semibold text-paper"><Box aria-hidden className="size-4 text-cyan" />3D engine cutaway</h3>
         </div>
-        <Segmented value={view} onValueChange={setView} options={VIEWS} aria-label="Engine cutaway view" size="sm" className="max-w-full" />
+        <div className="flex min-w-0 flex-wrap items-center gap-1.5">
+          <Segmented value={view} onValueChange={setView} options={VIEWS} aria-label="Engine cutaway view" size="sm" className="max-w-full" />
+          <Button variant="ghost" size="sm" aria-label={expanded ? 'Use compact engine view' : 'Expand engine view'} aria-pressed={expanded} onClick={() => setExpanded((value) => !value)} className="h-8 px-2 text-xs">
+            {expanded ? <Minimize2 aria-hidden /> : <Maximize2 aria-hidden />}<span className="sr-only sm:not-sr-only">{expanded ? 'Compact view' : 'Expand view'}</span>
+          </Button>
+        </div>
       </div>
 
       <LabStoreContext.Provider value={store}>
-        <div ref={viewport} className="h-[420px] min-w-0 bg-[radial-gradient(ellipse_at_center,rgb(56_215_242/0.035),transparent_70%)] sm:h-[520px]" data-testid="engine-cutaway-canvas">
+        <div ref={viewport} className={cn('min-w-0 bg-[radial-gradient(ellipse_at_center,rgb(56_215_242/0.035),transparent_70%)]', expanded ? 'h-[min(70svh,640px)]' : 'h-[clamp(240px,32svh,360px)]')} data-testid="engine-cutaway-canvas">
           {mounted ? (
             <SceneCanvas
               label={
@@ -213,42 +218,51 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, run
         </div>
       </LabStoreContext.Provider>
 
-      <div className="flex flex-col gap-4 border-t border-line/[0.06] p-3 sm:p-4">
-        <div className="flex flex-wrap items-center gap-3" role="group" aria-label="3D camera controls">
-          <div className="flex flex-wrap gap-2">
-            {ORBITS.map(({ label, icon: Icon, yaw, pitch }) => (
-              <Button key={label} variant="outline" size="icon" className="size-10" aria-label={label} title={label} onClick={() => moveCamera(yaw, pitch)} disabled={!cameraReady}><Icon aria-hidden /></Button>
-            ))}
+      <div className="flex flex-col gap-2 border-t border-line/[0.06] px-3 py-2">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <div className="flex flex-wrap items-center gap-2" role="group" aria-label="3D camera controls">
+            <div className="flex flex-wrap gap-1.5">
+              {ORBITS.map(({ label, icon: Icon, yaw, pitch }) => (
+                <Button key={label} variant="outline" size="icon" className="size-8 pointer-coarse:size-10" aria-label={label} title={label} onClick={() => moveCamera(yaw, pitch)} disabled={!cameraReady}><Icon aria-hidden /></Button>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              <Button variant="outline" size="icon" className="size-8 pointer-coarse:size-10" aria-label="Zoom into engine" title="Zoom in" onClick={() => moveCamera(0, 0, 0.82)} disabled={!cameraReady}><ZoomIn aria-hidden /></Button>
+              <Button variant="outline" size="icon" className="size-8 pointer-coarse:size-10" aria-label="Zoom out of engine" title="Zoom out" onClick={() => moveCamera(0, 0, 1.22)} disabled={!cameraReady}><ZoomOut aria-hidden /></Button>
+              <Button variant="ghost" className="h-8 px-2 text-xs pointer-coarse:h-10" aria-label="Reset 3D camera" onClick={() => store.getState().camera?.reset()} disabled={!cameraReady}><RotateCcw aria-hidden /><span className="hidden sm:inline">Reset</span></Button>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="icon" className="size-10" aria-label="Zoom into engine" title="Zoom in" onClick={() => moveCamera(0, 0, 0.82)} disabled={!cameraReady}><ZoomIn aria-hidden /></Button>
-            <Button variant="outline" size="icon" className="size-10" aria-label="Zoom out of engine" title="Zoom out" onClick={() => moveCamera(0, 0, 1.22)} disabled={!cameraReady}><ZoomOut aria-hidden /></Button>
-            <Button variant="ghost" className="h-10 px-3" aria-label="Reset 3D camera" onClick={() => store.getState().camera?.reset()} disabled={!cameraReady}><RotateCcw aria-hidden />Reset</Button>
+          <div className="flex min-w-0 max-w-full items-center gap-2">
+            <p className="text-xs font-medium text-steel-300">Cylinder</p>
+            <div className="flex min-w-0 gap-1.5 overflow-x-auto py-1 [scrollbar-width:thin] sm:flex-wrap sm:overflow-visible" role="group" aria-label="Choose a cylinder cutaway">
+              {events.map((event) => (
+                <button key={event.index} type="button" onClick={() => inspect(event.index)} aria-label={`Inspect ${cylinderName(event)}`} aria-pressed={view === 'detail' && selected.index === event.index} className={cn('relative hit-area min-h-7 min-w-7 shrink-0 rounded-md border px-1.5 font-mono text-xs transition-colors pointer-coarse:min-h-10 pointer-coarse:min-w-10', view === 'detail' && selected.index === event.index ? 'border-cyan/50 bg-cyan/10 text-cyan' : 'border-line/10 text-steel-300 hover:border-cyan/40 hover:text-paper')}>
+                  {event.cylinder ?? `${event.bank} · ${event.index + 1}`}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-        <p className="text-xs leading-relaxed text-steel-400">Drag to orbit; scroll or pinch to zoom. Every camera movement also has a button above.</p>
-        <div>
-          <p className="text-xs font-medium text-steel-300">Inspect a cylinder</p>
-          <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Choose a cylinder cutaway">
-            {events.map((event) => (
-              <button key={event.index} type="button" onClick={() => inspect(event.index)} aria-label={`Inspect ${cylinderName(event)}`} aria-pressed={view === 'detail' && selected.index === event.index} className={cn('relative hit-area min-h-9 min-w-9 rounded-md border px-2 font-mono text-xs transition-colors', view === 'detail' && selected.index === event.index ? 'border-cyan/50 bg-cyan/10 text-cyan' : 'border-line/10 text-steel-300 hover:border-cyan/40 hover:text-paper')}>
-                {event.cylinder ?? `${event.bank} · ${event.index + 1}`}
-              </button>
-            ))}
-          </div>
-          <p role="status" aria-live="polite" className="mt-2 text-xs leading-relaxed text-steel-400">
-            {view === 'detail' ? `Inspecting ${cylinderName(selected)}${partner ? ` and ${cylinderName(partner.event)}, its partner on the same crank throw` : ''}.` : `Showing all ${spec.cylinders} cylinders.`}
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+          <p role="status" aria-live="polite" className="text-xs leading-relaxed text-steel-400">
+            {view === 'detail' ? `Inspecting ${cylinderName(selected)}${partner ? ` + ${partner.event.cylinder ?? cylinderName(partner.event)} (crank pair)` : ''}.` : `Showing all ${spec.cylinders} cylinders.`}
             {spec.order === null ? ' Labels identify banks and firing events; a verified cylinder order is not published here.' : ''}
           </p>
-          {v10 && (
-            <p className="mt-1 text-xs leading-relaxed text-steel-400" data-testid="v10-throw-note">
-              {view === 'detail' ? pinNote : 'Gas leaves each cylinder as its exhaust valve opens, then mixes in the collectors.'}{' '}
-              {spec.separateBanks ? 'Each bank has its own exhaust.' : 'Both banks join one exhaust behind the engine.'}
-            </p>
-          )}
+          <details className="text-xs text-steel-400 open:w-full">
+            <summary className="relative hit-area w-fit cursor-pointer py-1 hover:text-paper">View guide and exhaust notes</summary>
+            <div className="mt-2 space-y-2 leading-relaxed">
+              <p>Drag to orbit; scroll or pinch to zoom. Every camera movement also has a button above.</p>
+              {v10 && (
+                <p className="mt-1 text-xs leading-relaxed text-steel-400" data-testid="v10-throw-note">
+                  {view === 'detail' ? pinNote : 'Gas leaves each cylinder as its exhaust valve opens, then mixes in the collectors.'}{' '}
+                  {spec.separateBanks ? 'Each bank has its own exhaust.' : 'Both banks join one exhaust behind the engine.'}
+                </p>
+              )}
+              <p className="text-xs leading-relaxed text-steel-400" data-testid="exhaust-flow-note">{exhaust.note}</p>
+              <p className="text-xs leading-relaxed text-steel-500">Illustrative cutaway: firing and bank geometry follow the production preset; dimensions and the DOHC valvetrain are teaching examples.</p>
+            </div>
+          </details>
         </div>
-        <p className="text-xs leading-relaxed text-steel-400" data-testid="exhaust-flow-note">{exhaust.note}</p>
-        <p className="text-xs leading-relaxed text-steel-500">Illustrative cutaway: firing and bank geometry follow the production preset; dimensions and the DOHC valvetrain are teaching examples.</p>
       </div>
     </section>
   )

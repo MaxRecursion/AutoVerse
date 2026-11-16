@@ -95,82 +95,98 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
   const pattern = describeIntervals(intervals)
 
   return (
-    <div className="mx-auto max-w-[1400px] px-4 pb-20 pt-6 sm:px-6 lg:pt-10">
+    <div className="mx-auto max-w-[1400px] px-4 pb-12 pt-4 sm:px-6">
       <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Engine Sound Lab' }]} />
-      <header className="max-w-3xl">
-        <p className="eyebrow flex items-center gap-2">
-          <span aria-hidden className="h-px w-6 bg-amber" />
-          Signature lab · Sound
-        </p>
-        <h1 className="mt-2 text-4xl font-semibold tracking-tight text-paper sm:text-5xl">Engine Sound Lab</h1>
-        <p className="mt-4 text-base leading-relaxed text-steel-300 sm:text-[17px]">
-          Why does a V8 burble, a flat-plane V8 shriek, and a 90° V10 bark while a 72° V10 howls? It comes down to when each cylinder fires,
-          and into which pipe. Pick one of {engines.length} engines from real production cars, from three cylinders to ten, and hear its
-          firing rhythm, including all nine V10 families featured in the reference video. Then bend a V engine’s bank angle and crankpins and hear the rhythm change.
-        </p>
-        <p className="mt-3 text-sm leading-relaxed text-steel-400">
-          <strong className="text-steel-300">Synthesised, not recorded.</strong> The timing of every firing, the firing order and which bank’s
-          exhaust each pulse goes to come from the real engines. The tone (exhaust length, brightness, rasp) is tuned by ear, so treat it as
-          a faithful rhythm with an illustrative voice. RPM ranges are representative simulation settings. Headphones help: presets with separate bank exhausts play across the left and right channels.
-        </p>
+      <header>
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h1 className="text-2xl font-semibold tracking-tight text-paper sm:text-3xl">Engine Sound Lab</h1>
+          <p className="eyebrow">Signature lab · {engines.length} production engines · 3–10 cylinders</p>
+        </div>
+        <p className="mt-2 max-w-4xl text-sm leading-relaxed text-steel-300">Hear each engine’s firing rhythm, inspect the moving cutaway, then try different revs, throttle and bank geometry.</p>
+        <details className="mt-1 max-w-4xl text-sm">
+          <summary className="relative hit-area w-fit cursor-pointer py-1 text-xs text-steel-400 hover:text-paper">About the sound · Synthesised, not recorded.</summary>
+          <div className="mt-2 rounded-lg border border-line/[0.08] p-3">
+            <p className="text-sm leading-relaxed text-steel-300">
+              Why does a V8 burble, a flat-plane V8 shriek, and a 90° V10 bark while a 72° V10 howls? It comes down to when each cylinder fires,
+              and into which pipe. Pick one of {engines.length} engines from real production cars, from three cylinders to ten, and hear its
+              firing rhythm, including all nine V10 families featured in the reference video. Then bend a V engine’s bank angle and crankpins and hear the rhythm change.
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-steel-400">
+              <strong className="text-steel-300">Production timing, illustrative tone.</strong> The timing of every firing, the firing order and which bank’s
+              exhaust each pulse goes to come from the real engines. The tone (exhaust length, brightness, rasp) is tuned by ear, so treat it as
+              a faithful rhythm with an illustrative voice. RPM ranges are representative simulation settings. Headphones help: presets with separate bank exhausts play across the left and right channels.
+            </p>
+          </div>
+        </details>
       </header>
 
-      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)]">
+      <div className="mt-4 grid grid-cols-1 items-start gap-3 lg:grid-cols-[200px_minmax(0,1fr)]">
         <EnginePicker current={spec.id} onPick={onPick} />
 
-        <section aria-labelledby="engine-heading" className="panel flex min-w-0 flex-col gap-6 p-4 sm:p-6">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="min-w-0">
-              <p className="eyebrow">
-                {spec.cylinders} cylinders · {LAYOUT_LABEL[spec.layout]}
-                {spec.layout === 'v' ? ` · ${spec.bankAngle}°` : ''}
-              </p>
-              <h2 id="engine-heading" className="mt-1 text-2xl font-semibold text-paper sm:text-3xl">
-                {spec.name}
-              </h2>
-              <p className="mt-1 text-steel-300">{spec.engine}</p>
-              <p className="mt-1 text-sm text-steel-400">{spec.cars.join(' · ')}</p>
-            </div>
-            <div role="group" aria-label="Engine playback controls" className="grid w-full max-w-[320px] shrink-0 grid-cols-[minmax(0,96px)_minmax(0,1fr)] items-center gap-3 sm:grid-cols-[120px_minmax(0,1fr)]">
-              <Tachometer bus={bus} redlineRpm={spec.redlineRpm} reduced={reduced} />
-              <div className="flex min-w-0 flex-col gap-2">
-                <Button size="lg" className="h-11 w-full min-w-0 px-2 text-sm sm:h-12 sm:px-4 sm:text-[15px]" onClick={toggle} disabled={!sound.supported || sound.loading} data-testid="sound-lab-start" aria-pressed={sound.running}>
-                  {sound.running ? <Square aria-hidden /> : <Play aria-hidden />}
-                  {sound.loading ? 'Starting…' : sound.running ? 'Stop engine' : 'Start engine'}
-                </Button>
-                <Button
-                  variant="outline"
-                  className={cn('h-11 w-full min-w-0 select-none touch-none px-2 text-sm sm:px-4', revving && 'border-amber/60 text-amber')}
-                  aria-pressed={revving}
-                  onPointerDown={() => setRevving(true)}
-                  onPointerUp={() => setRevving(false)}
-                  onPointerLeave={() => setRevving(false)}
-                  onPointerCancel={() => setRevving(false)}
-                  onKeyDown={revKey(true)}
-                  onKeyUp={revKey(false)}
-                  onBlur={() => setRevving(false)}
-                >
-                  <Gauge aria-hidden /> Hold to rev
-                </Button>
+        <section aria-labelledby="engine-heading" className="panel flex min-w-0 flex-col gap-4 p-3 sm:p-4">
+          <div className="space-y-3" data-testid="engine-workspace">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="eyebrow">
+                  {spec.cylinders} cylinders · {LAYOUT_LABEL[spec.layout]}
+                  {spec.layout === 'v' ? ` · ${spec.bankAngle}°` : ''}
+                </p>
+                <h2 id="engine-heading" className="mt-1 text-xl font-semibold text-paper sm:text-2xl">
+                  {spec.name}
+                </h2>
+                <p className="mt-1 text-sm text-steel-300">{spec.engine}</p>
+                <p className="mt-1 text-xs text-steel-400">{spec.cars.join(' · ')}</p>
+              </div>
+              <div role="group" aria-label="Engine playback controls" className="grid w-full max-w-[240px] shrink-0 grid-cols-[72px_minmax(0,1fr)] items-center gap-2 sm:w-[240px]">
+                <Tachometer bus={bus} redlineRpm={spec.redlineRpm} reduced={reduced} />
+                <div className="flex min-w-0 flex-col gap-2">
+                  <Button size="sm" className="h-8 w-full min-w-0 px-2 text-xs pointer-coarse:h-11" onClick={toggle} disabled={!sound.supported || sound.loading} data-testid="sound-lab-start" aria-pressed={sound.running}>
+                    {sound.running ? <Square aria-hidden /> : <Play aria-hidden />}
+                    {sound.loading ? 'Starting…' : sound.running ? 'Stop engine' : 'Start engine'}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className={cn('h-8 w-full min-w-0 select-none touch-none px-2 text-xs pointer-coarse:h-11', revving && 'border-amber/60 text-amber')}
+                    aria-pressed={revving}
+                    onPointerDown={() => setRevving(true)}
+                    onPointerUp={() => setRevving(false)}
+                    onPointerLeave={() => setRevving(false)}
+                    onPointerCancel={() => setRevving(false)}
+                    onKeyDown={revKey(true)}
+                    onKeyUp={revKey(false)}
+                    onBlur={() => setRevving(false)}
+                  >
+                    <Gauge aria-hidden /> Hold to rev
+                  </Button>
+                </div>
               </div>
             </div>
+            {!sound.supported && <p className="rounded-md border border-amber/30 bg-amber/[0.06] p-3 text-sm text-paper">This browser cannot run the audio synthesiser: it needs Web Audio worklets on a secure (https) page. The diagrams still work.</p>}
+            {sound.error && <p className="rounded-md border border-amber/30 bg-amber/[0.06] p-3 text-sm text-paper" role="alert">{sound.error}</p>}
+
+            <div className="grid grid-cols-2 gap-3 rounded-lg border border-line/[0.08] bg-graphite-950/40 px-3 py-2">
+              <Control label="Speed" value={`${rpm.toLocaleString('en-GB')} rpm`}>
+                <Slider value={[rpm]} min={spec.idleRpm} max={spec.redlineRpm} step={50} onValueChange={([v]) => setRpm(v!)} aria-label="Engine speed in rpm" data-testid="sound-lab-rpm" />
+              </Control>
+              <Control label="Throttle" value={`${Math.round(throttle * 100)}%`}>
+                <Slider value={[throttle * 100]} min={0} max={100} step={1} onValueChange={([v]) => setThrottle(v! / 100)} aria-label="Throttle opening in percent" />
+              </Control>
+            </div>
+
+            <Suspense fallback={<div className="grid min-h-[320px] place-items-center rounded-xl border border-cyan/20 bg-graphite-950/60 p-5 text-center text-steel-400" role="status">Preparing the 3D mechanical cutaway…</div>}>
+              <EngineCutaway spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} running={sound.running} reduced={reduced} />
+            </Suspense>
           </div>
-          {!sound.supported && <p className="rounded-md border border-amber/30 bg-amber/[0.06] p-3 text-sm text-paper">This browser cannot run the audio synthesiser: it needs Web Audio worklets on a secure (https) page. The diagrams still work.</p>}
-          {sound.error && <p className="rounded-md border border-amber/30 bg-amber/[0.06] p-3 text-sm text-paper" role="alert">{sound.error}</p>}
 
-          <p className="leading-relaxed text-paper/90">{spec.character}</p>
-
-          <Suspense fallback={<div className="grid min-h-[420px] place-items-center rounded-xl border border-cyan/20 bg-graphite-950/60 p-5 text-center text-steel-400" role="status">Preparing the 3D mechanical cutaway…</div>}>
-            <EngineCutaway spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} running={sound.running} reduced={reduced} />
-          </Suspense>
-
+          <h3 className="border-t border-line/[0.08] pt-4 text-sm font-semibold text-paper">Firing rhythm and exhaust pressure</h3>
+          <p className="text-sm leading-relaxed text-steel-300">{spec.character}</p>
           <details className="rounded-xl border border-line/[0.08] p-3">
             <summary className="relative hit-area min-h-9 cursor-pointer py-2 text-sm font-medium text-steel-300">Piston timing diagram</summary>
             <div className="mt-3"><CylinderLayout spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} animating={animating} /></div>
           </details>
 
-          <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-[300px_minmax(0,1fr)]">
-            <div className="mx-auto w-full max-w-[300px]">
+          <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-[200px_minmax(0,1fr)]">
+            <div className="mx-auto w-full max-w-[200px]">
               <FiringRing events={events} bus={bus} reduced={reduced} />
               <p className="mt-1 text-center text-xs text-steel-500">
                 {animating ? `Slowed ${VISUAL_SLOWDOWN}× so you can follow it` : sound.running ? 'Still view (reduced motion)' : 'Press Start to watch it turn'}
@@ -202,14 +218,7 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
             </figcaption>
           </figure>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            <Control label="Engine speed" value={`${rpm.toLocaleString('en-GB')} rpm`}>
-              <Slider value={[rpm]} min={spec.idleRpm} max={spec.redlineRpm} step={50} onValueChange={([v]) => setRpm(v!)} aria-label="Engine speed in rpm" data-testid="sound-lab-rpm" />
-            </Control>
-            <Control label="Throttle" value={`${Math.round(throttle * 100)}%`}>
-              <Slider value={[throttle * 100]} min={0} max={100} step={1} onValueChange={([v]) => setThrottle(v! / 100)} aria-label="Throttle opening in percent" />
-            </Control>
-          </div>
+
 
           {spec.pairedV && (
             <section aria-labelledby="experiment-heading" className="rounded-lg border border-line/[0.08] bg-graphite-950/40 p-4">
@@ -248,7 +257,7 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
         </section>
       </div>
 
-      <section aria-labelledby="listen-heading" className="mt-12 max-w-3xl">
+      <section aria-labelledby="listen-heading" className="mt-6 max-w-3xl">
         <h2 id="listen-heading" className="text-2xl font-semibold text-paper">Three comparisons worth hearing</h2>
         <ul className="mt-4 flex flex-col gap-3 text-steel-300">
           <Compare a="v8-cross" b="v8-flat" onPick={onPick}>
@@ -263,7 +272,7 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
         </ul>
       </section>
 
-      <section aria-labelledby="sources-heading" className="mt-12 max-w-3xl">
+      <section aria-labelledby="sources-heading" className="mt-6 max-w-3xl">
         <h2 id="sources-heading" className="text-2xl font-semibold text-paper">Sources</h2>
         <p className="mt-2 text-sm text-steel-400">
           Firing orders use each maker’s own cylinder numbering. Where we could not confirm a firing order, the lab labels firings by bank
@@ -285,7 +294,7 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
         </ul>
       </section>
 
-      <section aria-labelledby="understand-heading" className="mt-12 max-w-3xl rounded-xl border border-cyan/20 bg-cyan/[0.03] p-5">
+      <section aria-labelledby="understand-heading" className="mt-6 max-w-3xl rounded-xl border border-cyan/20 bg-cyan/[0.03] p-5">
         <h2 id="understand-heading" className="text-xl font-semibold text-paper">Go inside the sound</h2>
         <p className="mt-2 leading-relaxed text-steel-300">Follow a piston through intake, compression, power and exhaust, then see how arranging more cylinders changes the engine.</p>
         <div className="mt-4 flex flex-wrap gap-2">
@@ -303,18 +312,20 @@ function EnginePicker({ current, onPick }: { current: string; onPick: (id: strin
   useEffect(() => {
     const el = strip.current
     const chosen = el?.querySelector<HTMLElement>('[aria-pressed="true"]')
-    if (!el || !chosen || el.scrollWidth <= el.clientWidth) return
-    const offset = chosen.getBoundingClientRect().left - el.getBoundingClientRect().left
-    el.scrollLeft += offset - 8
+    if (!el || !chosen) return
+    const bounds = el.getBoundingClientRect()
+    const row = chosen.getBoundingClientRect()
+    if (el.scrollWidth > el.clientWidth) el.scrollLeft += row.left - bounds.left - 8
+    else if (row.top < bounds.top || row.bottom > bounds.bottom) el.scrollTop += row.top - bounds.top - 8
   }, [current])
   return (
-    <nav aria-label="Engines" className="panel h-fit min-w-0 p-3 sm:p-4">
-      <p className="flex items-center gap-2 px-1 font-semibold text-paper">
+    <nav aria-label="Engines" className="panel flex min-w-0 flex-col p-2.5 lg:sticky lg:top-20 lg:max-h-[calc(100svh-6rem)]">
+      <p className="flex items-center gap-2 px-1 text-sm font-semibold text-paper">
         <Volume2 aria-hidden className="size-4 text-cyan" /> Pick an engine
       </p>
       <p className="mt-1 px-1 text-xs text-steel-500 lg:hidden">Swipe for more engines</p>
       {/* Phones and tablets: one swipeable strip, so the player stays near the top. Wide screens: a list. */}
-      <div ref={strip} className="-mx-1 mt-3 flex snap-x gap-4 overflow-x-auto px-1 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0 lg:pb-0">
+      <div ref={strip} className="-mx-1 mt-2 flex min-h-0 snap-x gap-3 overflow-x-auto px-1 pb-2 lg:mx-0 lg:flex-col lg:overflow-x-hidden lg:overflow-y-auto lg:overscroll-contain lg:px-0 lg:pb-0 lg:[scrollbar-width:thin]">
         {cylinderGroups.map((n) => (
           <div key={n} className="shrink-0 snap-start">
             <p className="eyebrow px-1">{n} cyl</p>
@@ -329,12 +340,12 @@ function EnginePicker({ current, onPick }: { current: string; onPick: (id: strin
                       aria-pressed={e.id === current}
                       data-testid={`sound-lab-engine-${e.id}`}
                       className={cn(
-                        'relative hit-area flex w-full flex-col items-start whitespace-nowrap rounded-md border px-3 py-2 text-left transition-colors lg:whitespace-normal',
+                        'relative hit-area flex min-h-9 w-full flex-col items-start justify-center whitespace-nowrap rounded-md border px-2 py-1.5 text-left transition-colors lg:whitespace-normal pointer-coarse:min-h-11',
                         e.id === current ? 'border-cyan/50 bg-cyan/[0.08]' : 'border-transparent hover:border-line/10 hover:bg-tint/[0.03]',
                       )}
                     >
-                      <span className={cn('text-sm font-medium', e.id === current ? 'text-cyan' : 'text-paper')}>{e.name}</span>
-                      <span className="hidden text-xs text-steel-400 lg:block">{e.cars[0]}</span>
+                      <span className={cn('text-[13px] font-medium', e.id === current ? 'text-cyan' : 'text-paper')}>{e.name}</span>
+                      <span className="hidden text-[11px] leading-snug text-steel-400 lg:block">{e.cars[0]}</span>
                     </button>
                   </li>
                 ))}
@@ -378,8 +389,8 @@ function Fact({ label, value, mono, testId, children }: { label: string; value?:
 
 function Control({ label, value, children }: { label: string; value: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-2.5">
-      <div className="flex items-baseline justify-between gap-2 text-sm">
+    <div className="flex min-w-0 flex-col gap-2">
+      <div className="flex items-baseline justify-between gap-2 text-xs sm:text-sm">
         <span className="text-steel-300">{label}</span>
         <span className="font-mono text-paper">{value}</span>
       </div>
