@@ -65,6 +65,7 @@ export function useEngineFrames(bus: FrameBus, inputs: FrameInputs) {
         running,
         animate,
         rpm: state.rpm,
+        throttle: running ? (report?.throttle ?? 0) : 0,
         limiting: report?.limiting ?? false,
         bank: state.bank,
         fired,

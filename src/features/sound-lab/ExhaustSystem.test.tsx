@@ -30,10 +30,10 @@ vi.mock('three', async (importOriginal) => {
 
 const drawing = (): ExhaustDrawing => ({
   pipes: [{ points: [[0, 1, 0], [-1, 1, 0]], radius: 0.068, header: true }],
-  routes: [{ index: 0, points: [[0, 1, 0], [-1, 1, 0]], segments: [[[0, 1, 0], [-1, 1, 0]]], headerLength: 1 }],
+  routes: [{ index: 0, points: [[0, 1, 0], [-1, 1, 0]], segments: [[[0, 1, 0], [-1, 1, 0]]], feeds: [1], headerLength: 1 }],
 })
 const frame = (now: number, animate = true): EngineFrame => ({
-  now, dt: 1 / 60, playhead: now / 10 % 720, animate, running: animate, rpm: 6000,
+  now, dt: 1 / 60, playhead: now / 10 % 720, animate, running: animate, rpm: 6000, throttle: 1,
   limiting: false, bank: 90, fired: [], cycle: null,
 })
 

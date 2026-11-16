@@ -16,8 +16,10 @@
  * the shared pipes. Past the
  * outlet it slows, spreads and cools as it mixes with the air.
  */
+import { VALVES } from '@/features/engine-lab/engineModel'
 import { VALVE_TIMING, valveDuration, valveOpenFraction } from '@/features/engine-lab/kinematics'
-import { ease, mod } from './animation'
+import { ease, mod, type EngineFrame } from './animation'
+import type { EngineSpec } from './engines'
 
 export type Vec3 = [number, number, number]
 export type ExhaustSide = 'A' | 'B' | 'mid'
@@ -43,9 +45,9 @@ const BANK_TAIL: readonly ModelPoint[] = [
   { z: -1.45, y: 1.1 },
   { z: -1.32, y: 0.55 },
 ]
-/** Header pipe radius, and the collector and tailpipe radius. */
-export const HEADER_RADIUS = 0.068
-export const COLLECTOR_RADIUS = 0.105
+/** Header pipe radius, matching the head's exhaust port it bolts to; collectors and tailpipes are wider. */
+export const HEADER_RADIUS = VALVES.exhaust.portR
+export const COLLECTOR_RADIUS = 0.16
 /** Gas stays inside the pipe wall; shared by its geometry and the camera bounds. */
 export const GAS_FILL = 0.74
 /** The single-cylinder views stop each header a little past the bend, where the collector would be. */
@@ -70,6 +72,8 @@ export interface ExhaustPlumbing {
   routes: Map<number, Vec3[]>
   /** The same route as connected visible pipe curves, so gas never rounds a junction differently from its pipe. */
   routeSegments: Map<number, Vec3[][]>
+  /** For each route segment, how many cylinders' gas flows through that pipe (header 1, then its bank, then all). */
+  routeFeeds: Map<number, number[]>
 }
 
 /**
@@ -78,8 +82,18 @@ export interface ExhaustPlumbing {
  * exhaust joins the banks into one pipe behind the engine. An inline engine
  * has one bank and so one pipe either way.
  */
-export function exhaustPlumbing(cylinders: PlumbingCylinder[], place: Place, options: { xFront: number; xRear: number; shared: boolean }): ExhaustPlumbing {
-  const { xFront, xRear, shared } = options
+export function exhaustPlumbing(
+  cylinders: PlumbingCylinder[],
+  place: Place,
+  options: {
+    xFront: number
+    xRear: number
+    shared: boolean
+    /** A shared exhaust merges under the other bank, so this bank's joint pipe runs further (unequal-length headers). */
+    longBank?: ExhaustSide
+  },
+): ExhaustPlumbing {
+  const { xFront, xRear, shared, longBank } = options
   const sides = [...new Set(cylinders.map((c) => c.side))]
   const collectors = sides.map((side) => ({ side, points: [place(side, xFront, COLLECTOR), place(side, xRear, COLLECTOR)] }))
   const bankTail = (side: ExhaustSide): Vec3[] => [
@@ -92,11 +106,13 @@ export function exhaustPlumbing(cylinders: PlumbingCylinder[], place: Place, opt
   if (shared && sides.length > 1) {
     const ends = collectors.map((c) => c.points[1]!)
     const mergeY = Math.min(...ends.map((p) => p[1])) - 0.35
-    const merge: Vec3 = [xRear - 0.95, mergeY, 0]
-    const outlet: Vec3 = [xRear - 2.1, mergeY - 0.15, 0]
+    const short = longBank ? collectors.find((c) => c.side !== longBank)?.points[1] : undefined
+    const mergeZ = short ? 0.6 * short[2] : 0
+    const merge: Vec3 = [xRear - 0.95, mergeY, mergeZ]
+    const outlet: Vec3 = [xRear - 2.1, mergeY - 0.15, mergeZ]
     const joint = (side: ExhaustSide): Vec3[] => {
       const end = collectors.find((c) => c.side === side)!.points[1]!
-      return [end, [xRear - 0.5, (end[1] + mergeY) / 2, end[2] * 0.45], merge]
+      return [end, [xRear - 0.5, (end[1] + mergeY) / 2, mergeZ + (end[2] - mergeZ) * 0.45], merge]
     }
     const joints = new Map(sides.map((side) => [side, joint(side)]))
     const sharedTail: Vec3[] = [merge, outlet]
@@ -110,14 +126,84 @@ export function exhaustPlumbing(cylinders: PlumbingCylinder[], place: Place, opt
   const headers = cylinders.map((c) => ({ index: c.index, side: c.side, points: HEADER.map((p) => place(c.side, c.x, p)) }))
   const routes = new Map<number, Vec3[]>()
   const routeSegments = new Map<number, Vec3[][]>()
+  const routeFeeds = new Map<number, number[]>()
+  const onSide = (side: ExhaustSide) => cylinders.filter((c) => c.side === side).length
   for (const h of headers) {
     const rear = collectors.find((collector) => collector.side === h.side)!.points[1]!
     // The collector is straight, so its suffix from this header's junction is the same curve as the visible collector.
     const segments = [h.points, [h.points[h.points.length - 1]!, rear], ...tailSegmentsFor(h.side)]
     routeSegments.set(h.index, segments)
     routes.set(h.index, segments.flatMap((segment, index) => index === 0 ? segment : segment.slice(1)))
+    routeFeeds.set(h.index, segments.map((_, index) => (index === 0 ? 1 : index === 3 ? cylinders.length : onSide(h.side))))
   }
-  return { headers, collectors, tailpipes, routes, routeSegments }
+  return { headers, collectors, tailpipes, routes, routeSegments, routeFeeds }
+}
+
+/* ------------------------------------------------------------ drawing */
+
+export interface ExhaustPipe {
+  points: Vec3[]
+  radius: number
+  /** A header leaving an exhaust port: its first stretch can glow with heat. */
+  header?: boolean
+}
+
+export interface ExhaustRoute {
+  /** Firing-event index of the cylinder whose gas this is. */
+  index: number
+  points: Vec3[]
+  /** Exact visible pipe curves, sampled separately so gas stays inside their bends. */
+  segments: Vec3[][]
+  /** For each segment, how many cylinders' gas shares that pipe. */
+  feeds: number[]
+  headerLength: number
+}
+
+export interface ExhaustDrawing {
+  pipes: ExhaustPipe[]
+  routes: ExhaustRoute[]
+}
+
+/**
+ * What a scene draws for its exhaust: every pipe, and each cylinder's route.
+ * The whole engine shows headers, collectors and tailpipes; the single-cylinder
+ * views stop each header just past its bend, and the whole stub acts as header.
+ */
+export function exhaustDrawing(layout: ExhaustPlumbing, full: boolean): ExhaustDrawing {
+  if (!full) {
+    const routes = layout.headers.map((h) => {
+      const points = headerStub(h.points)
+      return { index: h.index, points, segments: [points], feeds: [1], headerLength: pathLength(points) }
+    })
+    return { pipes: routes.map((r) => ({ points: r.points, radius: HEADER_RADIUS, header: true })), routes }
+  }
+  return {
+    pipes: [
+      ...layout.headers.map((h) => ({ points: h.points, radius: HEADER_RADIUS, header: true })),
+      ...layout.collectors.map((c) => ({ points: c.points, radius: COLLECTOR_RADIUS })),
+      ...layout.tailpipes.map((points) => ({ points, radius: COLLECTOR_RADIUS })),
+    ],
+    routes: layout.headers.map((h) => ({
+      index: h.index,
+      points: layout.routes.get(h.index)!,
+      segments: layout.routeSegments.get(h.index)!,
+      feeds: layout.routeFeeds.get(h.index)!,
+      headerLength: pathLength(h.points),
+    })),
+  }
+}
+
+/**
+ * The bank whose headers are longer, for a preset with unequal-length headers
+ * (its delayed cylinders all on one bank, as on the Subaru boxer): the shared
+ * pipe then merges under the other bank.
+ */
+export function longHeaderSide(spec: Pick<EngineSpec, 'voice' | 'bankA' | 'bankB'>): ExhaustSide | undefined {
+  const delayed = Object.keys(spec.voice.headerDelayMs ?? {}).map(Number)
+  if (!delayed.length) return undefined
+  if (delayed.every((c) => spec.bankA.includes(c))) return 'A'
+  if (delayed.every((c) => spec.bankB.includes(c))) return 'B'
+  return undefined
 }
 
 /** A header that stops just past its bend, running back along the engine: the single-cylinder views. */
@@ -158,11 +244,16 @@ export const EXHAUST_OPEN_DEG = valveDuration(VALVE_TIMING.exhaust)
 /** Bottom and top dead centre of the exhaust stroke, in degrees after the valve opened. */
 export const STROKE_START = 540 - EXHAUST_OPENS
 export const STROKE_END = 720 - EXHAUST_OPENS
-/** The port's flow area grows with lift until the valve is about 30% open, then the throat limits it. */
-export const AREA_FULL_LIFT = 0.3
-/** Blowdown: the cylinder is still at several bar when the valve cracks, and the choked flow falls away with that pressure. */
-export const BLOWDOWN = 6
-export const BLOWDOWN_DECAY = 22
+/** The port's flow area grows with lift until the valve is about 12% open, then the throat limits it. */
+export const AREA_FULL_LIFT = 0.12
+/**
+ * Blowdown: the cylinder is still at several bar when the valve cracks, and the
+ * choked flow falls away with that pressure, over about the Engine Lab's
+ * blowdown time. Nearly half the cycle's gas leaves this way, most of it by
+ * bottom dead centre.
+ */
+export const BLOWDOWN = 10
+export const BLOWDOWN_DECAY = 14
 /** The piston pushing out the rest on the exhaust stroke, gentler than the blowdown. */
 export const DISPLACEMENT = 0.45
 
@@ -287,4 +378,192 @@ export function wallHeatTarget(load: number, diesel: boolean): number {
 /** Header metal follows the exhaust temperature with a lag: seconds to heat, longer to cool. */
 export function approachWallHeat(current: number, target: number, dt: number): number {
   return ease(current, target, Math.max(0, dt), target > current ? WALL_HEAT_UP_S : WALL_HEAT_DOWN_S)
+}
+
+/* ------------------------------------------------------------ the header column */
+
+/**
+ * Header-length units of gas a cylinder pushes out each cycle, so the gas in a
+ * header moves, on average, at FLOW_SPEED. A header holds only about a tenth
+ * of it: the blowdown flushes a header within a couple of dozen degrees.
+ */
+export const CYCLE_GAS = 720 * FLOW_SPEED
+/** Labels wrap after this many cycles: 10 × 11.52 units × 5 noise cells per unit = 576 = 9 × 64 cells, so turbulence wraps seamlessly. */
+export const LABEL_WRAP_CYCLES = 10
+/** Texels in the flow table the shader samples. */
+export const FLOW_TEXELS = 256
+/** Real seconds of residence for gas to lose most of its extra heat to the pipe walls. */
+export const GAS_COOL_S = 0.05
+/** Haze of older, mixed gas in a collector, shared between the cylinders feeding it. */
+export const RESIDUAL_TOTAL = 0.3
+/** Haze density of a full header column. */
+export const HEADER_GAS = 0.45
+/** Most crank degrees of motion blur in one frame. */
+export const SMEAR_MAX_DEG = 90
+/** Below this frame step, motion blur takes a single sample. */
+export const SMEAR_SINGLE_DEG = 4
+
+const SHARE_STEP = 0.05
+let shareTable: Float64Array | null = null
+/** Cumulative port flow, normalised: the share of a cycle's gas out by each SHARE_STEP after the valve opens. */
+function shares(): Float64Array {
+  if (!shareTable) {
+    const steps = Math.ceil(EXHAUST_OPEN_DEG / SHARE_STEP)
+    const table = new Float64Array(steps + 1)
+    let total = 0
+    for (let i = 1; i <= steps; i++) {
+      const a = Math.min(EXHAUST_OPEN_DEG, (i - 1) * SHARE_STEP)
+      const b = Math.min(EXHAUST_OPEN_DEG, i * SHARE_STEP)
+      total += ((portFlow(a) + portFlow(b)) / 2) * (b - a)
+      table[i] = total
+    }
+    for (let i = 0; i <= steps; i++) table[i] = table[i]! / total
+    shareTable = table
+  }
+  return shareTable
+}
+
+/** Share of this cycle's gas out of the port `e` degrees after the exhaust valve opened: 0 before, 1 once it has shut. */
+export function exhaustedShare(e: number): number {
+  if (!(e > 0)) return 0
+  if (e >= EXHAUST_OPEN_DEG) return 1
+  const table = shares()
+  const x = e / SHARE_STEP
+  const i = Math.min(Math.floor(x), table.length - 2)
+  return table[i]! + (table[i + 1]! - table[i]!) * (x - i)
+}
+
+/** Degrees after the valve opened by which share `f` of the cycle's gas had left: the inverse of exhaustedShare. */
+export function emissionAtShare(f: number): number {
+  if (!(f > 0)) return 0
+  if (f >= 1) return EXHAUST_OPEN_DEG
+  const table = shares()
+  let lo = 0
+  let hi = table.length - 1
+  while (hi - lo > 1) {
+    const mid = (lo + hi) >> 1
+    if (table[mid]! < f) lo = mid
+    else hi = mid
+  }
+  const span = table[hi]! - table[lo]!
+  return Math.min(EXHAUST_OPEN_DEG, (lo + (span > 0 ? (f - table[lo]!) / span : 0)) * SHARE_STEP)
+}
+
+/**
+ * portFlow blurred over the last `smear` crank degrees with `taps` samples:
+ * motion blur for one frame's step. A step under SMEAR_SINGLE_DEG takes one
+ * sample at its middle, as the shader does.
+ */
+export function portFlowOver(e: number, smear: number, taps: number): number {
+  if (smear < SMEAR_SINGLE_DEG) return portFlow(mod(e - smear / 2, 720))
+  const n = Math.max(1, Math.round(taps))
+  let sum = 0
+  for (let i = 0; i < n; i++) sum += portFlow(mod(e - (smear * (i + 0.5)) / n, 720))
+  return sum / n
+}
+
+/**
+ * A cylinder's clock: degrees since its exhaust valve last opened, and which
+ * of the last LABEL_WRAP_CYCLES cycles this is (`lap` counts the 720° wraps of
+ * the playhead).
+ */
+export function slotClock(playhead: number, lap: number, firingAngle: number): { since: number; cycle: number } {
+  const total = mod(playhead + 720 * lap - firingAngle + 360 - EXHAUST_OPENS, LABEL_WRAP_CYCLES * 720)
+  const cycle = Math.floor(total / 720)
+  return { since: total - 720 * cycle, cycle }
+}
+
+export interface Parcel {
+  /** Which gas this is, in cycles of gas (wraps with the clock). Turbulence is keyed to it, so eddies move with the gas. */
+  label: number
+  /** Crank degrees since it left the port. */
+  age: number
+  /** Degrees after its valve opened at which it left. */
+  emitDeg: number
+  /** Fresh flow carrying it: 1 in a header, which is always full. */
+  flow: number
+}
+
+/**
+ * The gas `dist` along a route whose header is `header` long. A header is a
+ * column, always full, that moves only while its valve is open: as the
+ * cylinder pushes gas in, the same amount leaves the header's far end. From
+ * there it moves on at FLOW_SPEED. The gas shader runs the same formulas.
+ */
+export function parcelAt(clock: { since: number; cycle: number }, dist: number, header: number, smear = 0, taps = 1): Parcel {
+  let label: number
+  let flow: number
+  if (dist <= header) {
+    label = clock.cycle + exhaustedShare(clock.since) - dist / CYCLE_GAS
+    flow = 1
+  } else {
+    const back = clock.since - (dist - header) / FLOW_SPEED
+    const wraps = -Math.floor(back / 720)
+    const exit = back + 720 * wraps
+    label = clock.cycle - wraps + exhaustedShare(exit) - header / CYCLE_GAS
+    flow = portFlowOver(exit, smear, taps)
+  }
+  const rel = Math.min(label - clock.cycle, 0.99995)
+  const cyclesAgo = -Math.floor(rel)
+  const emitDeg = emissionAtShare(rel + cyclesAgo)
+  return { label, age: 720 * cyclesAgo + clock.since - emitDeg, emitDeg, flow }
+}
+
+/**
+ * The flow table the gas shader samples (FLOW_TEXELS × RGBA8), at
+ * e_i = i / (FLOW_TEXELS − 1) × the valve's open time: r the share out by e_i,
+ * g the degrees at which share i / (FLOW_TEXELS − 1) had left (÷ open time),
+ * b portFlow and a portTemperature. TypeScript stays the single source.
+ */
+export function flowTable(): Uint8Array {
+  const out = new Uint8Array(FLOW_TEXELS * 4)
+  const byte = (v: number) => Math.round(Math.min(1, Math.max(0, v)) * 255)
+  for (let i = 0; i < FLOW_TEXELS; i++) {
+    const u = i / (FLOW_TEXELS - 1)
+    const e = u * EXHAUST_OPEN_DEG
+    out[i * 4] = byte(exhaustedShare(e))
+    out[i * 4 + 1] = byte(emissionAtShare(u) / EXHAUST_OPEN_DEG)
+    out[i * 4 + 2] = byte(portFlow(e))
+    out[i * 4 + 3] = byte(portTemperature(e))
+  }
+  return out
+}
+
+export interface ExhaustDrive {
+  /** 0 … 1: how hard the engine works, from revs and throttle together. */
+  load: number
+  /** Gas per cycle relative to full throttle: a wide-open throttle sends thicker gas. */
+  mass: number
+  /** Scale of the gas temperature leaving the ports. */
+  heat: number
+  /** Turns crank degrees spent in the pipes into e-folds of cooling (real seconds ÷ GAS_COOL_S). */
+  ageScale: number
+  /** 1 while the rev limiter is cutting fuel. */
+  cut: number
+}
+
+/**
+ * What drives the exhaust's look from the engine's state: hotter, thicker gas
+ * with revs and throttle; cooler for a lean-running diesel; and, because the
+ * pipes cool gas by the second, gas reaches the tailpipe hotter at high revs.
+ */
+export function exhaustDrive(frame: Pick<EngineFrame, 'running' | 'rpm' | 'throttle' | 'limiting'> | null, spec: Pick<EngineSpec, 'idleRpm' | 'redlineRpm' | 'ignition'>): ExhaustDrive {
+  if (!frame?.running) return { load: 0, mass: 0, heat: 0, ageScale: 0, cut: 0 }
+  const throttle = Math.min(1, Math.max(0, frame.throttle))
+  const load = exhaustLoad(frame.rpm, spec.idleRpm, spec.redlineRpm) * (0.4 + 0.6 * throttle)
+  return {
+    load,
+    mass: 0.35 + 0.65 * throttle,
+    heat: (0.75 + 0.25 * load) * (spec.ignition === 'compression' ? 0.7 : 1),
+    ageScale: 1 / (6 * Math.max(frame.rpm, 60) * GAS_COOL_S),
+    cut: frame.limiting ? 1 : 0,
+  }
+}
+
+/** How diluted the plume is `s` past the outlet: it slows (concentrating it) but widens much faster (mixing in air). */
+export function plumeDilution(s: number): number {
+  const d = Math.max(0, s)
+  const r0 = COLLECTOR_RADIUS * GAS_FILL
+  const r = r0 + PLUME_SPREAD * d
+  return ((1 + d / PLUME_SLOW) * r0 * r0) / (r * r)
 }

@@ -172,6 +172,8 @@ export interface EngineFrame {
   animate: boolean
   /** Engine speed the synthesiser is actually at (smoothed), 0 when stopped. */
   rpm: number
+  /** Throttle opening the synthesiser is at, 0–1 (0 when stopped). */
+  throttle: number
   limiting: boolean
   /** Bank angle as drawn, easing towards the chosen one. */
   bank: number

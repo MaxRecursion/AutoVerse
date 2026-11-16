@@ -161,7 +161,7 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
           <p className="leading-relaxed text-paper/90">{spec.character}</p>
 
           <Suspense fallback={<div className="grid min-h-[420px] place-items-center rounded-xl border border-cyan/20 bg-graphite-950/60 p-5 text-center text-steel-400" role="status">Preparing the 3D mechanical cutaway…</div>}>
-            <EngineCutaway spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} reduced={reduced} />
+            <EngineCutaway spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} running={sound.running} reduced={reduced} />
           </Suspense>
 
           <details className="rounded-xl border border-line/[0.08] p-3">

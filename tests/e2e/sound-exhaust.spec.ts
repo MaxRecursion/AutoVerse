@@ -8,10 +8,13 @@ interface GasProbe {
   count: number
   primitive: number
   run: number
-  shift: number
+  plumeShift: number
   opacity: number
   diesel: number
+  /** Per cylinder: degrees since its exhaust valve opened (the x of each uSlot clock). */
   since: number[]
+  /** Per cylinder: which of the last ten cycles its clock is in. */
+  cycle: number[]
   outletTime: number[]
 }
 
@@ -29,12 +32,12 @@ declare global {
 async function observeGas(page: Page) {
   await page.addInitScript(() => {
     localStorage.setItem('autoverse.preferences', JSON.stringify({ state: { level: 'beginner', tourStatus: 'declined' }, version: 0 }))
-    const probe: GasProbe = { program: 0, draws: 0, count: 0, primitive: -1, run: 0, shift: 0, opacity: 0, diesel: 0, since: [], outletTime: [] }
+    const probe: GasProbe = { program: 0, draws: 0, count: 0, primitive: -1, run: 0, plumeShift: 0, opacity: 0, diesel: 0, since: [], cycle: [], outletTime: [] }
     window.__exhaustProbe = probe
     const wallProbe: WallProbe = { program: 0, draws: 0, heat: 0 }
     window.__exhaustWallProbe = wallProbe
     if (typeof WebGL2RenderingContext === 'undefined') return
-    interface ProgramInfo { id: number; values: Record<string, number>; since: number[]; outletTime: number[] }
+    interface ProgramInfo { id: number; values: Record<string, number>; since: number[]; cycle: number[]; outletTime: number[] }
     const programs = new WeakMap<WebGLProgram, ProgramInfo>()
     const walls = new WeakMap<WebGLProgram, { id: number; heat: number }>()
     const uniforms = new WeakMap<WebGLUniformLocation, { program: WebGLProgram; name: string }>()
@@ -46,7 +49,7 @@ async function observeGas(page: Page) {
     gl.getUniformLocation = function (program, name) {
       const result = location.call(this, program, name)
       if (result) uniforms.set(result, { program, name: name.replace(/\[0\]$/, '') })
-      if (name === 'uRun' && !programs.has(program)) programs.set(program, { id: ++serial, values: {}, since: [], outletTime: [] })
+      if (name === 'uRun' && !programs.has(program)) programs.set(program, { id: ++serial, values: {}, since: [], cycle: [], outletTime: [] })
       if (name === 'uWallHeat' && !walls.has(program)) walls.set(program, { id: ++wallSerial, heat: 0 })
       return result
     }
@@ -63,9 +66,20 @@ async function observeGas(page: Page) {
     gl.uniform1fv = function (...args) {
       const uniform = args[0] && uniforms.get(args[0])
       const info = uniform && programs.get(uniform.program)
-      if (info && uniform?.name === 'uSince') info.since = Array.from(args[1])
       if (info && uniform?.name === 'uOutletTime') info.outletTime = Array.from(args[1])
       return array.apply(this, args)
+    }
+    // Each cylinder's clock: (degrees since its valve opened, share out, cycle, flow), ten vec4s.
+    const vectors = gl.uniform4fv
+    gl.uniform4fv = function (...args) {
+      const uniform = args[0] && uniforms.get(args[0])
+      const info = uniform && programs.get(uniform.program)
+      if (info && uniform?.name === 'uSlot') {
+        const values = Array.from(args[1] as ArrayLike<number>)
+        info.since = values.filter((_, i) => i % 4 === 0)
+        info.cycle = values.filter((_, i) => i % 4 === 2)
+      }
+      return vectors.apply(this, args)
     }
     const use = gl.useProgram
     gl.useProgram = function (program) {
@@ -80,9 +94,9 @@ async function observeGas(page: Page) {
       if (!info) return
       Object.assign(probe, {
         program: info.id, draws: probe.draws + 1, count, primitive,
-        run: info.values.uRun ?? 0, shift: info.values.uShift ?? 0,
+        run: info.values.uRun ?? 0, plumeShift: info.values.uPlumeShift ?? 0,
         opacity: info.values.uOpacity ?? 0, diesel: info.values.uDiesel ?? 0,
-        since: [...info.since], outletTime: [...info.outletTime],
+        since: [...info.since], cycle: [...info.cycle], outletTime: [...info.outletTime],
       })
     }
     const indexed = gl.drawElements
@@ -131,7 +145,8 @@ function shaderErrors(page: Page) {
 // Separate the scene families so software WebGL can compile every production preset within a bounded case.
 for (const family of ['inline, boxer, V6 and V8', 'V10']) {
   test(`${family}: production engines draw advancing gas through their whole-engine exhaust`, async ({ page, isMobile }) => {
-    test.setTimeout(180_000)
+    // Each preset builds a fresh WebGL scene and compiles its shaders in software rendering.
+    test.setTimeout(300_000)
     await observeGas(page)
     const errors = shaderErrors(page)
     const phone = new Set(['inline-3', 'flat-4', 'v6-90-odd', 'v8-flat', 'v10-viper', 'v10-tdi'])
@@ -155,11 +170,15 @@ for (const family of ['inline, boxer, V6 and V8', 'V10']) {
       expect(flowing.opacity, preset.id).toBe(1)
       expect(flowing.diesel, preset.id).toBe(preset.ignition === 'compression' ? 1 : 0)
       expect(flowing.since.length, preset.id).toBe(10)
-      expect(flowing.since.every(Number.isFinite), preset.id).toBe(true)
+      expect(flowing.since.every((since) => Number.isFinite(since) && since >= 0 && since < 720), preset.id).toBe(true)
+      expect(flowing.cycle.every((cycle) => Number.isInteger(cycle) && cycle >= 0 && cycle < 10), preset.id).toBe(true)
       expect(flowing.outletTime, preset.id).toHaveLength(10)
-      expect(flowing.outletTime.slice(0, preset.cylinders).every((delay) => Number.isFinite(delay) && delay > 0), `${preset.id}: each active route uploads its port-to-outlet travel delay`).toBe(true)
-      const shift = flowing.shift
-      await expect.poll(async () => (await gas(page)).shift).not.toBe(shift)
+      expect(flowing.outletTime.slice(0, preset.cylinders).every((delay) => Number.isFinite(delay) && delay > 0), `${preset.id}: each active route uploads its travel delay from the header's end to the outlet`).toBe(true)
+      // The cylinders' clocks run, and the plume drifts.
+      const clock = flowing.since[0]
+      await expect.poll(async () => (await gas(page)).since[0]).not.toBe(clock)
+      const drift = flowing.plumeShift
+      await expect.poll(async () => (await gas(page)).plumeShift).not.toBe(drift)
       await expect(page.getByTestId('exhaust-flow-note')).toContainText('cooling plume')
     }
     await page.getByTestId('sound-lab-start').click()
@@ -220,6 +239,8 @@ test('headers heat under sustained revs, cool gradually at idle and clear when m
 
   const start = page.getByTestId('sound-lab-start')
   const rpm = page.getByRole('slider', { name: 'Engine speed in rpm' })
+  // Headers glow from hard work, not revs alone: open the throttle first.
+  await page.getByRole('slider', { name: 'Throttle opening in percent' }).press('End')
   await start.click()
   await rpm.press('End')
   await expect.poll(async () => (await wall(page)).heat, { message: 'Sustained high RPM heats the header material', timeout: 20_000 }).toBeGreaterThan(0.2)

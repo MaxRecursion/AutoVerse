@@ -2,11 +2,12 @@ import { describe, expect, it } from 'vitest'
 import { VALVE_TIMING } from '@/features/engine-lab/kinematics'
 import { rotationSense } from './animation'
 import { cutawayLayout, cutawayMirror, cutawayToWorld } from './cutawayMath'
-import { bankOf, engines, type EngineSpec } from './engines'
+import { bankOf, engines, getEngine, type EngineSpec } from './engines'
 import { firingEvents } from './firing'
 import { exhaustLayout, isV10, v10Model } from './v10Layout'
 import {
   COLLECTOR_RADIUS,
+  CYCLE_GAS,
   EXHAUST_OPEN_DEG,
   EXHAUST_OPENS,
   FLOW_SPEED,
@@ -15,9 +16,22 @@ import {
   PLUME_FRAMED,
   PLUME_SPREAD,
   approachWallHeat,
+  FLOW_TEXELS,
+  HEADER_RADIUS,
+  LABEL_WRAP_CYCLES,
+  emissionAtShare,
+  exhaustDrawing,
+  exhaustDrive,
+  exhaustedShare,
   exhaustFramingPoints,
   exhaustLoad,
   exhaustPlumbing,
+  flowTable,
+  longHeaderSide,
+  parcelAt,
+  plumeDilution,
+  portFlowOver,
+  slotClock,
   gasAt,
   headerHeat,
   headerStub,
@@ -79,7 +93,7 @@ function productionPlumbing(spec: EngineSpec) {
   return exhaustPlumbing(
     cylinders.map((cylinder) => ({ index: cylinder.event.index, side: cylinder.side, x: cylinder.x })),
     (side, x, point) => cutawayToWorld(side, spec.bankAngle, cutawayMirror(spec.layout, side, false), x, point),
-    { xFront: Math.max(...cylinders.map((cylinder) => cylinder.x)) + 0.45, xRear: Math.min(...cylinders.map((cylinder) => cylinder.x)) - 0.85, shared: !spec.separateBanks },
+    { xFront: Math.max(...cylinders.map((cylinder) => cylinder.x)) + 0.45, xRear: Math.min(...cylinders.map((cylinder) => cylinder.x)) - 0.85, shared: !spec.separateBanks, longBank: longHeaderSide(spec) },
   )
 }
 
@@ -191,7 +205,7 @@ describe('exhaust camera framing', () => {
 
   it('extends a plume along its outlet direction, with buoyant rise and widening bounds', () => {
     const tail: Vec3[] = [[3, 2, 1], [1, 2, 1]]
-    const plumbing: ExhaustPlumbing = { headers: [], collectors: [], tailpipes: [tail], routes: new Map([[0, tail]]), routeSegments: new Map([[0, [tail]]]) }
+    const plumbing: ExhaustPlumbing = { headers: [], collectors: [], tailpipes: [tail], routes: new Map([[0, tail]]), routeSegments: new Map([[0, [tail]]]), routeFeeds: new Map([[0, [1]]]) }
     const framing = exhaustFramingPoints(plumbing)
     const bounds = (points: Vec3[], axis: number) => [Math.min(...points.map((point) => point[axis]!)), Math.max(...points.map((point) => point[axis]!))]
     const start = framing.slice(tail.length, tail.length + 8)
@@ -204,7 +218,7 @@ describe('exhaust camera framing', () => {
   })
 
   it('handles empty plumbing and a collapsed outlet without creating invalid bounds', () => {
-    const empty: ExhaustPlumbing = { headers: [], collectors: [], tailpipes: [], routes: new Map(), routeSegments: new Map() }
+    const empty: ExhaustPlumbing = { headers: [], collectors: [], tailpipes: [], routes: new Map(), routeSegments: new Map(), routeFeeds: new Map() }
     expect(exhaustFramingPoints(empty)).toEqual([])
     const tail: Vec3[] = [[0, 0, 0], [0, 0, 0]]
     expect(exhaustFramingPoints({ ...empty, tailpipes: [tail], routes: new Map([[0, tail]]) })).toEqual(tail)
@@ -233,15 +247,18 @@ describe('exhaust flow', () => {
       }
     }
     expect(peak).toBeCloseTo(1, 2)
-    // Around bottom dead centre of the exhaust stroke (40° after opening).
-    expect(at).toBeGreaterThan(30)
-    expect(at).toBeLessThan(50)
+    // The blowdown peaks well before bottom dead centre of the exhaust stroke (40° after opening)…
+    expect(at).toBeGreaterThan(20)
+    expect(at).toBeLessThan(32)
+    // …and moves over a third of the cycle's gas by then (the cylinder is still at several bar).
+    expect(exhaustedShare(40)).toBeGreaterThan(0.33)
+    expect(exhaustedShare(40)).toBeLessThan(0.45)
     // Mid exhaust stroke the piston keeps gas moving, more gently.
-    expect(portFlow(130)).toBeGreaterThan(0.4)
-    expect(portFlow(130)).toBeLessThan(0.6)
+    expect(portFlow(130)).toBeGreaterThan(0.2)
+    expect(portFlow(130)).toBeLessThan(0.4)
     // Fades to nothing as the valve closes, without a jump.
     expect(portFlow(EXHAUST_OPEN_DEG)).toBe(0)
-    for (let e = 1; e <= EXHAUST_OPEN_DEG; e++) expect(Math.abs(portFlow(e) - portFlow(e - 1))).toBeLessThan(0.06)
+    for (let e = 1; e <= EXHAUST_OPEN_DEG; e++) expect(Math.abs(portFlow(e) - portFlow(e - 1))).toBeLessThan(0.08)
   })
 
   it('sends the blowdown out hottest', () => {
@@ -284,5 +301,160 @@ describe('exhaust flow', () => {
     expect(exhaustLoad(9000, 800, 8000)).toBe(1)
     expect(exhaustLoad(0, 800, 8000)).toBe(0)
     expect(exhaustLoad(1000, 1000, 1000)).toBe(0)
+  })
+})
+
+describe('the header column', () => {
+  const H = 1.33
+
+  it('counts the share of a cycle’s gas out of the port, and inverts it', () => {
+    expect(exhaustedShare(0)).toBe(0)
+    expect(exhaustedShare(-5)).toBe(0)
+    expect(exhaustedShare(EXHAUST_OPEN_DEG)).toBe(1)
+    expect(exhaustedShare(700)).toBe(1)
+    for (let e = 1; e <= EXHAUST_OPEN_DEG; e++) expect(exhaustedShare(e)).toBeGreaterThanOrEqual(exhaustedShare(e - 1))
+    for (let e = 0.5; e < EXHAUST_OPEN_DEG; e += 0.5) if (portFlow(e) > 0.02) expect(Math.abs(emissionAtShare(exhaustedShare(e)) - e)).toBeLessThan(1)
+    // A header holds about a tenth of a cycle's gas: the blowdown flushes it within a couple of dozen degrees.
+    expect(emissionAtShare(H / CYCLE_GAS)).toBeLessThan(25)
+  })
+
+  it('tabulates the flow for the shader within one byte of the model', () => {
+    const table = flowTable()
+    expect(table).toHaveLength(FLOW_TEXELS * 4)
+    for (let i = 0; i < FLOW_TEXELS; i++) {
+      const u = i / (FLOW_TEXELS - 1)
+      const e = u * EXHAUST_OPEN_DEG
+      expect(Math.abs(table[i * 4]! / 255 - exhaustedShare(e))).toBeLessThanOrEqual(1 / 255)
+      expect(Math.abs(table[i * 4 + 1]! / 255 - emissionAtShare(u) / EXHAUST_OPEN_DEG)).toBeLessThanOrEqual(1 / 255)
+      expect(Math.abs(table[i * 4 + 2]! / 255 - portFlow(e))).toBeLessThanOrEqual(1 / 255)
+      expect(Math.abs(table[i * 4 + 3]! / 255 - portTemperature(e))).toBeLessThanOrEqual(1 / 255)
+    }
+  })
+
+  it('runs each cylinder’s clock from the playhead, counting cycles up to the label wrap', () => {
+    for (const [playhead, lap, firing] of [[100, 3, 250], [700, 0, 0], [5, 9, 600]] as const) {
+      const clock = slotClock(playhead, lap, firing)
+      expect(clock.since).toBeCloseTo(sinceExhaustOpened(((playhead - firing + 360) % 720 + 720) % 720), 9)
+      expect(clock.cycle).toBeGreaterThanOrEqual(0)
+      expect(clock.cycle).toBeLessThan(LABEL_WRAP_CYCLES)
+    }
+    // One lap later is one cycle later.
+    expect((slotClock(100, 4, 250).cycle - slotClock(100, 3, 250).cycle + LABEL_WRAP_CYCLES) % LABEL_WRAP_CYCLES).toBe(1)
+  })
+
+  it('keeps a header full, and still while its valve is shut, with only the gas ageing', () => {
+    for (let since = 0; since < 720; since += 14.4) expect(parcelAt({ since, cycle: 2 }, 0.6, H).flow).toBe(1)
+    const early = parcelAt({ since: 300, cycle: 3 }, 0.5, H)
+    const late = parcelAt({ since: 600, cycle: 3 }, 0.5, H)
+    expect(late.label).toBeCloseTo(early.label, 12)
+    expect(late.age - early.age).toBeCloseTo(300, 6)
+    // Soon after the valve opens the whole header holds gas from this cycle.
+    for (let d = 0; d <= H; d += 0.1) expect(parcelAt({ since: 20, cycle: 1 }, d, H).age).toBeLessThan(21)
+  })
+
+  it('hands gas on from the header to the collector without a jump, older further downstream', () => {
+    const clock = { since: 150, cycle: 4 }
+    const inside = parcelAt(clock, H - 1e-6, H)
+    const outside = parcelAt(clock, H + 1e-6, H)
+    expect(Math.abs(inside.label - outside.label)).toBeLessThan(1e-3)
+    expect(Math.abs(inside.age - outside.age)).toBeLessThan(1e-2)
+    let previous = -1
+    for (let d = 0; d < 8; d += 0.25) {
+      const parcel = parcelAt(clock, d, H)
+      expect(parcel.age).toBeGreaterThanOrEqual(-1e-9)
+      expect(parcel.age).toBeGreaterThanOrEqual(previous - 1e-6)
+      previous = parcel.age
+    }
+  })
+
+  it('spaces two cylinders’ gas in a shared pipe by their firing gap', () => {
+    const gap = 72
+    // Both points downstream of their headers, where the cylinders' gas shares the collector.
+    for (const d of [3, 4.5, 6]) {
+      const first = parcelAt(slotClock(400, 0, 0), d, H)
+      const second = parcelAt(slotClock(400 - gap, 0, 0), d - gap * FLOW_SPEED, H)
+      expect(second.flow).toBeCloseTo(first.flow, 6)
+    }
+  })
+
+  it('blurs the flow over a frame’s crank step without changing the cycle’s total', () => {
+    for (const e of [10, 26, 90, 200]) expect(portFlowOver(e, 0, 4)).toBe(portFlow(e))
+    let plain = 0
+    let blurred = 0
+    for (let e = 0; e < 720; e += 0.5) {
+      plain += portFlow(e)
+      blurred += portFlowOver(e, 40, 4)
+    }
+    expect(blurred).toBeCloseTo(plain, 6)
+  })
+})
+
+describe('what drives the exhaust', () => {
+  const spec = { idleRpm: 800, redlineRpm: 6000, ignition: 'spark' as const }
+  const at = (rpm: number, throttle: number) => exhaustDrive({ running: true, rpm, throttle, limiting: false }, spec)
+
+  it('is still and cold while the engine is stopped', () => {
+    expect(exhaustDrive({ running: false, rpm: 0, throttle: 0, limiting: false }, spec)).toEqual({ load: 0, mass: 0, heat: 0, ageScale: 0, cut: 0 })
+    expect(exhaustDrive(null, spec).load).toBe(0)
+  })
+
+  it('works harder with revs and with throttle, and runs a diesel cooler', () => {
+    expect(at(4000, 0.5).load).toBeGreaterThan(at(2000, 0.5).load)
+    expect(at(4000, 1).load).toBeGreaterThan(at(4000, 0.2).load)
+    expect(at(4000, 1).mass).toBeGreaterThan(at(4000, 0.2).mass)
+    expect(at(4000, 1).heat).toBeGreaterThan(at(1000, 1).heat)
+    expect(exhaustDrive({ running: true, rpm: 4000, throttle: 1, limiting: false }, { ...spec, ignition: 'compression' }).heat).toBeLessThan(at(4000, 1).heat)
+    // The pipes cool gas by the second, so at high revs it reaches the tailpipe hotter.
+    expect(at(6000, 1).ageScale).toBeLessThan(at(1000, 1).ageScale)
+  })
+
+  it('keeps the headers dark when revving without load', () => {
+    expect(wallHeatTarget(at(6000, 0.35).load, false)).toBeLessThan(0.1)
+    expect(wallHeatTarget(at(6000, 1).load, false)).toBe(1)
+  })
+})
+
+describe('exhaust drawing', () => {
+  it('counts the cylinders sharing each stretch of pipe', () => {
+    const viper = productionPlumbing(getEngine('v10-viper')!)
+    for (const feeds of viper.routeFeeds.values()) expect(feeds).toEqual([1, 5, 5])
+    const magnum = productionPlumbing(getEngine('v10-magnum')!)
+    for (const feeds of magnum.routeFeeds.values()) expect(feeds).toEqual([1, 5, 5, 10])
+    const inline = productionPlumbing(getEngine('inline-4')!)
+    for (const feeds of inline.routeFeeds.values()) expect(feeds).toEqual([1, 4, 4])
+  })
+
+  it('gives the Subaru boxer’s bank B the longer pipes, merging under bank A', () => {
+    const spec = getEngine('flat-4')!
+    expect(longHeaderSide(spec)).toBe('B')
+    expect(engines.filter((e) => e.id !== 'flat-4').every((e) => longHeaderSide(e) === undefined)).toBe(true)
+    const layout = productionPlumbing(spec)
+    // Cylinder for cylinder at the same place along the crank, bank B's gas has over a unit further to go.
+    for (const b of layout.headers.filter((h) => h.side === 'B')) {
+      const a = layout.headers.find((h) => h.side === 'A' && Math.abs(h.points[0]![0] - b.points[0]![0]) < 1e-9)!
+      expect(pathLength(layout.routes.get(b.index)!)).toBeGreaterThan(pathLength(layout.routes.get(a.index)!) + 1)
+    }
+  })
+
+  it('draws whole exhausts or header stubs, one route per cylinder, with the headers marked', () => {
+    const layout = productionPlumbing(getEngine('v8-cross')!)
+    const full = exhaustDrawing(layout, true)
+    expect(full.routes).toHaveLength(8)
+    expect(full.pipes.filter((p) => p.header)).toHaveLength(8)
+    expect(full.pipes.filter((p) => !p.header).every((p) => p.radius > HEADER_RADIUS)).toBe(true)
+    const stubs = exhaustDrawing(layout, false)
+    expect(stubs.routes).toHaveLength(8)
+    expect(stubs.pipes.every((p) => p.header && p.radius === HEADER_RADIUS)).toBe(true)
+    for (const route of stubs.routes) {
+      expect(route.segments).toHaveLength(1)
+      expect(route.feeds).toEqual([1])
+      expect(route.headerLength).toBeCloseTo(pathLength(route.points))
+    }
+  })
+
+  it('dilutes the plume as it widens', () => {
+    expect(plumeDilution(0)).toBe(1)
+    for (let s = 0.2; s <= 2.4; s += 0.2) expect(plumeDilution(s)).toBeLessThan(plumeDilution(s - 0.2))
+    expect(plumeDilution(2.4)).toBeLessThan(0.25)
   })
 })

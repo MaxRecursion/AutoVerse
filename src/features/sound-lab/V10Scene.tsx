@@ -61,7 +61,7 @@ import { pistonPinHeight, rodAngle, sparkIntensity, type ValveId } from '@/featu
 import type { EngineFrame, FrameBus } from './animation'
 import type { CutawaySceneProps } from './CutawayScene'
 import type { EngineSpec } from './engines'
-import { COLLECTOR_RADIUS, HEADER_RADIUS, headerStub, pathLength } from './exhaust'
+import { exhaustDrawing } from './exhaust'
 import { ExhaustSystem, type ExhaustDrawing } from './ExhaustSystem'
 import type { FiringEvent } from './firing'
 import {
@@ -458,27 +458,7 @@ interface V10ExhaustProps {
 
 /** This V10's headers, collectors and tailpipes, carrying its valve-timed exhaust gas. */
 function V10Exhaust({ spec, tier, cylinders, events, bus, bankAngle, shared, full }: V10ExhaustProps) {
-  const drawing = useCallback(
-    (bank: number): ExhaustDrawing => {
-      const layout = exhaustLayout(cylinders, bank, shared)
-      if (!full) {
-        const routes = layout.headers.map((h) => {
-          const points = headerStub(h.points)
-          return { index: h.index, points, segments: [points], headerLength: pathLength(h.points) }
-        })
-        return { pipes: routes.map((r) => ({ points: r.points, radius: HEADER_RADIUS, header: true })), routes }
-      }
-      return {
-        pipes: [
-          ...layout.headers.map((h) => ({ points: h.points, radius: HEADER_RADIUS, header: true })),
-          ...layout.collectors.map((c) => ({ points: c.points, radius: COLLECTOR_RADIUS })),
-          ...layout.tailpipes.map((points) => ({ points, radius: COLLECTOR_RADIUS })),
-        ],
-        routes: layout.headers.map((h) => ({ index: h.index, points: layout.routes.get(h.index)!, segments: layout.routeSegments.get(h.index)!, headerLength: pathLength(h.points) })),
-      }
-    },
-    [cylinders, shared, full],
-  )
+  const drawing = useCallback((bank: number): ExhaustDrawing => exhaustDrawing(exhaustLayout(cylinders, bank, shared), full), [cylinders, shared, full])
   const bankOf = useCallback((frameBank: number | null) => frameBank ?? bankAngle, [bankAngle])
   const firingAngle = useCallback((index: number) => events[index]?.angle ?? cylinders.find((c) => c.event.index === index)?.event.angle ?? 0, [events, cylinders])
   return <ExhaustSystem drawing={drawing} bankOf={bankOf} firingAngle={firingAngle} bus={bus} plume={full} spec={spec} tier={tier} />

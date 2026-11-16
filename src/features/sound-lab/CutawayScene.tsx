@@ -38,7 +38,7 @@ import { combustionIntensity, sparkIntensity, type ValveId } from '@/features/en
 import { bankAxis, DEG, type FrameBus } from './animation'
 import { CUTAWAY_PITCH, cutawayLayout, cutawayMirror, cutawayState, cutawayToWorld, type CutawayCylinder } from './cutawayMath'
 import type { EngineSpec } from './engines'
-import { COLLECTOR_RADIUS, HEADER_RADIUS, exhaustPlumbing, headerStub, pathLength } from './exhaust'
+import { exhaustDrawing, exhaustPlumbing, longHeaderSide } from './exhaust'
 import { ExhaustSystem, type ExhaustDrawing } from './ExhaustSystem'
 import type { FiringEvent } from './firing'
 
@@ -345,7 +345,7 @@ export function CutawayScene({ spec, events, bankAngle, sense, bus, tier, view, 
           onSelect={onSelect}
         />
       ))}
-      <CutawayExhaust spec={spec} cylinders={visible} bankAngle={bankAngle} bus={bus} tier={geometryTier} detail={detail} />
+      <CutawayExhaust spec={spec} cylinders={visible} bankAngle={bankAngle} bus={bus} tier={tier} detail={detail} />
     </group>
   )
 }
@@ -366,23 +366,11 @@ function CutawayExhaust({ spec, cylinders, bankAngle, bus, tier, detail }: {
       xFront: Math.max(...positions) + 0.45,
       xRear: Math.min(...positions) - 0.85,
       shared: !spec.separateBanks,
+      // Unequal-length headers (the Subaru boxer): the shared pipe merges under the other bank.
+      longBank: detail ? undefined : longHeaderSide(spec),
     })
-    if (detail) {
-      const routes = layout.headers.map((header) => {
-        const points = headerStub(header.points)
-        return { index: header.index, points, segments: [points], headerLength: pathLength(header.points) }
-      })
-      return { pipes: routes.map((route) => ({ points: route.points, radius: HEADER_RADIUS, header: true })), routes }
-    }
-    return {
-      pipes: [
-        ...layout.headers.map((header) => ({ points: header.points, radius: HEADER_RADIUS, header: true })),
-        ...layout.collectors.map((collector) => ({ points: collector.points, radius: COLLECTOR_RADIUS })),
-        ...layout.tailpipes.map((points) => ({ points, radius: COLLECTOR_RADIUS })),
-      ],
-      routes: layout.headers.map((header) => ({ index: header.index, points: layout.routes.get(header.index)!, segments: layout.routeSegments.get(header.index)!, headerLength: pathLength(header.points) })),
-    }
-  }, [cylinders, detail, spec.layout, spec.separateBanks])
+    return exhaustDrawing(layout, !detail)
+  }, [cylinders, detail, spec])
   const bankOf = useCallback((frameBank: number | null) => detail || spec.layout === 'inline' ? 0 : spec.layout === 'flat' ? 180 : frameBank ?? bankAngle, [detail, spec.layout, bankAngle])
   const firingAngle = useCallback((index: number) => cylinders.find((cylinder) => cylinder.event.index === index)?.event.angle ?? 0, [cylinders])
   return <ExhaustSystem drawing={drawing} bankOf={bankOf} firingAngle={firingAngle} bus={bus} plume={!detail} spec={spec} tier={tier} />

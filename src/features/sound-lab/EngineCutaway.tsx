@@ -13,7 +13,8 @@ import { cn } from '@/lib/utils'
 import type { FrameBus } from './animation'
 import { cutawayBoundsPoints, fitCutawayPoints } from './cutawayFraming'
 import { cutawayMirror, cutawayToWorld } from './cutawayMath'
-import { exhaustFramingPoints, exhaustPlumbing, type PlumbingCylinder } from './exhaust'
+import { exhaustFramingPoints, exhaustPlumbing, longHeaderSide, type PlumbingCylinder } from './exhaust'
+import { describeExhaust } from './exhaustText'
 import { CylinderLayout } from './CylinderLayout'
 import { CutawayScene } from './CutawayScene'
 import type { EngineSpec } from './engines'
@@ -30,6 +31,8 @@ interface EngineCutawayProps {
   bankAngle: number
   sense: 1 | -1
   bus: FrameBus
+  /** The engine is running (its sound playing), whether or not motion is reduced. */
+  running: boolean
   reduced: boolean
 }
 
@@ -41,6 +44,8 @@ const noSubscribe = () => () => {}
 const ORBIT_STEP = Math.PI / 12
 const MIN_DISTANCE = 2.2
 const MAX_DISTANCE = 80
+/** A boxer's exhaust runs under the engine, so its whole-engine view looks from a little lower down. */
+const BOXER_VIEW: Vec3 = [0.55, 0.1, 0.83]
 const ORBITS = [
   { label: 'Rotate engine left', icon: ArrowLeft, yaw: -ORBIT_STEP, pitch: 0 },
   { label: 'Rotate engine right', icon: ArrowRight, yaw: ORBIT_STEP, pitch: 0 },
@@ -61,12 +66,12 @@ function framing(spec: EngineSpec, view: CutawayView, aspect: number): { positio
       return spec.layout === 'inline' ? [{ index: slot, side: 'mid' as const, x }] : [{ index: slot * 2, side: 'A' as const, x }, { index: slot * 2 + 1, side: 'B' as const, x }]
     }).flat()
     const plumbing = exhaustPlumbing(cylinders, (side, x, point) => cutawayToWorld(side, bank, cutawayMirror(spec.layout, side, false), x, point), {
-      xFront: halfLength + 0.45, xRear: -halfLength - 0.85, shared: !spec.separateBanks,
+      xFront: halfLength + 0.45, xRear: -halfLength - 0.85, shared: !spec.separateBanks, longBank: longHeaderSide(spec),
     })
     return fitCutawayPoints([
       ...cutawayBoundsPoints([-halfLength - 0.8, -1.15, -reach], [halfLength + 0.9, 3.75 * Math.cos(halfBank) + 0.95 * Math.sin(halfBank) + 0.4, reach]),
       ...exhaustFramingPoints(plumbing),
-    ], aspect)
+    ], aspect, spec.layout === 'flat' ? BOXER_VIEW : undefined)
   }
   const target: Vec3 = [0, 1.45, 0]
   const base: Vec3 = [5, 3.5, 6]
@@ -82,7 +87,7 @@ const cylinderName = (event: FiringEvent) => event.cylinder === null ? `bank ${e
  * store registers camera controls only: the audio frame bus supplies all motion
  * and this view never records lesson progress or advances a lab timeline.
  */
-export default function EngineCutaway({ spec, events, bankAngle, sense, bus, reduced }: EngineCutawayProps) {
+export default function EngineCutaway({ spec, events, bankAngle, sense, bus, running, reduced }: EngineCutawayProps) {
   const [store] = useState(() => createLabStore(engineLabConfig, { autoplay: false }))
   const [view, setView] = useState<CutawayView>('detail')
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -97,6 +102,7 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, red
   // Framed for a wide bank angle, so the camera does not move while the bank-angle experiment eases.
   const home = useMemo(() => (v10 ? v10Framing(view === 'engine' ? 'engine' : 'pair', Math.max(spec.bankAngle, 90), aspect, !spec.separateBanks) : framing(spec, view, aspect)), [v10, spec, view, aspect])
   const selected = events.find((event) => event.index === selectedIndex) ?? events[0]!
+  const exhaust = describeExhaust(spec, { v10: !!v10, view, running, reduced })
   const partner = v10?.cylinders.find((c) => c.event.index !== selected.index && c.throwIndex === v10.cylinders.find((x) => x.event.index === selected.index)?.throwIndex)
   const pinNote = useMemo(() => {
     if (!v10) return ''
@@ -177,10 +183,10 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, red
                 view === 'detail'
                   ? v10 && partner
                     ? `3D mechanical cutaway of ${cylinderName(selected)} and its crank-throw partner, ${cylinderName(partner.event)}, in ${spec.engine}: both banks at ${spec.bankAngle}°, with pistons, connecting rods, crankpins, camshafts, valves and exhaust headers.`
-                    : `3D mechanical cutaway of ${cylinderName(selected)} in ${spec.engine}, showing the piston, connecting rod, crankshaft, camshafts and valves.`
+                    : `3D mechanical cutaway of ${cylinderName(selected)} in ${spec.engine}, showing the piston, connecting rod, crankshaft, camshafts, valves and the start of its exhaust header.`
                   : v10
-                    ? `3D mechanical cutaway of the ${spec.cylinders}-cylinder ${spec.engine}: five crank throws, banks ${spec.bankAngle}° apart, with valve-timed exhaust gas flowing through each bank's headers and tailpipes.`
-                    : `3D mechanical cutaway of the ${spec.cylinders}-cylinder ${spec.engine}: its ${spec.layout} layout, pistons, connecting rods, crankshaft, valvetrain and flowing exhaust gas.`
+                    ? `3D mechanical cutaway of the ${spec.cylinders}-cylinder ${spec.engine}: five crank throws, banks ${spec.bankAngle}° apart, and ${exhaust.pipes}; ${exhaust.gas}.`
+                    : `3D mechanical cutaway of the ${spec.cylinders}-cylinder ${spec.engine}: its ${spec.layout} layout, pistons, connecting rods, crankshaft and valvetrain, and ${exhaust.pipes}; ${exhaust.gas}.`
               }
               cameraPosition={home.position}
               target={home.target}
@@ -241,7 +247,7 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, red
             </p>
           )}
         </div>
-        <p className="text-xs leading-relaxed text-steel-400" data-testid="exhaust-flow-note">Exhaust gas flows through the headers{view === 'engine' ? ' and leaves the tailpipes as a cooling plume' : ''}, slowed with the mechanism. Heat colours and haze are illustrative.</p>
+        <p className="text-xs leading-relaxed text-steel-400" data-testid="exhaust-flow-note">{exhaust.note}</p>
         <p className="text-xs leading-relaxed text-steel-500">Illustrative cutaway: firing and bank geometry follow the production preset; dimensions and the DOHC valvetrain are teaching examples.</p>
       </div>
     </section>

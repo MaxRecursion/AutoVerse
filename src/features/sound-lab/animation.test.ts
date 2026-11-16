@@ -146,7 +146,7 @@ describe('rev counter', () => {
 })
 
 describe('frame bus', () => {
-  const frame = (playhead: number): EngineFrame => ({ playhead, running: true, animate: true, rpm: 1000, limiting: false, bank: 90, fired: [], cycle: null, dt: 0.016, now: 0 })
+  const frame = (playhead: number): EngineFrame => ({ playhead, running: true, animate: true, rpm: 1000, throttle: 0.5, limiting: false, bank: 90, fired: [], cycle: null, dt: 0.016, now: 0 })
   it('hands a new subscriber the latest frame, then every frame until it leaves', () => {
     const bus = createFrameBus()
     const early = vi.fn()
