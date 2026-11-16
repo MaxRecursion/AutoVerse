@@ -15,25 +15,30 @@
  * The pipe gas draws before the see-through pipe walls, so it sits inside them;
  * the plumes draw after. The walls are clear face-on and solid at their edges,
  * and the first stretch of each header glows dull red after sustained hard
- * running.
+ * running. A dark disc just inside each header's inlet is its bore: looking
+ * into a header from the sectioned head shows an opening, glowing with the
+ * metal, rather than the page behind the see-through walls.
  */
 import { useEffect, useMemo, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { CatmullRomCurve3, Float32BufferAttribute, MeshStandardMaterial, TubeGeometry, Vector3, type BufferGeometry, type Group, type Mesh } from 'three'
+import { CatmullRomCurve3, CircleGeometry, Color, Float32BufferAttribute, MeshBasicMaterial, MeshStandardMaterial, Quaternion, TubeGeometry, Vector3, type BufferGeometry, type Group, type Mesh } from 'three'
 import type { QualityTier } from '@/hooks/useQualityTier'
 import { merge } from '@/features/engine-lab/engineGeometry'
 import { useTheme } from '@/features/theme/theme'
 import { ease, mod, type FrameBus } from './animation'
 import type { EngineSpec } from './engines'
 import {
+  INLET_RECESS,
   LABEL_WRAP_CYCLES,
   SMEAR_MAX_DEG,
   approachWallHeat,
   exhaustDrive,
   exhaustedShare,
   headerHeat,
+  headerInlets,
   portFlowOver,
   slotClock,
+  wallGlow,
   wallHeatTarget,
   type ExhaustDrawing,
   type ExhaustPipe,
@@ -82,6 +87,30 @@ function pipeGeometry(pipes: ExhaustPipe[]): BufferGeometry {
   return merge(tubes)
 }
 
+/** A pipe's bore in shadow: what looking into a header shows, before it glows. */
+const BORE = new Color('#121418')
+/** The bore's share of the wall glow: it is seen face-on through no gas, and should not outshine the metal. */
+const BORE_GLOW = 0.55
+/** How dark a bore's middle is against its rim, where the eye looks further down the pipe. */
+const BORE_DEPTH = 0.45
+
+/** Dark discs just inside each header's inlet, facing back into the port (exhaust.ts headerInlets); null when there are no headers. */
+function inletGeometry(pipes: ExhaustPipe[]): BufferGeometry | null {
+  const facing = new Vector3()
+  const discs = headerInlets(pipes).map((inlet) => {
+    const disc = new CircleGeometry(inlet.radius, 20)
+    // A circle faces +z: turn it to face back into the port.
+    disc.applyQuaternion(new Quaternion().setFromUnitVectors(new Vector3(0, 0, 1), facing.set(...inlet.facing)))
+    disc.translate(...inlet.centre)
+    // Vertex 0 is the circle's centre: shade it, so the bore reads as a pipe receding rather than a flat cap.
+    const shade = new Float32Array(disc.getAttribute('position').count * 3).fill(1)
+    shade.fill(BORE_DEPTH, 0, 3)
+    disc.setAttribute('color', new Float32BufferAttribute(shade, 3))
+    return disc
+  })
+  return discs.length ? merge(discs) : null
+}
+
 /** Pipe walls: clear face-on so the gas shows, solid at the edges, and a header glow driven by `uWallHeat`. */
 function createPipeMaterial() {
   const wallHeat = { value: 0 }
@@ -111,16 +140,18 @@ interface Built {
   bank: number
   at: number
   pipes: BufferGeometry | null
+  inlets: BufferGeometry | null
   gas: BufferGeometry | null
   plumes: BufferGeometry | null
   slots: number[]
 }
 
-const unbuilt = (): Built => ({ bank: Number.NaN, at: -Infinity, pipes: null, gas: null, plumes: null, slots: [] })
+const unbuilt = (): Built => ({ bank: Number.NaN, at: -Infinity, pipes: null, inlets: null, gas: null, plumes: null, slots: [] })
 
 export function ExhaustSystem({ drawing, bankOf, firingAngle, bus, plume, spec, tier }: ExhaustSystemProps) {
   const group = useRef<Group>(null)
   const pipes = useRef<Mesh>(null)
+  const inlets = useRef<Mesh>(null)
   const gas = useRef<Mesh>(null)
   const plumes = useRef<Mesh>(null)
   const gl = useThree((state) => state.gl)
@@ -132,9 +163,11 @@ export function ExhaustSystem({ drawing, bankOf, firingAngle, bus, plume, spec, 
   // Shares the gas material's uniforms, so every update below reaches the plumes too.
   const plumeMaterial = useMemo(() => createPlumeMaterial(material), [material])
   const pipe = useMemo(() => createPipeMaterial(), [])
+  const bore = useMemo(() => new MeshBasicMaterial({ name: 'Exhaust bore', color: BORE, vertexColors: true }), [])
   useEffect(() => () => material.dispose(), [material])
   useEffect(() => () => plumeMaterial.dispose(), [plumeMaterial])
   useEffect(() => () => pipe.material.dispose(), [pipe])
+  useEffect(() => () => bore.dispose(), [bore])
   const built = useRef<Built>(unbuilt())
   const flow = useRef({ playhead: Number.NaN, lap: 0, plumeShift: 0, swirl: 0, run: 0, wallHeat: 0, cut: 0, wallAt: Number.NaN })
   const warmed = useRef<typeof material | null>(null)
@@ -148,6 +181,7 @@ export function ExhaustSystem({ drawing, bankOf, firingAngle, bus, plume, spec, 
   useEffect(
     () => () => {
       built.current.pipes?.dispose()
+      built.current.inlets?.dispose()
       built.current.gas?.dispose()
       built.current.plumes?.dispose()
       built.current = unbuilt()
@@ -176,9 +210,11 @@ export function ExhaustSystem({ drawing, bankOf, firingAngle, bus, plume, spec, 
         const gasRoutes: GasRoute[] = slotted.map((route, slot) => ({ slot, points: route.points, segments: route.segments, feeds: route.feeds, headerLength: route.headerLength, plume }))
         const next = buildGasGeometry(gasRoutes, tier)
         b.pipes?.dispose()
+        b.inlets?.dispose()
         b.gas?.dispose()
         b.plumes?.dispose()
         b.pipes = pipeGeometry(pipeList)
+        b.inlets = inletGeometry(pipeList)
         b.gas = next.pipes
         b.plumes = next.plumes
         u.uOutletTime.value.set(next.outletTime)
@@ -187,6 +223,10 @@ export function ExhaustSystem({ drawing, bankOf, firingAngle, bus, plume, spec, 
         b.bank = bank
         b.at = now
         if (pipes.current) pipes.current.geometry = b.pipes
+        if (inlets.current) {
+          if (b.inlets) inlets.current.geometry = b.inlets
+          inlets.current.visible = !!b.inlets
+        }
         if (gas.current) gas.current.geometry = b.gas
         if (plumes.current && b.plumes) plumes.current.geometry = b.plumes
       }
@@ -214,6 +254,7 @@ export function ExhaustSystem({ drawing, bankOf, firingAngle, bus, plume, spec, 
       f.cut = 0
       f.wallAt = Number.NaN
       pipe.wallHeat.value = 0
+      bore.color.copy(BORE)
       u.uOpacity.value = 0
       show(false)
       return
@@ -244,6 +285,9 @@ export function ExhaustSystem({ drawing, bankOf, firingAngle, bus, plume, spec, 
     // The rev limiter cuts fuel: the gas runs cooler until it recovers.
     f.cut = ease(f.cut, drive.cut, wallDt, CUT_S)
     pipe.wallHeat.value = f.wallHeat
+    // The bore glows with the hottest metal, just inside the port.
+    const [glowR, glowG, glowB] = wallGlow(f.wallHeat * headerHeat(INLET_RECESS))
+    bore.color.setRGB(BORE.r + glowR * BORE_GLOW, BORE.g + glowG * BORE_GLOW, BORE.b + glowB * BORE_GLOW)
     u.uSmear.value = smear
     u.uMass.value = drive.mass
     u.uHeat.value = drive.heat * (1 - 0.5 * f.cut)
@@ -264,6 +308,7 @@ export function ExhaustSystem({ drawing, bankOf, firingAngle, bus, plume, spec, 
       <mesh name="exhaust-pipes" ref={pipes} material={pipe.material} renderOrder={2} />
       <mesh name="exhaust-gas" ref={gas} material={material} renderOrder={1} frustumCulled={false} visible={false} />
       <mesh name="exhaust-plume" ref={plumes} material={plumeMaterial} renderOrder={3} frustumCulled={false} visible={false} />
+      <mesh name="exhaust-bores" ref={inlets} material={bore} visible={false} />
     </group>
   )
 }

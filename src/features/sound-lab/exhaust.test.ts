@@ -34,7 +34,9 @@ import {
   slotClock,
   gasAt,
   headerHeat,
+  headerInlets,
   headerStub,
+  INLET_RECESS,
   pathLength,
   pointAlong,
   portFlow,
@@ -43,6 +45,7 @@ import {
   sinceExhaustOpened,
   STUB_RUN,
   travelDeg,
+  wallGlow,
   wallHeatTarget,
   type ExhaustSide,
   type ExhaustPlumbing,
@@ -81,6 +84,50 @@ describe('exhaust header heat', () => {
     expect(cooled).toBeLessThan(1)
     expect(approachWallHeat(0, 1, 1000)).toBe(1)
     expect(approachWallHeat(1, 0, 1000)).toBeCloseTo(0)
+  })
+
+  it('glows like the pipe walls: nothing when barely warm, dull red rising to orange', () => {
+    expect(wallGlow(0)).toEqual([0, 0, 0])
+    expect(wallGlow(0.12)).toEqual([0, 0, 0])
+    const warm = wallGlow(0.5)
+    const hot = wallGlow(1)
+    // The pipe shader's emissive at full heat: mix(...)(1) × 1 × 1.5.
+    expect(hot[0]).toBeCloseTo(0.95 * 1.5, 12)
+    expect(hot[1]).toBeCloseTo(0.17 * 1.5, 12)
+    expect(hot[2]).toBeCloseTo(0.02 * 1.5, 12)
+    expect(warm[0]).toBeGreaterThan(0)
+    expect(warm[0]).toBeLessThan(hot[0])
+    // Redder while warm, more orange when hot.
+    expect(warm[1] / warm[0]).toBeLessThan(hot[1] / hot[0])
+  })
+})
+
+describe('header bores', () => {
+  it('closes each header just inside its inlet with a disc facing back into the port', () => {
+    const header = { points: [[0, 1, 0], [-1, 1, 0], [-1.5, 0.5, 0]] as Vec3[], radius: 0.1, header: true }
+    const collector = { points: [[-1.5, 0.5, 0], [-3, 0.5, 0]] as Vec3[], radius: 0.16 }
+    const [inlet, ...rest] = headerInlets([header, collector])
+    expect(rest).toHaveLength(0)
+    expect(inlet!.centre[0]).toBeCloseTo(-INLET_RECESS, 12)
+    expect(inlet!.centre[1]).toBeCloseTo(1, 12)
+    // The header runs along −x from the port, so its bore faces +x, back into the port.
+    expect(inlet!.facing[0]).toBeCloseTo(1, 12)
+    expect(inlet!.facing[1]).toBeCloseTo(0, 12)
+    expect(inlet!.facing[2]).toBeCloseTo(0, 12)
+    expect(inlet!.radius).toBeLessThan(header.radius)
+    expect(inlet!.radius).toBeGreaterThan(0.9 * header.radius)
+    // A degenerate header gets no disc rather than a NaN one.
+    expect(headerInlets([{ points: [[0, 0, 0], [0, 0, 0]], radius: 0.1, header: true }])).toEqual([])
+  })
+
+  it('gives every production header a disc whose normal points back along the pipe', () => {
+    for (const spec of engines) {
+      const { pipes } = exhaustDrawing(productionPlumbing(spec), true)
+      const inlets = headerInlets(pipes)
+      expect(inlets).toHaveLength(pipes.filter((pipe) => pipe.header).length)
+      expect(inlets.length).toBe(spec.cylinders)
+      for (const inlet of inlets) expect(Math.hypot(...inlet.facing)).toBeCloseTo(1, 12)
+    }
   })
 })
 

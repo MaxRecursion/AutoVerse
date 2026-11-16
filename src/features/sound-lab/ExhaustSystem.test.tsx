@@ -1,6 +1,6 @@
 import { act, cleanup, render } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { ShaderLib, type BufferGeometry, type MeshStandardMaterial, type ShaderMaterial } from 'three'
+import { ShaderLib, type BufferGeometry, type MeshBasicMaterial, type MeshStandardMaterial, type ShaderMaterial } from 'three'
 import { createFrameBus, type EngineFrame } from './animation'
 import { ExhaustSystem, type ExhaustDrawing } from './ExhaustSystem'
 
@@ -8,6 +8,7 @@ const harness = vi.hoisted(() => ({
   frame: null as (() => void) | null,
   pipes: [] as MeshStandardMaterial[],
   gas: [] as ShaderMaterial[],
+  bores: [] as MeshBasicMaterial[],
   gl: { extensions: { has: vi.fn(() => true) }, compileAsync: vi.fn(async () => {}), compile: vi.fn() },
   invalidate: vi.fn(),
 }))
@@ -32,6 +33,12 @@ vi.mock('three', async (importOriginal) => {
         harness.gas.push(this)
       }
     },
+    MeshBasicMaterial: class extends actual.MeshBasicMaterial {
+      constructor(...args: ConstructorParameters<typeof actual.MeshBasicMaterial>) {
+        super(...args)
+        harness.bores.push(this)
+      }
+    },
   }
 })
 
@@ -48,6 +55,7 @@ beforeEach(() => {
   harness.frame = null
   harness.pipes.length = 0
   harness.gas.length = 0
+  harness.bores.length = 0
   vi.clearAllMocks()
   // The host tags are supplied by R3F in production; this test uses inert DOM
   // hosts to exercise its frame callback without creating a WebGL context.
@@ -105,8 +113,12 @@ describe('exhaust lifecycle', () => {
     expect(heat.value).toBe(once)
     paint(frame(2000))
     expect(heat.value).toBeCloseTo(1 - Math.exp(-2 / 3), 8)
+    // The header's bore glows with its metal: redder than its dark shade once hot, never bluer.
+    const bore = harness.bores[0]!.color
+    expect(bore.r).toBeGreaterThan(bore.b)
     paint(frame(2500, false))
     expect(heat.value).toBe(0)
+    expect(bore.r).toBeLessThan(bore.b)
     paint(frame(5000))
     expect(heat.value).toBe(0)
     paint(frame(6000))
@@ -124,10 +136,17 @@ describe('exhaust lifecycle', () => {
     expect(pipeGeometry.getAttribute('aHeat').count).toBeGreaterThan(0)
     expect(gasGeometry.getAttribute('aTime').count).toBeGreaterThan(0)
     expect(harness.gl.compileAsync).toHaveBeenCalledExactlyOnceWith(container.firstElementChild, {}, {})
+    // The one header's bore: a disc just inside its inlet, drawn whether or not the engine runs.
+    const bores = meshes[3] as unknown as { geometry: BufferGeometry; visible: boolean }
+    const boreGeometry = bores.geometry
+    expect(bores.visible).toBe(true)
+    expect(boreGeometry.getAttribute('position').count).toBeGreaterThan(0)
     const replacedPipe = vi.fn()
     const replacedGas = vi.fn()
+    const replacedBore = vi.fn()
     pipeGeometry.addEventListener('dispose', replacedPipe)
     gasGeometry.addEventListener('dispose', replacedGas)
+    boreGeometry.addEventListener('dispose', replacedBore)
     clock.mockReturnValue(50)
     paint({ ...frame(50, false), bank: 100 })
     expect((meshes[0] as unknown as { geometry: BufferGeometry }).geometry).toBe(pipeGeometry)
@@ -139,13 +158,17 @@ describe('exhaust lifecycle', () => {
     expect(finalPipe).not.toBe(pipeGeometry)
     expect(replacedPipe).toHaveBeenCalledOnce()
     expect(replacedGas).toHaveBeenCalledOnce()
+    expect(replacedBore).toHaveBeenCalledOnce()
     expect(harness.gl.compileAsync).toHaveBeenCalledTimes(1)
     const pipeDisposed = vi.fn()
     const gasDisposed = vi.fn()
+    const boreDisposed = vi.fn()
     finalPipe.addEventListener('dispose', pipeDisposed)
     finalGas.addEventListener('dispose', gasDisposed)
+    bores.geometry.addEventListener('dispose', boreDisposed)
     unmount()
     expect(pipeDisposed).toHaveBeenCalledOnce()
     expect(gasDisposed).toHaveBeenCalledOnce()
+    expect(boreDisposed).toHaveBeenCalledOnce()
   })
 })

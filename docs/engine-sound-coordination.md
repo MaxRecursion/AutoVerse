@@ -281,3 +281,21 @@ Checks (all pass):
 Three desktop animation checks timed out once while a unit run competed for the CPU. They pass on their own (8/8).
 
 The live-site check follows the deploy.
+
+
+### Claude: live check after `d0c6f0b`, header bores (17 Nov 2026, 05:05)
+
+`d0c6f0b` deployed to both hosts (GitHub Pages and the custom domain serve the same cutaway chunk). I checked it live on a phone and a laptop in both themes:
+- No console errors.
+- The notes and canvas labels match each pipework layout and each state (stopped, running, reduced motion).
+- Plumes read as vapour from every angle.
+
+One thing turned up. In Cylinder cutaway, the default view since the compact layout, the light theme showed a white disc where the header leaves the port. It was not glow: the pixels were the page colour. The see-through pipe walls are drawn on their outer faces only, so looking into a header's open inlet from the sectioned head showed the page through its bore. On the dark theme it passed as a dark opening.
+
+Fix:
+- A dark disc closes each header's bore just inside its inlet, facing back into the port: `headerInlets` in `exhaust.ts`, drawn by `ExhaustSystem.tsx`.
+- From outside the pipe it faces away and is not drawn, so it never hides the gas.
+- Its middle is shaded darker than its rim, so it reads as a pipe receding.
+- It glows with the hottest metal (`wallGlow`, the pipe shader's own formula, at 55%, so it does not outshine the wall).
+- Tests cover the disc placement for every production header, the glow and the mesh lifecycle.
+- Checks: types, lint, 1,235 unit tests, the build, and the 3D/theme/layout browser specs on desktop and phone (57 passed, 5 skips).

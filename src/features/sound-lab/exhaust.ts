@@ -367,6 +367,52 @@ export const WALL_HEAT_DOWN_S = 5
 export const headerHeat = (distance: number) => (distance >= 0 ? Math.exp(-distance / HEADER_HEAT_LENGTH) : 0)
 
 /**
+ * The header glow as linear RGB light for a wall heat of `heat` (0–1): dull
+ * red, warming to orange. It matches the pipe walls' shader (ExhaustSystem),
+ * so a header's bore glows with its metal.
+ */
+export function wallGlow(heat: number): Vec3 {
+  const t = Math.min(1, Math.max(0, (heat - 0.12) / 0.88))
+  const g = t * t * (3 - 2 * t)
+  return [(0.45 + 0.5 * g) * g * 1.5, (0.03 + 0.14 * g) * g * 1.5, 0.02 * g * g * 1.5]
+}
+
+/** How far inside each header its inlet disc sits, so the disc never fights the head's face. */
+export const INLET_RECESS = 0.012
+
+export interface HeaderInlet {
+  centre: Vec3
+  /** Unit normal, back along the header into the port. */
+  facing: Vec3
+  radius: number
+}
+
+/**
+ * A disc closing each header's bore just inside its inlet, facing back into
+ * the port. The see-through pipe walls are drawn on their outer faces only,
+ * so looking into a header from the sectioned head would show the page
+ * through its bore. A real bore is a dark opening. From outside the pipe the
+ * disc faces away, so it is not drawn and never hides the gas.
+ */
+export function headerInlets(pipes: readonly ExhaustPipe[]): HeaderInlet[] {
+  const inlets: HeaderInlet[] = []
+  for (const { points, radius, header } of pipes) {
+    const [a, b] = points
+    if (!header || !a || !b) continue
+    const d: Vec3 = [b[0] - a[0], b[1] - a[1], b[2] - a[2]]
+    const length = Math.hypot(d[0], d[1], d[2])
+    if (length < 1e-9) continue
+    const along: Vec3 = [d[0] / length, d[1] / length, d[2] / length]
+    inlets.push({
+      centre: [a[0] + along[0] * INLET_RECESS, a[1] + along[1] * INLET_RECESS, a[2] + along[2] * INLET_RECESS],
+      facing: [-along[0], -along[1], -along[2]],
+      radius: radius * 0.97,
+    })
+  }
+  return inlets
+}
+
+/**
  * How brightly the headers glow once the revs have been held: nothing below
  * about half load, full at the redline. A diesel's cooler exhaust glows less.
  */
