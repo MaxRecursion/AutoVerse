@@ -12,12 +12,14 @@ import {
   FLOW_SPEED,
   GAS_FILL,
   HEADER,
-  PLUME_LENGTH,
+  PLUME_FRAMED,
   PLUME_SPREAD,
+  approachWallHeat,
   exhaustFramingPoints,
   exhaustLoad,
   exhaustPlumbing,
   gasAt,
+  headerHeat,
   headerStub,
   pathLength,
   pointAlong,
@@ -26,11 +28,46 @@ import {
   sinceExhaustOpened,
   STUB_RUN,
   travelDeg,
+  wallHeatTarget,
   type ExhaustSide,
   type ExhaustPlumbing,
   type ModelPoint,
   type Vec3,
 } from './exhaust'
+
+describe('exhaust header heat', () => {
+  it('keeps idle headers cool and concentrates heat near the exhaust port', () => {
+    expect(wallHeatTarget(0, false)).toBe(0)
+    expect(wallHeatTarget(0.5, false)).toBe(0)
+    expect(wallHeatTarget(1, false)).toBe(1)
+    expect(wallHeatTarget(1, true)).toBeLessThan(wallHeatTarget(1, false))
+    expect(headerHeat(0)).toBe(1)
+    expect(headerHeat(2)).toBeLessThan(0.03)
+    expect(headerHeat(-1)).toBe(0)
+  })
+
+  it('heats gradually and gives the same result at different frame rates', () => {
+    const after = (fps: number) => {
+      let heat = 0
+      for (let i = 0; i < 3 * fps; i++) heat = approachWallHeat(heat, 1, 1 / fps)
+      return heat
+    }
+    expect(after(30)).toBeGreaterThan(0.5)
+    expect(after(30)).toBeLessThan(0.8)
+    expect(after(30)).toBeCloseTo(after(120), 10)
+    expect(approachWallHeat(0, 1, 0)).toBe(0)
+  })
+
+  it('cools more slowly than it heats and never overshoots its target', () => {
+    const heated = approachWallHeat(0, 1, 3)
+    const cooled = approachWallHeat(1, 0, 3)
+    expect(1 - cooled).toBeLessThan(heated)
+    expect(cooled).toBeGreaterThan(0)
+    expect(cooled).toBeLessThan(1)
+    expect(approachWallHeat(0, 1, 1000)).toBe(1)
+    expect(approachWallHeat(1, 0, 1000)).toBeCloseTo(0)
+  })
+})
 
 /** A plain placement for the recipe tests: bank A on −z, bank B mirrored onto +z, no lean. */
 const flatPlace = (side: ExhaustSide, x: number, p: ModelPoint): Vec3 => [x, p.y, side === 'B' ? -p.z : p.z]
@@ -160,9 +197,9 @@ describe('exhaust camera framing', () => {
     const start = framing.slice(tail.length, tail.length + 8)
     expect(bounds(start, 0)).toEqual([1 - COLLECTOR_RADIUS * GAS_FILL, 1 + COLLECTOR_RADIUS * GAS_FILL])
     const end = framing.slice(-8)
-    const radius = COLLECTOR_RADIUS * GAS_FILL + PLUME_SPREAD * PLUME_LENGTH
-    expect(bounds(end, 0)).toEqual([1 - PLUME_LENGTH - radius, 1 - PLUME_LENGTH + radius])
-    expect(bounds(end, 1)).toEqual([2 + 0.07 * PLUME_LENGTH ** 2 - radius, 2 + 0.07 * PLUME_LENGTH ** 2 + radius])
+    const radius = COLLECTOR_RADIUS * GAS_FILL + PLUME_SPREAD * PLUME_FRAMED
+    expect(bounds(end, 0)).toEqual([1 - PLUME_FRAMED - radius, 1 - PLUME_FRAMED + radius])
+    expect(bounds(end, 1)).toEqual([2 + 0.07 * PLUME_FRAMED ** 2 - radius, 2 + 0.07 * PLUME_FRAMED ** 2 + radius])
     expect(bounds(end, 2)).toEqual([1 - radius, 1 + radius])
   })
 

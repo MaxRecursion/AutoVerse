@@ -37,12 +37,23 @@ describe('multi-cylinder cutaway phasing', () => {
     }
   })
 
-  it('mirrors bank B of V and boxer engines, and nothing in an inline engine or the single-cylinder view', () => {
+  it('mirrors bank B of V and boxer engines and the whole of an inline engine, never the single-cylinder view', () => {
     expect(cutawayMirror('v', 'B', false)).toBe(-1)
     expect(cutawayMirror('flat', 'B', false)).toBe(-1)
     expect(cutawayMirror('v', 'A', false)).toBe(1)
-    expect(cutawayMirror('inline', 'mid', false)).toBe(1)
+    expect(cutawayMirror('inline', 'mid', false)).toBe(-1)
     expect(cutawayMirror('v', 'B', true)).toBe(1)
+    expect(cutawayMirror('inline', 'mid', true)).toBe(1)
+  })
+
+  it('turns an inline engine’s exhaust towards the camera side (+z)', () => {
+    for (const spec of engines.filter((e) => e.layout === 'inline')) {
+      const events = firingEvents(spec.intervals, spec.order, bankOf(spec))
+      for (const c of cutawayLayout(spec, events, spec.bankAngle, rotationSense(spec, events))) {
+        const port = cutawayToWorld(c.side, 0, cutawayMirror(spec.layout, c.side, false), c.x, PORT_EXIT)
+        expect(port[2], spec.id).toBeGreaterThan(0.5)
+      }
+    }
   })
 
   it('turns every exhaust port outwards: away from the vee, or down under a boxer', () => {

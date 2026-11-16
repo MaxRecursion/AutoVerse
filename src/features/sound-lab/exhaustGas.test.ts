@@ -1,6 +1,6 @@
 import { CatmullRomCurve3, Vector3, type BufferGeometry } from 'three'
 import { describe, expect, it } from 'vitest'
-import { HEADER_RADIUS, type Vec3 } from './exhaust'
+import { FLOW_SPEED, HEADER_RADIUS, PLUME_LENGTH, travelDeg, type Vec3 } from './exhaust'
 import { buildGasGeometry, noiseStep, noiseVolume, plumeNoiseStep, wrapNoise, type GasRoute } from './exhaustGas'
 
 /** Recover each sampled cross-section's centre, ignoring its duplicated UV-seam vertex. */
@@ -75,7 +75,7 @@ describe('exhaust gas geometry', () => {
     try {
       const count = geometry.getAttribute('position').count
       expect(count).toBeGreaterThan(0)
-      for (const name of ['position', 'normal', 'aDist', 'aAround', 'aSlot', 'aTime', 'aPlume', 'aFade']) {
+      for (const name of ['position', 'normal', 'aAxis', 'aTangent', 'aRadius', 'aDist', 'aAround', 'aSlot', 'aTime', 'aPlume', 'aFade', 'aMask']) {
         const attribute = geometry.getAttribute(name)
         expect(attribute.count, name).toBe(count)
         expect(Array.from(attribute.array).every(Number.isFinite), name).toBe(true)
@@ -83,6 +83,51 @@ describe('exhaust gas geometry', () => {
       expect(Array.from(geometry.getIndex()!.array).every((index) => Number.isInteger(index) && index >= 0 && index < count)).toBe(true)
       expect(new Set(Array.from(geometry.getAttribute('aSlot').array))).toEqual(new Set([0, 9]))
       expect(Math.max(...Array.from(geometry.getAttribute('aPlume').array))).toBe(1)
+    } finally {
+      geometry.dispose()
+    }
+  })
+
+  it.each(['low', 'high'] as const)('%s detail mixes a shared outlet once while retaining each cylinder’s travel delay', (tier) => {
+    const common: Vec3[][] = [[[1, 1, 1], [-2, 1, 1]], [[-2, 1, 1], [-3, 0, 0], [-4, 0, 0]]]
+    const headers: Vec3[][] = [[[2, 2, 1], [1, 1, 1]], [[-1, 2, -1], [1, 1, 1]]]
+    const routes: GasRoute[] = headers.map((header, index) => {
+      const segments = [header, ...common]
+      return { slot: index === 0 ? 0 : 9, points: segments.flatMap((segment, part) => part ? segment.slice(1) : segment), segments, headerLength: 1, plume: true }
+    })
+    const geometry = buildGasGeometry(routes, tier)
+    const single = buildGasGeometry(routes.slice(0, 1), tier)
+    try {
+      const mask = Array.from(geometry.getAttribute('aMask').array)
+      const singleMask = Array.from(single.getAttribute('aMask').array)
+      const plumeIndices = mask.flatMap((value, index) => value ? [index] : [])
+      expect(plumeIndices.length).toBe(singleMask.filter(Boolean).length)
+      expect(new Set(plumeIndices.map((index) => mask[index]))).toEqual(new Set([(1 << 0) | (1 << 9)]))
+      const time = geometry.getAttribute('aTime')
+      const plumeTimes = plumeIndices.map((index) => time.getX(index))
+      expect(Math.min(...plumeTimes)).toBe(0)
+      expect(Math.max(...plumeTimes)).toBeCloseTo(travelDeg(PLUME_LENGTH, 0), 3)
+      const outletTime = geometry.userData.outletTime as number[]
+      expect(outletTime).toHaveLength(10)
+      expect(outletTime[0]).not.toBeCloseTo(outletTime[9]!, 2)
+      for (const route of routes) {
+        const length = route.segments!.reduce((sum, points) => sum + new CatmullRomCurve3(points.map((p) => new Vector3(...p)), false, 'catmullrom', 0.2).getLength(), 0)
+        expect(outletTime[route.slot]).toBeCloseTo(length / FLOW_SPEED, 7)
+      }
+      expect(outletTime.slice(1, 9)).toEqual(Array(8).fill(0))
+    } finally {
+      geometry.dispose()
+      single.dispose()
+    }
+  })
+
+  it('keeps disconnected bank outlets separate rather than mixing their cylinder masks', () => {
+    const geometry = buildGasGeometry([
+      { slot: 0, points: [[0, 2, 1], [-4, 0, 1]], headerLength: 1, plume: true },
+      { slot: 9, points: [[0, 2, -1], [-4, 0, -1]], headerLength: 1, plume: true },
+    ], 'low')
+    try {
+      expect(new Set(Array.from(geometry.getAttribute('aMask').array).filter(Boolean))).toEqual(new Set([1, 1 << 9]))
     } finally {
       geometry.dispose()
     }

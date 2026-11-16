@@ -83,7 +83,6 @@ function createMaterials() {
     plug: metal('#b4c5d8', 0.75, 0.25),
     insulator: metal('#eee8dc', 0, 0.32),
     injector: metal('#6a9aab', 0.75, 0.25),
-    pipe: metal('#9aa3ae', 0.55, 0.32, { transparent: true, opacity: 0.5, depthWrite: false }),
     selection: new MeshBasicMaterial({ color: '#38d7f2', transparent: true, opacity: 0.75, depthWrite: false, toneMapped: false }),
   }
 }
@@ -314,7 +313,8 @@ export function CutawayScene({ spec, events, bankAngle, sense, bus, tier, view, 
   useEffect(() => () => Object.values(mats).forEach((material) => material.dispose()), [mats])
   const detail = view === 'detail'
   const selected = placement.find((cylinder) => cylinder.event.index === selectedIndex) ?? placement[0]
-  const visible = detail && selected ? [selected] : placement
+  // Memoised: the exhaust rebuilds its pipes and gas whenever this list changes.
+  const visible = useMemo(() => (detail && selected ? [selected] : placement), [detail, selected, placement])
 
   return (
     <group dispose={null} name="production-engine-cutaway">
@@ -345,18 +345,17 @@ export function CutawayScene({ spec, events, bankAngle, sense, bus, tier, view, 
           onSelect={onSelect}
         />
       ))}
-      <CutawayExhaust spec={spec} cylinders={visible} bankAngle={bankAngle} bus={bus} material={mats.pipe} tier={geometryTier} detail={detail} />
+      <CutawayExhaust spec={spec} cylinders={visible} bankAngle={bankAngle} bus={bus} tier={geometryTier} detail={detail} />
     </group>
   )
 }
 
 /** The same exhaust and gas renderer as the V10, placed on the existing inline/V/boxer cylinders. */
-function CutawayExhaust({ spec, cylinders, bankAngle, bus, material, tier, detail }: {
+function CutawayExhaust({ spec, cylinders, bankAngle, bus, tier, detail }: {
   spec: EngineSpec
   cylinders: CutawayCylinder[]
   bankAngle: number
   bus: FrameBus
-  material: MeshStandardMaterial
   tier: QualityTier
   detail: boolean
 }) {
@@ -373,11 +372,11 @@ function CutawayExhaust({ spec, cylinders, bankAngle, bus, material, tier, detai
         const points = headerStub(header.points)
         return { index: header.index, points, segments: [points], headerLength: pathLength(header.points) }
       })
-      return { pipes: routes.map((route) => ({ points: route.points, radius: HEADER_RADIUS })), routes }
+      return { pipes: routes.map((route) => ({ points: route.points, radius: HEADER_RADIUS, header: true })), routes }
     }
     return {
       pipes: [
-        ...layout.headers.map((header) => ({ points: header.points, radius: HEADER_RADIUS })),
+        ...layout.headers.map((header) => ({ points: header.points, radius: HEADER_RADIUS, header: true })),
         ...layout.collectors.map((collector) => ({ points: collector.points, radius: COLLECTOR_RADIUS })),
         ...layout.tailpipes.map((points) => ({ points, radius: COLLECTOR_RADIUS })),
       ],
@@ -386,5 +385,5 @@ function CutawayExhaust({ spec, cylinders, bankAngle, bus, material, tier, detai
   }, [cylinders, detail, spec.layout, spec.separateBanks])
   const bankOf = useCallback((frameBank: number | null) => detail || spec.layout === 'inline' ? 0 : spec.layout === 'flat' ? 180 : frameBank ?? bankAngle, [detail, spec.layout, bankAngle])
   const firingAngle = useCallback((index: number) => cylinders.find((cylinder) => cylinder.event.index === index)?.event.angle ?? 0, [cylinders])
-  return <ExhaustSystem drawing={drawing} bankOf={bankOf} firingAngle={firingAngle} bus={bus} pipeMaterial={material} plume={!detail} spec={spec} tier={tier} />
+  return <ExhaustSystem drawing={drawing} bankOf={bankOf} firingAngle={firingAngle} bus={bus} plume={!detail} spec={spec} tier={tier} />
 }

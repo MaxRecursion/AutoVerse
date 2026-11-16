@@ -42,6 +42,7 @@ import {
   GAS_FILL,
   HEADER_RADIUS,
   PLUME_LENGTH,
+  PLUME_SLOW,
   PLUME_SPREAD,
   PORT_FLOW_PEAK,
   STROKE_END,
@@ -88,11 +89,13 @@ interface Ring {
   centre: Vector3
   tangent: Vector3
   radius: number
-  /** Distance from the port. */
+  /** Distance from the port (in a plume: its routes' mean length, plus the distance past the outlet). */
   dist: number
   /** 0 inside the pipes, rising to 1 at the end of the plume. */
   plume: number
   fade: number
+  /** Crank degrees gas takes to get here: from its port in a pipe, from the outlet in a plume. */
+  time: number
 }
 
 const smooth = (a: number, b: number, v: number) => {
@@ -100,7 +103,7 @@ const smooth = (a: number, b: number, v: number) => {
   return t * t * (3 - 2 * t)
 }
 
-/** Centre-line samples for one route: the pipe's own curve, then the plume rising gently as it slows. */
+/** Centre-line samples for one route's pipes, port to outlet (or to the end of a header stub). */
 function routeRings(route: GasRoute, spacing: number): Ring[] {
   const curves = (route.segments ?? [route.points]).map((points) => new CatmullRomCurve3(points.map((p) => new Vector3(...p)), false, 'catmullrom', 0.2))
   const lengths = curves.map((curve) => curve.getLength())
@@ -124,95 +127,149 @@ function routeRings(route: GasRoute, spacing: number): Ring[] {
         plume: 0,
         // A header stub fades out where the rest of the exhaust would carry on.
         fade: route.plume ? 1 : 1 - smooth(length - 0.45, length, dist),
+        time: travelDeg(dist, length),
       })
     }
     offset += partLength
   })
-  if (!route.plume) return rings
-  const end = rings[rings.length - 1]!
-  const direction = end.tangent.clone()
-  const up = new Vector3(0, 1, 0)
-  const plumeSteps = Math.max(6, Math.ceil(PLUME_LENGTH / spacing))
-  for (let i = 1; i <= plumeSteps; i++) {
-    const s = (i / plumeSteps) * PLUME_LENGTH
-    // Hot gas is buoyant: the plume curls upwards as it slows.
-    const centre = end.centre.clone().addScaledVector(direction, s).addScaledVector(up, 0.07 * s * s)
-    const tangent = direction.clone().addScaledVector(up, 0.14 * s).normalize()
-    const t = s / PLUME_LENGTH
-    rings.push({ centre, tangent, radius: end.radius + PLUME_SPREAD * s, dist: length + s, plume: t, fade: 1 - smooth(0.55, 1, t) })
-  }
   return rings
 }
 
 /**
- * One geometry holding every route's tube of gas, with the attributes the
- * shader reads: distance from the port, position around the tube, slot,
- * crank degrees the gas takes to get there, plume progress and fade.
+ * The plume leaving one outlet, fed by every cylinder that exhausts through
+ * it: it widens like a turbulent jet, slows (exhaust.ts travelDeg) and, hot
+ * and buoyant, curls upwards. One plume per outlet, so the puffs of several
+ * cylinders follow one another through the same cloud.
+ */
+function plumeRings(outlet: Ring, spacing: number, routeLength: number): Ring[] {
+  const direction = outlet.tangent.clone()
+  const up = new Vector3(0, 1, 0)
+  const steps = Math.max(6, Math.ceil(PLUME_LENGTH / spacing))
+  const rings: Ring[] = []
+  for (let i = 0; i <= steps; i++) {
+    const s = (i / steps) * PLUME_LENGTH
+    const t = s / PLUME_LENGTH
+    rings.push({
+      centre: outlet.centre.clone().addScaledVector(direction, s).addScaledVector(up, 0.07 * s * s),
+      tangent: direction.clone().addScaledVector(up, 0.14 * s).normalize(),
+      radius: outlet.radius + PLUME_SPREAD * s,
+      dist: routeLength + s,
+      plume: t,
+      fade: 1 - smooth(0.55, 1, t),
+      time: travelDeg(routeLength + s, routeLength) - routeLength / FLOW_SPEED,
+    })
+  }
+  return rings
+}
+
+interface GasArrays {
+  position: number[]
+  normal: number[]
+  axis: number[]
+  direction: number[]
+  radius: number[]
+  dist: number[]
+  around: number[]
+  slot: number[]
+  time: number[]
+  plume: number[]
+  fade: number[]
+  mask: number[]
+  index: number[]
+}
+
+/** Rings round a centre line, with a parallel-transported frame so the tube does not twist round bends. */
+function addTube(out: GasArrays, rings: Ring[], radial: number, slot: number, mask: number) {
+  const n = new Vector3()
+  const b = new Vector3()
+  const ring = new Vector3()
+  const first = rings[0]!.tangent
+  n.set(Math.abs(first.x) < 0.9 ? 1 : 0, Math.abs(first.x) < 0.9 ? 0 : 1, 0).cross(first).normalize()
+  const base = out.position.length / 3
+  rings.forEach((r, i) => {
+    if (i > 0) {
+      const prev = rings[i - 1]!.tangent
+      const axis = new Vector3().crossVectors(prev, r.tangent)
+      const sin = axis.length()
+      if (sin > 1e-6) n.applyAxisAngle(axis.divideScalar(sin), Math.atan2(sin, prev.dot(r.tangent)))
+      n.addScaledVector(r.tangent, -n.dot(r.tangent)).normalize()
+    }
+    b.crossVectors(r.tangent, n).normalize()
+    for (let j = 0; j <= radial; j++) {
+      const a = (j / radial) * Math.PI * 2
+      ring.copy(n).multiplyScalar(Math.cos(a)).addScaledVector(b, Math.sin(a))
+      out.position.push(r.centre.x + ring.x * r.radius, r.centre.y + ring.y * r.radius, r.centre.z + ring.z * r.radius)
+      out.normal.push(ring.x, ring.y, ring.z)
+      out.axis.push(r.centre.x, r.centre.y, r.centre.z)
+      out.direction.push(r.tangent.x, r.tangent.y, r.tangent.z)
+      out.radius.push(r.radius)
+      out.dist.push(r.dist)
+      out.around.push(j / radial)
+      out.slot.push(slot)
+      out.time.push(r.time)
+      out.plume.push(r.plume)
+      out.fade.push(r.fade)
+      out.mask.push(mask)
+    }
+  })
+  for (let i = 0; i < rings.length - 1; i++)
+    for (let j = 0; j < radial; j++) {
+      const a = base + i * (radial + 1) + j
+      const c = a + radial + 1
+      out.index.push(a, a + 1, c, a + 1, c + 1, c)
+    }
+}
+
+/**
+ * One geometry holding every cylinder's tube of gas through its pipes, plus
+ * one plume per outlet, with the attributes the shader reads: distance from
+ * the port, position around the tube, slot, crank degrees the gas takes to get
+ * there, plume progress and fade, the cross-section's centre, direction and
+ * radius (so the shader can measure how much gas each view ray crosses) and,
+ * on a plume, the set of slots (bits) whose gas it carries.
+ *
+ * `userData.outletTime[slot]` holds the crank degrees each cylinder's gas
+ * takes to reach its outlet, for the shader's `uOutletTime`.
  */
 export function buildGasGeometry(routes: GasRoute[], tier: QualityTier): BufferGeometry {
   const spacing = tier === 'low' ? 0.08 : 0.045
   const radial = tier === 'low' ? 8 : 12
-  const position: number[] = []
-  const normal: number[] = []
-  const dist: number[] = []
-  const around: number[] = []
-  const slot: number[] = []
-  const time: number[] = []
-  const plume: number[] = []
-  const fade: number[] = []
-  const index: number[] = []
-  const n = new Vector3()
-  const b = new Vector3()
-  const ring = new Vector3()
+  const out: GasArrays = { position: [], normal: [], axis: [], direction: [], radius: [], dist: [], around: [], slot: [], time: [], plume: [], fade: [], mask: [], index: [] }
+  const outletTime = Array.from({ length: MAX_GAS_SLOTS }, () => 0)
+  const outlets = new Map<string, { ring: Ring; slot: number; mask: number; lengths: number[] }>()
   for (const route of routes) {
     const rings = routeRings(route, spacing)
-    // The outlet: past it the gas is in the slowing plume.
-    const pipeEnd = rings.filter((r) => r.plume === 0).at(-1)!.dist
-    // Parallel-transported frame, so the tube does not twist round the bends.
-    const first = rings[0]!.tangent
-    n.set(Math.abs(first.x) < 0.9 ? 1 : 0, Math.abs(first.x) < 0.9 ? 0 : 1, 0).cross(first).normalize()
-    const base = position.length / 3
-    rings.forEach((r, i) => {
-      if (i > 0) {
-        const prev = rings[i - 1]!.tangent
-        const axis = new Vector3().crossVectors(prev, r.tangent)
-        const sin = axis.length()
-        if (sin > 1e-6) n.applyAxisAngle(axis.divideScalar(sin), Math.atan2(sin, prev.dot(r.tangent)))
-        n.addScaledVector(r.tangent, -n.dot(r.tangent)).normalize()
-      }
-      b.crossVectors(r.tangent, n).normalize()
-      const travel = travelDeg(r.dist, pipeEnd)
-      for (let j = 0; j <= radial; j++) {
-        const a = (j / radial) * Math.PI * 2
-        ring.copy(n).multiplyScalar(Math.cos(a)).addScaledVector(b, Math.sin(a))
-        position.push(r.centre.x + ring.x * r.radius, r.centre.y + ring.y * r.radius, r.centre.z + ring.z * r.radius)
-        normal.push(ring.x, ring.y, ring.z)
-        dist.push(r.dist)
-        around.push(j / radial)
-        slot.push(route.slot)
-        time.push(travel)
-        plume.push(r.plume)
-        fade.push(r.fade)
-      }
-    })
-    for (let i = 0; i < rings.length - 1; i++)
-      for (let j = 0; j < radial; j++) {
-        const a = base + i * (radial + 1) + j
-        const c = a + radial + 1
-        index.push(a, a + 1, c, a + 1, c + 1, c)
-      }
+    addTube(out, rings, radial, route.slot, 0)
+    const end = rings[rings.length - 1]!
+    outletTime[route.slot] = end.time
+    if (!route.plume) continue
+    const key = [end.centre.x, end.centre.y, end.centre.z].map((v) => v.toFixed(4)).join()
+    const group = outlets.get(key) ?? { ring: end, slot: route.slot, mask: 0, lengths: [] }
+    group.slot = Math.min(group.slot, route.slot)
+    group.mask |= 1 << route.slot
+    group.lengths.push(end.dist)
+    outlets.set(key, group)
+  }
+  for (const group of outlets.values()) {
+    const mean = group.lengths.reduce((total, length) => total + length, 0) / group.lengths.length
+    addTube(out, plumeRings(group.ring, spacing, mean), radial, group.slot, group.mask)
   }
   const geometry = new BufferGeometry()
-  geometry.setAttribute('position', new Float32BufferAttribute(position, 3))
-  geometry.setAttribute('normal', new Float32BufferAttribute(normal, 3))
-  geometry.setAttribute('aDist', new Float32BufferAttribute(dist, 1))
-  geometry.setAttribute('aAround', new Float32BufferAttribute(around, 1))
-  geometry.setAttribute('aSlot', new Float32BufferAttribute(slot, 1))
-  geometry.setAttribute('aTime', new Float32BufferAttribute(time, 1))
-  geometry.setAttribute('aPlume', new Float32BufferAttribute(plume, 1))
-  geometry.setAttribute('aFade', new Float32BufferAttribute(fade, 1))
-  geometry.setIndex(index)
+  geometry.setAttribute('position', new Float32BufferAttribute(out.position, 3))
+  geometry.setAttribute('normal', new Float32BufferAttribute(out.normal, 3))
+  geometry.setAttribute('aAxis', new Float32BufferAttribute(out.axis, 3))
+  geometry.setAttribute('aTangent', new Float32BufferAttribute(out.direction, 3))
+  geometry.setAttribute('aRadius', new Float32BufferAttribute(out.radius, 1))
+  geometry.setAttribute('aDist', new Float32BufferAttribute(out.dist, 1))
+  geometry.setAttribute('aAround', new Float32BufferAttribute(out.around, 1))
+  geometry.setAttribute('aSlot', new Float32BufferAttribute(out.slot, 1))
+  geometry.setAttribute('aTime', new Float32BufferAttribute(out.time, 1))
+  geometry.setAttribute('aPlume', new Float32BufferAttribute(out.plume, 1))
+  geometry.setAttribute('aFade', new Float32BufferAttribute(out.fade, 1))
+  geometry.setAttribute('aMask', new Float32BufferAttribute(out.mask, 1))
+  geometry.setIndex(out.index)
   geometry.computeBoundingSphere()
+  geometry.userData.outletTime = outletTime
   return geometry
 }
 
@@ -232,9 +289,10 @@ function random(seed: number) {
 
 /**
  * A small tiling volume of smooth noise: random values blurred twice along
- * each axis (wrapping), stretched to the full byte range. Sampled with
- * trilinear filtering and repeat wrapping it tiles seamlessly, which lets
- * the flow offset wrap without a seam.
+ * each axis (wrapping), then stretched so two standard deviations either side
+ * of the mean span the byte range (blurring leaves most values near the mean;
+ * the rare extremes clip). Sampled with trilinear filtering and repeat
+ * wrapping it tiles seamlessly, which lets the flow offset wrap without a seam.
  */
 export function noiseVolume(sx = NOISE_X, sy = NOISE_YZ, sz = NOISE_YZ, seed = 0x5eed): Uint8Array {
   const next = random(seed)
@@ -251,13 +309,13 @@ export function noiseVolume(sx = NOISE_X, sy = NOISE_YZ, sz = NOISE_YZ, seed = 0
           }
       a = out
     }
-  let lo = Infinity
-  let hi = -Infinity
-  for (const v of a) {
-    lo = Math.min(lo, v)
-    hi = Math.max(hi, v)
-  }
-  return Uint8Array.from(a, (v) => Math.round(((v - lo) / (hi - lo || 1)) * 255))
+  let mean = 0
+  for (const v of a) mean += v
+  mean /= a.length
+  let variance = 0
+  for (const v of a) variance += (v - mean) ** 2
+  const spread = 4 * Math.sqrt(variance / a.length) || 1
+  return Uint8Array.from(a, (v) => Math.round(Math.min(1, Math.max(0, 0.5 + (v - mean) / spread)) * 255))
 }
 
 let sharedNoise: Data3DTexture | null = null
@@ -290,6 +348,10 @@ attribute float aSlot;
 attribute float aTime;
 attribute float aPlume;
 attribute float aFade;
+attribute vec3 aAxis;
+attribute vec3 aTangent;
+attribute float aRadius;
+attribute float aMask;
 uniform float uSince[${MAX_GAS_SLOTS}];
 varying float vEmit;
 varying float vTime;
@@ -298,8 +360,11 @@ varying float vAround;
 varying float vSlot;
 varying float vPlume;
 varying float vFade;
-varying vec3 vNormal;
-varying vec3 vView;
+varying float vRadius;
+varying float vMask;
+varying vec3 vWorld;
+varying vec3 vAxis;
+varying vec3 vTangent;
 void main() {
   // Degrees after its valve opened at which the gas here left the port (wrapped in the fragment shader).
   vEmit = uSince[int(aSlot + 0.5)] - aTime;
@@ -309,10 +374,13 @@ void main() {
   vSlot = aSlot;
   vPlume = aPlume;
   vFade = aFade;
-  vec4 mv = modelViewMatrix * vec4(position, 1.0);
-  vView = -mv.xyz;
-  vNormal = normalize(normalMatrix * normal);
-  gl_Position = projectionMatrix * mv;
+  vRadius = aRadius;
+  vMask = aMask;
+  vec4 world = modelMatrix * vec4(position, 1.0);
+  vWorld = world.xyz;
+  vAxis = (modelMatrix * vec4(aAxis, 1.0)).xyz;
+  vTangent = normalize(mat3(modelMatrix) * aTangent);
+  gl_Position = projectionMatrix * viewMatrix * world;
 }
 `
 
@@ -326,6 +394,8 @@ uniform float uLoad;
 uniform float uDiesel;
 uniform float uOpacity;
 uniform float uRun;
+uniform float uSince[${MAX_GAS_SLOTS}];
+uniform float uOutletTime[${MAX_GAS_SLOTS}];
 varying float vEmit;
 varying float vTime;
 varying float vDist;
@@ -333,13 +403,19 @@ varying float vAround;
 varying float vSlot;
 varying float vPlume;
 varying float vFade;
-varying vec3 vNormal;
-varying vec3 vView;
+varying float vRadius;
+varying float vMask;
+varying vec3 vWorld;
+varying vec3 vAxis;
+varying vec3 vTangent;
 
 const float PI = 3.141592653589793;
 const float OPEN = ${glsl(EXHAUST_OPEN_DEG)};
 const float STROKE_START = ${glsl(STROKE_START)};
 const float STROKE_END = ${glsl(STROKE_END)};
+const float OUTLET_RADIUS = ${glsl(COLLECTOR_RADIUS * GAS_FILL)};
+const float PLUME_LENGTH = ${glsl(PLUME_LENGTH)};
+const float PLUME_SLOW = ${glsl(PLUME_SLOW)};
 
 // exhaust.ts portFlow: the valve's flow area times the blowdown burst plus the piston's push.
 float portFlow(float e) {
@@ -356,11 +432,11 @@ float portTemperature(float e) {
   return 1.0 - 0.4 * t * t * (3.0 - 2.0 * t);
 }
 
-// Incandescence of hot gas: dull red, orange, then yellow-white.
+// Incandescence of hot gas, in linear light: dull red, orange, then pale yellow.
 vec3 glowColour(float t) {
-  vec3 c = mix(vec3(0.38, 0.03, 0.0), vec3(1.0, 0.24, 0.02), smoothstep(0.1, 0.55, t));
-  c = mix(c, vec3(1.0, 0.52, 0.12), smoothstep(0.55, 0.85, t));
-  return mix(c, vec3(1.0, 0.78, 0.45), smoothstep(0.88, 1.0, t));
+  vec3 c = mix(vec3(0.45, 0.035, 0.004), vec3(1.0, 0.27, 0.03), smoothstep(0.1, 0.55, t));
+  c = mix(c, vec3(1.0, 0.55, 0.13), smoothstep(0.55, 0.85, t));
+  return mix(c, vec3(1.0, 0.8, 0.5), smoothstep(0.88, 1.0, t));
 }
 
 float noise(vec3 p) {
@@ -368,50 +444,113 @@ float noise(vec3 p) {
 }
 
 void main() {
-  float e = mod(vEmit, 720.0);
-  // Gas only exists where it left the port after the engine started.
-  float born = smoothstep(vTime, vTime + 36.0, uRun);
-  float flow = portFlow(e);
-  // Spent gas lingers between pulses, faintly, inside the pipes.
-  float body = (flow + 0.07 * (1.0 - vPlume)) * born;
+  if (uOpacity <= 0.0) discard;
+
+  // How much gas this pixel looks through: the view ray's chord across the gas column round
+  // the pipe's centre line, so the gas is thick through its core and has no hard outline.
+  vec3 ray = normalize(vWorld - cameraPosition);
+  vec3 along = normalize(vTangent);
+  vec3 fromAxis = cameraPosition - vAxis;
+  vec3 rayAcross = ray - dot(ray, along) * along;
+  vec3 eyeAcross = fromAxis - dot(fromAxis, along) * along;
+  float qa = max(dot(rayAcross, rayAcross), 1e-4);
+  float qb = dot(rayAcross, eyeAcross);
+  float qc = dot(eyeAcross, eyeAcross) - vRadius * vRadius;
+  float root = sqrt(max(qb * qb - qa * qc, 0.0));
+  float enter = max((-qb - root) / qa, 0.0);
+  float chord = clamp((-qb + root) / qa - enter, 0.0, 6.0 * vRadius);
 
   // Turbulence rides with the gas: in the pipes it is sampled by when the gas left the port, so
   // eddies travel with it; each cylinder has its own. Past the outlet the eddies grow and drift
   // more slowly. Octaves are whole multiples, so the flow offsets wrap without a seam.
   float angle = vAround * 2.0 * PI + uSwirl;
-  float around = 0.55 + 3.4 * vPlume;
+  float around = 0.55 + 1.7 * vPlume;
   vec2 ring = vec2(cos(angle), sin(angle)) * around + vec2(vSlot * 3.7, 9.0);
-  vec3 p = vec3(uShift - vTime * ${glsl(FLOW_SPEED * NOISE_ALONG)} + vSlot * 11.0, ring);
+  vec3 p = vec3(uShift - vDist * ${glsl(NOISE_ALONG)} + vSlot * 11.0, ring);
   float n = noise(p) * 0.6 + noise(p * 2.0 + vec3(13.0, 1.7, 4.1)) * 0.4;
   float open = smoothstep(0.0, 0.12, vPlume);
   if (open > 0.0) {
     vec3 q = vec3(vDist * ${glsl(NOISE_ALONG / PLUME_NOISE_SCALE)} - uPlumeShift + vSlot * 11.0, ring);
-    float m = noise(q) * 0.6 + noise(q * 2.0 + vec3(13.0, 1.7, 4.1)) * 0.4;
+    // Billows: the plume's eddies bend one another. Whole-frequency warps keep
+    // the wrapping flow offset periodic across the tiling noise volume.
+    q.yz += (vec2(noise(q + vec3(3.0, 7.0, 1.0)), noise(q + vec3(11.0, 2.0, 5.0))) - 0.5) * 2.4;
+    float m = noise(q) * 0.62 + noise(q * 2.0 + vec3(13.0, 1.7, 4.1)) * 0.38;
     n = mix(n, m, open);
   }
 #ifdef DETAIL
   n = n * 0.82 + noise(p * 4.0 + vec3(29.0, 5.5, 0.6)) * 0.18 * (1.0 - open) + noise(vec3(vDist * 5.0, ring * 2.0)) * 0.18 * open;
 #endif
-  // Torn, lumpy gas: a dense burst fills the pipe, thin flow breaks into wisps.
-  float tear = smoothstep(0.42 - 0.2 * min(body, 1.0), 0.86, n);
-  float density = body * tear * tear;
+  // Mixing octaves averages away contrast; restore it so eddies read as eddies.
+  n = clamp((n - 0.5) * 1.7 + 0.5, 0.0, 1.0);
 
-  // How much gas the eye looks through: most across the middle of the tube, none at its edges.
-  float facing = abs(dot(normalize(vNormal), normalize(vView)));
-  float depth = smoothstep(0.0, 0.65, facing) * mix(1.0, facing, 0.5 * vPlume);
+  // The gas here left the port this long after its valve opened; turbulence tears the edges of
+  // each burst, so fronts arrive ragged rather than as a clean slug.
+  float e = mod(vEmit + (n - 0.5) * (26.0 + 220.0 * open), 720.0);
+  // Gas only exists where it left the port after the engine started.
+  float born = smoothstep(vTime, vTime + 36.0, uRun);
+  float fresh = portFlow(e) * born;
+  float cooling = 3.0 + 2.6 * uLoad;
+  float cooledTemperature = portTemperature(e) * exp(-vDist / cooling);
+  if (vMask > 0.5) {
+    // One common plume carries every connected cylinder. Each contribution has its own
+    // port-to-outlet travel delay and cannot appear before that route has filled.
+    float totalFlow = 0.0;
+    float totalHeat = 0.0;
+    float filled = 0.0;
+    float feeds = 0.0;
+    int mask = int(vMask + 0.5);
+    for (int slot = 0; slot < ${MAX_GAS_SLOTS}; slot++) {
+      if ((mask & (1 << slot)) == 0) continue;
+      float travel = uOutletTime[slot] + vTime;
+      float arrived = smoothstep(travel, travel + 36.0, uRun);
+      float phase = mod(uSince[slot] - travel + (n - 0.5) * (26.0 + 220.0 * open), 720.0);
+      float contribution = portFlow(phase) * arrived;
+      totalFlow += contribution;
+      totalHeat += contribution * portTemperature(phase) * exp(-(uOutletTime[slot] * ${glsl(FLOW_SPEED)} + vPlume * PLUME_LENGTH) / cooling);
+      filled += arrived;
+      feeds += 1.0;
+    }
+    // Flow is normalised per connected cylinder, rather than drawing an opaque plume
+    // repeatedly for each cylinder. Heat follows the actual mixture's flow weights.
+    fresh = totalFlow / max(feeds, 1.0);
+    born = filled / max(feeds, 1.0);
+    cooledTemperature = totalHeat / max(totalFlow, 1e-4);
+  }
+  // Spent gas never quite empties from the pipes between bursts.
+  float residual = 0.12 * (1.0 - open) * born;
 
-  // Temperature: hottest at blowdown and at high revs, cooling along the pipes and fast in the open air.
-  float temperature = portTemperature(e) * mix(0.62, 1.0, uLoad) * mix(1.0, 0.7, uDiesel);
-  temperature *= exp(-vDist / 7.5) * (1.0 - 0.85 * smoothstep(0.0, 0.5, vPlume));
+  // Past the outlet the gas slows, widens and mixes into the air (exhaust.ts plumeDilution),
+  // and its far reaches break up into wisps.
+  float s = vPlume * PLUME_LENGTH;
+  float r = max(vRadius, OUTLET_RADIUS);
+  float dilution = mix(1.0, (1.0 + s / PLUME_SLOW) * (OUTLET_RADIUS * OUTLET_RADIUS) / (r * r), open);
+  float wisps = mix(1.0, smoothstep(0.3, 0.72, n + 0.32 * (1.0 - vPlume)), open);
+  float density = (fresh + residual) * dilution * wisps * mix(0.45, 1.55, n);
 
-  vec3 glow = glowColour(temperature) * temperature * temperature * density * (0.42 + 0.3 * uLoad) * (1.0 - open);
-  // Cooled gas shows as haze: water vapour for petrol, sootier for a diesel under load.
-  float haze = density * (1.0 - temperature) * mix(0.12, 0.62, open) * (1.0 + uDiesel * (0.6 + 0.9 * uLoad));
-  vec3 hazeColour = mix(vec3(0.78, 0.8, 0.84), vec3(0.36, 0.34, 0.31), uDiesel);
-  float strength = depth * vFade * uOpacity;
-  // Encode colours before premultiplying opacity. Encoding an already tiny haze
-  // contribution would brighten it into a luminous hose instead of translucent gas.
-  float alpha = clamp(haze * strength, 0.0, 0.95);
+  // Temperature: hottest at blowdown and at high revs, cooling along the pipes (more slowly at
+  // high revs, where the gas carries its heat further) and quickly once it mixes with the air.
+  float temperature = cooledTemperature * mix(0.62, 1.0, uLoad) * mix(1.0, 0.7, uDiesel);
+  temperature *= 1.0 - smoothstep(0.0, 0.18, vPlume);
+
+  // Hot gas glows in proportion to how much of it the ray crosses, and (like any hot body) far
+  // more brightly the hotter it is; cool gas scatters light as haze.
+  // The glow is as lumpy as the gas: turbulence leaves brighter knots and darker gaps. It grows
+  // with the amount of hot gas the ray crosses (a header's width is 1), so where several
+  // cylinders' gas shares a collector their light adds up the way their gas does.
+  float knots = smoothstep(0.2, 0.85, n);
+  float hotGas = fresh * dilution * mix(0.12, 1.85, knots) * chord / ${glsl(2 * HEADER_RADIUS * GAS_FILL)};
+  float t2 = temperature * temperature;
+  vec3 glow = glowColour(temperature) * t2 * t2 * hotGas * (0.62 + 0.55 * uLoad) * mix(1.0, 0.55, uDiesel);
+  float sigma = mix(14.0, 5.5, open) * (1.0 + uDiesel * (0.5 + 0.8 * uLoad));
+  float haze = (1.0 - exp(-sigma * density * chord)) * mix(0.35, 1.0, 1.0 - temperature);
+  vec3 hazeColour = mix(vec3(0.7, 0.73, 0.78), vec3(0.34, 0.32, 0.3), uDiesel);
+  // In the open air the cooled exhaust shows as a pale vapour.
+  hazeColour = mix(hazeColour, mix(vec3(0.86, 0.88, 0.9), vec3(0.42, 0.39, 0.36), uDiesel), open);
+
+  float strength = vFade * uOpacity;
+  // Encode colours before premultiplying opacity: encoding an already faint haze would brighten
+  // it into a luminous hose instead of translucent gas.
+  float alpha = clamp(haze * strength, 0.0, 0.92);
   vec3 emitted = linearToOutputTexel(vec4(glow, 1.0)).rgb * strength;
   vec3 scattered = linearToOutputTexel(vec4(hazeColour, 1.0)).rgb * alpha;
   gl_FragColor = vec4(emitted + scattered, alpha);
@@ -421,6 +560,7 @@ void main() {
 export type GasMaterial = ShaderMaterial & {
   uniforms: {
     uSince: { value: Float32Array }
+    uOutletTime: { value: Float32Array }
     uShift: { value: number }
     uPlumeShift: { value: number }
     uSwirl: { value: number }
@@ -438,6 +578,7 @@ export function createGasMaterial(tier: QualityTier): GasMaterial {
     name: 'Exhaust gas',
     uniforms: {
       uSince: { value: new Float32Array(MAX_GAS_SLOTS) },
+      uOutletTime: { value: new Float32Array(MAX_GAS_SLOTS) },
       uShift: { value: 0 },
       uPlumeShift: { value: 0 },
       uSwirl: { value: 0 },

@@ -17,7 +17,7 @@
  * outlet it slows, spreads and cools as it mixes with the air.
  */
 import { VALVE_TIMING, valveDuration, valveOpenFraction } from '@/features/engine-lab/kinematics'
-import { mod } from './animation'
+import { ease, mod } from './animation'
 
 export type Vec3 = [number, number, number]
 export type ExhaustSide = 'A' | 'B' | 'mid'
@@ -208,6 +208,9 @@ export const PLUME_SLOW = 0.5
 export const PLUME_LENGTH = 2.4
 export const PLUME_SPREAD = 0.22
 
+/** How much of each plume the camera keeps in view: its dense first stretch, not the fading far end. */
+export const PLUME_FRAMED = 1
+
 /** Visible pipe controls and conservative bounds of the actual outlet plumes, for camera framing. */
 export function exhaustFramingPoints(plumbing: ExhaustPlumbing): Vec3[] {
   const points = [
@@ -229,7 +232,7 @@ export function exhaustFramingPoints(plumbing: ExhaustPlumbing): Vec3[] {
     framed.add(key)
     const direction = end.map((coordinate, axis) => (coordinate - previous[axis]!) / length)
     for (let step = 0; step <= 4; step++) {
-      const s = (step / 4) * PLUME_LENGTH
+      const s = (step / 4) * PLUME_FRAMED
       const centre: Vec3 = [end[0] + direction[0]! * s, end[1] + direction[1]! * s + 0.07 * s * s, end[2] + direction[2]! * s]
       const radius = COLLECTOR_RADIUS * GAS_FILL + PLUME_SPREAD * s
       // A box around each cross-section stays conservative when the camera rotates.
@@ -259,4 +262,29 @@ export const gasAt = (since: number, travel: number) => portFlow(mod(since - tra
 export function exhaustLoad(rpm: number, idleRpm: number, redlineRpm: number): number {
   if (!(redlineRpm > idleRpm)) return 0
   return Math.min(1, Math.max(0, (rpm - idleRpm) / (redlineRpm - idleRpm)))
+}
+
+/* ------------------------------------------------------------ header heat */
+
+/** How far down a header its heat glow reaches (scene units): the pipe is hottest where it leaves the port. */
+export const HEADER_HEAT_LENGTH = 0.55
+/** Seconds for the header metal to heat up most of the way, and (more slowly) to cool. */
+export const WALL_HEAT_UP_S = 3
+export const WALL_HEAT_DOWN_S = 5
+
+/** How hot a header's wall is `distance` from its port, relative to the port end. */
+export const headerHeat = (distance: number) => (distance >= 0 ? Math.exp(-distance / HEADER_HEAT_LENGTH) : 0)
+
+/**
+ * How brightly the headers glow once the revs have been held: nothing below
+ * about half load, full at the redline. A diesel's cooler exhaust glows less.
+ */
+export function wallHeatTarget(load: number, diesel: boolean): number {
+  const t = Math.min(1, Math.max(0, (load - 0.55) / 0.45))
+  return t * t * (3 - 2 * t) * (diesel ? 0.4 : 1)
+}
+
+/** Header metal follows the exhaust temperature with a lag: seconds to heat, longer to cool. */
+export function approachWallHeat(current: number, target: number, dt: number): number {
+  return ease(current, target, Math.max(0, dt), target > current ? WALL_HEAT_UP_S : WALL_HEAT_DOWN_S)
 }

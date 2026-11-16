@@ -121,7 +121,6 @@ function createMaterials() {
     plugShell: std('#bcc1c7', 0.75, 0.28),
     insulator: std('#ece8df', 0, 0.32),
     injector: std('#6a9aab', 0.75, 0.25),
-    pipe: std('#9aa3ae', 0.55, 0.32, { transparent: true, opacity: 0.5, depthWrite: false }),
     selection: new MeshBasicMaterial({ color: '#38d7f2', transparent: true, opacity: 0.8, depthWrite: false, toneMapped: false }),
     // Instanced, so colour per cylinder comes from instance colours; unlit so the glow reads.
     gas: new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.34, depthWrite: false, side: DoubleSide }),
@@ -427,7 +426,7 @@ function WholeEngine({ spec, tier, cylinders, events, sense, bus, bankAngle, mat
       <group ref={ring}>
         <mesh geometry={extras.ring} material={mats.selection} />
       </group>
-      <V10Exhaust spec={spec} tier={tier} cylinders={cylinders} events={events} bus={bus} bankAngle={bankAngle} mats={mats} shared={sharedExhaust} full />
+      <V10Exhaust spec={spec} tier={tier} cylinders={cylinders} events={events} bus={bus} bankAngle={bankAngle} shared={sharedExhaust} full />
       {cylinders.map((c) => (
         <group
           key={c.event.index}
@@ -452,14 +451,13 @@ interface V10ExhaustProps {
   events: FiringEvent[]
   bus: FrameBus
   bankAngle: number
-  mats: Materials
   shared: boolean
   /** Whole engine: collectors, tailpipes and the plume too. Otherwise each header stops just past its bend. */
   full: boolean
 }
 
 /** This V10's headers, collectors and tailpipes, carrying its valve-timed exhaust gas. */
-function V10Exhaust({ spec, tier, cylinders, events, bus, bankAngle, mats, shared, full }: V10ExhaustProps) {
+function V10Exhaust({ spec, tier, cylinders, events, bus, bankAngle, shared, full }: V10ExhaustProps) {
   const drawing = useCallback(
     (bank: number): ExhaustDrawing => {
       const layout = exhaustLayout(cylinders, bank, shared)
@@ -468,11 +466,11 @@ function V10Exhaust({ spec, tier, cylinders, events, bus, bankAngle, mats, share
           const points = headerStub(h.points)
           return { index: h.index, points, segments: [points], headerLength: pathLength(h.points) }
         })
-        return { pipes: routes.map((r) => ({ points: r.points, radius: HEADER_RADIUS })), routes }
+        return { pipes: routes.map((r) => ({ points: r.points, radius: HEADER_RADIUS, header: true })), routes }
       }
       return {
         pipes: [
-          ...layout.headers.map((h) => ({ points: h.points, radius: HEADER_RADIUS })),
+          ...layout.headers.map((h) => ({ points: h.points, radius: HEADER_RADIUS, header: true })),
           ...layout.collectors.map((c) => ({ points: c.points, radius: COLLECTOR_RADIUS })),
           ...layout.tailpipes.map((points) => ({ points, radius: COLLECTOR_RADIUS })),
         ],
@@ -483,7 +481,7 @@ function V10Exhaust({ spec, tier, cylinders, events, bus, bankAngle, mats, share
   )
   const bankOf = useCallback((frameBank: number | null) => frameBank ?? bankAngle, [bankAngle])
   const firingAngle = useCallback((index: number) => events[index]?.angle ?? cylinders.find((c) => c.event.index === index)?.event.angle ?? 0, [events, cylinders])
-  return <ExhaustSystem drawing={drawing} bankOf={bankOf} firingAngle={firingAngle} bus={bus} pipeMaterial={mats.pipe} plume={full} spec={spec} tier={tier} />
+  return <ExhaustSystem drawing={drawing} bankOf={bankOf} firingAngle={firingAngle} bus={bus} plume={full} spec={spec} tier={tier} />
 }
 
 /* ------------------------------------------------------------ one throw, full cutaway */
@@ -509,7 +507,7 @@ function ThrowCutaway({ spec, tier, cylinders, events, sense, bus, bankAngle, ma
       {pair.map((c) => (
         <SectionedCylinder key={c.event.index} c={c} events={events} sense={sense} bus={bus} bankAngle={bankAngle} mats={mats} extras={extras} diesel={diesel} geo={geo} selected={c.event.index === selectedIndex} />
       ))}
-      <V10Exhaust spec={spec} tier={tier} cylinders={pair} events={events} bus={bus} bankAngle={bankAngle} mats={mats} shared={false} full={false} />
+      <V10Exhaust spec={spec} tier={tier} cylinders={pair} events={events} bus={bus} bankAngle={bankAngle} shared={false} full={false} />
     </group>
   )
 }

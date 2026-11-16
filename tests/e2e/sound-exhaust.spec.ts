@@ -12,30 +12,42 @@ interface GasProbe {
   opacity: number
   diesel: number
   since: number[]
+  outletTime: number[]
+}
+
+interface WallProbe {
+  program: number
+  draws: number
+  heat: number
 }
 
 declare global {
-  interface Window { __exhaustProbe: GasProbe }
+  interface Window { __exhaustProbe: GasProbe; __exhaustWallProbe: WallProbe }
 }
 
 /** Observe the shipped gas shader at the WebGL boundary, without exposing scene internals in the app. */
 async function observeGas(page: Page) {
   await page.addInitScript(() => {
     localStorage.setItem('autoverse.preferences', JSON.stringify({ state: { level: 'beginner', tourStatus: 'declined' }, version: 0 }))
-    const probe: GasProbe = { program: 0, draws: 0, count: 0, primitive: -1, run: 0, shift: 0, opacity: 0, diesel: 0, since: [] }
+    const probe: GasProbe = { program: 0, draws: 0, count: 0, primitive: -1, run: 0, shift: 0, opacity: 0, diesel: 0, since: [], outletTime: [] }
     window.__exhaustProbe = probe
+    const wallProbe: WallProbe = { program: 0, draws: 0, heat: 0 }
+    window.__exhaustWallProbe = wallProbe
     if (typeof WebGL2RenderingContext === 'undefined') return
-    interface ProgramInfo { id: number; values: Record<string, number>; since: number[] }
+    interface ProgramInfo { id: number; values: Record<string, number>; since: number[]; outletTime: number[] }
     const programs = new WeakMap<WebGLProgram, ProgramInfo>()
+    const walls = new WeakMap<WebGLProgram, { id: number; heat: number }>()
     const uniforms = new WeakMap<WebGLUniformLocation, { program: WebGLProgram; name: string }>()
     const current = new WeakMap<WebGL2RenderingContext, WebGLProgram | null>()
     let serial = 0
+    let wallSerial = 0
     const gl = WebGL2RenderingContext.prototype
     const location = gl.getUniformLocation
     gl.getUniformLocation = function (program, name) {
       const result = location.call(this, program, name)
       if (result) uniforms.set(result, { program, name: name.replace(/\[0\]$/, '') })
-      if (name === 'uRun' && !programs.has(program)) programs.set(program, { id: ++serial, values: {}, since: [] })
+      if (name === 'uRun' && !programs.has(program)) programs.set(program, { id: ++serial, values: {}, since: [], outletTime: [] })
+      if (name === 'uWallHeat' && !walls.has(program)) walls.set(program, { id: ++wallSerial, heat: 0 })
       return result
     }
     const scalar = gl.uniform1f
@@ -43,6 +55,8 @@ async function observeGas(page: Page) {
       const uniform = location && uniforms.get(location)
       const info = uniform && programs.get(uniform.program)
       if (info && uniform) info.values[uniform.name] = value
+      const wall = uniform && walls.get(uniform.program)
+      if (wall && uniform?.name === 'uWallHeat') wall.heat = value
       return scalar.call(this, location, value)
     }
     const array = gl.uniform1fv
@@ -50,6 +64,7 @@ async function observeGas(page: Page) {
       const uniform = args[0] && uniforms.get(args[0])
       const info = uniform && programs.get(uniform.program)
       if (info && uniform?.name === 'uSince') info.since = Array.from(args[1])
+      if (info && uniform?.name === 'uOutletTime') info.outletTime = Array.from(args[1])
       return array.apply(this, args)
     }
     const use = gl.useProgram
@@ -60,12 +75,14 @@ async function observeGas(page: Page) {
     const record = (context: WebGL2RenderingContext, primitive: number, count: number) => {
       const program = current.get(context)
       const info = program && programs.get(program)
+      const wall = program && walls.get(program)
+      if (wall) Object.assign(wallProbe, { program: wall.id, draws: wallProbe.draws + 1, heat: wall.heat })
       if (!info) return
       Object.assign(probe, {
         program: info.id, draws: probe.draws + 1, count, primitive,
         run: info.values.uRun ?? 0, shift: info.values.uShift ?? 0,
         opacity: info.values.uOpacity ?? 0, diesel: info.values.uDiesel ?? 0,
-        since: [...info.since],
+        since: [...info.since], outletTime: [...info.outletTime],
       })
     }
     const indexed = gl.drawElements
@@ -82,6 +99,7 @@ async function observeGas(page: Page) {
 }
 
 const gas = (page: Page) => page.evaluate(() => window.__exhaustProbe)
+const wall = (page: Page) => page.evaluate(() => window.__exhaustWallProbe)
 
 async function paintFrames(page: Page, count = 6) {
   return page.evaluate(async (count) => {
@@ -138,6 +156,8 @@ for (const family of ['inline, boxer, V6 and V8', 'V10']) {
       expect(flowing.diesel, preset.id).toBe(preset.ignition === 'compression' ? 1 : 0)
       expect(flowing.since.length, preset.id).toBe(10)
       expect(flowing.since.every(Number.isFinite), preset.id).toBe(true)
+      expect(flowing.outletTime, preset.id).toHaveLength(10)
+      expect(flowing.outletTime.slice(0, preset.cylinders).every((delay) => Number.isFinite(delay) && delay > 0), `${preset.id}: each active route uploads its port-to-outlet travel delay`).toBe(true)
       const shift = flowing.shift
       await expect.poll(async () => (await gas(page)).shift).not.toBe(shift)
       await expect(page.getByTestId('exhaust-flow-note')).toContainText('cooling plume')
@@ -186,3 +206,42 @@ for (const id of ['inline-4', 'v10-viper']) {
     expect(errors).toEqual([])
   })
 }
+
+test('headers heat under sustained revs, cool gradually at idle and clear when motion stops', async ({ page, isMobile }) => {
+  test.skip(isMobile, 'Thermal lag uses the same renderer on both devices; exercised once to bound software-GPU time.')
+  test.setTimeout(90_000)
+  await observeGas(page)
+  const errors = shaderErrors(page)
+  await open(page, '/sound-lab?engine=inline-4')
+  const view = await ready(page)
+  await view.getByRole('radio', { name: 'Whole engine', exact: true }).click()
+  await expect.poll(async () => (await wall(page)).program, { timeout: 20_000 }).toBeGreaterThan(0)
+  expect((await wall(page)).heat).toBe(0)
+
+  const start = page.getByTestId('sound-lab-start')
+  const rpm = page.getByRole('slider', { name: 'Engine speed in rpm' })
+  await start.click()
+  await rpm.press('End')
+  await expect.poll(async () => (await wall(page)).heat, { message: 'Sustained high RPM heats the header material', timeout: 20_000 }).toBeGreaterThan(0.2)
+  const hot = (await wall(page)).heat
+  await rpm.press('Home')
+  const idle = engines.find((engine) => engine.id === 'inline-4')!.idleRpm
+  await expect.poll(async () => Number((await page.getByTestId('sound-lab-tach').innerText()).replace(/\D/g, ''))).toBeLessThan(idle * 1.2)
+  expect((await wall(page)).heat, 'The warm metal stays warm after RPM returns to idle').toBeGreaterThan(0.05)
+  await expect.poll(async () => (await wall(page)).heat, { message: 'The header cools gradually at idle', timeout: 15_000 }).toBeLessThan(hot * 0.9)
+  expect((await wall(page)).heat).toBeGreaterThan(0)
+
+  await start.click()
+  await expect.poll(async () => (await wall(page)).heat).toBe(0)
+  await start.click()
+  await rpm.press('End')
+  await expect.poll(async () => (await wall(page)).heat, { timeout: 20_000 }).toBeGreaterThan(0.15)
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await expect(page.getByText('Still view (reduced motion)', { exact: true })).toBeVisible()
+  await expect.poll(async () => (await wall(page)).heat).toBe(0)
+  await paintFrames(page)
+  expect((await wall(page)).heat, 'Reduced motion leaves headers cool while audio remains controllable').toBe(0)
+  await expect(start).toHaveText('Stop engine')
+  await start.click()
+  expect(errors).toEqual([])
+})

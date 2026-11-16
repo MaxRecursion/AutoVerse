@@ -33,12 +33,13 @@ export function cutawayLayout(spec: EngineSpec, events: FiringEvent[], bankAngle
 export type Vec3 = [number, number, number]
 
 /**
- * Bank B of a V or flat engine is drawn as a mirror image (z → −z) of the
- * Engine Lab cylinder, so both banks' exhaust ports face outwards (downwards
- * on a boxer), as on the real engines. Inline engines and the single-cylinder
- * view are not mirrored.
+ * In the whole-engine view, bank B of a V or flat engine is drawn as a mirror
+ * image (z → −z) of the Engine Lab cylinder, so both banks' exhaust ports face
+ * outwards (downwards on a boxer), as on the real engines. An inline engine is
+ * mirrored too, which turns its exhaust side towards the camera. The
+ * single-cylinder view is never mirrored.
  */
-export const cutawayMirror = (layout: EngineSpec['layout'], side: Side, detail: boolean): 1 | -1 => (!detail && layout !== 'inline' && side === 'B' ? -1 : 1)
+export const cutawayMirror = (layout: EngineSpec['layout'], side: Side, detail: boolean): 1 | -1 => (!detail && (layout === 'inline' || side === 'B') ? -1 : 1)
 
 /** A point in a cylinder's own model frame (z sideways, y up), placed in the scene: mirrored, then leaned about x by its bank axis. */
 export function cutawayToWorld(side: Side, bankAngle: number, mirror: 1 | -1, x: number, p: { z: number; y: number }): Vec3 {

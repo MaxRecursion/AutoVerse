@@ -162,3 +162,15 @@ Gas leaves during exhaust-valve opening, with blowdown followed by the piston's 
 The renderer review corrected inward triangle winding, aligned gas with the visible pipes' piecewise curves, kept detailed flow inside its header bore, and removed a discontinuity in the wrapped swirl phase. Geometry and noise tests cover outward normals, finite attributes and valid indices, pipe alignment at joins, header-bore containment, and deterministic turbulence. Future changes should extend these shared files and the existing scenes rather than add another exhaust renderer.
 
 Release validation: all 1,187 unit tests, ESLint and the GitHub Pages production build passed. The 22 focused desktop/phone browser checks cover actual gas-shader draws for all 19 presets, advancing flow, diesel shading, stop/restart, reduced motion, bank experiments, camera controls and fallback. After tightening whole-engine framing around the actual pipes and plume bounds, the six cutaway/paused-pose browser checks passed again.
+
+## Claude exhaust refinement: completion review (16 Nov 2026)
+
+Claude's next unfinished changes add view-dependent pipe transparency, ray-based gas thickness, header heating, one plume per outlet, throttled bank-angle rebuilds and closer framing of the dense plume. Codex retained those changes and the existing shared renderer. Inline engines now face their exhaust towards the camera, using the same mirror transform for mechanism, plumbing and framing.
+
+The review completed the missing outlet integration: plume slot masks and per-cylinder outlet travel times now reach the shader, so every connected cylinder contributes after its full route has filled. Flow is normalized across the connected cylinders, with flow-weighted cooling, rather than stacking duplicate plumes. A fractional-frequency noise warp was replaced by a periodic warp to remove a discontinuity when the flow offset wraps.
+
+Header heating now consumes elapsed frame-bus time once, so repeated camera redraws do not overheat the metal and skipped bus ticks do not slow it. Stopped/reduced-motion views clear heat and flow. Shader warmup happens once per material, after the exhaust has real geometry, and targets only the exhaust group. Bank rebuilds stay throttled, settle even while stopped, and dispose replaced geometry.
+
+Regressions cover the combined outlet masks/delays, new ray attributes, heat lag and cooling, repeat/skipped bus ticks, paused bank settling, geometry disposal and real GPU heat/outlet-time uniforms.
+
+Completion checks: all 1,196 unit tests and ESLint pass. The full production browser suite passes on desktop and phone: 110 passed, with 10 intentional device-specific/duplicate checks skipped. This includes every production engine, pipe heating, audio, the WebGL fallback, course navigation, progress, certificates, tours, phone page widths and crawler-visible HTML. No page metadata or routes changed.
