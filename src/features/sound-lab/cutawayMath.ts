@@ -1,5 +1,5 @@
 /** Pure placement and four-stroke phasing for the original multi-cylinder cutaway. */
-import { bankAxis, crankSections, mod, type Side } from './animation'
+import { bankAxis, crankSections, DEG, mod, type Side } from './animation'
 import type { EngineSpec } from './engines'
 import type { FiringEvent } from './firing'
 import { MM, crownYFromPinMm } from '@/features/engine-lab/engineModel'
@@ -30,14 +30,33 @@ export function cutawayLayout(spec: EngineSpec, events: FiringEvent[], bankAngle
   })
 }
 
+export type Vec3 = [number, number, number]
+
+/**
+ * Bank B of a V or flat engine is drawn as a mirror image (z → −z) of the
+ * Engine Lab cylinder, so both banks' exhaust ports face outwards (downwards
+ * on a boxer), as on the real engines. Inline engines and the single-cylinder
+ * view are not mirrored.
+ */
+export const cutawayMirror = (layout: EngineSpec['layout'], side: Side, detail: boolean): 1 | -1 => (!detail && layout !== 'inline' && side === 'B' ? -1 : 1)
+
+/** A point in a cylinder's own model frame (z sideways, y up), placed in the scene: mirrored, then leaned about x by its bank axis. */
+export function cutawayToWorld(side: Side, bankAngle: number, mirror: 1 | -1, x: number, p: { z: number; y: number }): Vec3 {
+  const a = bankAxis(side, bankAngle) * DEG
+  const z = mirror * p.z
+  return [x, p.y * Math.cos(a) - z * Math.sin(a), p.y * Math.sin(a) + z * Math.cos(a)]
+}
+
 /**
  * Sound-lab phase zero is firing TDC. The detailed engine uses intake TDC as
  * zero, so its valve/cam/gas timeline is shifted by 360°. Crank sense changes
  * mechanical direction only; it must not reverse the four-stroke sequence.
+ * A mirrored cylinder turns its crank (and cams) the other way inside its own
+ * frame, which the mirror turns back: every crankpin stays where it was.
  */
-export function cutawayState(playhead: number, firingAngle: number, sense: 1 | -1) {
+export function cutawayState(playhead: number, firingAngle: number, sense: 1 | -1, mirror: 1 | -1 = 1) {
   const phase = mod(playhead - firingAngle, 720)
-  const mechanicalDeg = sense * phase
+  const mechanicalDeg = mirror * sense * phase
   const pinMm = pistonPinHeight(mechanicalDeg)
   return {
     phase,

@@ -6,9 +6,10 @@
  * at the engine's true angle, bank B one rod width behind bank A so a shared
  * crankpin visibly carries two rods and split pins sit 18° apart. Every
  * repeated part is an InstancedMesh (one draw call per part and bank), and
- * exhaust headers, collectors and tailpipes carry glowing pulses that leave
- * each cylinder when its exhaust valve opens: pulses sharing a pipe are spaced
- * by their firing gaps, so you can watch what each exhaust hears.
+ * hot exhaust gas flows out of each cylinder when its exhaust valve opens,
+ * through the headers, collectors and tailpipes and out into the air
+ * (ExhaustSystem). Valve timing and the travel delay along each route
+ * determine when the flows mix in each exhaust.
  *
  * Cylinder cutaway: the selected cylinder's throw as a full Engine Lab-style
  * section of both banks, the block cut down the middle of the vee.
@@ -16,12 +17,11 @@
  * Every cylinder is the Engine Lab's illustrative cylinder; layout, crankpins,
  * firing timing and exhaust routing come from the preset (v10Layout.ts).
  */
-import { useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 import { Html } from '@react-three/drei'
 import { useFrame, useThree, type ThreeEvent } from '@react-three/fiber'
 import {
   AdditiveBlending,
-  CatmullRomCurve3,
   Color,
   ConeGeometry,
   CylinderGeometry,
@@ -30,10 +30,8 @@ import {
   MeshBasicMaterial,
   MeshStandardMaterial,
   Plane,
-  SphereGeometry,
   SRGBColorSpace,
   TorusGeometry,
-  TubeGeometry,
   Vector3,
   type BufferGeometry,
   type Group,
@@ -45,7 +43,7 @@ import {
 import { useHtmlLayer } from '@/components/three/htmlLayer'
 import type { QualityTier } from '@/hooks/useQualityTier'
 import { cn } from '@/lib/utils'
-import { CAM_LOCAL_Y, buildEngineGeometries, merge, type EngineGeometries } from '@/features/engine-lab/engineGeometry'
+import { CAM_LOCAL_Y, buildEngineGeometries, type EngineGeometries } from '@/features/engine-lab/engineGeometry'
 import {
   DECK_Y,
   MM,
@@ -62,6 +60,9 @@ import {
 import { pistonPinHeight, rodAngle, sparkIntensity, type ValveId } from '@/features/engine-lab/kinematics'
 import type { EngineFrame, FrameBus } from './animation'
 import type { CutawaySceneProps } from './CutawayScene'
+import type { EngineSpec } from './engines'
+import { COLLECTOR_RADIUS, HEADER_RADIUS, headerStub, pathLength } from './exhaust'
+import { ExhaustSystem, type ExhaustDrawing } from './ExhaustSystem'
 import type { FiringEvent } from './firing'
 import {
   BANK_STAGGER,
@@ -71,21 +72,15 @@ import {
   exhaustLayout,
   leanAngle,
   moduleCrankDeg,
-  pathLength,
-  pointAlong,
-  PULSE_TRAVEL_DEG,
-  pulseAt,
   toWorld,
   v10Model,
   type V10Cylinder,
   type V10Side,
-  type Vec3,
 } from './v10Layout'
 
 const DEG = Math.PI / 180
 const VALVE_IDS: readonly ValveId[] = ['intake', 'exhaust']
 const SPRING_REST_TOP = VALVE_S.retainer - 0.022
-const BANK_COLOR: Record<V10Side, string> = { A: '#38d7f2', B: '#f6a63a' }
 
 /* ------------------------------------------------------------ shared resources */
 
@@ -131,18 +126,17 @@ function createMaterials() {
     // Instanced, so colour per cylinder comes from instance colours; unlit so the glow reads.
     gas: new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.34, depthWrite: false, side: DoubleSide }),
     flash: new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.95, blending: AdditiveBlending, depthWrite: false, toneMapped: false }),
-    pulse: new MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.95, blending: AdditiveBlending, depthWrite: false, toneMapped: false }),
   }
 }
 type Materials = ReturnType<typeof createMaterials>
 
-/** Small extra shapes: the diesel injector and its spray, the pulse, the selection ring. */
+/** Small extra shapes: the diesel injector and its spray, the selection ring. */
 function createExtras() {
   const injector = new CylinderGeometry(0.04, 0.065, 0.66, 12)
   injector.translate(0, SPARK_PLUG.tipY + 0.3, 0)
   const spray = new ConeGeometry(0.11, 0.26, 14, 1, true)
   spray.translate(0, SPARK_PLUG.tipY - 0.13, 0)
-  return { injector, spray, pulse: new SphereGeometry(0.1, 14, 10), ring: new TorusGeometry(0.5, 0.016, 6, 40) }
+  return { injector, spray, ring: new TorusGeometry(0.5, 0.016, 6, 40) }
 }
 type Extras = ReturnType<typeof createExtras>
 
@@ -199,7 +193,7 @@ export function V10Scene({ spec, events, bankAngle, sense, bus, tier, view, sele
   useEffect(() => () => Object.values(extras).forEach((g) => g.dispose()), [extras])
   const selected = cylinders.find((c) => c.event.index === selectedIndex) ?? cylinders[0]!
   const diesel = spec.ignition === 'compression'
-  const shared = { cylinders, events, sense, bus, bankAngle, mats, extras, diesel }
+  const shared = { cylinders, events, sense, bus, bankAngle, mats, extras, diesel, spec, tier }
 
   return view === 'engine' ? (
     <WholeEngine {...shared} geo={geometriesFor('low')} sharedExhaust={!spec.separateBanks} selected={selected} onSelect={onSelect} />
@@ -209,6 +203,8 @@ export function V10Scene({ spec, events, bankAngle, sense, bus, tier, view, sele
 }
 
 interface CommonProps {
+  spec: EngineSpec
+  tier: QualityTier
   cylinders: V10Cylinder[]
   events: FiringEvent[]
   sense: 1 | -1
@@ -295,7 +291,7 @@ interface WholeEngineProps extends CommonProps {
   onSelect: (index: number) => void
 }
 
-function WholeEngine({ cylinders, events, sense, bus, bankAngle, mats, extras, diesel, geo, sharedExhaust, selected, onSelect }: WholeEngineProps) {
+function WholeEngine({ spec, tier, cylinders, events, sense, bus, bankAngle, mats, extras, diesel, geo, sharedExhaust, selected, onSelect }: WholeEngineProps) {
   const banks = useMemo(() => ({ A: cylinders.filter((c) => c.side === 'A'), B: cylinders.filter((c) => c.side === 'B') }), [cylinders])
   const parts = useMemo(() => partDefs(geo, mats, extras, diesel), [geo, mats, extras, diesel])
   const meshes = useRef(new Map<string, InstancedMesh>())
@@ -431,7 +427,7 @@ function WholeEngine({ cylinders, events, sense, bus, bankAngle, mats, extras, d
       <group ref={ring}>
         <mesh geometry={extras.ring} material={mats.selection} />
       </group>
-      <Exhausts cylinders={cylinders} events={events} sense={sense} bus={bus} bankAngle={bankAngle} mats={mats} extras={extras} shared={sharedExhaust} full />
+      <V10Exhaust spec={spec} tier={tier} cylinders={cylinders} events={events} bus={bus} bankAngle={bankAngle} mats={mats} shared={sharedExhaust} full />
       {cylinders.map((c) => (
         <group
           key={c.event.index}
@@ -449,95 +445,45 @@ function WholeEngine({ cylinders, events, sense, bus, bankAngle, mats, extras, d
 
 /* ------------------------------------------------------------ exhausts */
 
-interface ExhaustProps {
+interface V10ExhaustProps {
+  spec: EngineSpec
+  tier: QualityTier
   cylinders: V10Cylinder[]
   events: FiringEvent[]
-  sense: 1 | -1
   bus: FrameBus
   bankAngle: number
   mats: Materials
-  extras: Extras
   shared: boolean
-  /** Whole engine: collectors and tailpipes too. Otherwise just the headers and a short run. */
+  /** Whole engine: collectors, tailpipes and the plume too. Otherwise each header stops just past its bend. */
   full: boolean
 }
 
-/**
- * Header pipes, collectors and tailpipes (rebuilt when the bank angle moves by
- * a degree), and a glowing pulse per cylinder that sets off when its exhaust
- * valve opens and travels at one speed to the outlet.
- */
-function Exhausts({ cylinders, events, bus, bankAngle, mats, extras, shared, full }: ExhaustProps) {
-  const pipes = useRef<Mesh>(null)
-  const pulses = useRef<InstancedMesh>(null)
-  const built = useRef<{ bank: number; geometry: BufferGeometry | null; routes: Map<number, Vec3[]>; lengths: Map<number, number>; speed: number }>({
-    bank: Number.NaN,
-    geometry: null,
-    routes: new Map(),
-    lengths: new Map(),
-    speed: 0,
-  })
-  const m = useMemo(() => new Matrix4(), [])
-  const color = useMemo(() => new Color(), [])
-
-  useEffect(
-    () => () => {
-      built.current.geometry?.dispose()
-      built.current.geometry = null
-    },
-    [],
-  )
-
-  useFrame(() => {
-    const frame = bus.last
-    const bank = Math.round((frame?.bank ?? bankAngle) * 2) / 2
-    const b = built.current
-    if (bank !== b.bank || !b.geometry) {
+/** This V10's headers, collectors and tailpipes, carrying its valve-timed exhaust gas. */
+function V10Exhaust({ spec, tier, cylinders, events, bus, bankAngle, mats, shared, full }: V10ExhaustProps) {
+  const drawing = useCallback(
+    (bank: number): ExhaustDrawing => {
       const layout = exhaustLayout(cylinders, bank, shared)
-      const runs: Vec3[][] = full
-        ? [...layout.headers.map((h) => h.points), ...layout.collectors.map((c) => c.points), ...layout.tailpipes]
-        : layout.headers.map((h) => [...h.points, [h.points.at(-1)![0] - 0.7, h.points.at(-1)![1], h.points.at(-1)![2]] as Vec3])
-      const tubes = runs.map((points, i) => {
-        const radius = full && i >= layout.headers.length ? 0.105 : 0.068
-        return new TubeGeometry(new CatmullRomCurve3(points.map((p) => new Vector3(...p)), false, 'catmullrom', 0.2), Math.max(16, points.length * 10), radius, 8, false)
-      })
-      const geometry = merge(tubes)
-      tubes.forEach((t) => t.dispose())
-      b.geometry?.dispose()
-      b.geometry = geometry
-      if (pipes.current) pipes.current.geometry = geometry
-      b.routes = full ? layout.routes : new Map(layout.headers.map((h) => [h.index, [...h.points, [h.points.at(-1)![0] - 0.7, h.points.at(-1)![1], h.points.at(-1)![2]] as Vec3]]))
-      b.lengths = new Map([...b.routes].map(([k, route]) => [k, pathLength(route)]))
-      b.speed = Math.max(...b.lengths.values()) / (full ? PULSE_TRAVEL_DEG : 260)
-      b.bank = bank
-    }
-    const mesh = pulses.current
-    if (!mesh) return
-    const playhead = frame?.playhead ?? 0
-    const animate = frame?.animate ?? false
-    cylinders.forEach((c, i) => {
-      const route = b.routes.get(c.event.index)
-      const length = b.lengths.get(c.event.index) ?? 0
-      const pulse = animate && route ? pulseAt(cycleAngle(playhead, firingOf(c, events)), length, b.speed) : { distance: 0, visible: false, heat: 0 }
-      if (!pulse.visible || !route) {
-        mesh.setMatrixAt(i, m.makeScale(0, 0, 0))
-        return
+      if (!full) {
+        const routes = layout.headers.map((h) => {
+          const points = headerStub(h.points)
+          return { index: h.index, points, segments: [points], headerLength: pathLength(h.points) }
+        })
+        return { pipes: routes.map((r) => ({ points: r.points, radius: HEADER_RADIUS })), routes }
       }
-      const [x, y, z] = pointAlong(route, pulse.distance)
-      const size = 0.75 + 0.5 * pulse.heat
-      mesh.setMatrixAt(i, m.makeScale(size, size, size).setPosition(x, y, z))
-      mesh.setColorAt(i, color.set(BANK_COLOR[c.side]).multiplyScalar(0.35 + 0.9 * pulse.heat))
-    })
-    mesh.instanceMatrix.needsUpdate = true
-    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true
-  })
-
-  return (
-    <group name="v10-exhausts">
-      <mesh ref={pipes} material={mats.pipe} renderOrder={1} />
-      <instancedMesh ref={pulses} args={[extras.pulse, mats.pulse, cylinders.length]} frustumCulled={false} renderOrder={3} />
-    </group>
+      return {
+        pipes: [
+          ...layout.headers.map((h) => ({ points: h.points, radius: HEADER_RADIUS })),
+          ...layout.collectors.map((c) => ({ points: c.points, radius: COLLECTOR_RADIUS })),
+          ...layout.tailpipes.map((points) => ({ points, radius: COLLECTOR_RADIUS })),
+        ],
+        routes: layout.headers.map((h) => ({ index: h.index, points: layout.routes.get(h.index)!, segments: layout.routeSegments.get(h.index)!, headerLength: pathLength(h.points) })),
+      }
+    },
+    [cylinders, shared, full],
   )
+  const bankOf = useCallback((frameBank: number | null) => frameBank ?? bankAngle, [bankAngle])
+  const firingAngle = useCallback((index: number) => events[index]?.angle ?? cylinders.find((c) => c.event.index === index)?.event.angle ?? 0, [events, cylinders])
+  return <ExhaustSystem drawing={drawing} bankOf={bankOf} firingAngle={firingAngle} bus={bus} pipeMaterial={mats.pipe} plume={full} spec={spec} tier={tier} />
 }
 
 /* ------------------------------------------------------------ one throw, full cutaway */
@@ -548,7 +494,7 @@ interface ThrowProps extends CommonProps {
 }
 
 /** Both cylinders of one throw, full castings, each bank's casting cut at the middle of the vee. */
-function ThrowCutaway({ cylinders, events, sense, bus, bankAngle, mats, extras, diesel, geo, throwIndex, selectedIndex }: ThrowProps) {
+function ThrowCutaway({ spec, tier, cylinders, events, sense, bus, bankAngle, mats, extras, diesel, geo, throwIndex, selectedIndex }: ThrowProps) {
   // Centre the throw at the origin: bank A at x = 0, bank B one rod width behind.
   const pair = useMemo(
     () =>
@@ -563,7 +509,7 @@ function ThrowCutaway({ cylinders, events, sense, bus, bankAngle, mats, extras, 
       {pair.map((c) => (
         <SectionedCylinder key={c.event.index} c={c} events={events} sense={sense} bus={bus} bankAngle={bankAngle} mats={mats} extras={extras} diesel={diesel} geo={geo} selected={c.event.index === selectedIndex} />
       ))}
-      <Exhausts cylinders={pair} events={events} sense={sense} bus={bus} bankAngle={bankAngle} mats={mats} extras={extras} shared={false} full={false} />
+      <V10Exhaust spec={spec} tier={tier} cylinders={pair} events={events} bus={bus} bankAngle={bankAngle} mats={mats} shared={false} full={false} />
     </group>
   )
 }

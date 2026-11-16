@@ -1,9 +1,13 @@
 import { describe, expect, it } from 'vitest'
+import { MM } from '@/features/engine-lab/engineModel'
 import { ENGINE_GEOMETRY, crankPinPosition, strokeAt } from '@/features/engine-lab/kinematics'
 import { bankOf, engines, getEngine } from './engines'
 import { firingEvents } from './firing'
 import { rotationSense } from './animation'
-import { CUTAWAY_PITCH, cutawayLayout, cutawayState } from './cutawayMath'
+import { CUTAWAY_PITCH, cutawayLayout, cutawayMirror, cutawayState, cutawayToWorld } from './cutawayMath'
+
+/** Where the exhaust port leaves the side of the Engine Lab head, in a cylinder's own frame. */
+const PORT_EXIT = { z: -0.86, y: 2.55 }
 
 describe('multi-cylinder cutaway phasing', () => {
   it('starts at power TDC and follows power, exhaust, intake, compression in both rotation directions', () => {
@@ -30,6 +34,52 @@ describe('multi-cylinder cutaway phasing', () => {
       expect(placed.map((c) => c.event.index).sort((a, b) => a - b)).toEqual(events.map((e) => e.index))
       const journals = [...new Set(placed.map((c) => c.x))].sort((a, b) => a - b)
       for (let i = 1; i < journals.length; i++) expect(journals[i]! - journals[i - 1]!).toBeCloseTo(CUTAWAY_PITCH)
+    }
+  })
+
+  it('mirrors bank B of V and boxer engines, and nothing in an inline engine or the single-cylinder view', () => {
+    expect(cutawayMirror('v', 'B', false)).toBe(-1)
+    expect(cutawayMirror('flat', 'B', false)).toBe(-1)
+    expect(cutawayMirror('v', 'A', false)).toBe(1)
+    expect(cutawayMirror('inline', 'mid', false)).toBe(1)
+    expect(cutawayMirror('v', 'B', true)).toBe(1)
+  })
+
+  it('turns every exhaust port outwards: away from the vee, or down under a boxer', () => {
+    for (const spec of engines.filter((e) => e.layout !== 'inline' && e.cylinders !== 10)) {
+      const events = firingEvents(spec.intervals, spec.order, bankOf(spec))
+      for (const c of cutawayLayout(spec, events, spec.bankAngle, rotationSense(spec, events))) {
+        const mirror = cutawayMirror(spec.layout, c.side, false)
+        const port = cutawayToWorld(c.side, spec.bankAngle, mirror, c.x, PORT_EXIT)
+        const bore = cutawayToWorld(c.side, spec.bankAngle, mirror, c.x, { z: 0, y: PORT_EXIT.y })
+        if (spec.layout === 'flat') expect(port[1], `${spec.id} ${c.side}`).toBeLessThan(-0.5)
+        else {
+          expect(Math.sign(port[2]), `${spec.id} ${c.side}`).toBe(Math.sign(bore[2]))
+          expect(Math.abs(port[2])).toBeGreaterThan(Math.abs(bore[2]))
+        }
+      }
+    }
+  })
+
+  it('keeps a mirrored cylinder’s crankpin, rod and piston exactly where the unmirrored one had them', () => {
+    for (const sense of [-1, 1] as const) {
+      for (let playhead = 0; playhead < 720; playhead += 17) {
+        const plain = cutawayState(playhead, 90, sense, 1)
+        const mirrored = cutawayState(playhead, 90, sense, -1)
+        const pin = (state: typeof plain, mirror: 1 | -1) => {
+          const p = crankPinPosition(state.mechanicalDeg)
+          return cutawayToWorld('B', 90, mirror, 0, { z: p.z * MM, y: p.y * MM })
+        }
+        const a = pin(plain, 1)
+        const b = pin(mirrored, -1)
+        for (let i = 0; i < 3; i++) expect(b[i]).toBeCloseTo(a[i]!, 9)
+        expect(mirrored.pistonY).toBeCloseTo(plain.pistonY, 12)
+        expect(mirrored.rodRotation).toBeCloseTo(-plain.rodRotation, 12)
+        expect(mirrored.cycleDeg).toBe(plain.cycleDeg)
+        // The rod still reaches its pin at constant length inside the mirrored frame.
+        const p = crankPinPosition(mirrored.mechanicalDeg)
+        expect(Math.hypot(mirrored.pistonY * 100 - p.y, p.z)).toBeCloseTo(ENGINE_GEOMETRY.rodLengthMm, 7)
+      }
     }
   })
 

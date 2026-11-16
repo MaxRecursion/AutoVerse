@@ -5,7 +5,7 @@
  * illustrative rather than OEM CAD. One geometry set is shared by every
  * cylinder and disposed by the scene, never by individual meshes.
  */
-import { useEffect, useMemo, useRef, type ReactNode } from 'react'
+import { useCallback, useEffect, useMemo, useRef, type ReactNode } from 'react'
 import { useFrame, useThree, type ThreeEvent } from '@react-three/fiber'
 import {
   AdditiveBlending,
@@ -36,8 +36,10 @@ import {
 } from '@/features/engine-lab/engineModel'
 import { combustionIntensity, sparkIntensity, type ValveId } from '@/features/engine-lab/kinematics'
 import { bankAxis, DEG, type FrameBus } from './animation'
-import { CUTAWAY_PITCH, cutawayLayout, cutawayState, type CutawayCylinder } from './cutawayMath'
+import { CUTAWAY_PITCH, cutawayLayout, cutawayMirror, cutawayState, cutawayToWorld, type CutawayCylinder } from './cutawayMath'
 import type { EngineSpec } from './engines'
+import { COLLECTOR_RADIUS, HEADER_RADIUS, exhaustPlumbing, headerStub, pathLength } from './exhaust'
+import { ExhaustSystem, type ExhaustDrawing } from './ExhaustSystem'
 import type { FiringEvent } from './firing'
 
 export interface CutawaySceneProps {
@@ -81,6 +83,7 @@ function createMaterials() {
     plug: metal('#b4c5d8', 0.75, 0.25),
     insulator: metal('#eee8dc', 0, 0.32),
     injector: metal('#6a9aab', 0.75, 0.25),
+    pipe: metal('#9aa3ae', 0.55, 0.32, { transparent: true, opacity: 0.5, depthWrite: false }),
     selection: new MeshBasicMaterial({ color: '#38d7f2', transparent: true, opacity: 0.75, depthWrite: false, toneMapped: false }),
   }
 }
@@ -176,9 +179,11 @@ function Cylinder({ cylinder, spec, bankAngle, sense, bus, geo, mats, selectionG
   // Gas colour is per-cylinder; sharing it would make all ten cylinders show the same stroke.
   const gases = useMemo(() => createGasMaterials(), [])
   useEffect(() => () => Object.values(gases).forEach((material) => material.dispose()), [gases])
-  const last = useRef({ playhead: Number.NaN, bank: Number.NaN, firingAngle: Number.NaN, sense, animate: false })
   const diesel = spec.ignition === 'compression'
-  const initial = cutawayState(0, cylinder.event.angle, sense)
+  // Bank B of a V or boxer is a mirror image, so its exhaust port faces out like bank A's.
+  const mirror = cutawayMirror(spec.layout, cylinder.side, detail)
+  const last = useRef({ playhead: Number.NaN, bank: Number.NaN, firingAngle: Number.NaN, sense, mirror, animate: false })
+  const initial = cutawayState(0, cylinder.event.angle, sense, mirror)
 
   useFrame(() => {
     const frame = bus.last
@@ -187,9 +192,10 @@ function Cylinder({ cylinder, spec, bankAngle, sense, bus, geo, mats, selectionG
     const animate = frame?.animate ?? false
     // A crankpin experiment can change a cylinder's phase while the crank is stopped.
     const firingAngle = cylinder.event.angle
-    if (last.current.playhead === playhead && last.current.bank === drawnBank && last.current.firingAngle === firingAngle && last.current.sense === sense && last.current.animate === animate) return
-    last.current = { playhead, bank: drawnBank, firingAngle, sense, animate }
-    const state = cutawayState(playhead, cylinder.event.angle, sense)
+    const prev = last.current
+    if (prev.playhead === playhead && prev.bank === drawnBank && prev.firingAngle === firingAngle && prev.sense === sense && prev.mirror === mirror && prev.animate === animate) return
+    last.current = { playhead, bank: drawnBank, firingAngle, sense, mirror, animate }
+    const state = cutawayState(playhead, cylinder.event.angle, sense, mirror)
     if (bank.current) bank.current.rotation.x = detail ? 0 : bankAxis(cylinder.side, drawnBank) * DEG
     if (piston.current) piston.current.position.y = state.pistonY
     if (rod.current) {
@@ -202,7 +208,7 @@ function Cylinder({ cylinder, spec, bankAngle, sense, bus, geo, mats, selectionG
       const lift = visualLift(valve, state.cycleDeg)
       if (r.lifted) r.lifted.position.y = -lift
       if (r.spring) r.spring.scale.y = Math.max(0.01, restSpringHeight - lift)
-      if (r.cam) r.cam.rotation.x = sense * camRotation(valve, state.cycleDeg)
+      if (r.cam) r.cam.rotation.x = mirror * sense * camRotation(valve, state.cycleDeg)
       const appearance = portGasAppearance(valve, state.cycleDeg)
       if (r.flow) r.flow.visible = appearance.opacity > 0.005
       setGas(gases[valve], appearance)
@@ -228,54 +234,56 @@ function Cylinder({ cylinder, spec, bankAngle, sense, bus, geo, mats, selectionG
 
   return (
     <group ref={bank} position={[detail ? 0 : cylinder.x, 0, 0]} rotation={[detail ? 0 : bankAxis(cylinder.side, bankAngle) * DEG, 0, 0]} onClick={pick} userData={{ cylinder: cylinder.event.cylinder ?? cylinder.event.bank, eventIndex: cylinder.event.index }}>
-      {detail && (
-        <>
-          <mesh geometry={geo.block} material={mats.casting} />
-          <mesh geometry={geo.section.block} material={mats.section} />
-          <mesh geometry={geo.head} material={mats.casting} />
-          <mesh geometry={geo.section.head} material={mats.section} />
-          <mesh geometry={geo.sump.pan} material={mats.sump} />
-          <mesh geometry={geo.sump.oil} material={mats.oil} />
-        </>
-      )}
-      <mesh geometry={geo.liner} material={mats.liner} />
-      <mesh geometry={geo.section.liner} material={detail ? mats.section : mats.liner} />
-      <mesh geometry={geo.chamber} material={mats.chamber} />
-      <mesh geometry={geo.ports.intake} material={mats.port} />
-      <mesh geometry={geo.ports.exhaust} material={mats.port} />
-      <mesh ref={(mesh) => { valves.intake.flow = mesh }} geometry={geo.ports.intakeGas} material={gases.intake} renderOrder={2} />
-      <mesh ref={(mesh) => { valves.exhaust.flow = mesh }} geometry={geo.ports.exhaustGas} material={gases.exhaust} renderOrder={2} />
+      <group scale={[1, 1, mirror]}>
+        {detail && (
+          <>
+            <mesh geometry={geo.block} material={mats.casting} />
+            <mesh geometry={geo.section.block} material={mats.section} />
+            <mesh geometry={geo.head} material={mats.casting} />
+            <mesh geometry={geo.section.head} material={mats.section} />
+            <mesh geometry={geo.sump.pan} material={mats.sump} />
+            <mesh geometry={geo.sump.oil} material={mats.oil} />
+          </>
+        )}
+        <mesh geometry={geo.liner} material={mats.liner} />
+        <mesh geometry={geo.section.liner} material={detail ? mats.section : mats.liner} />
+        <mesh geometry={geo.chamber} material={mats.chamber} />
+        <mesh geometry={geo.ports.intake} material={mats.port} />
+        <mesh geometry={geo.ports.exhaust} material={mats.port} />
+        <mesh ref={(mesh) => { valves.intake.flow = mesh }} geometry={geo.ports.intakeGas} material={gases.intake} renderOrder={2} />
+        <mesh ref={(mesh) => { valves.exhaust.flow = mesh }} geometry={geo.ports.exhaustGas} material={gases.exhaust} renderOrder={2} />
 
-      <group ref={piston} position={[0, initial.pistonY, 0]}>
-        <mesh geometry={geo.piston.body} material={mats.piston} />
-        <mesh geometry={geo.piston.rings} material={mats.rings} />
-        <mesh geometry={geo.piston.pin} material={mats.pin} />
+        <group ref={piston} position={[0, initial.pistonY, 0]}>
+          <mesh geometry={geo.piston.body} material={mats.piston} />
+          <mesh geometry={geo.piston.rings} material={mats.rings} />
+          <mesh geometry={geo.piston.pin} material={mats.pin} />
+        </group>
+        <group ref={rod} position={[0, initial.pistonY, 0]} rotation={[initial.rodRotation, 0, 0]}>
+          <mesh geometry={geo.rod} material={mats.rod} />
+        </group>
+        <group ref={crank} rotation={[initial.mechanicalDeg * DEG, 0, 0]}>
+          {(detail || cylinder.showCrank) && <mesh geometry={geo.crank.steel} material={mats.crank} />}
+          {timing && <mesh geometry={geo.crank.sprocketMark} material={mats.mark} />}
+          {endAssembly && <mesh geometry={geo.crank.flywheel} material={mats.flywheel} />}
+          {endAssembly && <mesh geometry={geo.crank.flywheelMark} material={mats.mark} />}
+        </group>
+        <ValveAssembly valve="intake" geo={geo} mats={mats} refs={valves.intake} timing={timing} />
+        <ValveAssembly valve="exhaust" geo={geo} mats={mats} refs={valves.exhaust} timing={timing} />
+        {timing && <mesh geometry={geo.belt} material={mats.belt} />}
+        {diesel ? (
+          <mesh geometry={injectorGeometry} material={mats.injector} />
+        ) : (
+          <>
+            <mesh geometry={geo.plug.shell} material={mats.plug} />
+            <mesh geometry={geo.plug.insulator} material={mats.insulator} />
+          </>
+        )}
+        <mesh ref={gas} geometry={geo.gas.column} material={gases.charge} position={[0, initial.crownY, 0]} scale={[1, Math.max(0.001, DECK_Y - initial.crownY), 1]} renderOrder={2} />
+        <mesh geometry={geo.gas.cap} material={gases.charge} renderOrder={2} />
+        <mesh ref={flash} geometry={geo.flash} material={gases.flash} position={[0.01, SPARK_GAP.y, SPARK_GAP.z]} visible={false} renderOrder={3} />
+        {selected && !detail && <mesh geometry={selectionGeometry} material={mats.selection} position={[0, DECK_Y + 0.08, 0]} rotation={[Math.PI / 2, 0, 0]} />}
+        {light && <pointLight ref={glow} color="#ffb14a" position={[0.32, DECK_Y, 0]} intensity={0} distance={3} decay={2} />}
       </group>
-      <group ref={rod} position={[0, initial.pistonY, 0]} rotation={[initial.rodRotation, 0, 0]}>
-        <mesh geometry={geo.rod} material={mats.rod} />
-      </group>
-      <group ref={crank} rotation={[initial.mechanicalDeg * DEG, 0, 0]}>
-        {(detail || cylinder.showCrank) && <mesh geometry={geo.crank.steel} material={mats.crank} />}
-        {timing && <mesh geometry={geo.crank.sprocketMark} material={mats.mark} />}
-        {endAssembly && <mesh geometry={geo.crank.flywheel} material={mats.flywheel} />}
-        {endAssembly && <mesh geometry={geo.crank.flywheelMark} material={mats.mark} />}
-      </group>
-      <ValveAssembly valve="intake" geo={geo} mats={mats} refs={valves.intake} timing={timing} />
-      <ValveAssembly valve="exhaust" geo={geo} mats={mats} refs={valves.exhaust} timing={timing} />
-      {timing && <mesh geometry={geo.belt} material={mats.belt} />}
-      {diesel ? (
-        <mesh geometry={injectorGeometry} material={mats.injector} />
-      ) : (
-        <>
-          <mesh geometry={geo.plug.shell} material={mats.plug} />
-          <mesh geometry={geo.plug.insulator} material={mats.insulator} />
-        </>
-      )}
-      <mesh ref={gas} geometry={geo.gas.column} material={gases.charge} position={[0, initial.crownY, 0]} scale={[1, Math.max(0.001, DECK_Y - initial.crownY), 1]} renderOrder={2} />
-      <mesh geometry={geo.gas.cap} material={gases.charge} renderOrder={2} />
-      <mesh ref={flash} geometry={geo.flash} material={gases.flash} position={[0.01, SPARK_GAP.y, SPARK_GAP.z]} visible={false} renderOrder={3} />
-      {selected && !detail && <mesh geometry={selectionGeometry} material={mats.selection} position={[0, DECK_Y + 0.08, 0]} rotation={[Math.PI / 2, 0, 0]} />}
-      {light && <pointLight ref={glow} color="#ffb14a" position={[0.32, DECK_Y, 0]} intensity={0} distance={3} decay={2} />}
     </group>
   )
 }
@@ -337,6 +345,46 @@ export function CutawayScene({ spec, events, bankAngle, sense, bus, tier, view, 
           onSelect={onSelect}
         />
       ))}
+      <CutawayExhaust spec={spec} cylinders={visible} bankAngle={bankAngle} bus={bus} material={mats.pipe} tier={geometryTier} detail={detail} />
     </group>
   )
+}
+
+/** The same exhaust and gas renderer as the V10, placed on the existing inline/V/boxer cylinders. */
+function CutawayExhaust({ spec, cylinders, bankAngle, bus, material, tier, detail }: {
+  spec: EngineSpec
+  cylinders: CutawayCylinder[]
+  bankAngle: number
+  bus: FrameBus
+  material: MeshStandardMaterial
+  tier: QualityTier
+  detail: boolean
+}) {
+  const drawing = useCallback((bank: number): ExhaustDrawing => {
+    const placed = cylinders.map((cylinder) => ({ index: cylinder.event.index, side: cylinder.side, x: detail ? 0 : cylinder.x }))
+    const positions = placed.map((cylinder) => cylinder.x)
+    const layout = exhaustPlumbing(placed, (side, x, point) => cutawayToWorld(side, bank, cutawayMirror(spec.layout, side, detail), x, point), {
+      xFront: Math.max(...positions) + 0.45,
+      xRear: Math.min(...positions) - 0.85,
+      shared: !spec.separateBanks,
+    })
+    if (detail) {
+      const routes = layout.headers.map((header) => {
+        const points = headerStub(header.points)
+        return { index: header.index, points, segments: [points], headerLength: pathLength(header.points) }
+      })
+      return { pipes: routes.map((route) => ({ points: route.points, radius: HEADER_RADIUS })), routes }
+    }
+    return {
+      pipes: [
+        ...layout.headers.map((header) => ({ points: header.points, radius: HEADER_RADIUS })),
+        ...layout.collectors.map((collector) => ({ points: collector.points, radius: COLLECTOR_RADIUS })),
+        ...layout.tailpipes.map((points) => ({ points, radius: COLLECTOR_RADIUS })),
+      ],
+      routes: layout.headers.map((header) => ({ index: header.index, points: layout.routes.get(header.index)!, segments: layout.routeSegments.get(header.index)!, headerLength: pathLength(header.points) })),
+    }
+  }, [cylinders, detail, spec.layout, spec.separateBanks])
+  const bankOf = useCallback((frameBank: number | null) => detail || spec.layout === 'inline' ? 0 : spec.layout === 'flat' ? 180 : frameBank ?? bankAngle, [detail, spec.layout, bankAngle])
+  const firingAngle = useCallback((index: number) => cylinders.find((cylinder) => cylinder.event.index === index)?.event.angle ?? 0, [cylinders])
+  return <ExhaustSystem drawing={drawing} bankOf={bankOf} firingAngle={firingAngle} bus={bus} pipeMaterial={material} plume={!detail} spec={spec} tier={tier} />
 }

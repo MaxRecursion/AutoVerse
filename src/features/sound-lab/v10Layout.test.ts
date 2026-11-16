@@ -13,17 +13,12 @@ import {
   exhaustLayout,
   isV10,
   moduleCrankDeg,
-  pathLength,
-  PULSE_START,
-  pointAlong,
-  pulseAt,
   throwLabel,
   throwPinOffset,
   throwX,
   toWorld,
   v10Framing,
   v10Model,
-  type Vec3,
 } from './v10Layout'
 
 const V10S = engines.filter(isV10)
@@ -132,31 +127,6 @@ describe('exhausts', () => {
     const outlet = shared.tailpipes.at(-1)!.at(-1)!
     expect(outlet[2]).toBe(0)
     for (const route of shared.routes.values()) expect(route.at(-1)).toEqual(outlet)
-  })
-
-  it('walks along a route', () => {
-    const path: Vec3[] = [
-      [0, 0, 0],
-      [3, 0, 0],
-      [3, 4, 0],
-    ]
-    expect(pathLength(path)).toBeCloseTo(7)
-    expect(pointAlong(path, 1.5)).toEqual([1.5, 0, 0])
-    expect(pointAlong(path, 5)).toEqual([3, 2, 0])
-    expect(pointAlong(path, 99)).toEqual([3, 4, 0])
-    expect(pointAlong(path, -1)).toEqual([0, 0, 0])
-  })
-
-  it('launches a pulse when the exhaust valve opens and spaces pulses by their firing gaps', () => {
-    expect(pulseAt(PULSE_START, 10, 0.01)).toMatchObject({ distance: 0, visible: true, heat: 1 })
-    expect(pulseAt(PULSE_START - 1, 10, 0.01).visible).toBe(false)
-    // Once it has run past the end of its route it is gone.
-    expect(pulseAt(PULSE_START + 600, 10, 0.05).visible).toBe(false)
-    // Two cylinders 54° apart in firing: their pulses are 54° × speed apart along a shared pipe.
-    const speed = 0.02
-    const first = pulseAt(mod(PULSE_START + 200, 720), 30, speed).distance
-    const second = pulseAt(mod(PULSE_START + 200 - 54, 720), 30, speed).distance
-    expect(first - second).toBeCloseTo(54 * speed)
   })
 })
 

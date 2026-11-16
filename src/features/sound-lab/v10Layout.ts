@@ -12,9 +12,10 @@
  * outwards, away from the vee.
  */
 import { CRANK_R, DECK_Y } from '@/features/engine-lab/engineModel'
-import { VALVE_TIMING } from '@/features/engine-lab/kinematics'
 import { crankSections, mod, rotationSense } from './animation'
 import { bankOf, type EngineSpec } from './engines'
+import { exhaustFramingPoints, exhaustPlumbing, type ExhaustPlumbing } from './exhaust'
+import { cutawayBoundsPoints, fitCutawayPoints } from './cutawayFraming'
 import { firingEvents, type FiringEvent } from './firing'
 
 const DEG = Math.PI / 180
@@ -99,107 +100,18 @@ export function throwPinOffset(cylinders: V10Cylinder[], throwIndex: number, ban
 
 /* ------------------------------------------------------------ exhausts */
 
-/** Exhaust header in a cylinder's own frame: out of the port on the head's side, then down to the collector. */
-const HEADER: { z: number; y: number }[] = [
-  { z: -0.86, y: 2.55 },
-  { z: -1.16, y: 2.52 },
-  { z: -1.4, y: 2.3 },
-  { z: -1.53, y: 1.96 },
-  { z: -1.56, y: 1.62 },
-]
-/** Where every header of a bank meets its collector (same lean for the whole bank). */
-const COLLECTOR = HEADER[HEADER.length - 1]!
-/** A bank's own tailpipe, continuing back and down from the collector. */
-const BANK_TAIL: { z: number; y: number }[] = [
-  { z: -1.45, y: 1.1 },
-  { z: -1.32, y: 0.55 },
-]
-
-export interface ExhaustLayout {
-  headers: { index: number; side: V10Side; points: Vec3[] }[]
-  collectors: { side: V10Side; points: Vec3[] }[]
-  tailpipes: Vec3[][]
-  /** Full route of each cylinder's exhaust pulse, port to outlet. */
-  routes: Map<number, Vec3[]>
-}
-
 /**
- * Headers, a collector along each bank and the tailpipes. With separate bank
- * exhausts each bank keeps its own pipe (what each ear hears); a shared exhaust
- * joins the banks into one pipe behind the engine.
+ * Headers, a collector along each bank and the tailpipes for this V10 at this
+ * bank angle, from the shared recipe in exhaust.ts: separate bank exhausts
+ * keep each bank's own pipe (what each ear hears); a shared exhaust joins the
+ * banks into one pipe behind the engine.
  */
-export function exhaustLayout(cylinders: V10Cylinder[], bankAngle: number, shared: boolean): ExhaustLayout {
-  const xFront = throwX(0) + 0.45
-  const xRear = throwX(4) - BANK_STAGGER - 0.85
-  const collectors = (['A', 'B'] as const).map((side) => ({
-    side,
-    points: [toWorld(side, bankAngle, xFront, COLLECTOR), toWorld(side, bankAngle, xRear, COLLECTOR)],
-  }))
-  const bankTail = (side: V10Side): Vec3[] => [
-    toWorld(side, bankAngle, xRear, COLLECTOR),
-    toWorld(side, bankAngle, xRear - 0.55, BANK_TAIL[0]!),
-    toWorld(side, bankAngle, xRear - 1.5, BANK_TAIL[1]!),
-  ]
-  let tailpipes: Vec3[][]
-  let tailFor: (side: V10Side) => Vec3[]
-  if (shared) {
-    const ends = collectors.map((c) => c.points[1]!)
-    const mergeY = Math.min(...ends.map((p) => p[1])) - 0.35
-    const merge: Vec3 = [xRear - 0.95, mergeY, 0]
-    const outlet: Vec3 = [xRear - 2.1, mergeY - 0.15, 0]
-    const joint = (side: V10Side): Vec3[] => {
-      const end = collectors.find((c) => c.side === side)!.points[1]!
-      return [end, [xRear - 0.5, (end[1] + mergeY) / 2, end[2] * 0.45], merge]
-    }
-    tailpipes = [joint('A'), joint('B'), [merge, outlet]]
-    tailFor = (side) => [...joint(side), outlet]
-  } else {
-    tailpipes = [bankTail('A'), bankTail('B')]
-    tailFor = bankTail
-  }
-  const headers = cylinders.map((c) => ({ index: c.event.index, side: c.side, points: HEADER.map((p) => toWorld(c.side, bankAngle, c.x, p)) }))
-  const routes = new Map<number, Vec3[]>()
-  for (const h of headers) routes.set(h.index, [...h.points, ...tailFor(h.side)])
-  return { headers, collectors, tailpipes, routes }
-}
-
-export function pathLength(path: Vec3[]): number {
-  let total = 0
-  for (let i = 1; i < path.length; i++) total += Math.hypot(path[i]![0] - path[i - 1]![0], path[i]![1] - path[i - 1]![1], path[i]![2] - path[i - 1]![2])
-  return total
-}
-
-/** The point `distance` along a polyline (clamped to its ends). */
-export function pointAlong(path: Vec3[], distance: number): Vec3 {
-  if (path.length === 0) return [0, 0, 0]
-  let left = Math.max(0, distance)
-  for (let i = 1; i < path.length; i++) {
-    const a = path[i - 1]!
-    const b = path[i]!
-    const step = Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2])
-    if (left <= step && step > 0) {
-      const t = left / step
-      return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]
-    }
-    left -= step
-  }
-  return [...path[path.length - 1]!]
-}
-
-/** A pulse leaves when the exhaust valve opens (the Engine Lab's EVO). */
-export const PULSE_START = VALVE_TIMING.exhaust.opens
-/** Crank degrees the longest route takes; shorter routes finish sooner at the same speed. */
-export const PULSE_TRAVEL_DEG = 520
-
-/**
- * Where a cylinder's exhaust pulse is along its route. Every pulse moves at
- * the same speed, so pulses that share a pipe are spaced by their firing gaps.
- */
-export function pulseAt(cycle: number, routeLength: number, speed: number): { distance: number; visible: boolean; heat: number } {
-  const since = mod(cycle - PULSE_START, 720)
-  const distance = since * speed
-  const visible = distance <= routeLength && since < 700
-  return { distance, visible, heat: visible ? 1 - 0.55 * (distance / routeLength) : 0 }
+export function exhaustLayout(cylinders: readonly (Pick<V10Cylinder, 'x' | 'side'> & { event: Pick<FiringEvent, 'index'> })[], bankAngle: number, shared: boolean): ExhaustPlumbing {
+  return exhaustPlumbing(
+    cylinders.map((c) => ({ index: c.event.index, side: c.side, x: c.x })),
+    (side, x, p) => toWorld(side === 'B' ? 'B' : 'A', bankAngle, x, p),
+    { xFront: throwX(0) + 0.45, xRear: throwX(4) - BANK_STAGGER - 0.85, shared },
+  )
 }
 
 /* ------------------------------------------------------------ views and camera */
@@ -215,10 +127,10 @@ const FOV = 38
 
 /**
  * Camera for the whole engine or one throw, fitted to a canvas of this aspect
- * ratio. Both look mostly from the front: every bore is cut open on its
- * front face, so that is where the pistons show, in both banks at once.
+ * ratio. The throw looks mostly from the front so its cut faces show; the whole
+ * engine also includes the tailpipes and their cooling plumes.
  */
-export function v10Framing(view: V10View, bankAngle: number, aspect: number): CameraPose {
+export function v10Framing(view: V10View, bankAngle: number, aspect: number, sharedExhaust = false): CameraPose {
   const h = (bankAngle / 2) * DEG
   const tanHalf = Math.tan((FOV / 2) * DEG)
   const a = Math.max(0.35, aspect || 1)
@@ -232,15 +144,16 @@ export function v10Framing(view: V10View, bankAngle: number, aspect: number): Ca
     const n = Math.hypot(...dir)
     return { position: [target[0] + (distance * dir[0]!) / n, target[1] + (distance * dir[1]!) / n, target[2] + (distance * dir[2]!) / n], target }
   }
-  // Across the banks (exhausts included) and from the crank's sweep up to the cams.
-  const width = 2 * (4.05 * Math.sin(h) + 1.6 * Math.cos(h))
-  const height = 4.1 * Math.cos(h) + 1.6
-  const target: Vec3 = [-0.2, height / 2 - 0.85, 0]
-  // Seen obliquely the row looks narrower than its full width, so phones can sit a little closer.
-  const distance = Math.max(width / (2 * tanHalf * a), height / (2 * tanHalf)) * (a < 1 ? 1.02 : 1.28) + (a < 1 ? 2.2 : 3.2)
-  const dir = [0.84, 0.42, 0.34]
-  const n = Math.hypot(...dir)
-  return { position: [target[0] + (distance * dir[0]!) / n, target[1] + (distance * dir[1]!) / n, target[2] + (distance * dir[2]!) / n], target }
+  const reach = 3.75 * Math.sin(h) + 0.95 * Math.cos(h) + 0.15
+  const cylinders = Array.from({ length: 5 }, (_, slot) => (['A', 'B'] as const).map((side) => ({
+    x: throwX(slot) - (side === 'B' ? BANK_STAGGER : 0), side,
+    // Camera plumbing needs the event's identity only, not its firing phase.
+    event: { index: slot * 2 + (side === 'B' ? 1 : 0) },
+  }))).flat()
+  return fitCutawayPoints([
+    ...cutawayBoundsPoints([throwX(4) - BANK_STAGGER - 0.8, -1.15, -reach], [throwX(0) + 0.9, 3.75 * Math.cos(h) + 0.95 * Math.sin(h) + 0.4, reach]),
+    ...exhaustFramingPoints(exhaustLayout(cylinders, bankAngle, sharedExhaust)),
+  ], a)
 }
 
 /* ------------------------------------------------------------ words */
