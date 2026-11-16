@@ -30,7 +30,7 @@ export function HeroSection() {
   ]
 
   return (
-    <section aria-labelledby="home-heading" className="relative isolate overflow-hidden border-b border-white/[0.06]">
+    <section aria-labelledby="home-heading" className="relative isolate overflow-hidden border-b border-line/[0.06]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 bg-blueprint [mask-image:radial-gradient(ellipse_80%_70%_at_65%_40%,black_25%,transparent_80%)]"
@@ -66,7 +66,7 @@ export function HeroSection() {
                 <ArrowRight aria-hidden />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="h-11 border-white/12 bg-graphite-900/60 px-5 text-[15px] hover:border-cyan/40">
+            <Button asChild size="lg" variant="outline" className="h-11 border-line/12 bg-graphite-900/60 px-5 text-[15px] hover:border-cyan/40">
               <Link to={startHref}>
                 <GraduationCap aria-hidden />
                 {startLabel}
@@ -96,7 +96,7 @@ export function HeroSection() {
           <HeroEngine />
         </Reveal>
 
-        <dl className="grid w-full max-w-md grid-cols-3 divide-x divide-white/[0.08] self-start border-y border-white/[0.08] lg:col-start-1 lg:row-start-2">
+        <dl className="grid w-full max-w-md grid-cols-3 divide-x divide-line/[0.08] self-start border-y border-line/[0.08] lg:col-start-1 lg:row-start-2">
           {stats.map((s) => (
             <div key={s.label} className="flex flex-col-reverse justify-end gap-1 px-3 py-3 first:pl-0">
               <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-steel-400">{s.label}</dt>

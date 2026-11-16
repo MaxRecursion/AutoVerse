@@ -28,7 +28,7 @@ export function CategoryGrid() {
                 {category.title}
               </span>
               <span className="order-1 flex items-center justify-between gap-2">
-                <span className="grid size-9 place-items-center rounded-lg border border-white/[0.08] bg-graphite-950/80 text-steel-300 transition-colors group-hover:border-cyan/30 group-hover:text-cyan">
+                <span className="grid size-9 place-items-center rounded-lg border border-line/[0.08] bg-graphite-950/80 text-steel-300 transition-colors group-hover:border-cyan/30 group-hover:text-cyan">
                   <CategoryIcon name={category.icon} className="size-[18px]" />
                 </span>
                 <span className="font-mono text-[11px] tabular-nums text-steel-400">

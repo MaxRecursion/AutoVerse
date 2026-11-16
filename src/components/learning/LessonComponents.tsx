@@ -42,7 +42,7 @@ export function LessonComponents({ components, store, onLocate }: LessonComponen
             data-anchor
             className={cn(
               'flex flex-col rounded-xl border transition-colors',
-              selected ? 'border-cyan/50 bg-cyan/[0.05]' : 'border-white/[0.07] bg-graphite-900/60',
+              selected ? 'border-cyan/50 bg-cyan/[0.05]' : 'border-line/[0.07] bg-graphite-900/60',
             )}
           >
             <button
@@ -65,7 +65,7 @@ export function LessonComponents({ components, store, onLocate }: LessonComponen
             </button>
 
             {selected && (hasDetail || (store && onLocate)) && (
-              <div id={detailId} className="flex flex-col gap-3 border-t border-white/[0.06] px-4 pb-4 pt-3">
+              <div id={detailId} className="flex flex-col gap-3 border-t border-line/[0.06] px-4 pb-4 pt-3">
                 {c.technical && <p className="text-sm leading-relaxed text-steel-300">{c.technical}</p>}
                 {c.annotations.length > 0 && (
                   <dl className="grid gap-x-4 gap-y-1.5 text-sm sm:grid-cols-[auto_1fr]">

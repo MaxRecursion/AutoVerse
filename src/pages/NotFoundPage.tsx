@@ -87,7 +87,7 @@ function LinkGroup({ icon, title, children }: { icon: ReactNode; title: string; 
         {icon}
         {title}
       </h2>
-      <ul className="flex flex-col divide-y divide-white/[0.05] border-y border-white/[0.06]">{children}</ul>
+      <ul className="flex flex-col divide-y divide-line/[0.05] border-y border-line/[0.06]">{children}</ul>
     </nav>
   )
 }

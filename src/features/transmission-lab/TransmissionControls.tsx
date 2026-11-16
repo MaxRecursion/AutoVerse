@@ -78,7 +78,7 @@ export function ShiftGate({ value, onChange, className }: { value: GearId; onCha
         data-testid="shift-gate"
       >
         {/* The gate itself: three slots joined by the cross-gate. */}
-        <svg className="pointer-events-none absolute inset-0 size-full text-white/[0.12]" aria-hidden>
+        <svg className="pointer-events-none absolute inset-0 size-full text-line/[0.12]" aria-hidden>
           {[1, 2, 3].map((col) => {
             const x = `${((col - 0.5) / 3) * 100}%`
             return <line key={col} x1={x} x2={x} y1="16%" y2="84%" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
@@ -106,7 +106,7 @@ export function ShiftGate({ value, onChange, className }: { value: GearId; onCha
                 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan',
                 checked
                   ? 'border-amber bg-amber text-graphite-950 shadow-[0_0_0_3px_rgb(246_166_58/0.25)]'
-                  : 'border-white/15 bg-graphite-850 text-steel-300 hover:border-cyan/60 hover:text-paper',
+                  : 'border-line/15 bg-graphite-850 text-steel-300 hover:border-cyan/60 hover:text-paper',
               )}
             >
               {g}
@@ -161,14 +161,14 @@ function LabSlider({ label, shortLabel, value, min, max, step, valueText, displa
         step={step}
         onValueChange={(v) => onChange(v[0])}
       >
-        <SliderPrimitive.Track className="relative h-1.5 grow overflow-hidden rounded-full bg-white/10">
+        <SliderPrimitive.Track className="relative h-1.5 grow overflow-hidden rounded-full bg-tint/10">
           <SliderPrimitive.Range className={cn('absolute h-full', tone === 'amber' ? 'bg-amber' : 'bg-cyan')} />
         </SliderPrimitive.Track>
         <SliderPrimitive.Thumb
           aria-label={label}
           aria-valuetext={valueText}
           className={cn(
-            'block size-5 rounded-full border-2 bg-paper shadow transition-[box-shadow]',
+            'block size-5 rounded-full border-2 bg-control-thumb shadow transition-[box-shadow]',
             'focus-visible:outline-none focus-visible:ring-4',
             tone === 'amber' ? 'border-amber focus-visible:ring-amber/40' : 'border-cyan focus-visible:ring-cyan/40',
           )}
@@ -223,7 +223,7 @@ export function TransmissionControls() {
             className={cn(
               'mb-0.5 flex size-9 shrink-0 items-center justify-center rounded-full border transition-colors',
               'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan',
-              p.running ? 'border-white/15 text-paper hover:border-cyan/60' : 'border-cyan/60 bg-cyan/15 text-cyan',
+              p.running ? 'border-line/15 text-paper hover:border-cyan/60' : 'border-cyan/60 bg-cyan/15 text-cyan',
             )}
           >
             {p.running ? <Pause className="size-4" aria-hidden /> : <Play className="size-4" aria-hidden />}

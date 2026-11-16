@@ -84,7 +84,7 @@ export function SystemMapTeaser() {
                     <li key={s.topicId}>
                       <Link
                         to={topicHref(s.topic)}
-                        className="relative hit-area inline-flex min-h-9 items-center rounded-full border border-white/[0.08] bg-graphite-950/70 px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+                        className="relative hit-area inline-flex min-h-9 items-center rounded-full border border-line/[0.08] bg-graphite-950/70 px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
                       >
                         {s.label}
                       </Link>
@@ -111,7 +111,7 @@ export function SystemMapTeaser() {
                     {topic ? (
                       <Link
                         to={topicHref(topic)}
-                        className="group flex min-h-14 items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-white/[0.04]"
+                        className="group flex min-h-14 items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-tint/[0.04]"
                       >
                         <NodeBody index={i} node={node} />
                         <ArrowUpRight aria-hidden className="size-4 shrink-0 text-steel-500 transition-colors group-hover:text-cyan" />

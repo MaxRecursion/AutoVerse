@@ -237,10 +237,10 @@ function QuestionCard({ question, number, total, choice, onAnswer, headingRef }:
                 aria-describedby={answered ? feedbackId : undefined}
                 className={cn(
                   'flex min-h-11 pointer-coarse:min-h-12 w-full items-center gap-3 rounded-lg border px-3 py-2.5 text-left text-sm transition-colors',
-                  state === 'idle' && 'border-white/[0.1] bg-graphite-850 text-paper hover:border-cyan/50 hover:bg-graphite-800',
+                  state === 'idle' && 'border-line/[0.1] bg-graphite-850 text-paper hover:border-cyan/50 hover:bg-graphite-800',
                   state === 'correct' && 'border-ok/50 bg-ok/[0.08] text-paper',
                   state === 'wrong' && 'border-danger/50 bg-danger/[0.08] text-paper',
-                  state === 'dim' && 'border-white/[0.06] text-steel-400',
+                  state === 'dim' && 'border-line/[0.06] text-steel-400',
                   answered && 'cursor-default',
                 )}
               >
@@ -248,7 +248,7 @@ function QuestionCard({ question, number, total, choice, onAnswer, headingRef }:
                   aria-hidden
                   className={cn(
                     'relative grid size-6 shrink-0 place-items-center rounded-md border font-mono text-[11px]',
-                    state === 'correct' ? 'border-ok/60 text-ok' : state === 'wrong' ? 'border-danger/60 text-danger' : 'border-white/15 text-steel-300',
+                    state === 'correct' ? 'border-ok/60 text-ok' : state === 'wrong' ? 'border-danger/60 text-danger' : 'border-line/15 text-steel-300',
                   )}
                 >
                   {state === 'correct' ? <Check className="size-3.5" /> : state === 'wrong' ? <X className="size-3.5" /> : LETTERS[i]}
@@ -301,7 +301,7 @@ function QuestionDots({
               aria-current={i === index ? 'true' : undefined}
               className={cn(
                 'relative hit-area block size-3 rounded-full transition-all',
-                choice === undefined ? 'bg-white/20 hover:bg-white/40' : isCorrectAnswer(q, choice) ? 'bg-ok' : 'bg-danger',
+                choice === undefined ? 'bg-tint/20 hover:bg-tint/40' : isCorrectAnswer(q, choice) ? 'bg-ok' : 'bg-danger',
                 i === index && 'scale-125 ring-2 ring-cyan ring-offset-2 ring-offset-graphite-950',
               )}
             />

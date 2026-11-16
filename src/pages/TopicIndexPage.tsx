@@ -106,7 +106,7 @@ export default function TopicIndexPage() {
         <div className="mt-4 flex flex-col gap-10">
           {groups.map(({ category, topics: list }) => (
             <section key={category?.id ?? 'other'} aria-labelledby={`group-${category?.id ?? 'other'}`}>
-              <div className="mb-3 flex flex-wrap items-end justify-between gap-2 border-b border-white/[0.06] pb-2">
+              <div className="mb-3 flex flex-wrap items-end justify-between gap-2 border-b border-line/[0.06] pb-2">
                 <h2 id={`group-${category?.id ?? 'other'}`} className="flex items-center gap-2 text-lg font-semibold text-paper">
                   {category && <CategoryIcon name={category.icon} className="size-4 text-cyan" />}
                   {category?.title ?? 'Other lessons'}
@@ -173,7 +173,7 @@ function FilterBar({ query, categoryId, difficulty, interactiveOnly, filtered, c
             placeholder="e.g. camshaft, torque, brake fluid"
             autoComplete="off"
             enterKeyHint="search"
-            className="h-11 pointer-coarse:h-12 w-full rounded-lg border border-white/10 bg-graphite-950 pl-9 pr-3 text-base text-paper placeholder:text-steel-500 focus-visible:border-cyan/60 sm:text-sm"
+            className="h-11 pointer-coarse:h-12 w-full rounded-lg border border-line/10 bg-graphite-950 pl-9 pr-3 text-base text-paper placeholder:text-steel-500 focus-visible:border-cyan/60 sm:text-sm"
           />
         </div>
       </div>
@@ -228,7 +228,7 @@ function FilterSelect({ id, label, value, onChange, children }: { id: string; la
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="h-11 pointer-coarse:h-12 w-full min-w-44 appearance-none rounded-lg border border-white/10 bg-graphite-950 pl-3 pr-9 text-base text-paper focus-visible:border-cyan/60 sm:text-sm"
+          className="h-11 pointer-coarse:h-12 w-full min-w-44 appearance-none rounded-lg border border-line/10 bg-graphite-950 pl-3 pr-9 text-base text-paper focus-visible:border-cyan/60 sm:text-sm"
         >
           {children}
         </select>
@@ -263,7 +263,7 @@ function CategoryDirectory({ counts }: { counts: Map<string, number> }) {
             <li key={c.id}>
               <Link
                 to={`/learn/${c.slug}`}
-                className="group flex min-h-12 items-center gap-3 rounded-lg border border-white/[0.06] bg-graphite-900/60 px-3 py-2.5 transition-colors hover:border-cyan/35"
+                className="group flex min-h-12 items-center gap-3 rounded-lg border border-line/[0.06] bg-graphite-900/60 px-3 py-2.5 transition-colors hover:border-cyan/35"
               >
                 <CategoryIcon name={c.icon} className="size-4 shrink-0 text-steel-400 group-hover:text-cyan" />
                 <span className="min-w-0 flex-1 truncate text-sm text-paper">{c.title}</span>
@@ -299,7 +299,7 @@ function AtoZIndex() {
           <a
             key={letter}
             href={`#az-${letter}`}
-            className="relative hit-area grid size-9 place-items-center rounded-md border border-white/[0.06] pointer-coarse:size-11 font-mono text-xs text-steel-300 hover:border-cyan/40 hover:text-cyan"
+            className="relative hit-area grid size-9 place-items-center rounded-md border border-line/[0.06] pointer-coarse:size-11 font-mono text-xs text-steel-300 hover:border-cyan/40 hover:text-cyan"
           >
             {letter}
           </a>

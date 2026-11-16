@@ -164,7 +164,7 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
             <EngineCutaway spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} reduced={reduced} />
           </Suspense>
 
-          <details className="rounded-xl border border-white/[0.08] p-3">
+          <details className="rounded-xl border border-line/[0.08] p-3">
             <summary className="relative hit-area min-h-9 cursor-pointer py-2 text-sm font-medium text-steel-300">Piston timing diagram</summary>
             <div className="mt-3"><CylinderLayout spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} animating={animating} /></div>
           </details>
@@ -212,7 +212,7 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
           </div>
 
           {spec.pairedV && (
-            <section aria-labelledby="experiment-heading" className="rounded-lg border border-white/[0.08] bg-graphite-950/40 p-4">
+            <section aria-labelledby="experiment-heading" className="rounded-lg border border-line/[0.08] bg-graphite-950/40 p-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <h3 id="experiment-heading" className="flex items-center gap-2 font-semibold text-paper">
                   <Wand2 aria-hidden className="size-4 text-amber" /> Bend the V: bank angle and crankpins
@@ -330,7 +330,7 @@ function EnginePicker({ current, onPick }: { current: string; onPick: (id: strin
                       data-testid={`sound-lab-engine-${e.id}`}
                       className={cn(
                         'relative hit-area flex w-full flex-col items-start whitespace-nowrap rounded-md border px-3 py-2 text-left transition-colors lg:whitespace-normal',
-                        e.id === current ? 'border-cyan/50 bg-cyan/[0.08]' : 'border-transparent hover:border-white/10 hover:bg-white/[0.03]',
+                        e.id === current ? 'border-cyan/50 bg-cyan/[0.08]' : 'border-transparent hover:border-line/10 hover:bg-tint/[0.03]',
                       )}
                     >
                       <span className={cn('text-sm font-medium', e.id === current ? 'text-cyan' : 'text-paper')}>{e.name}</span>
@@ -350,7 +350,7 @@ function Compare({ a, b, onPick, children }: { a: string; b: string; onPick: (id
   const ea = getEngine(a)!
   const eb = getEngine(b)!
   return (
-    <li className="rounded-lg border border-white/[0.06] p-3">
+    <li className="rounded-lg border border-line/[0.06] p-3">
       <div className="flex flex-wrap items-center gap-2">
         <Button variant="outline" size="sm" className="h-auto min-h-9 max-w-full whitespace-normal py-1.5 text-left" onClick={() => onPick(a)}>
           {ea.name} · {ea.cars[0]}

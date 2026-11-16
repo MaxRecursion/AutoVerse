@@ -11,13 +11,14 @@ import { TourButton } from '@/features/tour/TourButton'
 import { useStartTour } from '@/features/tour/useStartTour'
 import { ProgressPill } from './ProgressPill'
 import { CourseNavigationTrigger } from '@/features/course-navigation/CourseNavigation'
+import { ThemeToggle } from '@/features/theme/ThemeToggle'
 
 export function Header() {
   const [open, setOpen] = useState(false)
   const startTour = useStartTour()
   return (
-    <header className="sticky top-0 z-40 border-b border-white/[0.06] bg-graphite-950/85 pt-[env(safe-area-inset-top)] backdrop-blur-lg [view-transition-name:site-header]">
-      <div className="mx-auto flex h-14 max-w-[1600px] items-center gap-4 px-4 sm:px-6">
+    <header className="sticky top-0 z-40 border-b border-line/[0.06] bg-graphite-950/85 pt-[env(safe-area-inset-top)] backdrop-blur-lg [view-transition-name:site-header]">
+      <div className="mx-auto flex h-14 max-w-[1600px] items-center gap-2 px-3 sm:gap-4 sm:px-6">
         <CourseNavigationTrigger />
         <Logo compactOnPhone />
         <nav aria-label="Primary" data-tour="nav" className="ml-4 hidden items-center gap-1 xl:flex">
@@ -26,16 +27,17 @@ export function Header() {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                cn('rounded-md px-2 py-1.5 text-sm text-steel-300 transition-colors hover:text-paper', isActive && 'bg-white/[0.06] text-paper')
+                cn('rounded-md px-2 py-1.5 text-sm text-steel-300 transition-colors hover:text-paper', isActive && 'bg-tint/[0.06] text-paper')
               }
             >
               {item.label}
             </NavLink>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-2 pointer-coarse:gap-2.5">
+        <div className="ml-auto flex items-center gap-1 sm:gap-2 pointer-coarse:gap-2.5">
           <ProgressPill />
           <SearchCommand />
+          <ThemeToggle />
           <span className="hidden min-[360px]:contents"><TourButton /></span>
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -43,7 +45,7 @@ export function Header() {
                 <Menu />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72 border-white/10 bg-graphite-900">
+            <SheetContent side="right" className="w-72 border-line/10 bg-graphite-900">
               <SheetHeader>
                 <SheetTitle>
                   <Logo />
@@ -55,7 +57,7 @@ export function Header() {
                     key={item.to}
                     to={item.to}
                     onClick={() => setOpen(false)}
-                    className={({ isActive }) => cn('rounded-md px-3 py-3 text-base text-steel-300', isActive && 'bg-white/[0.06] text-paper')}
+                    className={({ isActive }) => cn('rounded-md px-3 py-3 text-base text-steel-300', isActive && 'bg-tint/[0.06] text-paper')}
                   >
                     {item.label}
                   </NavLink>

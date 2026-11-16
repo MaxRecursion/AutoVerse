@@ -5,7 +5,10 @@ import { installRoutePrefetch } from '@/app/prefetch'
 import { router, routerReady, routes } from '@/app/router'
 import { startHostedAnalytics } from '@/lib/analytics'
 import { setStaticFirstPaint } from '@/lib/boot'
+import { initializeTheme } from '@/features/theme/theme'
 import '@/styles/globals.css'
+
+initializeTheme()
 
 const container = document.getElementById('root')!
 

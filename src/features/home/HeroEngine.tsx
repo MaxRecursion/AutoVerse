@@ -47,9 +47,9 @@ export function HeroEngine({ className }: { className?: string }) {
         {/* Scale ticks down the left edge (decorative). */}
         <span
           aria-hidden
-          className="pointer-events-none absolute -left-5 bottom-6 top-6 hidden w-2 bg-[repeating-linear-gradient(to_bottom,rgb(255_255_255/0.22)_0_1px,transparent_1px_12px)] xl:block"
+          className="pointer-events-none absolute -left-5 bottom-6 top-6 hidden w-2 bg-[repeating-linear-gradient(to_bottom,rgb(var(--line-rgb)/0.22)_0_1px,transparent_1px_12px)] xl:block"
         />
-        <div className="relative h-[clamp(320px,52dvh,520px)] overflow-hidden rounded-2xl border border-white/[0.08] bg-graphite-950 bg-blueprint shadow-[0_40px_80px_-40px_rgb(0_0_0/0.9)] lg:h-[clamp(420px,64dvh,640px)]">
+        <div className="relative h-[clamp(320px,52dvh,520px)] overflow-hidden rounded-2xl border border-line/[0.08] bg-graphite-950 bg-blueprint shadow-scene lg:h-[clamp(420px,64dvh,640px)]">
           <HeroBoundary fallback={<HeroUnavailable />}>
             <Suspense fallback={<HeroLoading />}>
               <EngineHero />

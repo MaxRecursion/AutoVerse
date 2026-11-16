@@ -90,7 +90,7 @@ export function MobileSheet() {
     <div
       ref={sheet}
       className={cn(
-        'relative z-30 flex shrink-0 flex-col rounded-t-2xl border-t border-white/10 bg-graphite-900/95 shadow-[0_-12px_32px_-12px_rgba(0,0,0,0.6)]',
+        'relative z-30 flex shrink-0 flex-col rounded-t-2xl border-t border-line/10 bg-graphite-900/95 shadow-drawer',
         expanded ? 'h-[68%]' : 'h-[40%]',
       )}
       data-testid="explorer-sheet"
@@ -124,7 +124,7 @@ export function MobileSheet() {
         </span>
       </button>
       <div id="explorer-sheet-body" className="flex min-h-0 flex-1 flex-col pb-[env(safe-area-inset-bottom)]">
-        <BodyFadeControl id="body-fade-mobile" className="border-b border-white/[0.06] px-4 pb-1" />
+        <BodyFadeControl id="body-fade-mobile" className="border-b border-line/[0.06] px-4 pb-1" />
         <ExplorerPanel compact className="min-h-0 flex-1" />
       </div>
     </div>

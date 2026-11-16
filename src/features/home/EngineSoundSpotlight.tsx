@@ -12,7 +12,7 @@ function RhythmPreview() {
     { label: 'Uneven firing', pulses: [0, 0.75, 2, 2.75, 4, 4.75, 6, 6.75, 8, 8.75], color: 'text-amber' },
   ]
   return (
-    <div className="flex h-full flex-col justify-center rounded-xl border border-white/[0.06] bg-graphite-950/70 p-5 sm:p-6">
+    <div className="flex h-full flex-col justify-center rounded-xl border border-line/[0.06] bg-graphite-950/70 p-5 sm:p-6">
       <div className="mb-5 flex items-center justify-between gap-3">
         <span className="eyebrow">The rhythm of combustion</span>
         <AudioLines aria-hidden className="size-5 shrink-0 text-cyan" />
@@ -50,7 +50,7 @@ export function SoundLabFeatureCard({ className }: { className?: string }) {
           </p>
           <ul aria-label="Engine layouts to explore" className="mt-5 flex flex-wrap gap-2">
             {LAYOUTS.map((layout) => (
-              <li key={layout} className="rounded-md border border-white/10 bg-graphite-950/70 px-2.5 py-1 font-mono text-xs text-steel-300">{layout}</li>
+              <li key={layout} className="rounded-md border border-line/10 bg-graphite-950/70 px-2.5 py-1 font-mono text-xs text-steel-300">{layout}</li>
             ))}
           </ul>
           <Button asChild className="mt-6 h-11">

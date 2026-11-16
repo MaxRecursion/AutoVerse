@@ -23,7 +23,7 @@ const parseKey = (key: string) => {
   return new Date(y, m - 1, d)
 }
 
-const SHADE = ['bg-white/[0.035]', 'bg-cyan/20', 'bg-cyan/35', 'bg-cyan/55']
+const SHADE = ['bg-tint/[0.035]', 'bg-cyan/20', 'bg-cyan/35', 'bg-cyan/55']
 
 /** A month of what the learner did, by day, with the current and best streak. */
 export function ActivityCalendar() {
@@ -78,7 +78,7 @@ export function ActivityCalendar() {
       </div>
 
       <dl className="grid grid-cols-2 gap-3">
-        <div className="track flex items-center gap-3 rounded-lg border border-white/[0.06] px-3 py-2">
+        <div className="track flex items-center gap-3 rounded-lg border border-line/[0.06] px-3 py-2">
           <Flame aria-hidden className={cn('size-5', current > 0 ? 'text-amber' : 'text-steel-500')} />
           <div>
             <dt className="text-xs text-steel-400">Current streak</dt>
@@ -87,7 +87,7 @@ export function ActivityCalendar() {
             </dd>
           </div>
         </div>
-        <div className="track flex items-center gap-3 rounded-lg border border-white/[0.06] px-3 py-2">
+        <div className="track flex items-center gap-3 rounded-lg border border-line/[0.06] px-3 py-2">
           <div>
             <dt className="text-xs text-steel-400">Best streak</dt>
             <dd className="font-display text-xl text-paper">
@@ -121,7 +121,7 @@ export function ActivityCalendar() {
                     'relative flex aspect-square w-full items-center justify-center rounded-lg font-mono text-xs tabular-nums outline-none transition-colors focus-visible:ring-2 focus-visible:ring-cyan',
                     cell.inMonth ? SHADE[Math.min(items.length, 3)] : 'opacity-25',
                     items.length > 0 ? 'text-paper' : 'text-steel-400',
-                    cell.inMonth && 'hover:ring-1 hover:ring-white/30',
+                    cell.inMonth && 'hover:ring-1 hover:ring-line/30',
                     cell.key === today && 'ring-1 ring-amber/70',
                     shown === cell.key && 'ring-2 ring-cyan',
                   )}

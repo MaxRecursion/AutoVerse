@@ -55,7 +55,7 @@ export function LabSkeleton({ variant = 'full' }: { variant?: LabViewProps['vari
       <div aria-hidden className={cn(workbenchAside, 'min-h-64 lg:min-h-0')}>
         <div className="skeleton-delay flex flex-col gap-3 p-3">
           <Bone className="h-11" />
-          <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] pb-2">
+          <div className="flex items-center justify-between gap-2 border-b border-line/[0.06] pb-2">
             <Bone className="h-9 w-48" />
             <Bone className="h-9 w-24" />
           </div>
@@ -70,4 +70,4 @@ export function LabSkeleton({ variant = 'full' }: { variant?: LabViewProps['vari
 }
 
 /** One gray block of the skeleton. */
-const Bone = ({ className }: { className?: string }) => <div className={cn('rounded-md bg-white/[0.05] motion-safe:animate-pulse', className)} />
+const Bone = ({ className }: { className?: string }) => <div className={cn('rounded-md bg-tint/[0.05] motion-safe:animate-pulse', className)} />

@@ -57,7 +57,7 @@ export function PioneerCard({ pioneer: p, open, onOpenChange, currentTopicId, sh
             <div className="mt-2 flex flex-col gap-3">
               <p className="text-[15px] leading-relaxed text-steel-300">{p.story}</p>
               {p.caution && (
-                <p className="flex gap-2 rounded-lg border border-white/[0.08] bg-graphite-900/70 p-3 text-[13px] leading-relaxed text-steel-300">
+                <p className="flex gap-2 rounded-lg border border-line/[0.08] bg-graphite-900/70 p-3 text-[13px] leading-relaxed text-steel-300">
                   <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-cyan" />
                   <span>
                     <span className="font-medium text-paper">Worth knowing: </span>
@@ -69,7 +69,7 @@ export function PioneerCard({ pioneer: p, open, onOpenChange, currentTopicId, sh
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="eyebrow">Appears in</span>
                   {lessons.map((t) => (
-                    <Link key={t.id} to={topicHref(t)} className="rounded-full border border-white/10 px-3 py-1 text-xs text-steel-300 hover:border-cyan/50 hover:text-cyan">
+                    <Link key={t.id} to={topicHref(t)} className="rounded-full border border-line/10 px-3 py-1 text-xs text-steel-300 hover:border-cyan/50 hover:text-cyan">
                       {t.title}
                     </Link>
                   ))}

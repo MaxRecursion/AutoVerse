@@ -2,6 +2,14 @@
 
 This is the shared product and implementation guide for improving AutoVerse’s learning flow. Keep it current as work ships so future contributors, including Claude, can resume from the same priorities.
 
+## Display themes
+
+The header has a keyboard- and touch-accessible light/dark toggle on every page. Dark remains the default; an explicit choice is saved locally and shared with other open tabs. The head bootstrap applies that choice before paint, and the render-safe theme store in `features/theme/theme.ts` owns live updates. Storage restrictions must not disable switching. Theme changes preserve the open lesson, progress, selected parts, camera and running lab/audio state.
+
+Use the shared CSS palette for surfaces, type, status colours and charts. Graphite/steel names are semantic surface/type roles across both palettes; `line` and `tint` replace literal white borders and overlays, and `control-thumb` stays visible on either track. Canvas charts reread the palette on a theme change, while SVG diagrams use CSS variables. Physical materials and combustion colours keep their meaning in both modes. Certificates retain their separate print palette.
+
+Theme release checks: all 1,204 unit tests and ESLint pass. The full production browser suite passes 124 checks on desktop and phone, with 10 intentional device-specific/duplicate checks skipped. Theme checks cover rendered contrast, saved first paint, navigation/reload persistence, cross-tab updates, blocked storage, keyboard and 320px controls, and uninterrupted engine playback.
+
 ## What Is Already Here
 
 AutoVerse has 34 complete lessons, three curated learning paths, four interactive labs, a vehicle system map, local lesson history, completion markers, bookmarks, and quiz scores. The main friction is orientation: the home page has a beginner route, but lesson pages primarily suggest a category neighbor, so learners can lose their place in a curated path. Completion is a button state rather than a clear “you finished / here is what comes next” moment. Progress is saved only in the current browser and device. Several categories have only one lesson, so breadth and depth remain uneven.

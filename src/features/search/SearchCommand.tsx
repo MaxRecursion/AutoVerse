@@ -29,7 +29,7 @@ const GROUPS: { kind: SearchKind; heading: string; limit: number; icon: typeof B
 
 const KIND_LABEL: Record<SearchKind, string> = { topic: 'Lesson', lab: 'Lab', component: 'Component', category: 'Category', pioneer: 'Engineer' }
 
-const ITEM = 'min-h-11 pointer-coarse:min-h-12 gap-3 rounded-md px-2.5 py-2 data-[selected=true]:bg-white/[0.06] data-[selected=true]:text-paper'
+const ITEM = 'min-h-11 pointer-coarse:min-h-12 gap-3 rounded-md px-2.5 py-2 data-[selected=true]:bg-tint/[0.06] data-[selected=true]:text-paper'
 
 /** Something the menu can do rather than a page it opens. */
 interface ActionCommand extends MenuCommand {
@@ -94,14 +94,14 @@ export function SearchCommand() {
       <Button
         variant="outline"
         onClick={() => setOpen(true)}
-        className="h-9 gap-2 border-white/10 bg-graphite-900/60 px-2.5 text-steel-300 hover:text-paper sm:w-44 sm:justify-start lg:w-56"
+        className="h-9 gap-2 border-line/10 bg-graphite-900/60 px-2.5 text-steel-300 hover:text-paper sm:w-44 sm:justify-start lg:w-56"
         aria-label="Search lessons, labs and components"
         aria-keyshortcuts={apple ? 'Meta+K /' : 'Control+K /'}
         data-tour="search"
       >
         <Search aria-hidden />
         <span className="hidden text-sm sm:inline">Search</span>
-        <kbd aria-hidden className="ml-auto hidden rounded border border-white/10 bg-graphite-800 px-1.5 font-mono text-[10px] text-steel-400 sm:inline">
+        <kbd aria-hidden className="ml-auto hidden rounded border border-line/10 bg-graphite-800 px-1.5 font-mono text-[10px] text-steel-400 sm:inline">
           {apple ? '⌘K' : 'Ctrl K'}
         </kbd>
       </Button>
@@ -115,7 +115,7 @@ export function SearchCommand() {
       >
         <DialogContent
           showCloseButton={false}
-          className="top-3 max-w-[calc(100%-1.5rem)] translate-y-0 gap-0 overflow-hidden border-white/10 bg-graphite-900 p-0 sm:top-[12dvh] sm:max-w-xl"
+          className="top-3 max-w-[calc(100%-1.5rem)] translate-y-0 gap-0 overflow-hidden border-line/10 bg-graphite-900 p-0 sm:top-[12dvh] sm:max-w-xl"
         >
           <DialogTitle className="sr-only">Search AutoVerse</DialogTitle>
           <DialogDescription className="sr-only">Search lessons, labs, components and categories. Use the arrow keys to move and Enter to open.</DialogDescription>
@@ -130,7 +130,7 @@ export function SearchCommand() {
               <SearchResults query={query} onSelect={go} onTour={tour} />
             )}
           </Command>
-          <div className="hidden items-center gap-4 border-t border-white/[0.06] px-3 py-2 text-[11px] text-steel-500 sm:flex" aria-hidden>
+          <div className="hidden items-center gap-4 border-t border-line/[0.06] px-3 py-2 text-[11px] text-steel-500 sm:flex" aria-hidden>
             <span>
               <kbd className="font-mono">↑↓</kbd> move
             </span>
@@ -195,7 +195,7 @@ function SearchResults({ query, onSelect, onTour }: { query: string; onSelect: (
             ))}
           </CommandGroup>
         )}
-        {recentTopics.length > 0 && <CommandSeparator className="my-1 bg-white/[0.06]" />}
+        {recentTopics.length > 0 && <CommandSeparator className="my-1 bg-tint/[0.06]" />}
         {commandGroups}
         <CommandGroup heading="Labs">
           {labs.map((l) => (

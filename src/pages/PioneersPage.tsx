@@ -80,7 +80,7 @@ export default function PioneersPage() {
         </p>
       </header>
 
-      <div className="z-20 -mx-4 mt-8 sm:sticky sm:top-[calc(3.5rem+env(safe-area-inset-top))] border-y border-white/[0.06] bg-graphite-950/90 px-4 py-3 backdrop-blur-lg sm:-mx-6 sm:px-6">
+      <div className="z-20 -mx-4 mt-8 sm:sticky sm:top-[calc(3.5rem+env(safe-area-inset-top))] border-y border-line/[0.06] bg-graphite-950/90 px-4 py-3 backdrop-blur-lg sm:-mx-6 sm:px-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label className="relative block flex-1">
             <span className="sr-only">Search engineers</span>
@@ -154,7 +154,7 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
       onClick={onClick}
       className={cn(
         'relative hit-area inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 text-sm transition-colors',
-        active ? 'border-amber/60 bg-amber/10 text-amber' : 'border-white/10 text-steel-300 hover:border-white/25 hover:text-paper',
+        active ? 'border-amber/60 bg-amber/10 text-amber' : 'border-line/10 text-steel-300 hover:border-line/25 hover:text-paper',
       )}
     >
       {children}

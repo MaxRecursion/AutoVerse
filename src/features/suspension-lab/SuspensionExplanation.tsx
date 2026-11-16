@@ -142,7 +142,7 @@ function PhaseButtons({ current }: { current: ResponsePhase }) {
             aria-pressed={active}
             className={cn(
               'flex min-h-11 pointer-coarse:min-h-12 items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-left text-sm transition-colors',
-              active ? 'border-amber/60 bg-amber/10 text-paper' : 'border-white/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
+              active ? 'border-amber/60 bg-amber/10 text-paper' : 'border-line/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
             )}
           >
             <span className="font-mono text-[11px] text-steel-400">{i + 1}</span>
@@ -185,7 +185,7 @@ function ScenarioList() {
                 aria-pressed={on}
                 className={cn(
                   'flex min-h-11 pointer-coarse:min-h-12 w-full flex-col items-start justify-center rounded-lg border px-3 py-1.5 text-left transition-colors',
-                  on ? 'border-cyan/50 bg-cyan/[0.08] text-paper' : 'border-white/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
+                  on ? 'border-cyan/50 bg-cyan/[0.08] text-paper' : 'border-line/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
                 )}
               >
                 <span className="text-sm font-medium">{c.label}</span>
@@ -223,7 +223,7 @@ function LiveStateTable() {
   return (
     <table ref={root} className="w-full text-sm" data-testid="suspension-live-state">
       <caption className="eyebrow mb-1.5 text-left">Live state · illustrative model</caption>
-      <tbody className="divide-y divide-white/[0.05]">
+      <tbody className="divide-y divide-line/[0.05]">
         <Row label="Body" hint="from ride height">
           <Value cell="body" />
         </Row>
@@ -279,7 +279,7 @@ function DeeperTopics() {
           <li key={t.id}>
             <Link
               to={`/topics/${t.slug}`}
-              className="relative hit-area group flex min-h-10 items-center justify-between gap-2 rounded-md border border-white/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+              className="relative hit-area group flex min-h-10 items-center justify-between gap-2 rounded-md border border-line/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
             >
               {t.title}
               <ArrowRight className="size-4 text-steel-500 transition-transform group-hover:translate-x-0.5 group-hover:text-cyan" aria-hidden />

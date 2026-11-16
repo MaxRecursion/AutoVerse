@@ -28,7 +28,7 @@ export function ExplorerTextAlternative({ onFocusSystem }: { onFocusSystem?: () 
           const lesson = sys.topicIds.map(getTopic).find((t): t is Topic => !!t)
           const lab = sys.labId ? getLab(sys.labId) : undefined
           return (
-            <li key={sys.id} className="rounded-xl border border-white/[0.07] bg-graphite-900/50 p-4">
+            <li key={sys.id} className="rounded-xl border border-line/[0.07] bg-graphite-900/50 p-4">
               <h3 className="font-display text-base font-semibold text-paper">{sys.name}</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-steel-300">{sys.summary}</p>
               <p className="mt-2 text-xs leading-relaxed text-steel-400">

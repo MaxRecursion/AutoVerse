@@ -74,7 +74,7 @@ export function LessonFinish({
           {target ? (
             <Link
               to={topicHref(target)}
-              className="group flex min-h-16 items-center gap-3 rounded-xl border border-white/[0.08] px-4 py-3 transition-colors hover:border-cyan/40"
+              className="group flex min-h-16 items-center gap-3 rounded-xl border border-line/[0.08] px-4 py-3 transition-colors hover:border-cyan/40"
             >
               <span className="min-w-0">
                 <span className="eyebrow block">{next.label}</span>

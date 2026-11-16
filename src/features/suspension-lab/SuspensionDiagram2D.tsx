@@ -19,12 +19,12 @@ const INK = {
   rod: '#e3e6ea',
   bumpStop: '#d9a441',
   behind: '#5b6472',
-  road: '#262a31',
-  roadEdge: '#8a93a0',
-  amber: '#f6a63a',
-  cyan: '#38d7f2',
-  danger: '#ff5c4d',
-  text: '#8a93a0',
+  road: 'var(--color-graphite-700)',
+  roadEdge: 'var(--color-steel-400)',
+  amber: 'var(--color-amber)',
+  cyan: 'var(--color-cyan)',
+  danger: 'var(--color-danger)',
+  text: 'var(--color-steel-400)',
 } as const
 
 const line = (a: Pt, b: Pt) => ({ x1: a[0], y1: a[1], x2: b[0], y2: b[1] })
@@ -118,12 +118,12 @@ export function SuspensionDiagram2D({ variant }: { variant: 'fallback' | 'panel'
             <circle cx={sc.contact.x} cy={sc.contact.y} r={3} fill={sc.contact.touching ? INK.amber : INK.danger} />
             {/* Suspension spring and damper */}
             <path d={sc.spring} fill="none" stroke={INK.spring} strokeWidth={2.4} strokeLinejoin="round" />
-            <rect {...sc.damperCylinder} fill="none" stroke={INK.joint} strokeWidth={1.6} />
-            <line {...line(...sc.damperRod)} stroke={INK.rod} strokeWidth={2.2} />
-            <line {...line(...sc.piston)} stroke={INK.rod} strokeWidth={3} />
+            <rect {...sc.damperCylinder} fill="none" stroke="var(--color-steel-300)" strokeWidth={1.6} />
+            <line {...line(...sc.damperRod)} stroke="var(--color-paper)" strokeWidth={2.2} />
+            <line {...line(...sc.piston)} stroke="var(--color-paper)" strokeWidth={3} />
             {/* Masses */}
-            <rect {...sc.wheel} rx={3} fill="#3a2f22" stroke={INK.amber} strokeWidth={1.4} />
-            <rect {...sc.body} rx={3} fill="#173039" stroke={INK.cyan} strokeWidth={1.4} />
+            <rect {...sc.wheel} rx={3} fill="color-mix(in srgb, var(--color-amber) 12%, var(--color-graphite-950))" stroke={INK.amber} strokeWidth={1.4} />
+            <rect {...sc.body} rx={3} fill="color-mix(in srgb, var(--color-cyan) 12%, var(--color-graphite-950))" stroke={INK.cyan} strokeWidth={1.4} />
             <text x={sc.body.x + sc.body.w / 2} y={sc.body.y + sc.body.h / 2 + 3.5} textAnchor="middle" fill={INK.cyan} className="font-mono text-[10px]">
               body m_s
             </text>
@@ -144,7 +144,7 @@ export function SuspensionDiagram2D({ variant }: { variant: 'fallback' | 'panel'
         </figure>
       </div>
 
-      <dl className={cn('grid grid-cols-2 gap-x-4 gap-y-1 rounded-lg border border-white/[0.06] p-3 text-sm', fallback ? 'mx-auto w-full max-w-3xl sm:grid-cols-4' : '')} aria-live="off">
+      <dl className={cn('grid grid-cols-2 gap-x-4 gap-y-1 rounded-lg border border-line/[0.06] p-3 text-sm', fallback ? 'mx-auto w-full max-w-3xl sm:grid-cols-4' : '')} aria-live="off">
         <Item label="Phase" value={PHASE_LABEL[pose.phase]} />
         <Item label="Body" value={formatMm(pose.body)} />
         <Item label="Wheel" value={formatMm(pose.wheel)} />

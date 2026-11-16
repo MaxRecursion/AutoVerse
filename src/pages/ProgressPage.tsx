@@ -82,7 +82,7 @@ export default function ProgressPage() {
         <ClearAllButton disabled={!hasAny} />
       </header>
 
-      <p className="mt-5 flex max-w-3xl items-start gap-3 rounded-lg border border-white/[0.07] bg-graphite-900/60 px-4 py-3 text-sm leading-relaxed text-steel-300">
+      <p className="mt-5 flex max-w-3xl items-start gap-3 rounded-lg border border-line/[0.07] bg-graphite-900/60 px-4 py-3 text-sm leading-relaxed text-steel-300">
         <HardDrive aria-hidden className="mt-0.5 size-4 shrink-0 text-cyan" />
         <span>
           Progress is stored only in this browser on this device. There is no account and nothing is sent to a server, so it does not sync between
@@ -204,7 +204,7 @@ export default function ProgressPage() {
 
         {quizRows.length > 0 && (
           <Block id="quizzes" title="Quiz scores" description="Best attempt per lesson.">
-            <div className="overflow-x-auto rounded-xl border border-white/[0.07]">
+            <div className="overflow-x-auto rounded-xl border border-line/[0.07]">
               <table className="w-full text-sm">
                 <thead className="bg-graphite-900/80 text-left">
                   <tr>
@@ -223,7 +223,7 @@ export default function ProgressPage() {
                   {quizRows.map((r) => {
                     const pct = Math.round((r.score / r.total) * 100)
                     return (
-                      <tr key={r.topicId} className="border-t border-white/[0.05]">
+                      <tr key={r.topicId} className="border-t border-line/[0.05]">
                         <td className="px-4 py-2.5">
                           <Link to={`${topicHref(r.topic)}#quiz`} className="relative hit-area inline-flex min-h-9 items-center text-paper hover:text-cyan">
                             {r.topic.title}
@@ -277,7 +277,7 @@ function Block({ id, title, description, children }: { id: string; title: string
 
 function TopicList({ items }: { items: { topic: Topic; meta?: ReactNode; action?: ReactNode }[] }) {
   return (
-    <ul className="flex flex-col divide-y divide-white/[0.05] rounded-xl border border-white/[0.07] bg-graphite-900/50">
+    <ul className="flex flex-col divide-y divide-line/[0.05] rounded-xl border border-line/[0.07] bg-graphite-900/50">
       {items.map(({ topic, meta, action }) => (
         <li key={topic.id} className="flex items-center gap-3 px-4 py-2">
           <Link to={topicHref(topic)} className="flex min-h-11 pointer-coarse:min-h-12 min-w-0 flex-1 flex-col justify-center">
@@ -350,12 +350,12 @@ function PathCard({
           const done = !!completed[t.id]
           return (
             <li key={t.id}>
-              <Link to={topicHref(t)} onClick={() => setCourseId(path.id)} className="flex min-h-9 pointer-coarse:min-h-12 items-center gap-3 rounded-md px-1 text-sm hover:bg-white/[0.03]">
+              <Link to={topicHref(t)} onClick={() => setCourseId(path.id)} className="flex min-h-9 pointer-coarse:min-h-12 items-center gap-3 rounded-md px-1 text-sm hover:bg-tint/[0.03]">
                 <span
                   aria-hidden
                   className={cn(
                     'grid size-5 shrink-0 place-items-center rounded-full border font-mono text-[10px]',
-                    done ? 'border-ok/60 bg-ok/10 text-ok' : 'border-white/15 text-steel-400',
+                    done ? 'border-ok/60 bg-ok/10 text-ok' : 'border-line/15 text-steel-400',
                   )}
                 >
                   {done ? '✓' : i + 1}

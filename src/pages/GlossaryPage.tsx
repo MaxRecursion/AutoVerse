@@ -48,7 +48,7 @@ export default function GlossaryPage() {
             <a
               key={g.letter}
               href={`#letter-${g.letter === '#' ? 'num' : g.letter}`}
-              className="relative hit-area grid size-9 place-items-center rounded-md border border-white/10 pointer-coarse:size-11 font-mono text-sm text-steel-300 hover:border-cyan/50 hover:text-cyan"
+              className="relative hit-area grid size-9 place-items-center rounded-md border border-line/10 pointer-coarse:size-11 font-mono text-sm text-steel-300 hover:border-cyan/50 hover:text-cyan"
             >
               {g.letter}
             </a>
@@ -68,7 +68,7 @@ export default function GlossaryPage() {
               <h2 id={`heading-${g.letter}`} className="font-mono text-xl text-cyan">
                 {g.letter}
               </h2>
-              <dl className="mt-4 flex flex-col divide-y divide-white/[0.06] border-y border-white/[0.06]">
+              <dl className="mt-4 flex flex-col divide-y divide-line/[0.06] border-y border-line/[0.06]">
                 {g.entries.map((e) => (
                   <div key={e.slug} id={`term-${e.slug}`} className="scroll-mt-20 py-4">
                     <dt className="text-lg font-semibold text-paper">{e.term}</dt>

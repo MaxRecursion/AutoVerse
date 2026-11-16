@@ -34,7 +34,7 @@ export function BrakingControls() {
           onClick={() => setOpen((v) => !v)}
           className={cn(
             'relative hit-area ml-auto inline-flex min-h-9 items-center gap-1.5 rounded-md border px-2.5 text-xs transition-colors sm:hidden',
-            open ? 'border-cyan/50 bg-cyan/10 text-cyan' : 'border-white/[0.1] text-steel-300 hover:text-paper',
+            open ? 'border-cyan/50 bg-cyan/10 text-cyan' : 'border-line/[0.1] text-steel-300 hover:text-paper',
           )}
         >
           <SlidersHorizontal className="size-3.5" aria-hidden />
@@ -132,7 +132,7 @@ function PedalButton() {
         data-testid="brake-pedal-button"
       >
         {/* Pedal travel meter (written per frame). */}
-        <span className="relative h-5 w-1.5 overflow-hidden rounded-full bg-white/[0.08]" aria-hidden>
+        <span className="relative h-5 w-1.5 overflow-hidden rounded-full bg-tint/[0.08]" aria-hidden>
           <span ref={fill} className="absolute inset-0 origin-bottom scale-y-0 bg-amber" />
         </span>
         Hold to brake
@@ -160,7 +160,7 @@ function SurfacePicker({ value }: { value: SurfaceId }) {
       <span className="eyebrow max-sm:sr-only" aria-hidden>
         Road
       </span>
-      <div className="flex rounded-lg border border-white/[0.08] bg-graphite-900/70 p-0.5">
+      <div className="flex rounded-lg border border-line/[0.08] bg-graphite-900/70 p-0.5">
         {SURFACE_IDS.map((id) => (
           <label key={id} className="relative" title={SURFACES[id].label}>
             <input

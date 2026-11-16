@@ -107,7 +107,7 @@ export function BeginnerPath() {
                     aria-hidden
                     className={cn(
                       'grid size-9 shrink-0 place-items-center rounded-full border font-mono text-xs tabular-nums',
-                      done ? 'border-ok/40 text-ok' : isNext ? 'border-amber/60 text-amber' : 'border-white/10 text-steel-400',
+                      done ? 'border-ok/40 text-ok' : isNext ? 'border-amber/60 text-amber' : 'border-line/10 text-steel-400',
                     )}
                   >
                     {done ? <CircleCheck className="size-4" /> : String(i + 1).padStart(2, '0')}

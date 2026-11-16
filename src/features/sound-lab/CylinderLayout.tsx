@@ -175,7 +175,7 @@ export function CylinderLayout({ spec, events, bankAngle, sense, bus, animating,
   }, [bus, spec, sections, sense, inline])
 
   return (
-    <figure className="min-w-0 rounded-xl border border-white/[0.08] bg-graphite-950/60 p-4" data-testid={testId} data-bank-angle={angle}>
+    <figure className="min-w-0 rounded-xl border border-line/[0.08] bg-graphite-950/60 p-4" data-testid={testId} data-bank-angle={angle}>
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <h3 className="text-sm font-semibold text-paper">Cylinder layout</h3>
         <p className="flex flex-wrap gap-3 font-mono text-[10px] text-steel-400">

@@ -66,7 +66,7 @@ export function GettingStarted({ variant }: { variant: 'home' | 'page' }) {
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
           aria-controls={bodyId}
-          className="relative hit-area flex min-h-12 min-w-0 flex-1 items-center gap-3 rounded-lg px-3 text-left outline-none transition-colors hover:bg-white/[0.03] focus-visible:ring-2 focus-visible:ring-cyan"
+          className="relative hit-area flex min-h-12 min-w-0 flex-1 items-center gap-3 rounded-lg px-3 text-left outline-none transition-colors hover:bg-tint/[0.03] focus-visible:ring-2 focus-visible:ring-cyan"
         >
           <ChevronDown aria-hidden className={cn('size-5 shrink-0 text-steel-400 transition-transform duration-300', open && 'rotate-180')} />
           <span className="min-w-0">
@@ -78,7 +78,7 @@ export function GettingStarted({ variant }: { variant: 'home' | 'page' }) {
           {/* Progress as segments: they fill in as steps are done. */}
           <span aria-hidden className="ml-auto flex shrink-0 items-center gap-1">
             {steps.map((s) => (
-              <span key={s.id} className={cn('h-2 w-4 rounded-full transition-colors duration-500 sm:w-6', s.done ? 'bg-ok' : 'bg-white/10')} />
+              <span key={s.id} className={cn('h-2 w-4 rounded-full transition-colors duration-500 sm:w-6', s.done ? 'bg-ok' : 'bg-tint/10')} />
             ))}
           </span>
           <span className="shrink-0 font-mono text-xs tabular-nums text-steel-300">
@@ -106,14 +106,14 @@ export function GettingStarted({ variant }: { variant: 'home' | 'page' }) {
             transition={{ type: 'spring', stiffness: 300, damping: 34 }}
             className="overflow-hidden"
           >
-            <ol className="flex flex-col gap-0.5 border-t border-white/[0.06] p-2 sm:p-3">
+            <ol className="flex flex-col gap-0.5 border-t border-line/[0.06] p-2 sm:p-3">
               {steps.map((s, i) => {
                 const go = where[s.id]
                 return (
                   <li key={s.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg px-2 py-2">
                     <span
                       aria-hidden
-                      className={cn('grid size-6 shrink-0 place-items-center rounded-full font-mono text-[11px]', s.done ? 'bg-ok/20 text-ok' : 'border border-white/15 text-steel-300')}
+                      className={cn('grid size-6 shrink-0 place-items-center rounded-full font-mono text-[11px]', s.done ? 'bg-ok/20 text-ok' : 'border border-line/15 text-steel-300')}
                     >
                       {s.done ? <Check className="size-3.5" /> : i + 1}
                     </span>

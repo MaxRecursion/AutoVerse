@@ -95,7 +95,7 @@ export function LabWorkbench({
       <aside className={workbenchAside} aria-label={`${title} explanation`}>
         <LabMissions />
         <Tabs defaultValue="explain" className="flex min-h-0 flex-1 flex-col gap-0">
-          <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] px-3 py-2">
+          <div className="flex items-center justify-between gap-2 border-b border-line/[0.06] px-3 py-2">
             <TabsList>
               <TabsTrigger value="explain">Explain</TabsTrigger>
               <TabsTrigger value="parts" data-tour="lab-parts">Parts</TabsTrigger>
@@ -115,7 +115,7 @@ export function LabWorkbench({
             </TabsContent>
           )}
         </Tabs>
-        {disclaimer && <p className="border-t border-white/[0.06] px-4 py-2 text-[11px] leading-snug text-steel-400">{disclaimer}</p>}
+        {disclaimer && <p className="border-t border-line/[0.06] px-4 py-2 text-[11px] leading-snug text-steel-400">{disclaimer}</p>}
       </aside>
     </div>
   )
@@ -210,7 +210,7 @@ export function ComponentInspector({ componentIds }: { componentIds: string[] })
               {selected.relatedTopicIds.map((tid) => {
                 const t = getTopic(tid)
                 return t ? (
-                  <Link key={tid} to={`/topics/${t.slug}`} className="rounded border border-white/10 px-2 py-0.5 text-xs text-steel-300 hover:border-cyan/50 hover:text-cyan">
+                  <Link key={tid} to={`/topics/${t.slug}`} className="rounded border border-line/10 px-2 py-0.5 text-xs text-steel-300 hover:border-cyan/50 hover:text-cyan">
                     {t.title} →
                   </Link>
                 ) : null
@@ -222,13 +222,13 @@ export function ComponentInspector({ componentIds }: { componentIds: string[] })
         <p className="text-sm text-steel-400">Select a part in the scene or from the list to see what it does.</p>
       )}
 
-      <ul className="flex flex-col divide-y divide-white/[0.05] rounded-lg border border-white/[0.06]">
+      <ul className="flex flex-col divide-y divide-line/[0.05] rounded-lg border border-line/[0.06]">
         {componentIds.map((id) => {
           const c = getComponent(id)
           const isHidden = !!hidden[id]
           const isIsolated = isolatedId === id
           return (
-            <li key={id} className={cn('flex items-center gap-1 px-1.5 py-1', selectedId === id && 'bg-white/[0.04]')}>
+            <li key={id} className={cn('flex items-center gap-1 px-1.5 py-1', selectedId === id && 'bg-tint/[0.04]')}>
               <button
                 type="button"
                 className={cn('min-h-9 pointer-coarse:min-h-12 flex-1 rounded px-2 text-left text-sm hover:text-cyan', selectedId === id ? 'text-cyan' : 'text-paper', isHidden && 'opacity-50')}

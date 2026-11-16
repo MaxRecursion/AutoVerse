@@ -45,7 +45,7 @@ export function SystemMapDetails({ map, layout, graph, selectedId, onClear, head
             ))}
           </ul>
         )}
-        <p className="mt-4 rounded-md border border-white/[0.06] bg-graphite-900/50 px-3 py-2 text-xs leading-relaxed text-steel-400">
+        <p className="mt-4 rounded-md border border-line/[0.06] bg-graphite-900/50 px-3 py-2 text-xs leading-relaxed text-steel-400">
           Select any box in the diagram to see what it connects to, open its lesson, or find it in 3D.
         </p>
       </div>
@@ -70,7 +70,7 @@ export function SystemMapDetails({ map, layout, graph, selectedId, onClear, head
           type="button"
           onClick={onClear}
           aria-label="Clear selection"
-          className="-mr-2 -mt-2 inline-flex size-9 items-center justify-center rounded-md text-steel-400 hover:bg-white/5 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
+          className="-mr-2 -mt-2 inline-flex size-9 items-center justify-center rounded-md text-steel-400 hover:bg-tint/5 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
         >
           <X aria-hidden className="size-4" />
         </button>
@@ -129,7 +129,7 @@ export function SystemMapDetails({ map, layout, graph, selectedId, onClear, head
       <ul className="mt-4 grid gap-1.5">
         {topic && (
           <li>
-            <Link to={topicHref(topic)} className={cn(ACTION, 'border-white/10 text-steel-200 hover:border-cyan/50 hover:text-paper')}>
+            <Link to={topicHref(topic)} className={cn(ACTION, 'border-line/10 text-steel-200 hover:border-cyan/50 hover:text-paper')}>
               <BookOpen aria-hidden className="size-4 text-steel-400 group-hover:text-cyan" />
               <span className="min-w-0 flex-1">
                 <span className="annotation block text-steel-500">Lesson</span>
@@ -153,7 +153,7 @@ export function SystemMapDetails({ map, layout, graph, selectedId, onClear, head
         )}
         {links.lab && links.explorer && (
           <li>
-            <Link to={links.explorer} className={cn(ACTION, 'border-white/10 text-steel-200 hover:border-cyan/50 hover:text-paper')}>
+            <Link to={links.explorer} className={cn(ACTION, 'border-line/10 text-steel-200 hover:border-cyan/50 hover:text-paper')}>
               <Car aria-hidden className="size-4 text-steel-400 group-hover:text-cyan" />
               <span className="min-w-0 flex-1">
                 <span className="annotation block text-steel-500">Vehicle explorer</span>

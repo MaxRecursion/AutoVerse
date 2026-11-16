@@ -53,7 +53,7 @@ const INK = {
   intake: '#38d7f2',
   exhaust: '#f6a63a',
   spark: '#fff3c9',
-  text: '#8a93a0',
+  text: 'var(--color-steel-400)',
 } as const
 
 const rgba = (c: RGB, a: number) => `rgba(${Math.round(c[0] * 255)}, ${Math.round(c[1] * 255)}, ${Math.round(c[2] * 255)}, ${a.toFixed(3)})`
@@ -145,7 +145,7 @@ function SectionDrawing({ state, className }: { state: EngineState; className?: 
 
       {/* Behind the section plane */}
       <g fill="none" stroke={INK.behind} strokeWidth={0.8} strokeDasharray="3 3" opacity={0.6}>
-        <polygon points={points(STATIC.headBehind)} fill="rgba(255,255,255,0.025)" strokeDasharray="none" />
+        <polygon points={points(STATIC.headBehind)} fill="var(--color-line)" fillOpacity={0.025} strokeDasharray="none" />
         {part('flywheel', <Circle c={STATIC.flywheel.c} r={STATIC.flywheel.r} fill="none" />)}
         {part('timing-belt', <polygon points={points(STATIC.belt)} fill="none" />)}
       </g>
@@ -350,9 +350,9 @@ function ChartFrame({ deg, top, base, showStrokeNames }: { deg: number; top: num
     <>
       {STROKES.map((s, i) => (
         <g key={s.id}>
-          <rect x={cx(s.start)} y={top} width={cx(s.end) - cx(s.start)} height={base - top} fill={i % 2 ? 'rgba(255,255,255,0.025)' : 'rgba(255,255,255,0.05)'} />
+          <rect x={cx(s.start)} y={top} width={cx(s.end) - cx(s.start)} height={base - top} fill="var(--color-line)" fillOpacity={i % 2 ? 0.025 : 0.05} />
           {showStrokeNames && (
-            <text x={(cx(s.start) + cx(s.end)) / 2} y={top - 6} textAnchor="middle" fontSize={7.5} fill={strokeAt(deg) === s.id ? '#f6a63a' : INK.text} letterSpacing="0.1em">
+            <text x={(cx(s.start) + cx(s.end)) / 2} y={top - 6} textAnchor="middle" fontSize={7.5} fill={strokeAt(deg) === s.id ? 'var(--color-amber)' : INK.text} letterSpacing="0.1em">
               {s.label.toUpperCase()}
             </text>
           )}
@@ -367,7 +367,7 @@ function ChartFrame({ deg, top, base, showStrokeNames }: { deg: number; top: num
           </text>
         </g>
       ))}
-      <line x1={cx(deg)} y1={top - 2} x2={cx(deg)} y2={base} stroke="#f3efe6" strokeWidth={1} />
+      <line x1={cx(deg)} y1={top - 2} x2={cx(deg)} y2={base} stroke="var(--color-paper)" strokeWidth={1} />
     </>
   )
 }
@@ -449,14 +449,14 @@ function ValveTimingChart({ state }: { state: EngineState }) {
           [VALVE_TIMING.intake.opens, 720],
           [0, VALVE_TIMING.exhaust.closes],
         ].map(([a, b]) => (
-          <rect key={a} x={cx(a)} y={top} width={cx(b) - cx(a)} height={base - top} fill="rgba(56,215,242,0.12)" />
+          <rect key={a} x={cx(a)} y={top} width={cx(b) - cx(a)} height={base - top} fill="var(--color-cyan)" fillOpacity={0.12} />
         ))}
-        <line x1={cx(SPARK_ANGLE)} y1={top} x2={cx(SPARK_ANGLE)} y2={base} stroke={INK.spark} strokeWidth={1} strokeDasharray="2 2" />
-        <text x={cx(SPARK_ANGLE) - 3} y={top + 9} textAnchor="end" fontSize={7} fill={INK.spark}>
+        <line x1={cx(SPARK_ANGLE)} y1={top} x2={cx(SPARK_ANGLE)} y2={base} stroke="var(--color-paper)" strokeWidth={1} strokeDasharray="2 2" />
+        <text x={cx(SPARK_ANGLE) - 3} y={top + 9} textAnchor="end" fontSize={7} fill="var(--color-paper)">
           spark
         </text>
-        <path d={LIFT_PATHS.intake} fill="none" stroke={INK.intake} strokeWidth={1.8} />
-        <path d={LIFT_PATHS.exhaust} fill="none" stroke={INK.exhaust} strokeWidth={1.8} />
+        <path d={LIFT_PATHS.intake} fill="none" stroke="var(--color-cyan)" strokeWidth={1.8} />
+        <path d={LIFT_PATHS.exhaust} fill="none" stroke="var(--color-amber)" strokeWidth={1.8} />
         <text x={4} y={liftY(10) + 3} fontSize={7} fill={INK.text}>
           10
         </text>
@@ -466,8 +466,8 @@ function ValveTimingChart({ state }: { state: EngineState }) {
         <text x={4} y={top - 6} fontSize={7} fill={INK.text}>
           mm
         </text>
-        <circle cx={cx(deg)} cy={liftY(state.intakeLift)} r={3} fill={INK.intake} />
-        <circle cx={cx(deg)} cy={liftY(state.exhaustLift)} r={3} fill={INK.exhaust} />
+        <circle cx={cx(deg)} cy={liftY(state.intakeLift)} r={3} fill="var(--color-cyan)" />
+        <circle cx={cx(deg)} cy={liftY(state.exhaustLift)} r={3} fill="var(--color-amber)" />
       </ScrubbableChart>
       <ul className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-steel-300">
         <Legend swatch="bg-cyan">Intake valve</Legend>
@@ -490,7 +490,7 @@ function PressureChart({ state }: { state: EngineState }) {
       </figcaption>
       <ScrubbableChart label="Illustrative cylinder-pressure chart: crank angle" deg={deg} height={PRESSURE_CHART.h}>
         <ChartFrame deg={deg} top={top} base={base} showStrokeNames={false} />
-        <path d={PRESSURE_PATH} fill="none" stroke="#f3efe6" strokeWidth={1.5} strokeOpacity={0.85} />
+        <path d={PRESSURE_PATH} fill="none" stroke="var(--color-paper)" strokeWidth={1.5} strokeOpacity={0.85} />
         {[0, 20, 40].map((bar) => (
           <text key={bar} x={4} y={pressureY(bar) + 3} fontSize={7} fill={INK.text}>
             {bar}
@@ -499,7 +499,7 @@ function PressureChart({ state }: { state: EngineState }) {
         <text x={4} y={top - 4} fontSize={7} fill={INK.text}>
           bar
         </text>
-        <circle cx={cx(deg)} cy={pressureY(state.pressureBar)} r={3} fill={INK.exhaust} />
+        <circle cx={cx(deg)} cy={pressureY(state.pressureBar)} r={3} fill="var(--color-amber)" />
       </ScrubbableChart>
       <p className="text-xs leading-snug text-steel-400">
         A simple compression-and-burn model drawn to show the shape of the curve: pressure climbs as the charge is squeezed, jumps after the spark, peaks a little after TDC
@@ -562,7 +562,7 @@ export function EngineSection2D({ variant = 'panel' }: EngineSection2DProps) {
   return (
     <div className="flex flex-col gap-5">
       <figure className="flex flex-col gap-2">
-        <div className="rounded-lg border border-white/[0.06] bg-graphite-950 bg-blueprint p-2">
+        <div className="rounded-lg border border-line/[0.06] bg-graphite-950 bg-blueprint p-2">
           <SectionDrawing state={state} className="mx-auto h-[min(520px,62dvh)] w-auto max-w-full" />
         </div>
         <figcaption>

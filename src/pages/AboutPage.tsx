@@ -120,7 +120,7 @@ function ExternalAnchor({ href, children, className }: { href: string; children:
 
 function Section({ id, eyebrow, title, children }: { id: string; eyebrow: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} aria-labelledby={`${id}-heading`} className="scroll-mt-24 border-t border-white/[0.06] pt-10">
+    <section id={id} aria-labelledby={`${id}-heading`} className="scroll-mt-24 border-t border-line/[0.06] pt-10">
       <p className="eyebrow">{eyebrow}</p>
       <h2 id={`${id}-heading`} className="mt-2 font-display text-2xl font-semibold text-paper">
         {title}
@@ -186,7 +186,7 @@ export default function AboutPage() {
             <li key={s.id}>
               <a
                 href={`#${s.id}`}
-                className="relative hit-area inline-flex min-h-10 items-center rounded-full border border-white/[0.08] px-4 text-sm text-steel-300 hover:border-cyan/40 hover:text-cyan"
+                className="relative hit-area inline-flex min-h-10 items-center rounded-full border border-line/[0.08] px-4 text-sm text-steel-300 hover:border-cyan/40 hover:text-cyan"
               >
                 {s.label}
               </a>
@@ -236,7 +236,7 @@ export default function AboutPage() {
 
               <dl className="grid grid-cols-2 gap-3 sm:grid-cols-3" aria-label="Catalogued articles by status">
                 {STATUS_ORDER.map((status) => (
-                  <div key={status} className="rounded-lg border border-white/[0.06] p-3">
+                  <div key={status} className="rounded-lg border border-line/[0.06] p-3">
                     <dt className="text-sm text-paper">{STATUS_LABELS[status].label}</dt>
                     <dd className="mt-1 font-mono text-xl text-paper">{sources.counts.get(status) ?? 0}</dd>
                     <dd className="text-xs text-steel-500">{STATUS_LABELS[status].detail}</dd>
@@ -260,9 +260,9 @@ export default function AboutPage() {
                             <ChevronDown aria-hidden className="size-4 text-steel-400 transition-transform group-open:rotate-180" />
                           </span>
                         </summary>
-                        <ul className="border-t border-white/[0.06] px-4 py-2">
+                        <ul className="border-t border-line/[0.06] px-4 py-2">
                           {g.articles.map((a) => (
-                            <li key={a.url} className="flex flex-wrap items-baseline justify-between gap-x-3 border-b border-white/[0.04] py-2 last:border-0">
+                            <li key={a.url} className="flex flex-wrap items-baseline justify-between gap-x-3 border-b border-line/[0.04] py-2 last:border-0">
                               <ExternalAnchor href={a.url} className="relative hit-area min-h-9 text-sm">
                                 {a.title}
                               </ExternalAnchor>

@@ -199,7 +199,7 @@ function TourOverlay() {
             type="button"
             onClick={() => close('skipped')}
             aria-label="Close the tour"
-            className="-mr-1.5 -mt-1.5 grid size-9 shrink-0 place-items-center rounded-md text-steel-400 hover:bg-white/[0.06] hover:text-paper"
+            className="-mr-1.5 -mt-1.5 grid size-9 shrink-0 place-items-center rounded-md text-steel-400 hover:bg-tint/[0.06] hover:text-paper"
           >
             <X aria-hidden className="size-4" />
           </button>
@@ -211,7 +211,7 @@ function TourOverlay() {
         <p id="tour-body" className="text-[15px] leading-relaxed text-steel-300">
           {step.body}
         </p>
-        {step.tip && <p className="rounded-lg border border-white/[0.08] bg-graphite-900/70 px-3 py-2 text-[13px] leading-snug text-steel-300">{step.tip}</p>}
+        {step.tip && <p className="rounded-lg border border-line/[0.08] bg-graphite-900/70 px-3 py-2 text-[13px] leading-snug text-steel-300">{step.tip}</p>}
         {waiting && (
           <p className="text-xs text-steel-400" role="status">
             Getting this ready…
@@ -220,7 +220,7 @@ function TourOverlay() {
 
         <ol className="flex items-center gap-1.5" aria-hidden>
           {TOUR_STEPS.map((s, i) => (
-            <li key={s.id} className={cn('h-1 flex-1 rounded-full', i < index ? 'bg-cyan/60' : i === index ? 'bg-cyan' : 'bg-white/15')} />
+            <li key={s.id} className={cn('h-1 flex-1 rounded-full', i < index ? 'bg-cyan/60' : i === index ? 'bg-cyan' : 'bg-tint/15')} />
           ))}
         </ol>
 

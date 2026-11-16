@@ -24,11 +24,11 @@ export default function LabsPage() {
       <SoundLabFeatureCard className="mt-8" />
 
       <ul className="mt-6 grid grid-cols-1 gap-2 text-sm leading-relaxed text-steel-300 md:grid-cols-2">
-        <li className="flex items-start gap-3 rounded-lg border border-white/[0.07] bg-graphite-900/60 px-4 py-3">
+        <li className="flex items-start gap-3 rounded-lg border border-line/[0.07] bg-graphite-900/60 px-4 py-3">
           <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-amber" />
           <span>Simulation values (angles, ratios, pressures, forces) are illustrative teaching values, not data for any real vehicle.</span>
         </li>
-        <li className="flex items-start gap-3 rounded-lg border border-white/[0.07] bg-graphite-900/60 px-4 py-3">
+        <li className="flex items-start gap-3 rounded-lg border border-line/[0.07] bg-graphite-900/60 px-4 py-3">
           <MonitorSmartphone aria-hidden className="mt-0.5 size-4 shrink-0 text-cyan" />
           <span>Lab controls and parts lists work with touch and the keyboard. Without 3D graphics support, a 2D diagram takes the model’s place.</span>
         </li>

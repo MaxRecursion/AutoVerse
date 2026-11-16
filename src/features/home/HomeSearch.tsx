@@ -27,11 +27,11 @@ export function SearchEntry({ query, placeholder = 'Search lessons, labs and par
         onClick={() => openSearch(query)}
         aria-haspopup="dialog"
         aria-keyshortcuts={apple ? 'Meta+K /' : 'Control+K /'}
-        className="group flex min-h-13 w-full items-center gap-3 rounded-xl border border-white/10 bg-graphite-950/80 px-4 text-left text-steel-400 shadow-[inset_0_1px_0_0_rgb(255_255_255/0.03)] transition-colors hover:border-cyan/40 hover:text-steel-300"
+        className="group flex min-h-13 w-full items-center gap-3 rounded-xl border border-line/10 bg-graphite-950/80 px-4 text-left text-steel-400 shadow-[inset_0_1px_0_0_rgb(255_255_255/0.03)] transition-colors hover:border-cyan/40 hover:text-steel-300"
       >
         <Search aria-hidden className="size-5 shrink-0 text-steel-400 transition-colors group-hover:text-cyan" />
         <span className="min-w-0 flex-1 truncate text-[15px]">{placeholder}</span>
-        <kbd aria-hidden className="hidden shrink-0 rounded border border-white/10 bg-graphite-800 px-1.5 py-0.5 font-mono text-[11px] text-steel-400 sm:inline">
+        <kbd aria-hidden className="hidden shrink-0 rounded border border-line/10 bg-graphite-800 px-1.5 py-0.5 font-mono text-[11px] text-steel-400 sm:inline">
           {apple ? '⌘K' : 'Ctrl K'}
         </kbd>
       </button>
@@ -45,7 +45,7 @@ export function SearchEntry({ query, placeholder = 'Search lessons, labs and par
               aria-haspopup="dialog"
               aria-label={`Search for ${s}`}
               onClick={() => openSearch(s)}
-              className="relative hit-area inline-flex min-h-9 items-center rounded-full border border-white/[0.08] bg-graphite-900/70 px-3.5 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+              className="relative hit-area inline-flex min-h-9 items-center rounded-full border border-line/[0.08] bg-graphite-900/70 px-3.5 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
             >
               {s}
             </button>

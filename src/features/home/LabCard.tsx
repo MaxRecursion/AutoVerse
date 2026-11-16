@@ -50,7 +50,7 @@ export function LabCard({ overview, headingLevel: Heading = 'h3' }: { overview: 
   const { lab, system } = overview
   return (
     <article className="group panel relative flex h-full flex-col overflow-hidden transition-colors hover:border-cyan/35 hover:bg-graphite-850/90">
-      <div className="relative h-36 border-b border-white/[0.06] bg-graphite-950 bg-blueprint">
+      <div className="relative h-36 border-b border-line/[0.06] bg-graphite-950 bg-blueprint">
         <LabGlyph labId={lab.id} className="absolute inset-0 m-auto h-[70%] w-auto transition-transform duration-500 motion-safe:group-hover:scale-[1.04]" />
         <span className="annotation absolute left-3 top-3 uppercase text-steel-500">{labNumber(lab)}</span>
         <LabStatus status={lab.status} className="absolute right-3 top-3" />
@@ -89,7 +89,7 @@ export function LabIndexCard({ overview }: { overview: LabOverview }) {
   const more = parts.length - PART_PREVIEW
   return (
     <article aria-labelledby={titleId} className="panel flex h-full flex-col overflow-hidden sm:flex-row">
-      <div className="relative h-40 shrink-0 border-b border-white/[0.06] bg-graphite-950 bg-blueprint sm:h-auto sm:min-h-56 sm:w-48 sm:border-b-0 sm:border-r lg:w-60">
+      <div className="relative h-40 shrink-0 border-b border-line/[0.06] bg-graphite-950 bg-blueprint sm:h-auto sm:min-h-56 sm:w-48 sm:border-b-0 sm:border-r lg:w-60">
         <LabGlyph labId={lab.id} className="absolute inset-0 m-auto h-[72%] w-auto sm:h-auto sm:w-[78%]" />
         <span className="annotation absolute left-3 top-3 uppercase text-steel-500">{labNumber(lab)}</span>
       </div>
@@ -126,7 +126,7 @@ export function LabIndexCard({ overview }: { overview: LabOverview }) {
           </div>
         </div>
 
-        <dl className="grid min-w-0 content-start gap-3 border-t border-white/[0.06] pt-4 text-sm lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+        <dl className="grid min-w-0 content-start gap-3 border-t border-line/[0.06] pt-4 text-sm lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
           <div>
             <dt className="eyebrow mb-1">System covered</dt>
             <dd>
@@ -152,7 +152,7 @@ export function LabIndexCard({ overview }: { overview: LabOverview }) {
               <dd>
                 <ul className="flex flex-wrap gap-1.5 pointer-coarse:gap-y-3">
                   {parts.slice(0, PART_PREVIEW).map((p) => (
-                    <li key={p.id} className="rounded-md border border-white/[0.08] bg-graphite-950/60 px-2 py-0.5 text-xs text-steel-300">
+                    <li key={p.id} className="rounded-md border border-line/[0.08] bg-graphite-950/60 px-2 py-0.5 text-xs text-steel-300">
                       {p.name}
                     </li>
                   ))}

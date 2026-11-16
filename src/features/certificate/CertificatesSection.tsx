@@ -31,7 +31,7 @@ export function CertificatesSection() {
             <article className="panel flex h-full flex-col gap-3 p-5" aria-label={`Certificate: ${course.title}`}>
               <div className="flex items-start gap-3">
                 <span
-                  className={`mt-0.5 grid size-9 shrink-0 place-items-center rounded-full border ${earned ? 'border-amber/40 bg-amber/10 text-amber' : 'border-white/15 text-steel-400'}`}
+                  className={`mt-0.5 grid size-9 shrink-0 place-items-center rounded-full border ${earned ? 'border-amber/40 bg-amber/10 text-amber' : 'border-line/15 text-steel-400'}`}
                 >
                   {earned ? <Award aria-hidden className="size-4" /> : <Lock aria-hidden className="size-4" />}
                 </span>

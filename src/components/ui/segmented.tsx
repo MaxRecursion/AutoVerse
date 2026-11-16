@@ -46,7 +46,7 @@ export function Segmented<T extends string>({ value, onValueChange, options, siz
       // Pressing the chosen item again would clear a single-choice group; a segmented control always has a choice.
       onValueChange={(v) => v && onValueChange(v as T)}
       aria-label={rest['aria-label']}
-      className={cn('track relative inline-flex w-fit items-center gap-0.5 rounded-lg border border-white/[0.07] bg-graphite-950/70 p-0.5', className)}
+      className={cn('track relative inline-flex w-fit items-center gap-0.5 rounded-lg border border-line/[0.07] bg-graphite-950/70 p-0.5', className)}
     >
       {options.map((o) => {
         const on = o.value === value

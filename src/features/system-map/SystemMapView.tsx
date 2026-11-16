@@ -132,7 +132,7 @@ export function SystemMapView({ map }: { map: SystemMap }) {
             type="button"
             aria-pressed={paused}
             onClick={() => setPaused((p) => !p)}
-            className="relative hit-area inline-flex min-h-10 items-center gap-1.5 rounded-md border border-white/10 px-3 text-sm text-steel-300 transition-colors hover:border-cyan/50 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
+            className="relative hit-area inline-flex min-h-10 items-center gap-1.5 rounded-md border border-line/10 px-3 text-sm text-steel-300 transition-colors hover:border-cyan/50 hover:text-paper focus-visible:outline-2 focus-visible:outline-cyan"
           >
             {paused ? <Play aria-hidden className="size-4" /> : <Pause aria-hidden className="size-4" />}
             {paused ? 'Play flow' : 'Pause flow'}
@@ -148,7 +148,7 @@ export function SystemMapView({ map }: { map: SystemMap }) {
       </div>
 
       <div className="mt-4 grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_360px]">
-        <section aria-label={`${layout.title} diagram`} className="rounded-xl border border-white/[0.07] bg-graphite-950 bg-blueprint p-2 sm:p-5">
+        <section aria-label={`${layout.title} diagram`} className="rounded-xl border border-line/[0.07] bg-graphite-950 bg-blueprint p-2 sm:p-5">
           <SystemMapGraph
             graph={graph}
             label={`${layout.title}: power flow and connected systems`}
@@ -156,7 +156,7 @@ export function SystemMapView({ map }: { map: SystemMap }) {
             onSelect={select}
             animate={!paused && !reducedMotion}
           />
-          <div className="mt-4 border-t border-white/[0.06] px-1 pt-3 sm:px-0">
+          <div className="mt-4 border-t border-line/[0.06] px-1 pt-3 sm:px-0">
             <Legend />
           </div>
         </section>

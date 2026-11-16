@@ -55,7 +55,7 @@ export default function FlashcardDialog({ entries, onClose }: FlashcardDialogPro
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
       <DialogContent
-        className="max-w-lg border-white/10 bg-graphite-900 p-4 sm:p-6"
+        className="max-w-lg border-line/10 bg-graphite-900 p-4 sm:p-6"
         onKeyDown={(e) => {
           if (finished) return
           if (e.key === 'ArrowRight') {
@@ -122,7 +122,7 @@ export default function FlashcardDialog({ entries, onClose }: FlashcardDialogPro
                     <p className="eyebrow">{current.term}</p>
                     <p className="text-[15px] leading-relaxed text-paper">{current.definition}</p>
                     {current.equation && (
-                      <code className="block overflow-x-auto whitespace-pre rounded-md border border-white/[0.06] bg-graphite-950 px-3 py-2 font-mono text-[13px] text-amber">
+                      <code className="block overflow-x-auto whitespace-pre rounded-md border border-line/[0.06] bg-graphite-950 px-3 py-2 font-mono text-[13px] text-amber">
                         {current.equation}
                       </code>
                     )}

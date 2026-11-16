@@ -1,10 +1,20 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en" class="dark" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%icons/autoverse.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0b0c0f" />
+    <script>
+      (() => {
+        let theme = 'dark';
+        try { if (localStorage.getItem('autoverse.theme') === 'light') theme = 'light'; } catch {}
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        document.documentElement.style.colorScheme = theme;
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'dark' ? '#0b0c0f' : '#f4f7fb');
+      })();
+    </script>
     <title>AutoVerse — Hear Engines, Learn How Cars Work</title>
     <meta name="description" content="Hear production engine rhythms from inline-3 to V10. Explore bank angles, firing orders and live sound synthesis, then learn how cars work in 3D." />
   </head>

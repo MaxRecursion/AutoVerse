@@ -161,7 +161,7 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, red
 
   return (
     <section className="min-w-0 overflow-hidden rounded-xl border border-cyan/20 bg-graphite-950/60" aria-labelledby="engine-cutaway-heading" data-testid="engine-cutaway" data-view={view} data-scene={v10 ? 'v10' : 'generic'}>
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] p-3 sm:p-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line/[0.06] p-3 sm:p-4">
         <div>
           <h3 id="engine-cutaway-heading" className="flex items-center gap-2 font-semibold text-paper"><Box aria-hidden className="size-4 text-cyan" />3D engine cutaway</h3>
           <p className="mt-1 text-xs leading-relaxed text-steel-400">Follow the pistons, rods, crankshaft, cams and valves.</p>
@@ -207,7 +207,7 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, red
         </div>
       </LabStoreContext.Provider>
 
-      <div className="flex flex-col gap-4 border-t border-white/[0.06] p-3 sm:p-4">
+      <div className="flex flex-col gap-4 border-t border-line/[0.06] p-3 sm:p-4">
         <div className="flex flex-wrap items-center gap-3" role="group" aria-label="3D camera controls">
           <div className="flex flex-wrap gap-2">
             {ORBITS.map(({ label, icon: Icon, yaw, pitch }) => (
@@ -225,7 +225,7 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, red
           <p className="text-xs font-medium text-steel-300">Inspect a cylinder</p>
           <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Choose a cylinder cutaway">
             {events.map((event) => (
-              <button key={event.index} type="button" onClick={() => inspect(event.index)} aria-label={`Inspect ${cylinderName(event)}`} aria-pressed={view === 'detail' && selected.index === event.index} className={cn('relative hit-area min-h-9 min-w-9 rounded-md border px-2 font-mono text-xs transition-colors', view === 'detail' && selected.index === event.index ? 'border-cyan/50 bg-cyan/10 text-cyan' : 'border-white/10 text-steel-300 hover:border-cyan/40 hover:text-paper')}>
+              <button key={event.index} type="button" onClick={() => inspect(event.index)} aria-label={`Inspect ${cylinderName(event)}`} aria-pressed={view === 'detail' && selected.index === event.index} className={cn('relative hit-area min-h-9 min-w-9 rounded-md border px-2 font-mono text-xs transition-colors', view === 'detail' && selected.index === event.index ? 'border-cyan/50 bg-cyan/10 text-cyan' : 'border-line/10 text-steel-300 hover:border-cyan/40 hover:text-paper')}>
                 {event.cylinder ?? `${event.bank} · ${event.index + 1}`}
               </button>
             ))}

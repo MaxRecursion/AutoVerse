@@ -47,7 +47,7 @@ export function LessonSteps({ steps, level, store, onShowCue, onSelectComponent,
             data-active={active || undefined}
             className={cn(
               'relative scroll-mt-28 rounded-xl border p-4 transition-colors sm:p-5',
-              active ? 'border-amber/50 bg-amber/[0.06]' : 'border-white/[0.07] bg-graphite-900/60',
+              active ? 'border-amber/50 bg-amber/[0.06]' : 'border-line/[0.07] bg-graphite-900/60',
             )}
           >
             {onSeen && <DwellSentinel onSeen={() => onSeen(step.id)} threshold={0.6} ms={1500} />}
@@ -56,7 +56,7 @@ export function LessonSteps({ steps, level, store, onShowCue, onSelectComponent,
                 aria-hidden
                 className={cn(
                   'grid size-8 shrink-0 place-items-center rounded-full border font-mono text-xs',
-                  active ? 'border-amber/70 bg-amber/15 text-amber' : 'border-white/15 text-steel-300',
+                  active ? 'border-amber/70 bg-amber/15 text-amber' : 'border-line/15 text-steel-300',
                 )}
               >
                 {i + 1}
@@ -100,14 +100,14 @@ export function LessonSteps({ steps, level, store, onShowCue, onSelectComponent,
                           aria-pressed={selectedId === c.id}
                           className={cn(
                             'relative hit-area inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3 text-xs transition-colors',
-                            selectedId === c.id ? 'border-cyan/60 bg-cyan/10 text-cyan' : 'border-white/10 text-steel-300 hover:border-cyan/40 hover:text-paper',
+                            selectedId === c.id ? 'border-cyan/60 bg-cyan/10 text-cyan' : 'border-line/10 text-steel-300 hover:border-cyan/40 hover:text-paper',
                           )}
                         >
                           <span className="size-1.5 rounded-full bg-cyan" aria-hidden />
                           {c.name}
                         </button>
                       ) : (
-                        <span key={c.id} className="inline-flex min-h-7 items-center rounded-full border border-white/10 px-2.5 text-xs text-steel-300">
+                        <span key={c.id} className="inline-flex min-h-7 items-center rounded-full border border-line/10 px-2.5 text-xs text-steel-300">
                           {c.name}
                         </span>
                       ),

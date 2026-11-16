@@ -98,7 +98,7 @@ export function FlowDiagram({ flow, label, currentTopicId, selectedComponentId, 
 
   return (
     <div className={cn('flex flex-col gap-3', className)}>
-      <div ref={containerRef} className="w-full overflow-hidden rounded-xl border border-white/[0.07] bg-graphite-950 bg-blueprint p-3 sm:p-4">
+      <div ref={containerRef} className="w-full overflow-hidden rounded-xl border border-line/[0.07] bg-graphite-950 bg-blueprint p-3 sm:p-4">
         <svg
           viewBox={`0 0 ${layout.width} ${layout.height}`}
           width="100%"

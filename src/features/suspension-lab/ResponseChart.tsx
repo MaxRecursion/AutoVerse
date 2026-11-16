@@ -61,7 +61,7 @@ export function ResponseChart({ className }: { className?: string }) {
         {/* Grid */}
         {chart.ticks.map((t) => (
           <g key={t.mm}>
-            <line x1={CHART.left} x2={CHART.width - CHART.right} y1={t.y} y2={t.y} stroke="currentColor" className={t.mm === 0 ? 'text-steel-500' : 'text-white/[0.06]'} strokeWidth={1} />
+            <line x1={CHART.left} x2={CHART.width - CHART.right} y1={t.y} y2={t.y} stroke="currentColor" className={t.mm === 0 ? 'text-steel-500' : 'text-line/[0.06]'} strokeWidth={1} />
             <text x={CHART.left - 4} y={t.y + 3} textAnchor="end" className="fill-steel-400 font-mono text-[9px]">
               {t.mm > 0 ? `+${t.mm}` : t.mm < 0 ? `${MINUS}${Math.abs(t.mm)}` : '0'}
             </text>

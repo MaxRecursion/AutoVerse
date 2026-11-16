@@ -86,7 +86,7 @@ function StrokeProgress() {
     if (bar.current) bar.current.style.transform = `scaleX(${(s.crankDeg % 180) / 180})`
   })
   return (
-    <div className="mt-2 h-0.5 overflow-hidden rounded bg-white/[0.07]" aria-hidden>
+    <div className="mt-2 h-0.5 overflow-hidden rounded bg-tint/[0.07]" aria-hidden>
       <div ref={bar} className="h-full origin-left bg-amber" />
     </div>
   )
@@ -109,7 +109,7 @@ function StrokeButtons({ current }: { current: StrokeId }) {
               aria-pressed={active}
               className={cn(
                 'flex min-h-12 flex-col items-start justify-center rounded-lg border px-2.5 py-1.5 text-left transition-colors',
-                active ? 'border-amber/60 bg-amber/10 text-paper' : 'border-white/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
+                active ? 'border-amber/60 bg-amber/10 text-paper' : 'border-line/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
               )}
             >
               <span className="text-sm font-medium">
@@ -129,7 +129,7 @@ function StrokeButtons({ current }: { current: StrokeId }) {
               key={id}
               type="button"
               onClick={() => seek(id)}
-              className="relative hit-area min-h-9 rounded-md border border-white/[0.08] px-2.5 text-xs text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+              className="relative hit-area min-h-9 rounded-md border border-line/[0.08] px-2.5 text-xs text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
             >
               {c.label}
             </button>
@@ -171,7 +171,7 @@ function LiveStateTable() {
   return (
     <table ref={root} className="w-full text-sm" data-testid="engine-live-state">
       <caption className="eyebrow mb-1.5 text-left">Live state</caption>
-      <tbody className="divide-y divide-white/[0.05]">
+      <tbody className="divide-y divide-line/[0.05]">
         <Row label="Crank angle">
           <span data-cell="crank" className="font-mono tabular-nums text-paper" />
         </Row>
@@ -216,7 +216,7 @@ function Row({ label, hint, children }: { label: string; hint?: string; children
 function ValueWithBar({ cell, colour }: { cell: 'intake' | 'exhaust'; colour: string }) {
   return (
     <span className="inline-flex items-center justify-end gap-2">
-      <span className="h-1 w-14 overflow-hidden rounded bg-white/[0.07]" aria-hidden>
+      <span className="h-1 w-14 overflow-hidden rounded bg-tint/[0.07]" aria-hidden>
         <span data-bar={cell} className={cn('block h-full w-full origin-left', colour)} style={{ transform: 'scaleX(0)' }} />
       </span>
       <span data-cell={cell} className="min-w-[5.5rem] font-mono tabular-nums" />
@@ -236,7 +236,7 @@ function DeeperTopics() {
           <li key={t.id}>
             <Link
               to={`/topics/${t.slug}`}
-              className="relative hit-area group flex min-h-10 items-center justify-between gap-2 rounded-md border border-white/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+              className="relative hit-area group flex min-h-10 items-center justify-between gap-2 rounded-md border border-line/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
             >
               {t.title}
               <ArrowRight className="size-4 text-steel-500 transition-transform group-hover:translate-x-0.5 group-hover:text-cyan" aria-hidden />

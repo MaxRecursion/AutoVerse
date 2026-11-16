@@ -50,7 +50,7 @@ export function ExplorerFallback() {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-4 pb-6" data-testid="explorer-fallback">
-      <p className="annotation rounded border border-white/10 bg-graphite-950/70 px-2 py-1 text-steel-400">
+      <p className="annotation rounded border border-line/10 bg-graphite-950/70 px-2 py-1 text-steel-400">
         2D side view · 3D graphics are not available here
       </p>
       <svg

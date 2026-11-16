@@ -57,7 +57,7 @@ export function Tachometer({ bus, redlineRpm, reduced }: TachometerProps) {
   return (
     <div className="relative w-full max-w-[120px] min-w-0 select-none">
       <svg aria-hidden viewBox="0 0 120 92" className="h-auto w-full">
-        <path d={arc(-SWEEP / 2, SWEEP / 2, R)} fill="none" stroke="rgb(255 255 255 / 0.08)" strokeWidth={6} strokeLinecap="round" />
+        <path d={arc(-SWEEP / 2, SWEEP / 2, R)} fill="none" stroke="var(--color-line)" strokeOpacity={0.08} strokeWidth={6} strokeLinecap="round" />
         <path d={arc(dialAngle(redlineRpm, max), SWEEP / 2, R)} fill="none" stroke="var(--color-danger)" strokeOpacity={0.85} strokeWidth={6} />
         {majors.map((rpm) => {
           const deg = dialAngle(rpm, max)

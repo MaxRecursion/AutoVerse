@@ -81,7 +81,7 @@ function StopProgress() {
     if (bar.current) bar.current.style.transform = `scaleX(${(st.t / plan.duration).toFixed(4)})`
   })
   return (
-    <div className="mt-2 h-0.5 overflow-hidden rounded bg-white/[0.07]" aria-hidden>
+    <div className="mt-2 h-0.5 overflow-hidden rounded bg-tint/[0.07]" aria-hidden>
       <div ref={bar} className="h-full origin-left scale-x-0 bg-amber" />
     </div>
   )
@@ -102,7 +102,7 @@ function ScenarioButtons() {
             aria-pressed={active}
             className={cn(
               'flex min-h-12 flex-col items-start justify-center rounded-lg border px-2.5 py-1.5 text-left transition-colors',
-              active ? 'border-amber/60 bg-amber/10 text-paper' : 'border-white/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
+              active ? 'border-amber/60 bg-amber/10 text-paper' : 'border-line/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
             )}
           >
             <span className="text-[13px] leading-tight font-medium">{b.label}</span>
@@ -125,7 +125,7 @@ function StopSummaryCard() {
     ['Disc rise', `+${Math.round(summary.discRiseK)} K`],
   ]
   return (
-    <section aria-label="This stop" className="flex flex-col gap-3 rounded-lg border border-white/[0.06] bg-graphite-950/40 p-3" data-testid="stop-summary">
+    <section aria-label="This stop" className="flex flex-col gap-3 rounded-lg border border-line/[0.06] bg-graphite-950/40 p-3" data-testid="stop-summary">
       <p className="eyebrow flex items-center gap-1.5">
         <Gauge className="size-3.5" aria-hidden />
         This stop
@@ -166,7 +166,7 @@ function LiveStateTable() {
   return (
     <table ref={root} className="w-full text-sm" data-testid="braking-live-state">
       <caption className="eyebrow mb-1.5 text-left">Live state</caption>
-      <tbody className="divide-y divide-white/[0.05]">
+      <tbody className="divide-y divide-line/[0.05]">
         <Row label="Wheel">
           <span data-cell="wheel" />
         </Row>
@@ -214,7 +214,7 @@ function EventButtons() {
             key={id}
             type="button"
             onClick={() => store.getState().seekCue(id)}
-            className="relative hit-area min-h-9 rounded-md border border-white/[0.08] px-2.5 text-xs text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+            className="relative hit-area min-h-9 rounded-md border border-line/[0.08] px-2.5 text-xs text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
           >
             {c.label}
           </button>
@@ -236,7 +236,7 @@ function DeeperTopics() {
           <li key={t.id}>
             <Link
               to={`/topics/${t.slug}`}
-              className="relative hit-area group flex min-h-10 items-center justify-between gap-2 rounded-md border border-white/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+              className="relative hit-area group flex min-h-10 items-center justify-between gap-2 rounded-md border border-line/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
             >
               {t.title}
               <ArrowRight className="size-4 text-steel-500 transition-transform group-hover:translate-x-0.5 group-hover:text-cyan" aria-hidden />

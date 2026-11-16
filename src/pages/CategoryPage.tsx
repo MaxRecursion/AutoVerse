@@ -170,7 +170,7 @@ export default function CategoryPage() {
         </aside>
       </div>
 
-      <nav aria-label="Other categories" className="mt-16 flex flex-col gap-2 border-t border-white/[0.06] pt-6 sm:flex-row sm:justify-between">
+      <nav aria-label="Other categories" className="mt-16 flex flex-col gap-2 border-t border-line/[0.06] pt-6 sm:flex-row sm:justify-between">
         {prev ? (
           <Link to={`/learn/${prev.slug}`} className="group flex min-h-11 pointer-coarse:min-h-12 items-center gap-2 text-sm text-steel-300 hover:text-cyan">
             <ArrowLeft aria-hidden className="size-4" />
@@ -211,7 +211,7 @@ function FurtherReading({ articles }: { articles: readonly SourceArticle[] }) {
     <>
       <ul id={listId} className="mt-3 flex flex-col">
         {shown.map((a) => (
-          <li key={a.url} className="border-b border-white/[0.05] last:border-0">
+          <li key={a.url} className="border-b border-line/[0.05] last:border-0">
             <a
               href={a.url}
               target="_blank"
@@ -254,7 +254,7 @@ function CategoryNotFound({ slug }: { slug: string }) {
       <ul className="mt-6 grid gap-2 sm:grid-cols-2">
         {categories.map((c) => (
           <li key={c.id}>
-            <Link to={`/learn/${c.slug}`} className="flex min-h-11 pointer-coarse:min-h-12 items-center gap-3 rounded-lg border border-white/[0.06] px-3 text-sm text-paper hover:border-cyan/40">
+            <Link to={`/learn/${c.slug}`} className="flex min-h-11 pointer-coarse:min-h-12 items-center gap-3 rounded-lg border border-line/[0.06] px-3 text-sm text-paper hover:border-cyan/40">
               <CategoryIcon name={c.icon} className="text-steel-400" />
               {c.title}
             </Link>

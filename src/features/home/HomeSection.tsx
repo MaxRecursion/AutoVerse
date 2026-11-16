@@ -22,7 +22,7 @@ export function HomeSection({ id, eyebrow, title, description, action, children,
   return (
     <section id={id} aria-labelledby={headingId} className={cn('mx-auto w-full max-w-[1400px] scroll-mt-20 px-4 sm:px-6', className)}>
       <Reveal>
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b border-white/[0.06] pb-4">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b border-line/[0.06] pb-4">
           <div className="max-w-2xl">
             <p className="eyebrow flex items-center gap-2">
               <span aria-hidden className="h-px w-5 bg-cyan" />

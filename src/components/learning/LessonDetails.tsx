@@ -18,7 +18,7 @@ export function KeyConcepts({ concepts }: { concepts: Topic['keyConcepts'] }) {
             <dd className="text-sm leading-relaxed text-steel-300">{k.definition}</dd>
             {k.equation && (
               <dd>
-                <code className="block overflow-x-auto whitespace-pre rounded-md border border-white/[0.06] bg-graphite-950 px-3 py-2 font-mono text-[13px] text-amber">
+                <code className="block overflow-x-auto whitespace-pre rounded-md border border-line/[0.06] bg-graphite-950 px-3 py-2 font-mono text-[13px] text-amber">
                   {k.equation}
                 </code>
               </dd>
@@ -35,7 +35,7 @@ export function Misconceptions({ items }: { items: Topic['misconceptions'] }) {
   return (
     <ul className="flex flex-col gap-3">
       {items.map((m) => (
-        <li key={m.myth} data-anchor className="grid overflow-hidden rounded-xl border border-white/[0.07] sm:grid-cols-2">
+        <li key={m.myth} data-anchor className="grid overflow-hidden rounded-xl border border-line/[0.07] sm:grid-cols-2">
           <div className="flex gap-3 bg-danger/[0.05] p-4">
             <CircleAlert aria-hidden className="mt-0.5 size-4 shrink-0 text-danger" />
             <p className="text-sm leading-relaxed text-steel-300">
@@ -43,7 +43,7 @@ export function Misconceptions({ items }: { items: Topic['misconceptions'] }) {
               {m.myth}
             </p>
           </div>
-          <div className="flex gap-3 border-t border-white/[0.06] bg-ok/[0.04] p-4 sm:border-l sm:border-t-0">
+          <div className="flex gap-3 border-t border-line/[0.06] bg-ok/[0.04] p-4 sm:border-l sm:border-t-0">
             <CircleCheck aria-hidden className="mt-0.5 size-4 shrink-0 text-ok" />
             <p className="text-sm leading-relaxed text-steel-300">
               <span className="eyebrow mb-1 block text-ok">Reality</span>
@@ -60,7 +60,7 @@ export function PracticalExamples({ items }: { items: readonly string[] }) {
   return (
     <ul className="flex flex-col gap-2">
       {items.map((ex) => (
-        <li key={ex} data-anchor className="flex gap-3 rounded-lg border border-white/[0.06] bg-graphite-900/60 px-4 py-3 text-[15px] leading-relaxed text-steel-300">
+        <li key={ex} data-anchor className="flex gap-3 rounded-lg border border-line/[0.06] bg-graphite-900/60 px-4 py-3 text-[15px] leading-relaxed text-steel-300">
           <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-amber" />
           {ex}
         </li>
@@ -143,7 +143,7 @@ export function SourcesAndAttribution({ topic }: { topic: Topic }) {
         <p className="text-steel-400">No external sources are listed for this lesson.</p>
       )}
 
-      <dl className="grid gap-x-6 gap-y-2 rounded-xl border border-white/[0.07] bg-graphite-900/60 p-4 sm:grid-cols-[auto_1fr]">
+      <dl className="grid gap-x-6 gap-y-2 rounded-xl border border-line/[0.07] bg-graphite-900/60 p-4 sm:grid-cols-[auto_1fr]">
         <dt className="annotation text-steel-400">Licence</dt>
         <dd className="text-steel-300">
           {topic.licence.url ? (

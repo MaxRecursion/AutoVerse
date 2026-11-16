@@ -8,6 +8,7 @@ import { useQualityTier } from '@/hooks/useQualityTier'
 import { hasWebGL } from '@/lib/webgl'
 import { useRafClock } from '@/lib/simulation/useRafClock'
 import { cn } from '@/lib/utils'
+import { useTheme } from '@/features/theme/theme'
 
 type Vec3 = [number, number, number]
 
@@ -72,6 +73,7 @@ export function SceneCanvas({
 }: SceneCanvasProps) {
   const store = useOptionalLabStoreApi()
   const tier = useQualityTier()
+  const theme = useTheme()
   // False until the scene's Suspense content has resolved and drawn its first frames.
   const [drawn, setDrawn] = useState(false)
   // Fixed DOM target for in-scene HTML (part labels, hotspots); see htmlLayer.ts.
@@ -88,14 +90,14 @@ export function SceneCanvas({
 
   return (
     <SceneErrorBoundary fallback={fallbackWithClock}>
-      <div className={cn('relative h-full w-full', className)} role="img" aria-label={label}>
+      <div className={cn('relative h-full w-full', className)} role="img" aria-label={label} data-scene-theme={theme}>
         {/* Before the Canvas, so its ref is attached before the scene (and its labels) first render; z-[1] draws it above the canvas. */}
         <div ref={htmlLayer} className="pointer-events-none absolute inset-0 z-[1] overflow-hidden" data-testid="scene-html-layer" />
         <Canvas
           frameloop={frameloop}
           dpr={tier === 'low' ? [1, 1.25] : [1, 2]}
           camera={{ position: cameraPosition, fov, near: 0.05, far: 200 }}
-          gl={{ antialias: tier !== 'low', powerPreference: 'high-performance' }}
+          gl={{ antialias: tier !== 'low', powerPreference: 'high-performance', alpha: true }}
           onPointerMissed={() => store?.getState().select(null)}
           onCreated={onCreated}
         >
@@ -103,6 +105,7 @@ export function SceneCanvas({
           <LabStoreContext.Provider value={store}>
             <HtmlLayerContext.Provider value={htmlLayer}>
               <StudioLights lowQuality={tier === 'low'} />
+              <ThemeFrame theme={theme} />
               <Suspense fallback={null}>
                 {children}
                 {/* Mounts with the children (same boundary), so it only counts frames once they are in the scene. */}
@@ -124,6 +127,15 @@ export function SceneCanvas({
       </div>
     </SceneErrorBoundary>
   )
+}
+
+/** Refresh a sleeping canvas without replacing its scene, camera or simulation. */
+function ThemeFrame({ theme }: { theme: 'light' | 'dark' }) {
+  const invalidate = useThree((state) => state.invalidate)
+  useLayoutEffect(() => {
+    invalidate()
+  }, [theme, invalidate])
+  return null
 }
 
 function StudioLights({ lowQuality }: { lowQuality: boolean }) {

@@ -52,14 +52,14 @@ export function LessonIsland({ sections, stages, summary, complete, onFinish }: 
   }, [next?.id, reduced])
 
   return (
-    <div className="sticky top-14 z-30 border-y border-white/[0.06] bg-graphite-950/90 backdrop-blur-lg">
+    <div className="sticky top-14 z-30 border-y border-line/[0.06] bg-graphite-950/90 backdrop-blur-lg">
       <div className="mx-auto flex h-12 max-w-6xl items-center gap-2 px-4 sm:gap-3 sm:px-6">
         <PopoverPrimitive.Root open={open} onOpenChange={setOpen}>
           <PopoverPrimitive.Trigger asChild>
             <button
               type="button"
               aria-label={`Lesson progress and outline. ${summary.coreDone} of ${summary.coreTotal} core stages done.`}
-              className="tactile relative hit-area grid size-10 shrink-0 place-items-center rounded-full border border-white/[0.1] bg-graphite-850 outline-none transition-colors hover:border-cyan/40 focus-visible:ring-2 focus-visible:ring-cyan data-[state=open]:border-cyan/50"
+              className="tactile relative hit-area grid size-10 shrink-0 place-items-center rounded-full border border-line/[0.1] bg-graphite-850 outline-none transition-colors hover:border-cyan/40 focus-visible:ring-2 focus-visible:ring-cyan data-[state=open]:border-cyan/50"
             >
               <ProgressRing percent={complete ? 100 : percent} size={32} stroke={3} barClassName={complete ? 'stroke-ok' : 'stroke-cyan'} />
               <span aria-hidden className={cn('absolute font-mono text-[10px] tabular-nums', complete ? 'text-ok' : 'text-steel-300')}>
@@ -79,7 +79,7 @@ export function LessonIsland({ sections, stages, summary, complete, onFinish }: 
                 e.preventDefault()
                 jumpToSection(id, reduced)
               }}
-              className="glass z-[45] max-h-[min(34rem,calc(100dvh-8rem))] w-[min(calc(100vw-1.5rem),25rem)] origin-top-left overflow-y-auto rounded-2xl border border-white/10 p-4 outline-none data-[state=open]:animate-[island-in_170ms_ease-out]"
+              className="glass z-[45] max-h-[min(34rem,calc(100dvh-8rem))] w-[min(calc(100vw-1.5rem),25rem)] origin-top-left overflow-y-auto rounded-2xl border border-line/10 p-4 outline-none data-[state=open]:animate-[island-in_170ms_ease-out]"
             >
               <p className="eyebrow">Lesson progress</p>
               <p className="mt-1 font-display text-lg text-paper">
@@ -90,7 +90,7 @@ export function LessonIsland({ sections, stages, summary, complete, onFinish }: 
                   <li key={s.id} className="flex items-start gap-2.5 text-sm">
                     <span
                       aria-hidden
-                      className={cn('mt-0.5 grid size-5 shrink-0 place-items-center rounded-full font-mono text-[10px]', s.done ? 'bg-ok/20 text-ok' : 'bg-white/[0.06] text-steel-300')}
+                      className={cn('mt-0.5 grid size-5 shrink-0 place-items-center rounded-full font-mono text-[10px]', s.done ? 'bg-ok/20 text-ok' : 'bg-tint/[0.06] text-steel-300')}
                     >
                       {s.done ? <Check className="size-3" /> : i + 1}
                     </span>
@@ -102,7 +102,7 @@ export function LessonIsland({ sections, stages, summary, complete, onFinish }: 
                   </li>
                 ))}
               </ul>
-              <div className="my-4 h-px bg-white/[0.08]" />
+              <div className="my-4 h-px bg-tint/[0.08]" />
               <nav aria-label="On this page">
                 <p className="eyebrow">On this page</p>
                 <ol className="mt-2 flex flex-col">
@@ -116,7 +116,7 @@ export function LessonIsland({ sections, stages, summary, complete, onFinish }: 
                           setOpen(false)
                         }}
                         className={cn(
-                          'relative hit-area flex min-h-9 w-full items-center gap-3 rounded-md px-2 text-left text-sm transition-colors hover:bg-white/[0.05]',
+                          'relative hit-area flex min-h-9 w-full items-center gap-3 rounded-md px-2 text-left text-sm transition-colors hover:bg-tint/[0.05]',
                           active === s.id ? 'bg-cyan/10 text-cyan' : 'text-steel-300 hover:text-paper',
                         )}
                       >
@@ -135,7 +135,7 @@ export function LessonIsland({ sections, stages, summary, complete, onFinish }: 
           <nav
             ref={navRef}
             aria-label="Lesson stages"
-            className="track relative min-w-0 rounded-full border border-white/[0.07] bg-graphite-950/60 px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overflow-x-auto"
+            className="track relative min-w-0 rounded-full border border-line/[0.07] bg-graphite-950/60 px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overflow-x-auto"
           >
             <ol className="flex w-max items-center gap-1 py-0.5 sm:gap-1.5">
               {stages.map((s, i) => {
@@ -144,7 +144,7 @@ export function LessonIsland({ sections, stages, summary, complete, onFinish }: 
                   <li key={s.id} className="flex shrink-0 items-center gap-1 sm:gap-1.5">
                     {i > 0 && (
                       // The line between two stages fills once the earlier one is done.
-                      <span aria-hidden className={cn('hidden h-0.5 w-3 rounded-full transition-colors duration-500 lg:block', stages[i - 1]!.done ? 'bg-ok/60' : 'bg-white/15')} />
+                      <span aria-hidden className={cn('hidden h-0.5 w-3 rounded-full transition-colors duration-500 lg:block', stages[i - 1]!.done ? 'bg-ok/60' : 'bg-tint/15')} />
                     )}
                     <button
                       type="button"
@@ -157,12 +157,12 @@ export function LessonIsland({ sections, stages, summary, complete, onFinish }: 
                           ? 'border-ok/35 bg-ok/[0.07] text-ok'
                           : isNext
                             ? 'tactile border-cyan/60 bg-cyan/10 text-cyan'
-                            : 'border-white/10 text-steel-400 hover:border-white/25 hover:text-paper',
+                            : 'border-line/10 text-steel-400 hover:border-line/25 hover:text-paper',
                       )}
                     >
                       <span
                         aria-hidden
-                        className={cn('grid size-5 shrink-0 place-items-center rounded-full font-mono text-[10px]', s.done ? 'bg-ok/20' : 'bg-white/[0.06]')}
+                        className={cn('grid size-5 shrink-0 place-items-center rounded-full font-mono text-[10px]', s.done ? 'bg-ok/20' : 'bg-tint/[0.06]')}
                       >
                         {s.done ? <Check className="size-3" /> : i + 1}
                       </span>

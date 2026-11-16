@@ -54,13 +54,13 @@ export function LabMissions() {
   const count = missions.filter((m) => done.includes(m.id)).length
   const listId = `missions-${labId}`
   return (
-    <div className="border-b border-white/[0.06]" data-testid="lab-missions" data-tour="lab-missions">
+    <div className="border-b border-line/[0.06]" data-testid="lab-missions" data-tour="lab-missions">
       <button
         type="button"
         aria-expanded={open}
         aria-controls={listId}
         onClick={() => setOpen((v) => !v)}
-        className="flex min-h-11 pointer-coarse:min-h-12 w-full items-center gap-2.5 px-3 py-2 text-left hover:bg-white/[0.03]"
+        className="flex min-h-11 pointer-coarse:min-h-12 w-full items-center gap-2.5 px-3 py-2 text-left hover:bg-tint/[0.03]"
       >
         <Target aria-hidden className="size-4 shrink-0 text-cyan" />
         <span className="text-sm font-medium text-paper">Lab missions</span>

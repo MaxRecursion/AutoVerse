@@ -128,7 +128,7 @@ export function FiringRing({ events, bus, reduced }: FiringRingProps) {
 
   return (
     <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="h-auto w-full max-w-[300px] overflow-visible" role="img" aria-label={ringLabel(events)} data-testid="sound-lab-ring">
-      <circle cx={C} cy={C} r={R} fill="none" stroke="rgb(255 255 255 / 0.08)" strokeWidth={14} />
+      <circle cx={C} cy={C} r={R} fill="none" stroke="var(--color-line)" strokeOpacity={0.08} strokeWidth={14} />
       {[0, 180, 360, 540].map((deg) => {
         const p = at(deg, R + 22)
         return (

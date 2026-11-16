@@ -26,7 +26,7 @@ export function SystemLadder({ rungs, nextId }: { rungs: readonly LadderRung[]; 
         const done = rung.completed === rung.topics.length
         return (
           <li key={rung.layer.id} className="relative pl-11 sm:pl-14">
-            {i < rungs.length - 1 && <span aria-hidden className="absolute bottom-[-2rem] left-[15px] top-9 w-px bg-white/[0.12] sm:left-[19px]" />}
+            {i < rungs.length - 1 && <span aria-hidden className="absolute bottom-[-2rem] left-[15px] top-9 w-px bg-tint/[0.12] sm:left-[19px]" />}
             <span
               aria-hidden
               className={cn(
@@ -71,7 +71,7 @@ function LessonRow({ topic, status, isNext }: { topic: Topic; status: Status; is
       aria-current={isNext ? 'true' : undefined}
       className={cn(
         'group flex min-h-14 items-start gap-3 rounded-xl border p-3 transition-colors sm:p-3.5',
-        isNext ? 'border-cyan/50 bg-cyan/[0.06]' : 'border-white/[0.07] bg-graphite-900/60 hover:border-white/20',
+        isNext ? 'border-cyan/50 bg-cyan/[0.06]' : 'border-line/[0.07] bg-graphite-900/60 hover:border-line/20',
       )}
     >
       <Icon

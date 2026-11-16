@@ -39,7 +39,7 @@ export function PartLabel({ id, position, force, hidden = false }: PartLabelProp
           'pointer-events-auto whitespace-nowrap rounded border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider backdrop-blur-sm transition-colors',
           selected
             ? 'border-cyan/70 bg-cyan/15 text-cyan'
-            : 'border-white/15 bg-graphite-950/70 text-steel-300 hover:border-cyan/50 hover:text-paper',
+            : 'border-line/15 bg-graphite-950/70 text-steel-300 hover:border-cyan/50 hover:text-paper',
         )}
       >
         {name}

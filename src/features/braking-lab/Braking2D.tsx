@@ -32,7 +32,7 @@ const ROD_TRAVEL = (ARM / BRAKE_SPEC.pedalRatio) * Math.sin((PEDAL.maxAngleDeg *
 const GAP = 4
 const WHEEL = { x: 112, y: 182, tyre: 50, disc: 31 } as const
 
-const STEEL = '#8a93a0'
+const STEEL = 'var(--color-steel-400)'
 const BODY = '#4b5563'
 const LINE = '#5c636c'
 
@@ -177,12 +177,12 @@ function BrakeDrawing({ state: st, plan, className }: DrawingProps) {
         <line x1={14} x2={232} y1={WHEEL.y + WHEEL.tyre} y2={WHEEL.y + WHEEL.tyre} stroke="#5b6472" strokeWidth={1} />
         <g transform={`translate(${dashShift.toFixed(1)} 0)`}>
           {[0, 1, 2, 3, 4, 5].map((i) => (
-            <line key={i} x1={i * 40 - 26} x2={i * 40 - 10} y1={WHEEL.y + WHEEL.tyre + 5} y2={WHEEL.y + WHEEL.tyre + 5} stroke="#d6d1c4" strokeWidth={1.5} opacity={0.6} />
+            <line key={i} x1={i * 40 - 26} x2={i * 40 - 10} y1={WHEEL.y + WHEEL.tyre + 5} y2={WHEEL.y + WHEEL.tyre + 5} stroke="var(--color-paper)" strokeWidth={1.5} opacity={0.6} />
           ))}
         </g>
         {skid > 0.5 && <rect x={WHEEL.x} y={WHEEL.y + WHEEL.tyre - 1.5} width={skid} height={3} fill="#08090a" opacity={0.85} />}
-        <rect x={0} y={WHEEL.y + WHEEL.tyre + 1} width={14} height={14} fill="#0b0c0f" />
-        <rect x={232} y={WHEEL.y + WHEEL.tyre + 1} width={20} height={14} fill="#0b0c0f" />
+        <rect x={0} y={WHEEL.y + WHEEL.tyre + 1} width={14} height={14} fill="var(--color-graphite-950)" />
+        <rect x={232} y={WHEEL.y + WHEEL.tyre + 1} width={20} height={14} fill="var(--color-graphite-950)" />
       </g>
 
       {/* ---------- Labels ---------- */}
@@ -241,7 +241,7 @@ export function Braking2D({ variant = 'panel' }: Braking2DProps) {
   return (
     <div className="flex flex-col gap-4" data-testid="braking-2d-panel">
       <figure className="flex flex-col gap-2">
-        <div className="rounded-lg border border-white/[0.06] bg-graphite-950 bg-blueprint p-2">
+        <div className="rounded-lg border border-line/[0.06] bg-graphite-950 bg-blueprint p-2">
           <BrakeDrawing state={st} plan={plan} className="w-full" />
         </div>
         <figcaption className="text-xs leading-snug text-steel-400">

@@ -6,9 +6,9 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * AutoVerse design tokens — graphite surfaces, warm-white type,
- * electric cyan for interaction, amber for motion paths / energy,
- * red/green reserved for technical states.
+ * Shared theme palettes. Existing graphite/steel names describe surface and
+ * type roles; physical materials in the 3D models retain their own colours.
+ * Cyan marks interaction, amber marks energy, red/green mark technical states.
  */
 :root {
   --radius: 0.625rem;
@@ -30,8 +30,26 @@
   --amber: #f6a63a;
   --danger: #ff5c4d;
   --ok: #4fd58a;
+  --line: #fff;
+  --line-rgb: 255 255 255;
+  --tint: #fff;
+  --control-thumb: #f3efe6;
+  --panel-sheen: rgb(255 255 255 / 0.025);
+  --panel-shadow: 0 1px 0 0 rgb(255 255 255 / 0.05) inset, 0 20px 40px -24px rgb(0 0 0 / 0.8);
+  --scene-shadow: 0 40px 80px -40px rgb(0 0 0 / 0.9);
+  --drawer-shadow: 0 -12px 32px -12px rgb(0 0 0 / 0.6);
+  --tactile-fill: linear-gradient(to bottom, rgb(255 255 255 / 0.075), rgb(255 255 255 / 0.015) 55%, rgb(0 0 0 / 0.14));
+  --tactile-inset: inset 0 1px 0 rgb(255 255 255 / 0.09), inset 0 -2px 3px rgb(0 0 0 / 0.35);
+  --tactile-shadow: 0 6px 14px -8px rgb(0 0 0 / 0.85);
+  --lit-fill: linear-gradient(to bottom, rgb(255 255 255 / 0.34), rgb(255 255 255 / 0.05) 50%, rgb(0 0 0 / 0.12));
+  --pressed-inset: inset 0 2px 5px rgb(0 0 0 / 0.5), inset 0 -1px 0 rgb(255 255 255 / 0.04);
+  --track-fill: linear-gradient(to bottom, rgb(0 0 0 / 0.4), rgb(0 0 0 / 0.12));
+  --track-inset: inset 0 2px 4px rgb(0 0 0 / 0.55), inset 0 -1px 0 rgb(255 255 255 / 0.05);
+  --glass-fill: rgb(16 18 22 / 0.66);
+  --glass-inset: inset 0 1px 0 rgb(255 255 255 / 0.07);
+  --glass-shadow: 0 24px 48px -24px rgb(0 0 0 / 0.85);
 
-  /* shadcn semantic tokens (dark-first app) */
+  /* Shared UI semantic tokens */
   --background: var(--graphite-950);
   --foreground: var(--paper);
   --card: var(--graphite-900);
@@ -50,6 +68,47 @@
   --border: rgb(255 255 255 / 0.08);
   --input: rgb(255 255 255 / 0.12);
   --ring: var(--cyan);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --ink: #fff;
+  --graphite-950: #f4f7fb;
+  --graphite-900: #fff;
+  --graphite-850: #f0f4f9;
+  --graphite-800: #e7edf5;
+  --graphite-700: #d8e2ee;
+  --graphite-600: #bbc9d9;
+  --steel-500: #546376;
+  --steel-400: #475569;
+  --steel-300: #334155;
+  --paper: #152137;
+  --cyan: #00798f;
+  --cyan-dim: #006174;
+  --amber: #985600;
+  --danger: #c3372b;
+  --ok: #187346;
+  --line: #152137;
+  --line-rgb: 21 33 55;
+  --tint: #152137;
+  --control-thumb: #fff;
+  --primary-foreground: #fff;
+  --border: rgb(21 33 55 / 0.13);
+  --input: rgb(21 33 55 / 0.23);
+  --panel-sheen: rgb(255 255 255 / 0.65);
+  --panel-shadow: 0 1px 0 0 rgb(255 255 255 / 0.9) inset, 0 16px 36px -24px rgb(21 33 55 / 0.2);
+  --scene-shadow: 0 24px 56px -32px rgb(21 33 55 / 0.25);
+  --drawer-shadow: 0 -12px 32px -12px rgb(21 33 55 / 0.18);
+  --tactile-fill: linear-gradient(to bottom, rgb(255 255 255 / 0.65), rgb(255 255 255 / 0.12) 55%, rgb(21 33 55 / 0.04));
+  --tactile-inset: inset 0 1px 0 rgb(255 255 255 / 0.9), inset 0 -2px 3px rgb(21 33 55 / 0.08);
+  --tactile-shadow: 0 5px 12px -8px rgb(21 33 55 / 0.3);
+  --lit-fill: linear-gradient(to bottom, rgb(255 255 255 / 0.04), transparent 50%, rgb(21 33 55 / 0.1));
+  --pressed-inset: inset 0 2px 4px rgb(21 33 55 / 0.14), inset 0 -1px 0 rgb(255 255 255 / 0.8);
+  --track-fill: linear-gradient(to bottom, rgb(21 33 55 / 0.08), rgb(21 33 55 / 0.025));
+  --track-inset: inset 0 1px 3px rgb(21 33 55 / 0.15), inset 0 -1px 0 rgb(255 255 255 / 0.9);
+  --glass-fill: rgb(255 255 255 / 0.84);
+  --glass-inset: inset 0 1px 0 rgb(255 255 255 / 0.9);
+  --glass-shadow: 0 20px 40px -24px rgb(21 33 55 / 0.25);
 }
 
 @theme inline {
@@ -73,6 +132,11 @@
   --color-amber: var(--amber);
   --color-danger: var(--danger);
   --color-ok: var(--ok);
+  --color-line: var(--line);
+  --color-tint: var(--tint);
+  --color-control-thumb: var(--control-thumb);
+  --shadow-scene: var(--scene-shadow);
+  --shadow-drawer: var(--drawer-shadow);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -147,17 +211,17 @@
   /* Fine engineering grid used behind hero / scene panels */
   .bg-blueprint {
     background-image:
-      linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px),
-      linear-gradient(rgb(255 255 255 / 0.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(255 255 255 / 0.018) 1px, transparent 1px);
+      linear-gradient(rgb(var(--line-rgb) / 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--line-rgb) / 0.035) 1px, transparent 1px),
+      linear-gradient(rgb(var(--line-rgb) / 0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--line-rgb) / 0.018) 1px, transparent 1px);
     background-size: 96px 96px, 96px 96px, 16px 16px, 16px 16px;
   }
   /* Restrained metallic panel, with a faint sheen along its top edge */
   .panel {
-    @apply rounded-xl border border-white/[0.07] bg-graphite-900/80 backdrop-blur-md;
-    background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.025), transparent 40%);
-    box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.05) inset, 0 20px 40px -24px rgb(0 0 0 / 0.8);
+    @apply rounded-xl border border-line/[0.07] bg-graphite-900/80 backdrop-blur-md;
+    background-image: linear-gradient(to bottom, var(--panel-sheen), transparent 40%);
+    box-shadow: var(--panel-shadow);
   }
   .eyebrow {
     @apply font-mono text-[11px] uppercase tracking-[0.18em] text-steel-400;
@@ -174,35 +238,35 @@
  * through Tailwind's shadow variables, so focus rings (ring-*) compose on top.
  */
 @utility tactile {
-  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.075), rgb(255 255 255 / 0.015) 55%, rgb(0 0 0 / 0.14));
-  --tw-inset-shadow: inset 0 1px 0 rgb(255 255 255 / 0.09), inset 0 -2px 3px rgb(0 0 0 / 0.35);
-  --tw-shadow: 0 6px 14px -8px rgb(0 0 0 / 0.85);
+  background-image: var(--tactile-fill);
+  --tw-inset-shadow: var(--tactile-inset);
+  --tw-shadow: var(--tactile-shadow);
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 /* A lit key: pair with a bright bg-* (cyan by default); glow-* picks the halo colour. */
 @utility tactile-lit {
-  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.34), rgb(255 255 255 / 0.05) 50%, rgb(0 0 0 / 0.12));
+  background-image: var(--lit-fill);
   --tw-inset-shadow: inset 0 1px 0 rgb(255 255 255 / 0.55), inset 0 -2px 4px rgb(0 0 0 / 0.2);
   --tw-shadow: 0 0 0 1px rgb(var(--glow-rgb, 56 215 242) / 0.35), 0 8px 22px -10px rgb(var(--glow-rgb, 56 215 242) / 0.7);
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 @utility tactile-pressed {
-  --tw-inset-shadow: inset 0 2px 5px rgb(0 0 0 / 0.5), inset 0 -1px 0 rgb(255 255 255 / 0.04);
+  --tw-inset-shadow: var(--pressed-inset);
   --tw-shadow: 0 0 #0000;
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 /* An inset well for segmented controls, progress bars and slider tracks. */
 @utility track {
-  background-image: linear-gradient(to bottom, rgb(0 0 0 / 0.4), rgb(0 0 0 / 0.12));
-  --tw-inset-shadow: inset 0 2px 4px rgb(0 0 0 / 0.55), inset 0 -1px 0 rgb(255 255 255 / 0.05);
+  background-image: var(--track-fill);
+  --tw-inset-shadow: var(--track-inset);
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow, 0 0 #0000);
 }
 @utility glass {
-  background-color: rgb(16 18 22 / 0.66);
+  background-color: var(--glass-fill);
   -webkit-backdrop-filter: blur(18px) saturate(1.4);
   backdrop-filter: blur(18px) saturate(1.4);
-  --tw-inset-shadow: inset 0 1px 0 rgb(255 255 255 / 0.07);
-  --tw-shadow: 0 24px 48px -24px rgb(0 0 0 / 0.85);
+  --tw-inset-shadow: var(--glass-inset);
+  --tw-shadow: var(--glass-shadow);
   box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow, 0 0 #0000), var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 @utility glow-amber {

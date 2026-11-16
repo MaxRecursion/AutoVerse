@@ -123,7 +123,7 @@ function PowerPath() {
                   aria-pressed={selectedId === id}
                   className={cn(
                     'relative hit-area min-h-9 rounded-md border px-2 text-xs transition-colors',
-                    !released ? 'border-amber/40 bg-amber/[0.08] text-paper hover:border-amber' : 'border-white/[0.08] text-steel-500 hover:text-steel-300',
+                    !released ? 'border-amber/40 bg-amber/[0.08] text-paper hover:border-amber' : 'border-line/[0.08] text-steel-500 hover:text-steel-300',
                     selectedId === id && 'border-cyan text-cyan',
                   )}
                 >
@@ -149,7 +149,7 @@ function ToothArithmetic() {
   const d = useDriveState()
   const kind = gearKind(p.gear)
   return (
-    <section aria-label="Ratio arithmetic" className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+    <section aria-label="Ratio arithmetic" className="rounded-lg border border-line/[0.06] bg-tint/[0.02] p-3">
       <p className="eyebrow">Ratio from tooth counts</p>
       <p className="mt-1 font-mono text-sm tabular-nums text-paper" data-testid="transmission-ratio-expression">
         {d.ratio === null ? 'Neutral — no ratio' : `${trainExpression(p.gear)} = ${formatRatio(d.ratio)}`}
@@ -181,7 +181,7 @@ function PedalShortcuts({ current }: { current: ClutchState }) {
           onClick={() => store.getState().setParam(PARAM.clutch, cuePedal(s.cue))}
           className={cn(
             'relative hit-area min-h-10 rounded-lg border px-2.5 text-left text-sm transition-colors',
-            current === s.state ? 'border-amber/60 bg-amber/10 text-paper' : 'border-white/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
+            current === s.state ? 'border-amber/60 bg-amber/10 text-paper' : 'border-line/[0.08] text-steel-300 hover:border-cyan/40 hover:text-paper',
           )}
         >
           {s.label}
@@ -197,7 +197,7 @@ function LiveNumbers() {
   return (
     <table className="w-full text-sm" data-testid="transmission-live-state">
       <caption className="eyebrow mb-1.5 text-left">Live numbers · illustrative</caption>
-      <tbody className="divide-y divide-white/[0.05]">
+      <tbody className="divide-y divide-line/[0.05]">
         <Row label="Engine speed">{formatRpm(d.engineRpm)}</Row>
         <Row label="Gearbox input" hint="after the clutch">
           {formatRpm(d.inputRpm)}
@@ -245,7 +245,7 @@ function DeeperTopics() {
           <li key={t.id}>
             <Link
               to={`/topics/${t.slug}`}
-              className="relative hit-area group flex min-h-10 items-center justify-between gap-2 rounded-md border border-white/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
+              className="relative hit-area group flex min-h-10 items-center justify-between gap-2 rounded-md border border-line/[0.06] px-3 text-sm text-steel-300 transition-colors hover:border-cyan/40 hover:text-paper"
             >
               {t.title}
               <ArrowRight className="size-4 text-steel-500 transition-transform group-hover:translate-x-0.5 group-hover:text-cyan" aria-hidden />

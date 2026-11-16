@@ -177,7 +177,7 @@ export function GearboxSchematic2D({ variant = 'panel' }: GearboxSchematic2DProp
           <span className="eyebrow">Side-view schematic</span>
           <span className="annotation text-steel-400">bar height = pitch diameter</span>
         </figcaption>
-        <div className="rounded-lg border border-white/[0.06] bg-graphite-950 bg-blueprint p-2">
+        <div className="rounded-lg border border-line/[0.06] bg-graphite-950 bg-blueprint p-2">
           <Drawing className="h-auto w-full" />
         </div>
       </figure>
