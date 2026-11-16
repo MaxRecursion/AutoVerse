@@ -474,7 +474,13 @@ export function slotClock(playhead: number, lap: number, firingAngle: number): {
 }
 
 export interface Parcel {
-  /** Which gas this is, in cycles of gas (wraps with the clock). Turbulence is keyed to it, so eddies move with the gas. */
+  /**
+   * Which gas this is, in cycles of gas (wraps with the clock), and so when it
+   * left the port. In the header it also keys the turbulence, so the eddies
+   * stand still with the column while the valve is shut. Beyond the header the
+   * shader keys the eddies to when the gas left the header, so they move at
+   * the flow speed.
+   */
   label: number
   /** Crank degrees since it left the port. */
   age: number
@@ -507,6 +513,17 @@ export function parcelAt(clock: { since: number; cycle: number }, dist: number, 
   const cyclesAgo = -Math.floor(rel)
   const emitDeg = emissionAtShare(rel + cyclesAgo)
   return { label, age: 720 * cyclesAgo + clock.since - emitDeg, emitDeg, flow }
+}
+
+/**
+ * How hot a parcel of gas is now, 0–1: as hot as the port gas when it left
+ * (scaled by the engine's `heat`), cooling towards the wall temperature by
+ * the second. The gas shader's parcelTemperature, in the pipes and the plume.
+ */
+export function parcelTemperature(parcel: Pick<Parcel, 'emitDeg' | 'age'>, heat: number, floorTemperature: number, ageScale: number): number {
+  const hot = portTemperature(parcel.emitDeg) * heat
+  const floor = Math.min(floorTemperature, hot)
+  return floor + (hot - floor) * Math.exp(-parcel.age * ageScale)
 }
 
 /**

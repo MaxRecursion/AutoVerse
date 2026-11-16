@@ -30,6 +30,35 @@ export function cutawayLayout(spec: EngineSpec, events: FiringEvent[], bankAngle
   })
 }
 
+/** Where one cylinder's exhaust starts: all the exhaust pipework takes from the cutaway layout. */
+export interface ExhaustSeat {
+  index: number
+  side: Side
+  x: number
+}
+
+/**
+ * The exhaust pipework depends only on which cylinder sits where. The bank
+ * angle reaches it through the frame bus, which rebuilds the pipes at most
+ * once per rebuild gap. The firing angles only time each cylinder's gas,
+ * read every frame. Bank-angle and crankpin-split slider steps make a new
+ * cylinder list without moving any seat, so the pipework is keyed by this
+ * string rather than by that list. The single-cylinder view puts its one
+ * seat at x = 0.
+ */
+export function exhaustSeatsKey(cylinders: readonly CutawayCylinder[], detail: boolean): string {
+  return cylinders.map((cylinder) => `${cylinder.event.index}:${cylinder.side}:${detail ? 0 : cylinder.x}`).join(' ')
+}
+
+/** The seats an {@link exhaustSeatsKey} was made from. */
+export function exhaustSeats(key: string): ExhaustSeat[] {
+  if (!key) return []
+  return key.split(' ').map((entry) => {
+    const [index, side, x] = entry.split(':')
+    return { index: Number(index), side: side as Side, x: Number(x) }
+  })
+}
+
 export type Vec3 = [number, number, number]
 
 /**

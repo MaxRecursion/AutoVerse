@@ -38,7 +38,7 @@ import {
   type ExhaustDrawing,
   type ExhaustPipe,
 } from './exhaust'
-import { MAX_GAS_SLOTS, buildGasGeometry, createGasMaterial, plumeNoiseStep, wrapNoise, type GasRoute } from './exhaustGas'
+import { MAX_GAS_SLOTS, buildGasGeometry, createGasMaterial, createPlumeMaterial, plumeNoiseStep, wrapNoise, type GasRoute } from './exhaustGas'
 
 export type { ExhaustDrawing, ExhaustPipe, ExhaustRoute } from './exhaust'
 
@@ -129,8 +129,11 @@ export function ExhaustSystem({ drawing, bankOf, firingAngle, bus, plume, spec, 
   const invalidate = useThree((state) => state.invalidate)
   const theme = useTheme()
   const material = useMemo(() => createGasMaterial(tier), [tier])
+  // Shares the gas material's uniforms, so every update below reaches the plumes too.
+  const plumeMaterial = useMemo(() => createPlumeMaterial(material), [material])
   const pipe = useMemo(() => createPipeMaterial(), [])
   useEffect(() => () => material.dispose(), [material])
+  useEffect(() => () => plumeMaterial.dispose(), [plumeMaterial])
   useEffect(() => () => pipe.material.dispose(), [pipe])
   const built = useRef<Built>(unbuilt())
   const flow = useRef({ playhead: Number.NaN, lap: 0, plumeShift: 0, swirl: 0, run: 0, wallHeat: 0, cut: 0, wallAt: Number.NaN })
@@ -260,7 +263,7 @@ export function ExhaustSystem({ drawing, bankOf, firingAngle, bus, plume, spec, 
     <group name="exhaust" ref={group} dispose={null}>
       <mesh name="exhaust-pipes" ref={pipes} material={pipe.material} renderOrder={2} />
       <mesh name="exhaust-gas" ref={gas} material={material} renderOrder={1} frustumCulled={false} visible={false} />
-      <mesh name="exhaust-plume" ref={plumes} material={material} renderOrder={3} frustumCulled={false} visible={false} />
+      <mesh name="exhaust-plume" ref={plumes} material={plumeMaterial} renderOrder={3} frustumCulled={false} visible={false} />
     </group>
   )
 }

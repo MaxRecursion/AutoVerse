@@ -1,12 +1,13 @@
 import { act, cleanup, render } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { ShaderLib, type BufferGeometry, type MeshStandardMaterial } from 'three'
+import { ShaderLib, type BufferGeometry, type MeshStandardMaterial, type ShaderMaterial } from 'three'
 import { createFrameBus, type EngineFrame } from './animation'
 import { ExhaustSystem, type ExhaustDrawing } from './ExhaustSystem'
 
 const harness = vi.hoisted(() => ({
   frame: null as (() => void) | null,
   pipes: [] as MeshStandardMaterial[],
+  gas: [] as ShaderMaterial[],
   gl: { extensions: { has: vi.fn(() => true) }, compileAsync: vi.fn(async () => {}), compile: vi.fn() },
   invalidate: vi.fn(),
 }))
@@ -25,6 +26,12 @@ vi.mock('three', async (importOriginal) => {
         harness.pipes.push(this)
       }
     },
+    ShaderMaterial: class extends actual.ShaderMaterial {
+      constructor(...args: ConstructorParameters<typeof actual.ShaderMaterial>) {
+        super(...args)
+        harness.gas.push(this)
+      }
+    },
   }
 })
 
@@ -40,6 +47,7 @@ const frame = (now: number, animate = true): EngineFrame => ({
 beforeEach(() => {
   harness.frame = null
   harness.pipes.length = 0
+  harness.gas.length = 0
   vi.clearAllMocks()
   // The host tags are supplied by R3F in production; this test uses inert DOM
   // hosts to exercise its frame callback without creating a WebGL context.
@@ -62,6 +70,30 @@ function mount() {
 }
 
 describe('exhaust lifecycle', () => {
+  it('hands the gas shader each cylinder’s clock, header length and what the engine is doing', () => {
+    const { paint } = mount()
+    paint(frame(0))
+    paint(frame(400))
+    const u = harness.gas[0]!.uniforms
+    // The plume material is a second material over the same uniforms, drawn on both faces.
+    expect(harness.gas).toHaveLength(2)
+    expect(harness.gas[1]!.uniforms).toBe(u)
+    expect(harness.gas[1]!.side).not.toBe(harness.gas[0]!.side)
+    // The single test route is all header (one segment), so its header length is its whole length.
+    expect(u.uHeaderLength!.value[0]).toBeCloseTo(1, 6)
+    expect(u.uMass!.value).toBeGreaterThan(0)
+    expect(u.uHeat!.value).toBeGreaterThan(0)
+    expect(u.uAgeScale!.value).toBeGreaterThan(0)
+    expect(u.uOpacity!.value).toBe(1)
+    const clock = u.uSlot!.value[0] as { x: number; y: number; z: number; w: number }
+    expect(clock.x).toBeGreaterThanOrEqual(0)
+    expect(clock.x).toBeLessThan(720)
+    expect([clock.y, clock.z, clock.w].every(Number.isFinite)).toBe(true)
+    // Stopped: the gas is hidden.
+    paint(frame(800, false))
+    expect(u.uOpacity!.value).toBe(0)
+  })
+
   it('heats by distinct bus time rather than the number of camera redraws, and resets when motion stops', () => {
     const { paint, heat } = mount()
     paint(frame(0))

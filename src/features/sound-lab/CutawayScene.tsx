@@ -36,7 +36,7 @@ import {
 } from '@/features/engine-lab/engineModel'
 import { combustionIntensity, sparkIntensity, type ValveId } from '@/features/engine-lab/kinematics'
 import { bankAxis, DEG, type FrameBus } from './animation'
-import { CUTAWAY_PITCH, cutawayLayout, cutawayMirror, cutawayState, cutawayToWorld, type CutawayCylinder } from './cutawayMath'
+import { CUTAWAY_PITCH, cutawayLayout, cutawayMirror, cutawayState, cutawayToWorld, exhaustSeats, exhaustSeatsKey, type CutawayCylinder } from './cutawayMath'
 import type { EngineSpec } from './engines'
 import { exhaustDrawing, exhaustPlumbing, longHeaderSide } from './exhaust'
 import { ExhaustSystem, type ExhaustDrawing } from './ExhaustSystem'
@@ -359,8 +359,12 @@ function CutawayExhaust({ spec, cylinders, bankAngle, bus, tier, detail }: {
   tier: QualityTier
   detail: boolean
 }) {
+  // A new drawing rebuilds the pipes at once, so it follows the seats rather than
+  // the cylinder list, which every bank-angle or crankpin-split step replaces.
+  // The bank itself arrives through the frame bus, at most once per rebuild gap.
+  const seats = exhaustSeatsKey(cylinders, detail)
   const drawing = useCallback((bank: number): ExhaustDrawing => {
-    const placed = cylinders.map((cylinder) => ({ index: cylinder.event.index, side: cylinder.side, x: detail ? 0 : cylinder.x }))
+    const placed = exhaustSeats(seats)
     const positions = placed.map((cylinder) => cylinder.x)
     const layout = exhaustPlumbing(placed, (side, x, point) => cutawayToWorld(side, bank, cutawayMirror(spec.layout, side, detail), x, point), {
       xFront: Math.max(...positions) + 0.45,
@@ -370,7 +374,7 @@ function CutawayExhaust({ spec, cylinders, bankAngle, bus, tier, detail }: {
       longBank: detail ? undefined : longHeaderSide(spec),
     })
     return exhaustDrawing(layout, !detail)
-  }, [cylinders, detail, spec])
+  }, [seats, detail, spec])
   const bankOf = useCallback((frameBank: number | null) => detail || spec.layout === 'inline' ? 0 : spec.layout === 'flat' ? 180 : frameBank ?? bankAngle, [detail, spec.layout, bankAngle])
   const firingAngle = useCallback((index: number) => cylinders.find((cylinder) => cylinder.event.index === index)?.event.angle ?? 0, [cylinders])
   return <ExhaustSystem drawing={drawing} bankOf={bankOf} firingAngle={firingAngle} bus={bus} plume={!detail} spec={spec} tier={tier} />

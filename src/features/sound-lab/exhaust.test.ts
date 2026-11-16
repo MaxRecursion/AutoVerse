@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { VALVE_TIMING } from '@/features/engine-lab/kinematics'
-import { rotationSense } from './animation'
+import { mod, rotationSense } from './animation'
 import { cutawayLayout, cutawayMirror, cutawayToWorld } from './cutawayMath'
 import { bankOf, engines, getEngine, type EngineSpec } from './engines'
 import { firingEvents } from './firing'
@@ -38,6 +38,7 @@ import {
   pathLength,
   pointAlong,
   portFlow,
+  parcelTemperature,
   portTemperature,
   sinceExhaustOpened,
   STUB_RUN,
@@ -367,14 +368,42 @@ describe('the header column', () => {
     }
   })
 
-  it('spaces two cylinders’ gas in a shared pipe by their firing gap', () => {
-    const gap = 72
-    // Both points downstream of their headers, where the cylinders' gas shares the collector.
-    for (const d of [3, 4.5, 6]) {
-      const first = parcelAt(slotClock(400, 0, 0), d, H)
-      const second = parcelAt(slotClock(400 - gap, 0, 0), d - gap * FLOW_SPEED, H)
-      expect(second.flow).toBeCloseTo(first.flow, 6)
+  it('passes two cylinders’ bursts through their shared collector by firing gap and route length', () => {
+    // Two cylinders 72° apart in firing whose headers join one collector 1.25 apart, as drawn.
+    const cylinders = [{ index: 0, side: 'mid' as const, x: 0.625 }, { index: 1, side: 'mid' as const, x: -0.625 }]
+    const layout = exhaustPlumbing(cylinders, flatPlace, { xFront: 1.1, xRear: -1.5, shared: false })
+    const header = pathLength(layout.headers[0]!.points)
+    // The collector's rear end: a point both cylinders' gas passes.
+    const toRear = (index: number) => pathLength(layout.routes.get(index)!.slice(0, HEADER.length + 1))
+    const firing = [0, 72]
+    const peakAt = (index: number) => {
+      let best = -1
+      let at = 0
+      for (let playhead = 0; playhead < 720; playhead += 0.25) {
+        const flow = parcelAt(slotClock(playhead, 0, firing[index]!), toRear(index), header).flow
+        if (flow > best) {
+          best = flow
+          at = playhead
+        }
+      }
+      return at
     }
+    const shorter = toRear(0) - toRear(1)
+    expect(shorter).toBeCloseTo(1.25, 6)
+    // Cylinder 1 fires 72° later but its gas has 1.25 units less to travel: a log manifold's spacing.
+    const spacing = mod(peakAt(1) - peakAt(0) + 360, 720) - 360
+    expect(spacing).toBeCloseTo(72 - shorter / FLOW_SPEED, 0)
+  })
+
+  it('cools gas towards the walls by its age, from the temperature it left the port with', () => {
+    const fresh = { emitDeg: 20, age: 0 }
+    expect(parcelTemperature(fresh, 1, 0.22, 0.001)).toBeCloseTo(portTemperature(20), 12)
+    // Older gas is cooler, never below the wall temperature, and a hotter engine keeps it hotter.
+    expect(parcelTemperature({ emitDeg: 20, age: 600 }, 1, 0.22, 0.001)).toBeLessThan(parcelTemperature(fresh, 1, 0.22, 0.001))
+    expect(parcelTemperature({ emitDeg: 20, age: 1e6 }, 1, 0.22, 0.001)).toBeCloseTo(0.22, 9)
+    expect(parcelTemperature({ emitDeg: 20, age: 300 }, 1, 0.22, 0.0005)).toBeGreaterThan(parcelTemperature({ emitDeg: 20, age: 300 }, 1, 0.22, 0.002))
+    // Gas that left cooler than the walls is not warmed by them.
+    expect(parcelTemperature({ emitDeg: 20, age: 500 }, 0.1, 0.22, 0.001)).toBeCloseTo(portTemperature(20) * 0.1, 12)
   })
 
   it('blurs the flow over a frame’s crank step without changing the cycle’s total', () => {

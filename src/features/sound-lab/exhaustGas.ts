@@ -26,6 +26,7 @@ import {
   CustomBlending,
   Data3DTexture,
   DataTexture,
+  DoubleSide,
   Float32BufferAttribute,
   FrontSide,
   LinearFilter,
@@ -518,6 +519,10 @@ float noise(vec3 p) {
 
 void main() {
   if (uOpacity <= 0.0) discard;
+  // Plumes are drawn on both faces (createPlumeMaterial), pipe gas on its front faces only. A ray
+  // through a plume's side crosses one front and one back face, so each carries half the chord,
+  // and the two halves compose to the whole: (1 − e^(−x/2))² blended is 1 − e^(−x).
+  bool plume = vMask > 0.5;
 
   // How much gas this pixel looks through: the view ray's chord across the gas column round
   // the pipe's centre line, so the gas is thick through its core and has no hard outline.
@@ -531,7 +536,9 @@ void main() {
   float qc = dot(eyeAcross, eyeAcross) - vRadius * vRadius;
   float root = sqrt(max(qb * qb - qa * qc, 0.0));
   float enter = max((-qb - root) / qa, 0.0);
-  float chord = clamp((-qb + root) / qa - enter, 0.0, 6.0 * vRadius);
+  // Looking along a pipe sees through more gas, within reason; a plume seen end-on stays a soft
+  // cloud rather than a solid disc.
+  float chord = clamp((-qb + root) / qa - enter, 0.0, (plume ? 2.5 : 6.0) * vRadius) * (plume ? 0.5 : 1.0);
 
   float angle = vAround * 2.0 * PI + uSwirl;
   float open = smoothstep(0.0, 0.12, vPlume);
@@ -544,21 +551,26 @@ void main() {
   if (vMask < 0.5) {
     // In the pipes. Which gas is here? In the header, a full column that moves only as the
     // cylinder pushes gas in; beyond it, gas that left the header's end a while ago at the
-    // flow speed. Its label (cycles of gas) keys the turbulence, so eddies ride with it.
+    // flow speed. Its label (cycles of gas) says when it left the port, which sets its age and heat.
     vec4 clock = uSlot[int(vSlot + 0.5)];
     bool inHeader = vDist <= vHeader;
     float exitPhase = 0.0;
+    float wraps = 0.0;
     float label;
     if (inHeader) {
       label = clock.z + clock.y - vDist / CYCLE_GAS;
     } else {
       float back = clock.x - (vDist - vHeader) / FLOW_SPEED;
-      float wraps = -floor(back / 720.0);
+      wraps = -floor(back / 720.0);
       exitPhase = back + 720.0 * wraps;
       label = clock.z - wraps + shareAt(exitPhase) - vHeader / CYCLE_GAS;
     }
-    // Octaves at whole multiples, so the ten-cycle label wrap (9 × 64 cells) is seamless.
-    vec3 p = vec3(label * CYCLE_GAS * ${glsl(NOISE_ALONG)} + vSlot * 11.0, ring);
+    // Eddies ride with the gas: in the header with the column (still while the valve is shut),
+    // beyond it with when the gas left the header's end, so they move at the flow speed. Both wrap
+    // after ten cycles on a whole number of noise tiles (9 × 64 cells), and the octaves are whole
+    // multiples, so the wrap is seamless.
+    float along = inHeader ? label * CYCLE_GAS : ((clock.z - wraps) * 720.0 + exitPhase) * FLOW_SPEED;
+    vec3 p = vec3(along * ${glsl(NOISE_ALONG)} + vSlot * 11.0, ring);
     n = noise(p) * 0.6 + noise(p * 2.0 + vec3(13.0, 1.7, 4.1)) * 0.4;
 #ifdef DETAIL
     n = n * 0.82 + noise(p * 4.0 + vec3(29.0, 5.5, 0.6)) * 0.18;
@@ -633,7 +645,10 @@ void main() {
   vec3 glow = glowColour(temperature) * pow(temperature, 2.5) * hotGas * (0.5 + 0.4 * uLoad) * mix(1.0, 0.55, uDiesel);
   // On the light theme haze has to block light to show at all, so it is a little thicker there.
   float sigma = mix(12.0, 10.0, open) * (1.0 + uDiesel * (0.5 + 0.8 * uLoad)) * mix(1.0, 1.0 + 0.6 * open, uLight);
-  float haze = (1.0 - exp(-sigma * density * chord)) * mix(0.35, 1.0, 1.0 - temperature);
+  // Leaving the tailpipe the gas is still too hot to see; it shows as vapour a little way out as it
+  // cools, so the plume fades in rather than starting as a dense ball at the outlet.
+  float condense = plume ? 0.2 + 0.8 * smoothstep(0.05, 0.5, s) : 1.0;
+  float haze = (1.0 - exp(-sigma * density * chord)) * mix(0.35, 1.0, 1.0 - temperature) * condense;
   // Pale vapour on the dark theme; on the light theme the same gas shows as a darker smoke.
   vec3 hazeDark = mix(mix(vec3(0.7, 0.73, 0.78), vec3(0.34, 0.32, 0.3), uDiesel), mix(vec3(0.92, 0.93, 0.95), vec3(0.42, 0.39, 0.36), uDiesel), open);
   vec3 hazeLight = mix(mix(vec3(0.42, 0.45, 0.5), vec3(0.25, 0.23, 0.21), uDiesel), mix(vec3(0.45, 0.48, 0.53), vec3(0.28, 0.26, 0.24), uDiesel), open);
@@ -673,7 +688,20 @@ export type GasMaterial = ShaderMaterial & {
   }
 }
 
-/** The gas material: premultiplied blending, so hot gas adds light and cool haze dims what is behind it. */
+/** How all exhaust gas is drawn: premultiplied blending, so hot gas adds light and cool haze dims what is behind it. */
+const GAS_DRAWING = {
+  transparent: true,
+  depthWrite: false,
+  blending: CustomBlending,
+  blendEquation: AddEquation,
+  blendSrc: OneFactor,
+  blendDst: OneMinusSrcAlphaFactor,
+  blendSrcAlpha: OneFactor,
+  blendDstAlpha: OneMinusSrcAlphaFactor,
+  toneMapped: false,
+} as const
+
+/** The pipe gas material, drawn on front faces: the gas is seen through its pipe walls. */
 export function createGasMaterial(tier: QualityTier): GasMaterial {
   const material = new ShaderMaterial({
     name: 'Exhaust gas',
@@ -699,16 +727,31 @@ export function createGasMaterial(tier: QualityTier): GasMaterial {
     defines: tier === 'high' ? { DETAIL: '', SMEAR_TAPS: 4 } : { SMEAR_TAPS: 2 },
     vertexShader: VERTEX,
     fragmentShader: FRAGMENT,
-    transparent: true,
-    depthWrite: false,
+    ...GAS_DRAWING,
     side: FrontSide,
-    blending: CustomBlending,
-    blendEquation: AddEquation,
-    blendSrc: OneFactor,
-    blendDst: OneMinusSrcAlphaFactor,
-    blendSrcAlpha: OneFactor,
-    blendDstAlpha: OneMinusSrcAlphaFactor,
-    toneMapped: false,
+  })
+  return material as GasMaterial
+}
+
+/**
+ * The plumes' material. It uses the gas material's own shader, defines and
+ * uniforms (the same uniforms object, so every update reaches both), drawn
+ * on both faces. A plume is an open, widening tube: a ray looking into its
+ * mouth meets only its far wall, so its back faces are drawn too. The shader
+ * gives each face half the view ray's chord. Pipe gas keeps its own front-face
+ * material and never rasterises its back faces.
+ */
+export function createPlumeMaterial(gas: GasMaterial): GasMaterial {
+  const material = new ShaderMaterial({
+    name: 'Exhaust plume',
+    uniforms: gas.uniforms,
+    defines: { ...gas.defines },
+    vertexShader: gas.vertexShader,
+    fragmentShader: gas.fragmentShader,
+    ...GAS_DRAWING,
+    side: DoubleSide,
+    // Both faces in one draw call: the two halves of a chord blend to the same result in either order.
+    forceSinglePass: true,
   })
   return material as GasMaterial
 }

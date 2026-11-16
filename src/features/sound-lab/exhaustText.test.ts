@@ -19,9 +19,14 @@ describe('exhaust words', () => {
     const viper = spec('v10-viper')
     expect(describeExhaust(viper, { v10: true, view: 'engine', running: true, reduced: false }).gas).toMatch(/surges from each port as its valve opens/)
     expect(describeExhaust(viper, { v10: true, view: 'engine', running: false, reduced: false }).gas).toMatch(/once the engine runs/)
-    expect(describeExhaust(viper, { v10: true, view: 'engine', running: true, reduced: true }).gas).toMatch(/hidden in the still view/)
+    expect(describeExhaust(viper, { v10: true, view: 'engine', running: true, reduced: true }).gas).toMatch(/not drawn while motion is reduced/)
     expect(describeExhaust(viper, { v10: true, view: 'engine', running: false, reduced: false }).note).toBe('Start the engine to fill the exhaust with gas.')
     expect(describeExhaust(viper, { v10: true, view: 'detail', running: true, reduced: true }).note).toMatch(/^Still view/)
+    // With reduced motion the gas is never drawn, so a stopped engine must not promise it.
+    const stillStopped = describeExhaust(viper, { v10: true, view: 'engine', running: false, reduced: true })
+    expect(stillStopped.note).toMatch(/^Still view/)
+    expect(stillStopped.note).not.toMatch(/Start the engine/)
+    expect(stillStopped.gas).not.toMatch(/fill with exhaust gas/)
   })
 
   it('explains the column, the plume and what is illustrative, in both views', () => {
@@ -29,11 +34,25 @@ describe('exhaust words', () => {
     expect(engine).toMatch(/surges into its header/)
     expect(engine).toMatch(/cooling plume/)
     expect(engine).toMatch(/pressure waves/)
+    // Arrival order sometimes matches the firing order; spacing always differs, so only spacing is claimed.
+    expect(engine).toMatch(/different spacing/)
+    expect(engine).not.toMatch(/different order/)
     expect(engine).toMatch(/Slowed 40×/)
     expect(engine).toMatch(/illustrative/)
     const detail = describeExhaust(spec('inline-6'), { v10: false, view: 'detail', ...running }).note
     expect(detail).toMatch(/surges into the header/)
     expect(detail).not.toMatch(/plume/)
+  })
+
+  it('follows the gas out of the pipework actually drawn', () => {
+    const note = (id: string, v10 = false) => describeExhaust(spec(id), { v10, view: 'engine', ...running }).note
+    expect(note('inline-4')).toMatch(/The collector carries it on, losing heat to the pipe walls, and out of the tailpipe as a cooling plume\./)
+    expect(note('v8-cross')).toMatch(/Each bank's collector carries it on, losing heat to the pipe walls, and out of that bank's own tailpipe as a cooling plume\./)
+    expect(note('v10-viper', true)).toMatch(/Each bank's collector/)
+    expect(note('v6-90-odd')).toMatch(/The banks' collectors carry it on, losing heat to the pipe walls, into one tailpipe behind the engine and out as a cooling plume\./)
+    expect(note('v10-magnum', true)).toMatch(/into one tailpipe behind the engine/)
+    // The note says "cooling" once, not twice in one breath.
+    for (const id of ['inline-4', 'v8-cross', 'v6-90-odd']) expect(note(id).match(/cooling/g)).toHaveLength(1)
   })
 
   it('adds the boxer’s unequal headers and the diesel’s cooler, sootier gas', () => {

@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest'
 import { MM } from '@/features/engine-lab/engineModel'
 import { ENGINE_GEOMETRY, crankPinPosition, strokeAt } from '@/features/engine-lab/kinematics'
 import { bankOf, engines, getEngine } from './engines'
-import { firingEvents } from './firing'
+import { firingEvents, pairedVIntervals } from './firing'
 import { rotationSense } from './animation'
-import { CUTAWAY_PITCH, cutawayLayout, cutawayMirror, cutawayState, cutawayToWorld } from './cutawayMath'
+import { CUTAWAY_PITCH, cutawayLayout, cutawayMirror, cutawayState, cutawayToWorld, exhaustSeats, exhaustSeatsKey } from './cutawayMath'
 
 /** Where the exhaust port leaves the side of the Engine Lab head, in a cylinder's own frame. */
 const PORT_EXIT = { z: -0.86, y: 2.55 }
@@ -92,6 +92,24 @@ describe('multi-cylinder cutaway phasing', () => {
         expect(Math.hypot(mirrored.pistonY * 100 - p.y, p.z)).toBeCloseTo(ENGINE_GEOMETRY.rodLengthMm, 7)
       }
     }
+  })
+
+  it('keys the exhaust by cylinder seat, so bank-angle and crankpin-split steps keep the pipework', () => {
+    const spec = getEngine('v6-90-odd')!
+    const place = (bankAngle: number, split: number) => {
+      const events = firingEvents(pairedVIntervals(spec.cylinders, bankAngle, split, spec.pairedV!.startWithPair), spec.order, bankOf(spec))
+      return cutawayLayout(spec, events, bankAngle, rotationSense(spec, events))
+    }
+    const stock = place(90, 0)
+    const key = exhaustSeatsKey(stock, false)
+    expect(exhaustSeatsKey(place(60, 30), false)).toBe(key)
+    expect(exhaustSeatsKey(place(90, -15), false)).toBe(key)
+    expect(exhaustSeats(key)).toEqual(stock.map((cylinder) => ({ index: cylinder.event.index, side: cylinder.side, x: cylinder.x })))
+    // The single-cylinder view draws its one cylinder at the origin, and picking another one is a new seat.
+    const [first, second] = stock
+    expect(exhaustSeats(exhaustSeatsKey([first!], true))).toEqual([{ index: first!.event.index, side: first!.side, x: 0 }])
+    expect(exhaustSeatsKey([second!], true)).not.toBe(exhaustSeatsKey([first!], true))
+    expect(exhaustSeats('')).toEqual([])
   })
 
   it('draws one crank per shared-pin pair and separate split/boxer throws', () => {

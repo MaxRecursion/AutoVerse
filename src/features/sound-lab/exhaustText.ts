@@ -28,6 +28,13 @@ export interface ExhaustWords {
 
 type Spec = Pick<EngineSpec, 'layout' | 'separateBanks' | 'ignition' | 'voice' | 'bankA' | 'bankB'>
 
+/** Where the gas goes after the headers, in the note: one collector, one per bank, or banks joining. */
+function outflow(spec: Spec): string {
+  if (spec.layout === 'inline') return 'The collector carries it on, losing heat to the pipe walls, and out of the tailpipe as a cooling plume.'
+  if (spec.separateBanks) return "Each bank's collector carries it on, losing heat to the pipe walls, and out of that bank's own tailpipe as a cooling plume."
+  return "The banks' collectors carry it on, losing heat to the pipe walls, into one tailpipe behind the engine and out as a cooling plume."
+}
+
 function pipework(spec: Spec, v10: boolean): string {
   if (v10) return spec.separateBanks ? "each bank's headers, collector and tailpipe" : "both banks' headers and collectors joining one tailpipe behind the engine"
   if (spec.layout === 'inline') return 'an exhaust manifold and tailpipe'
@@ -37,23 +44,25 @@ function pipework(spec: Spec, v10: boolean): string {
 export function describeExhaust(spec: Spec, state: ExhaustState): ExhaustWords {
   const { view, running, reduced } = state
   const moving = running && !reduced
+  // Reduced motion never draws the gas, running or not, so it is checked first.
   const gas = moving
     ? 'hot exhaust gas surges from each port as its valve opens, cools along the pipes and leaves as a fading plume'
-    : running
-      ? 'exhaust gas is hidden in the still view'
+    : reduced
+      ? 'exhaust gas is not drawn while motion is reduced'
       : 'the pipes fill with exhaust gas once the engine runs'
   let note: string
-  if (!running) note = 'Start the engine to fill the exhaust with gas.'
-  else if (reduced) note = 'Still view: the exhaust gas is hidden while motion is reduced.'
+  if (reduced) note = running ? 'Still view: the exhaust gas is hidden while motion is reduced.' : 'Still view: exhaust gas is not drawn while motion is reduced.'
+  else if (!running) note = 'Start the engine to fill the exhaust with gas.'
   else if (view === 'detail') {
     note = `When the exhaust valve opens, a hot burst of gas surges into the header; the rising piston pushes out the rest, then the gas waits until the valve opens again. Slowed ${VISUAL_SLOWDOWN}× with the mechanism; heat colours and haze are illustrative.`
   } else {
     const longBank = longHeaderSide(spec)
     note = [
       'When an exhaust valve opens, a hot burst of gas surges into its header; the rising piston pushes out the rest, then the gas waits there until the valve opens again.',
-      'The collectors carry it, cooling, out of the tailpipe as a cooling plume.',
+      outflow(spec),
       longBank ? `Bank ${longBank}'s pipes are longer, so its gas reaches the shared pipe later: the boxer's unequal-length headers.` : '',
-      'The sound travels as pressure waves many times faster than the gas, so the gas reaches the tailpipe in a different order from the firing rhythm you hear.',
+      // Arrival spacing always differs (routes differ in length); the order sometimes does too, so only spacing is claimed.
+      'Sound travels through the exhaust as pressure waves, many times faster than the gas itself, so puffs of gas reach the tailpipe with different spacing from the rhythm you hear.',
       `Slowed ${VISUAL_SLOWDOWN}× with the mechanism; heat colours, haze and pipe glow are illustrative, and the pipework is simplified (no catalytic converters, silencers or turbochargers).`,
     ]
       .filter(Boolean)

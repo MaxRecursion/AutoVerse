@@ -1,7 +1,7 @@
-import { CatmullRomCurve3, Vector3, type BufferGeometry } from 'three'
+import { CatmullRomCurve3, DoubleSide, FrontSide, Vector3, type BufferGeometry } from 'three'
 import { describe, expect, it } from 'vitest'
-import { CYCLE_GAS, FLOW_SPEED, HEADER_RADIUS, LABEL_WRAP_CYCLES, PLUME_LENGTH, exhaustDrive, parcelAt, portTemperature, travelDeg, type Vec3 } from './exhaust'
-import { NOISE_PERIOD, buildGasGeometry, noiseStep, noiseVolume, plumeNoiseStep, wrapNoise, type GasRoute } from './exhaustGas'
+import { CYCLE_GAS, FLOW_SPEED, HEADER_RADIUS, LABEL_WRAP_CYCLES, PLUME_LENGTH, exhaustDrive, parcelAt, parcelTemperature, portTemperature, travelDeg, type Vec3 } from './exhaust'
+import { NOISE_PERIOD, buildGasGeometry, createGasMaterial, createPlumeMaterial, noiseStep, noiseVolume, plumeNoiseStep, wrapNoise, type GasRoute } from './exhaustGas'
 
 /** Recover each sampled cross-section's centre, ignoring its duplicated UV-seam vertex. */
 function rings(geometry: BufferGeometry) {
@@ -151,8 +151,7 @@ describe('exhaust gas geometry', () => {
       expect(travel + 36).toBeLessThan(200)
       expect(parcel.age).toBeGreaterThan(200)
       const drive = exhaustDrive({ running: true, rpm: 800, throttle: 0, limiting: false }, { idleRpm: 800, redlineRpm: 6000, ignition: 'spark' })
-      const hot = portTemperature(parcel.emitDeg) * drive.heat
-      const temperature = 0.22 + (hot - 0.22) * Math.exp(-parcel.age * drive.ageScale)
+      const temperature = parcelTemperature(parcel, drive.heat, 0.22, drive.ageScale)
       expect(temperature).toBeCloseTo(0.237701867, 7)
       // The same parcel crosses into the plume; its temperature must not reset to the exit phase.
       const reheated = portTemperature(105 - travel) * drive.heat * Math.exp(-travel * drive.ageScale)
@@ -238,6 +237,44 @@ describe('exhaust gas geometry', () => {
   it('wraps the gas labels exactly on the noise volume’s tile', () => {
     const tiles = (LABEL_WRAP_CYCLES * CYCLE_GAS) / NOISE_PERIOD
     expect(Math.abs(tiles - Math.round(tiles))).toBeLessThan(1e-9)
+  })
+})
+
+describe('exhaust gas shader', () => {
+  const fragment = createGasMaterial('low').fragmentShader
+
+  it('carries each cylinder’s header residence into its plume', () => {
+    // The plume labels gas by when it left the end of the cylinder's own (curved) header…
+    expect(fragment).toMatch(/shareAt\(exitPhase\) - uHeaderLength\[slot\] \/ CYCLE_GAS/)
+    // …then ages and cools it exactly as in the pipes (exhaust.ts parcelTemperature).
+    expect(fragment).toMatch(/totalHeat \+= contribution \* parcelTemperature\(parcel\)/)
+    expect(fragment).toMatch(/smoothstep\(parcel\.y, parcel\.y \+ 36\.0, uRun\)/)
+  })
+
+  it('moves eddies past the header with the gas, not with the share of the cycle out', () => {
+    expect(fragment).toMatch(/\(\(clock\.z - wraps\) \* 720\.0 \+ exitPhase\) \* FLOW_SPEED/)
+  })
+
+  it('fills a plume seen end-on: plumes on both faces in one pass, half a chord each; pipe gas on its front faces', () => {
+    const gas = createGasMaterial('high')
+    const plume = createPlumeMaterial(gas)
+    expect(gas.side).toBe(FrontSide)
+    expect(plume.side).toBe(DoubleSide)
+    expect(plume.forceSinglePass).toBe(true)
+    // One shader and one set of uniforms: every per-frame update reaches the plumes too.
+    expect(plume.uniforms).toBe(gas.uniforms)
+    expect(plume.fragmentShader).toBe(gas.fragmentShader)
+    expect(plume.defines).toEqual(gas.defines)
+    expect(plume.blending).toBe(gas.blending)
+    expect(plume.depthWrite).toBe(false)
+    expect(fragment).toMatch(/\* \(plume \? 0\.5 : 1\.0\);/)
+    // Two halves of a chord, blended over one another, block exactly as much light as the whole.
+    for (const x of [0.05, 0.8, 4]) {
+      const half = 1 - Math.exp(-x / 2)
+      expect(1 - (1 - half) ** 2).toBeCloseTo(1 - Math.exp(-x), 12)
+    }
+    plume.dispose()
+    gas.dispose()
   })
 })
 
