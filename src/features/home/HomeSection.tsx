@@ -20,18 +20,18 @@ interface HomeSectionProps {
 export function HomeSection({ id, eyebrow, title, description, action, children, className }: HomeSectionProps) {
   const headingId = `${id}-heading`
   return (
-    <section id={id} aria-labelledby={headingId} className={cn('mx-auto w-full max-w-[1400px] scroll-mt-20 px-4 sm:px-6', className)}>
+    <section id={id} aria-labelledby={headingId} className={cn('min-w-0 scroll-mt-20', className)}>
       <Reveal>
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-b border-line/[0.06] pb-4">
+        <div className="mb-3 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 border-b border-line/[0.06] pb-3">
           <div className="max-w-2xl">
             <p className="eyebrow flex items-center gap-2">
               <span aria-hidden className="h-px w-5 bg-cyan" />
               {eyebrow}
             </p>
-            <h2 id={headingId} className="mt-2 text-2xl font-semibold text-paper sm:text-3xl">
+            <h2 id={headingId} className="mt-1 text-lg font-semibold text-paper sm:text-xl">
               {title}
             </h2>
-            {description && <p className="mt-2 leading-relaxed text-steel-300">{description}</p>}
+            {description && <p className="mt-1 text-sm leading-relaxed text-steel-300">{description}</p>}
           </div>
           {action && (
             <Link to={action.to} className="relative hit-area inline-flex min-h-10 items-center gap-1.5 rounded-md text-sm text-steel-300 transition-colors hover:text-cyan">

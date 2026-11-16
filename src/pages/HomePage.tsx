@@ -32,20 +32,20 @@ export default function HomePage() {
   useHomeTitle()
   return (
     <HomeMotion>
-      <div className="pb-16 lg:pb-24">
+      <div className="pb-10">
         <HeroSection />
-        <div className="flex flex-col gap-16 pt-10 lg:gap-24 lg:pt-14">
-          <EngineSoundSpotlight />
-          <LearningJourney />
-          <div className="mx-auto w-full max-w-[1400px] px-4 empty:hidden sm:px-6">
+        <div className="mx-auto grid w-full max-w-[1400px] grid-cols-1 gap-4 px-4 pt-4 sm:px-6 lg:grid-cols-12">
+          <div className="min-w-0 lg:col-span-8"><EngineSoundSpotlight /></div>
+          <div className="min-w-0 lg:col-span-4"><LearningJourney /></div>
+          <div className="grid min-w-0 grid-cols-1 items-start gap-4 empty:hidden lg:col-span-12 lg:grid-cols-2 [&>*:only-child]:lg:col-span-2">
             <GettingStarted variant="home" />
+            <ContinueLearning />
           </div>
-          <ContinueLearning />
-          <HomeSearch />
-          <FeaturedLabs />
-          <BeginnerPath />
-          <CategoryGrid />
-          <SystemMapTeaser />
+          <div className="min-w-0 lg:col-span-12"><HomeSearch /></div>
+          <div className="min-w-0 lg:col-span-12"><FeaturedLabs /></div>
+          <div className="min-w-0 lg:col-span-12"><BeginnerPath /></div>
+          <div className="min-w-0 lg:col-span-8"><CategoryGrid /></div>
+          <div className="min-w-0 lg:col-span-4"><SystemMapTeaser /></div>
         </div>
       </div>
     </HomeMotion>

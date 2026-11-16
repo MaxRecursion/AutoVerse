@@ -167,7 +167,7 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, run
   )
 
   return (
-    <section className="min-w-0 overflow-hidden rounded-xl border border-cyan/20 bg-graphite-950/60" aria-labelledby="engine-cutaway-heading" data-testid="engine-cutaway" data-view={view} data-scene={v10 ? 'v10' : 'generic'}>
+    <section className="flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-cyan/20 bg-graphite-950/60" aria-labelledby="engine-cutaway-heading" data-testid="engine-cutaway" data-view={view} data-scene={v10 ? 'v10' : 'generic'}>
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line/[0.06] px-3 py-2">
         <div>
           <h3 id="engine-cutaway-heading" className="flex items-center gap-2 text-sm font-semibold text-paper"><Box aria-hidden className="size-4 text-cyan" />3D engine cutaway</h3>
@@ -181,7 +181,7 @@ export default function EngineCutaway({ spec, events, bankAngle, sense, bus, run
       </div>
 
       <LabStoreContext.Provider value={store}>
-        <div ref={viewport} className={cn('min-w-0 bg-[radial-gradient(ellipse_at_center,rgb(56_215_242/0.035),transparent_70%)]', expanded ? 'h-[min(70svh,640px)]' : 'h-[clamp(240px,32svh,360px)]')} data-testid="engine-cutaway-canvas">
+        <div ref={viewport} className={cn('min-w-0 grow bg-[radial-gradient(ellipse_at_center,rgb(56_215_242/0.035),transparent_70%)]', expanded ? 'h-[min(70svh,640px)]' : 'h-[clamp(240px,32svh,360px)]')} data-testid="engine-cutaway-canvas">
           {mounted ? (
             <SceneCanvas
               label={

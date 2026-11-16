@@ -53,23 +53,23 @@ export function SystemMapTeaser() {
     return topic ? [{ ...s, topic }] : []
   })
   return (
-    <section aria-labelledby="map-teaser-heading" className="mx-auto w-full max-w-[1400px] px-4 sm:px-6">
+    <section aria-labelledby="map-teaser-heading" className="h-full min-w-0">
       <Reveal>
-        <div className="panel relative isolate grid grid-cols-1 gap-8 overflow-hidden p-5 sm:p-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12 lg:p-10">
+        <div className="panel relative isolate grid h-full grid-cols-1 gap-4 overflow-hidden p-4">
           <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-blueprint opacity-70" />
           <div className="flex flex-col items-start">
             <p className="eyebrow flex items-center gap-2">
               <span aria-hidden className="h-px w-5 bg-cyan" />
               System map
             </p>
-            <h2 id="map-teaser-heading" className="mt-2 text-2xl font-semibold text-paper sm:text-3xl">
+            <h2 id="map-teaser-heading" className="mt-1 text-xl font-semibold text-paper">
               See how it all connects
             </h2>
-            <p className="mt-3 max-w-md leading-relaxed text-steel-300">
+            <p className="mt-2 max-w-md text-sm leading-relaxed text-steel-300">
               Power takes a long route from the crankshaft to the road. Follow it through every component, and see which systems keep the
               whole machine running along the way.
             </p>
-            <Button asChild size="lg" className="mt-6 h-11 px-5">
+            <Button asChild size="lg" className="mt-3 h-10 px-3 pointer-coarse:min-h-11">
               <Link to="/map">
                 <Network aria-hidden />
                 Open the system map
@@ -77,7 +77,7 @@ export function SystemMapTeaser() {
               </Link>
             </Button>
             {support.length > 0 && (
-              <div className="mt-8 w-full">
+              <div className="mt-3 w-full">
                 <p className="eyebrow mb-2">Supporting systems</p>
                 <ul className="flex flex-wrap gap-1.5 pointer-coarse:gap-y-3">
                   {support.map((s) => (
@@ -111,13 +111,13 @@ export function SystemMapTeaser() {
                     {topic ? (
                       <Link
                         to={topicHref(topic)}
-                        className="group flex min-h-14 items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-tint/[0.04]"
+                        className="group flex min-h-11 items-center gap-2 rounded-lg px-2 py-1.5 transition-colors hover:bg-tint/[0.04]"
                       >
                         <NodeBody index={i} node={node} />
                         <ArrowUpRight aria-hidden className="size-4 shrink-0 text-steel-500 transition-colors group-hover:text-cyan" />
                       </Link>
                     ) : (
-                      <div className="flex min-h-14 items-center gap-3 px-3 py-2">
+                      <div className="flex min-h-11 items-center gap-2 px-2 py-1.5">
                         <NodeBody index={i} node={node} />
                       </div>
                     )}

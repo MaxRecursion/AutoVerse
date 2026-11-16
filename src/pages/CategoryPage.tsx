@@ -52,17 +52,19 @@ export default function CategoryPage() {
   const nextCategory: Category | undefined = categories[index + 1]
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
+    <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 lg:py-6">
       <Breadcrumbs items={[{ label: 'Learn', to: '/learn' }, { label: category.title }]} />
-      <header className="max-w-3xl">
-        <p className="eyebrow flex items-center gap-2">
-          <CategoryIcon name={category.icon} className="size-3.5 text-cyan" />
-          Category
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold text-paper sm:text-4xl">{category.title}</h1>
-        <p className="mt-3 text-lg leading-relaxed text-steel-300">{category.summary}</p>
+      <header className="grid grid-cols-1 gap-3 lg:grid-cols-12">
+        <div className={`panel min-w-0 p-4 ${list.length ? 'lg:col-span-8' : 'lg:col-span-12'}`}>
+          <p className="eyebrow flex items-center gap-2">
+            <CategoryIcon name={category.icon} className="size-3.5 text-cyan" />
+            Category
+          </p>
+          <h1 className="mt-1 text-2xl font-semibold text-paper sm:text-3xl">{category.title}</h1>
+          <p className="mt-2 max-w-3xl text-sm leading-relaxed text-steel-300">{category.summary}</p>
+        </div>
         {list.length > 0 && (
-          <div className="mt-6 flex flex-wrap items-center gap-4">
+          <div className="panel flex min-w-0 flex-col justify-between gap-3 p-4 lg:col-span-4">
             <div className="flex items-center gap-3" role="group" aria-label="Your progress in this system">
               <span className="relative grid place-items-center">
                 <ProgressRing percent={Math.round((doneCount / list.length) * 100)} size={44} stroke={4} />
@@ -75,13 +77,13 @@ export default function CategoryPage() {
               </span>
             </div>
             {next ? (
-              <Button asChild className="h-11 px-5">
+              <Button asChild className="h-auto min-h-10 w-full justify-between whitespace-normal px-3 py-2 text-left">
                 <Link to={topicHref(next)}>
                   {started ? 'Continue' : 'Start here'}: {next.title} <ArrowRight aria-hidden />
                 </Link>
               </Button>
             ) : (
-              <Button asChild variant="outline" className="h-11 px-5">
+              <Button asChild variant="outline" className="h-10 w-full px-3">
                 <Link to="/progress">See your progress</Link>
               </Button>
             )}
@@ -89,9 +91,9 @@ export default function CategoryPage() {
         )}
       </header>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <section aria-labelledby="lessons-heading">
-          <h2 id="lessons-heading" className="mb-4 text-lg font-semibold text-paper">
+      <div className="mt-3 grid grid-cols-1 items-start gap-3 lg:grid-cols-12" data-testid="category-workspace">
+        <section aria-labelledby="lessons-heading" className="panel min-w-0 p-4 lg:col-span-8">
+          <h2 id="lessons-heading" className="mb-4 text-base font-semibold text-paper">
             Learn it from the surface down <span className="font-mono text-xs font-normal text-steel-500">{list.length} lessons</span>
           </h2>
           {list.length ? (
@@ -107,18 +109,18 @@ export default function CategoryPage() {
           )}
         </section>
 
-        <aside className="flex flex-col gap-8" aria-label="More for this category">
+        <aside className="grid min-w-0 grid-cols-1 items-start gap-3 sm:grid-cols-2 lg:col-span-4 lg:grid-cols-1" aria-label="More for this category">
           {relatedLabs.length > 0 && (
-            <section aria-labelledby="lab-heading">
-              <h2 id="lab-heading" className="mb-3 text-lg font-semibold text-paper">
+            <section aria-labelledby="lab-heading" className="panel min-w-0 p-4">
+              <h2 id="lab-heading" className="mb-2 text-base font-semibold text-paper">
                 Try it in 3D
               </h2>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-2">
                 {relatedLabs.map((lab) => (
                   <li key={lab.id}>
                     <Link
                       to={`/labs/${lab.id}`}
-                      className="group panel flex flex-col gap-2 p-4 transition-colors hover:border-cyan/40"
+                      className="group flex min-w-0 flex-col gap-1.5 rounded-lg border border-line/[0.06] bg-graphite-950/35 p-3 transition-colors hover:border-cyan/40"
                     >
                       <span className="flex items-center gap-2 text-cyan">
                         <Box aria-hidden className="size-4" />
@@ -134,8 +136,8 @@ export default function CategoryPage() {
           )}
 
           {people.length > 0 && (
-            <section aria-labelledby="people-heading">
-              <h2 id="people-heading" className="mb-3 text-lg font-semibold text-paper">
+            <section aria-labelledby="people-heading" className="panel min-w-0 p-4">
+              <h2 id="people-heading" className="mb-2 text-base font-semibold text-paper">
                 Meet the engineers
               </h2>
               <ul className="flex flex-col gap-2">
@@ -143,11 +145,10 @@ export default function CategoryPage() {
                   <li key={p.id}>
                     <Link
                       to={`/pioneers?focus=${p.id}`}
-                      className="group flex min-h-14 flex-col justify-center rounded-xl border border-amber/20 bg-amber/[0.035] px-4 py-2.5 transition-colors hover:border-amber/50"
+                      className="group grid min-h-11 grid-cols-[3rem_minmax(0,1fr)] items-start gap-x-2 rounded-lg border border-amber/20 bg-amber/[0.035] px-2.5 py-2 transition-colors hover:border-amber/50"
                     >
-                      <span className="eyebrow text-amber">{p.year}</span>
-                      <span className="font-medium text-paper group-hover:text-amber">{p.name}</span>
-                      <span className="text-xs leading-snug text-steel-400">{p.headline}</span>
+                      <span className="eyebrow pt-0.5 text-amber">{p.year}</span>
+                      <span className="min-w-0"><span className="block text-sm font-medium text-paper group-hover:text-amber">{p.name}</span><span className="mt-0.5 block text-xs leading-snug text-steel-400">{p.headline}</span></span>
                     </Link>
                   </li>
                 ))}
@@ -158,8 +159,8 @@ export default function CategoryPage() {
             </section>
           )}
 
-          <section aria-labelledby="reading-heading">
-            <h2 id="reading-heading" className="text-lg font-semibold text-paper">
+          <section aria-labelledby="reading-heading" className="panel min-w-0 p-4 sm:col-span-2 lg:col-span-1">
+            <h2 id="reading-heading" className="text-base font-semibold text-paper">
               Further reading
             </h2>
             <p className="mt-1 text-xs leading-relaxed text-steel-400">
@@ -170,7 +171,7 @@ export default function CategoryPage() {
         </aside>
       </div>
 
-      <nav aria-label="Other categories" className="mt-16 flex flex-col gap-2 border-t border-line/[0.06] pt-6 sm:flex-row sm:justify-between">
+      <nav aria-label="Other categories" className="mt-6 flex flex-col gap-2 border-t border-line/[0.06] pt-4 sm:flex-row sm:justify-between">
         {prev ? (
           <Link to={`/learn/${prev.slug}`} className="group flex min-h-11 pointer-coarse:min-h-12 items-center gap-2 text-sm text-steel-300 hover:text-cyan">
             <ArrowLeft aria-hidden className="size-4" />

@@ -232,6 +232,30 @@
 }
 
 @layer components {
+  /* Use the available content width: the course outline can share a laptop screen with a lab. */
+  .sound-engine {
+    container-type: inline-size;
+  }
+  .sound-bento {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .sound-bento-identity {
+    grid-column: 1 / -1;
+  }
+  .sound-bento-secondary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @container (min-width: 700px) {
+    .sound-bento {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    }
+    .sound-bento-secondary {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
   /* A destination keeps its colour across desktop, drawer and footer links. */
   .navigation-link {
     display: inline-flex;

@@ -66,21 +66,21 @@ export default function PioneersPage() {
   const years = pioneers.length ? `${pioneers[0]!.sortYear}–${pioneers[pioneers.length - 1]!.sortYear}` : ''
 
   return (
-    <div className="mx-auto max-w-4xl px-4 pb-20 pt-6 sm:px-6 lg:pt-10">
+    <div className="mx-auto max-w-6xl px-4 pb-12 pt-4 sm:px-6">
       <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Pioneers' }]} />
       <header>
         <p className="eyebrow text-amber">Engineering history</p>
-        <h1 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">The engineers behind the parts</h1>
-        <p className="mt-4 max-w-2xl text-[17px] leading-relaxed text-steel-300">
+        <h1 className="mt-1 text-2xl font-semibold tracking-tight sm:text-3xl">The engineers behind the parts</h1>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-steel-300">
           Every part in a car was somebody’s problem first. Here are {pioneers.length} of the people who solved them, from {years}, each linked to the
           lessons and parts they shaped.
         </p>
-        <p className="mt-3 max-w-2xl text-sm text-steel-400">
+        <p className="mt-2 max-w-3xl text-xs text-steel-400">
           Each story is retold in our own words from the source it cites. Where historians disagree, or a popular tale is doubtful, the card says so.
         </p>
       </header>
 
-      <div className="z-20 -mx-4 mt-8 sm:sticky sm:top-[calc(3.5rem+env(safe-area-inset-top))] border-y border-line/[0.06] bg-graphite-950/90 px-4 py-3 backdrop-blur-lg sm:-mx-6 sm:px-6">
+      <div className="z-20 -mx-4 mt-4 sm:sticky sm:top-[calc(3.5rem+env(safe-area-inset-top))] border-y border-line/[0.06] bg-graphite-950/90 px-4 py-2 backdrop-blur-lg sm:-mx-6 sm:px-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <label className="relative block flex-1">
             <span className="sr-only">Search engineers</span>
@@ -121,7 +121,7 @@ export default function PioneersPage() {
       {eras.length === 0 ? (
         <p className="mt-12 text-center text-steel-400">No engineers match “{query}”{system !== 'all' ? ` in ${getCategory(system)?.title ?? system}` : ''}.</p>
       ) : (
-        <div className="mt-10 flex flex-col gap-12">
+        <div className="mt-4 flex flex-col gap-6">
           {eras.map(({ era, items }) => (
             <section key={era.id} aria-labelledby={`era-${era.id}`}>
               <div className="flex items-baseline gap-3">
@@ -130,10 +130,9 @@ export default function PioneersPage() {
                 </h2>
                 <span className="font-mono text-xs text-amber">{era.range}</span>
               </div>
-              <ol className="relative mt-5 flex flex-col gap-4 border-l border-amber/25 pl-5 sm:pl-8">
+              <ol className="mt-3 grid grid-cols-1 items-start gap-3 md:grid-cols-2">
                 {items.map((p) => (
                   <li key={p.id} className="relative">
-                    <span aria-hidden className="absolute -left-[27px] top-6 size-3 rounded-full border-2 border-amber bg-graphite-950 sm:-left-[39px]" />
                     <PioneerCard pioneer={p} showSystem open={isOpen(p.id)} onOpenChange={(v) => setOpen((o) => ({ ...o, [p.id]: v }))} />
                   </li>
                 ))}

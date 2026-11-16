@@ -41,7 +41,7 @@ export function HeroSection() {
       />
 
       {/* Phones: copy, engine, then figures. Wide screens: copy over figures, the engine spanning both rows. */}
-      <div className="mx-auto grid w-full max-w-[1400px] grid-cols-1 gap-8 px-4 pb-12 pt-6 sm:gap-10 sm:px-6 sm:pt-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:grid-rows-[auto_auto] lg:gap-x-14 lg:pb-20 lg:pt-16">
+      <div className="mx-auto grid w-full max-w-[1400px] grid-cols-1 gap-4 px-4 py-4 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:grid-rows-[auto_auto] lg:gap-x-6 lg:py-6">
         <div className="max-w-xl lg:col-start-1 lg:row-start-1 lg:self-end">
           <p className="eyebrow flex items-center gap-2">
             <span aria-hidden className="h-px w-6 bg-cyan" />
@@ -49,31 +49,31 @@ export function HeroSection() {
           </p>
           <h1
             id="home-heading"
-            className="mt-4 text-[2.65rem] font-semibold leading-[1.02] tracking-tight text-paper sm:text-6xl xl:text-[4.5rem]"
+            className="mt-2 text-3xl font-semibold leading-[1.05] tracking-tight text-paper sm:text-4xl xl:text-5xl"
           >
             See it move.<br />{' '}Hear it fire<span className="text-amber">.</span>
           </h1>
-          <p className="mt-5 max-w-lg text-base leading-relaxed text-steel-300 sm:text-lg">
+          <p className="mt-3 max-w-lg text-sm leading-relaxed text-steel-300">
             From an inline-three to a V10: hear how production engine layouts, bank angles and firing orders shape the rhythm.
             Then take the machinery apart with interactive 3D labs and plain-language lessons.
           </p>
 
-          <div className="mt-8 grid gap-2.5 sm:flex sm:flex-wrap">
-            <Button asChild size="lg" className="h-11 px-5 text-[15px]">
+          <div className="mt-4 grid grid-cols-1 gap-2 sm:flex sm:flex-wrap">
+            <Button asChild size="lg" className="h-10 px-3 text-sm pointer-coarse:min-h-11">
               <Link to="/sound-lab">
                 <AudioLines aria-hidden />
                 Open Engine Sound Lab
                 <ArrowRight aria-hidden />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="h-11 border-line/12 bg-graphite-900/60 px-5 text-[15px] hover:border-cyan/40">
+            <Button asChild size="lg" variant="outline" className="h-10 border-line/12 bg-graphite-900/60 px-3 text-sm pointer-coarse:min-h-11 hover:border-cyan/40">
               <Link to={startHref}>
                 <GraduationCap aria-hidden />
                 {startLabel}
                 <ArrowRight aria-hidden />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="ghost" className="h-11 px-4 text-[15px] text-paper hover:text-cyan">
+            <Button asChild size="lg" variant="ghost" className="h-10 px-3 text-sm text-paper pointer-coarse:min-h-11 hover:text-cyan">
               <Link to="/explore">
                 <Car aria-hidden />
                 Explore the Car
@@ -93,12 +93,12 @@ export function HeroSection() {
         </div>
 
         <Reveal trigger="mount" delay={0.1} className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:self-center">
-          <HeroEngine />
+          <HeroEngine compact />
         </Reveal>
 
-        <dl className="grid w-full max-w-md grid-cols-3 divide-x divide-line/[0.08] self-start border-y border-line/[0.08] lg:col-start-1 lg:row-start-2">
+        <dl className="grid w-full max-w-md grid-cols-3 gap-2 self-start lg:col-start-1 lg:row-start-2">
           {stats.map((s) => (
-            <div key={s.label} className="flex flex-col-reverse justify-end gap-1 px-3 py-3 first:pl-0">
+            <div key={s.label} className="panel flex flex-col-reverse justify-end gap-1 px-3 py-2">
               <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-steel-400">{s.label}</dt>
               <dd className="font-display text-2xl tabular-nums text-paper">{s.value}</dd>
             </div>

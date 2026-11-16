@@ -56,8 +56,8 @@ export function BeginnerPath() {
 
   return (
     <HomeSection id="path" eyebrow={`${started ? 'Your' : 'Suggested'} ${DIFFICULTY_LABEL[path.level].toLowerCase()} learning path`} title={title} description={path.summary}>
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-8">
-        <div className="panel flex flex-col gap-5 self-start p-5 lg:sticky lg:top-20">
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,3fr)_minmax(0,9fr)]">
+        <div className="panel flex flex-col gap-3 self-start p-4 lg:sticky lg:top-20">
           <dl className="grid grid-cols-2 gap-3">
             <div>
               <dt className="eyebrow">Lessons</dt>
@@ -89,7 +89,7 @@ export function BeginnerPath() {
           )}
         </div>
 
-        <ol className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-3">
+        <ol className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">
           {stops.map((t, i) => {
             const done = !!completed[t.id]
             const isNext = next?.id === t.id
@@ -99,14 +99,14 @@ export function BeginnerPath() {
                   to={topicHref(t)}
                   aria-current={isNext ? 'step' : undefined}
                   className={cn(
-                    'group panel flex h-full gap-3 p-4 transition-colors hover:border-cyan/35 hover:bg-graphite-850/90',
+                    'group panel flex h-full gap-2 p-3 transition-colors hover:border-cyan/35 hover:bg-graphite-850/90',
                     isNext && 'border-amber/35',
                   )}
                 >
                   <span
                     aria-hidden
                     className={cn(
-                      'grid size-9 shrink-0 place-items-center rounded-full border font-mono text-xs tabular-nums',
+                      'grid size-7 shrink-0 place-items-center rounded-full border font-mono text-xs tabular-nums',
                       done ? 'border-ok/40 text-ok' : isNext ? 'border-amber/60 text-amber' : 'border-line/10 text-steel-400',
                     )}
                   >
@@ -114,7 +114,7 @@ export function BeginnerPath() {
                   </span>
                   <span className="flex min-w-0 flex-1 flex-col gap-1.5">
                     <span className="sr-only">Step {i + 1}: </span>
-                    <span className="font-medium leading-snug text-paper transition-colors group-hover:text-cyan">{t.title}</span>
+                    <span className="text-sm font-medium leading-snug text-paper transition-colors group-hover:text-cyan">{t.title}</span>
                     <span className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-steel-400">
                       <DifficultyMeter difficulty={t.difficulty} className="text-[11px] text-steel-400" />
                       <span className="inline-flex items-center gap-1">

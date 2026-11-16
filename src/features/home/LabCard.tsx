@@ -83,18 +83,18 @@ export function LabCard({ overview, headingLevel: Heading = 'h3' }: { overview: 
 const PART_PREVIEW = 6
 
 /** Detailed lab card (labs index): systems and parts covered, lessons, and actions. */
-export function LabIndexCard({ overview }: { overview: LabOverview }) {
+export function LabIndexCard({ overview, compact = false }: { overview: LabOverview; compact?: boolean }) {
   const { lab, lesson, system, parts, lessons } = overview
   const titleId = `lab-${lab.id}-title`
   const more = parts.length - PART_PREVIEW
   return (
-    <article aria-labelledby={titleId} className="panel flex h-full flex-col overflow-hidden sm:flex-row">
-      <div className="relative h-40 shrink-0 border-b border-line/[0.06] bg-graphite-950 bg-blueprint sm:h-auto sm:min-h-56 sm:w-48 sm:border-b-0 sm:border-r lg:w-60">
-        <LabGlyph labId={lab.id} className="absolute inset-0 m-auto h-[72%] w-auto sm:h-auto sm:w-[78%]" />
+    <article aria-labelledby={titleId} className={cn('panel flex h-full flex-col overflow-hidden', !compact && 'sm:flex-row')}>
+      <div className={cn('relative shrink-0 border-b border-line/[0.06] bg-graphite-950 bg-blueprint', compact ? 'h-24' : 'h-40 sm:h-auto sm:min-h-56 sm:w-48 sm:border-b-0 sm:border-r lg:w-60')}>
+        <LabGlyph labId={lab.id} className={cn('absolute inset-0 m-auto h-[72%] w-auto', !compact && 'sm:h-auto sm:w-[78%]')} />
         <span className="annotation absolute left-3 top-3 uppercase text-steel-500">{labNumber(lab)}</span>
       </div>
 
-      <div className="grid min-w-0 flex-1 grid-cols-1 gap-4 p-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-8 lg:p-6">
+      <div className={cn('grid min-w-0 flex-1 grid-cols-1', compact ? 'gap-3 p-4' : 'gap-4 p-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-8 lg:p-6')}>
         <div className="flex min-w-0 flex-col gap-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
             {system ? <p className="eyebrow">{system.title}</p> : <span />}
@@ -126,7 +126,7 @@ export function LabIndexCard({ overview }: { overview: LabOverview }) {
           </div>
         </div>
 
-        <dl className="grid min-w-0 content-start gap-3 border-t border-line/[0.06] pt-4 text-sm lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
+        <dl className={cn('grid min-w-0 content-start gap-3 border-t border-line/[0.06] pt-3 text-sm', compact ? 'sm:grid-cols-2' : 'lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0')}>
           <div>
             <dt className="eyebrow mb-1">System covered</dt>
             <dd>

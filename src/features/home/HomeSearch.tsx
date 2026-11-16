@@ -27,7 +27,7 @@ export function SearchEntry({ query, placeholder = 'Search lessons, labs and par
         onClick={() => openSearch(query)}
         aria-haspopup="dialog"
         aria-keyshortcuts={apple ? 'Meta+K /' : 'Control+K /'}
-        className="group flex min-h-13 w-full items-center gap-3 rounded-xl border border-line/10 bg-graphite-950/80 px-4 text-left text-steel-400 shadow-[inset_0_1px_0_0_rgb(255_255_255/0.03)] transition-colors hover:border-cyan/40 hover:text-steel-300"
+        className="group flex min-h-11 w-full items-center gap-3 rounded-xl border border-line/10 bg-graphite-950/80 px-4 text-left text-steel-400 shadow-[inset_0_1px_0_0_rgb(255_255_255/0.03)] transition-colors hover:border-cyan/40 hover:text-steel-300"
       >
         <Search aria-hidden className="size-5 shrink-0 text-steel-400 transition-colors group-hover:text-cyan" />
         <span className="min-w-0 flex-1 truncate text-[15px]">{placeholder}</span>
@@ -59,8 +59,8 @@ export function SearchEntry({ query, placeholder = 'Search lessons, labs and par
 /** Homepage band: global search entry. */
 export function HomeSearch() {
   return (
-    <section aria-labelledby="home-search-heading" className="mx-auto w-full max-w-[1400px] px-4 sm:px-6">
-      <div className="panel grid grid-cols-1 gap-5 p-4 sm:p-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:items-center lg:gap-10">
+    <section aria-labelledby="home-search-heading" className="min-w-0">
+      <div className="panel grid grid-cols-1 gap-3 p-4 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:items-center lg:gap-4">
         <div>
           <h2 id="home-search-heading" className="text-lg font-semibold text-paper sm:text-xl">
             Looking for something specific?

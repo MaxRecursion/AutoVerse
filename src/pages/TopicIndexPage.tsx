@@ -72,11 +72,11 @@ export default function TopicIndexPage() {
   }, [])
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:py-12">
+    <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6 lg:py-6">
       <header className="max-w-3xl">
         <p className="eyebrow">Learn</p>
-        <h1 className="mt-2 text-3xl font-semibold text-paper sm:text-4xl">Every lesson, one place</h1>
-        <p className="mt-3 leading-relaxed text-steel-300">
+        <h1 className="mt-1 text-2xl font-semibold text-paper sm:text-3xl">Every lesson, one place</h1>
+        <p className="mt-2 text-sm leading-relaxed text-steel-300">
           {topics.length} {topics.length === 1 ? 'lesson' : 'lessons'} across {categories.length} categories, from first principles to
           engineering detail. Lessons marked “Interactive 3D” include a working laboratory.
         </p>
@@ -92,7 +92,7 @@ export default function TopicIndexPage() {
         onChange={update}
       />
 
-      <p className="mt-6 text-sm text-steel-400" role="status" aria-live="polite">
+      <p className="mt-3 text-sm text-steel-400" role="status" aria-live="polite">
         {results.length === 0
           ? 'No lessons match these filters.'
           : filtered
@@ -103,25 +103,25 @@ export default function TopicIndexPage() {
       {results.length === 0 ? (
         <EmptyResults query={query} onClear={() => update({ query: null, category: null, difficulty: null, interactive: null })} />
       ) : (
-        <div className="mt-4 flex flex-col gap-10">
+        <div className="mt-3 grid grid-cols-1 items-start gap-3 md:grid-cols-2" data-testid="lesson-catalog-grid">
           {groups.map(({ category, topics: list }) => (
-            <section key={category?.id ?? 'other'} aria-labelledby={`group-${category?.id ?? 'other'}`}>
-              <div className="mb-3 flex flex-wrap items-end justify-between gap-2 border-b border-line/[0.06] pb-2">
-                <h2 id={`group-${category?.id ?? 'other'}`} className="flex items-center gap-2 text-lg font-semibold text-paper">
+            <section key={category?.id ?? 'other'} aria-labelledby={`group-${category?.id ?? 'other'}`} className={cn('panel min-w-0 p-3', list.length > 3 && 'md:col-span-2')}>
+              <div className="mb-2 flex flex-wrap items-center justify-between gap-2 border-b border-line/[0.06] pb-2">
+                <h2 id={`group-${category?.id ?? 'other'}`} className="flex items-center gap-2 text-base font-semibold text-paper">
                   {category && <CategoryIcon name={category.icon} className="size-4 text-cyan" />}
                   {category?.title ?? 'Other lessons'}
                   <span className="font-mono text-xs font-normal text-steel-500">{list.length}</span>
                 </h2>
                 {category && (
-                  <Link to={`/learn/${category.slug}`} className="relative hit-area inline-flex min-h-9 items-center gap-1 text-sm text-steel-300 hover:text-cyan">
+                  <Link to={`/learn/${category.slug}`} className="relative hit-area inline-flex min-h-8 items-center gap-1 text-xs text-steel-300 hover:text-cyan pointer-coarse:min-h-11">
                     View category <ArrowRight aria-hidden className="size-3.5" />
                   </Link>
                 )}
               </div>
-              <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <ul className={cn('grid grid-cols-1 gap-2', list.length > 3 ? 'sm:grid-cols-2 xl:grid-cols-3' : list.length > 1 && 'sm:grid-cols-2 md:grid-cols-1 xl:grid-cols-2')}>
                 {list.map((t) => (
                   <li key={t.id}>
-                    <TopicCard topic={t} />
+                    <TopicCard topic={t} className="gap-2 rounded-lg border-line/[0.05] bg-graphite-950/35 p-3" />
                   </li>
                 ))}
               </ul>
@@ -130,8 +130,10 @@ export default function TopicIndexPage() {
         </div>
       )}
 
-      <CategoryDirectory counts={counts} />
-      <AtoZIndex />
+      <div className="mt-6 grid grid-cols-1 items-start gap-3 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        <CategoryDirectory counts={counts} />
+        <AtoZIndex />
+      </div>
     </div>
   )
 }
@@ -152,14 +154,14 @@ function FilterBar({ query, categoryId, difficulty, interactiveOnly, filtered, c
     <form
       role="search"
       aria-label="Filter lessons"
-      className="panel mt-8 grid gap-3 p-3 sm:p-4 md:grid-cols-[minmax(0,1fr)_auto_auto_auto] md:items-end"
+      className="panel mt-4 grid grid-cols-2 gap-2 p-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,180px)_minmax(0,150px)_auto] lg:items-end"
       onSubmit={(e) => {
         // Results update as you type; submitting just dismisses the on-screen keyboard.
         e.preventDefault()
         if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
       }}
     >
-      <div className="flex flex-col gap-1.5">
+      <div className="col-span-2 flex min-w-0 flex-col gap-1.5 lg:col-span-1">
         <label htmlFor={`${uid}-q`} className="text-xs font-medium text-steel-300">
           Search lessons
         </label>
@@ -173,7 +175,7 @@ function FilterBar({ query, categoryId, difficulty, interactiveOnly, filtered, c
             placeholder="e.g. camshaft, torque, brake fluid"
             autoComplete="off"
             enterKeyHint="search"
-            className="h-11 pointer-coarse:h-12 w-full rounded-lg border border-line/10 bg-graphite-950 pl-9 pr-3 text-base text-paper placeholder:text-steel-500 focus-visible:border-cyan/60 sm:text-sm"
+            className="h-9 pointer-coarse:h-11 w-full rounded-md border border-line/10 bg-graphite-950 pl-9 pr-3 text-base text-paper placeholder:text-steel-500 focus-visible:border-cyan/60 sm:text-sm"
           />
         </div>
       </div>
@@ -196,8 +198,8 @@ function FilterBar({ query, categoryId, difficulty, interactiveOnly, filtered, c
         ))}
       </FilterSelect>
 
-      <div className="flex items-center justify-between gap-3 md:h-11 md:justify-start">
-        <label htmlFor={`${uid}-int`} className="flex min-h-11 pointer-coarse:min-h-12 cursor-pointer items-center gap-2.5 text-sm text-steel-300">
+      <div className="col-span-2 flex flex-wrap items-center justify-between gap-2 lg:col-span-1 lg:min-h-9 lg:justify-start">
+        <label htmlFor={`${uid}-int`} className="flex min-h-9 pointer-coarse:min-h-11 cursor-pointer items-center gap-2 text-sm text-steel-300">
           <Switch id={`${uid}-int`} checked={interactiveOnly} onCheckedChange={(v) => onChange({ interactive: v ? '1' : null })} />
           Interactive 3D only
         </label>
@@ -219,7 +221,7 @@ function FilterBar({ query, categoryId, difficulty, interactiveOnly, filtered, c
 
 function FilterSelect({ id, label, value, onChange, children }: { id: string; label: string; value: string; onChange: (v: string) => void; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex min-w-0 flex-col gap-1.5">
       <label htmlFor={id} className="text-xs font-medium text-steel-300">
         {label}
       </label>
@@ -228,7 +230,7 @@ function FilterSelect({ id, label, value, onChange, children }: { id: string; la
           id={id}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="h-11 pointer-coarse:h-12 w-full min-w-44 appearance-none rounded-lg border border-line/10 bg-graphite-950 pl-3 pr-9 text-base text-paper focus-visible:border-cyan/60 sm:text-sm"
+          className="h-9 pointer-coarse:h-11 w-full min-w-0 appearance-none truncate rounded-md border border-line/10 bg-graphite-950 pl-2.5 pr-8 text-base text-paper focus-visible:border-cyan/60 sm:text-sm"
         >
           {children}
         </select>
@@ -252,18 +254,18 @@ function EmptyResults({ query, onClear }: { query: string; onClear: () => void }
 
 function CategoryDirectory({ counts }: { counts: Map<string, number> }) {
   return (
-    <section aria-labelledby="categories-heading" className="mt-16">
+    <section aria-labelledby="categories-heading" className="panel min-w-0 p-4">
       <h2 id="categories-heading" className="text-lg font-semibold text-paper">
         Browse by category
       </h2>
-      <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {categories.map((c) => {
           const n = counts.get(c.id) ?? 0
           return (
             <li key={c.id}>
               <Link
                 to={`/learn/${c.slug}`}
-                className="group flex min-h-12 items-center gap-3 rounded-lg border border-line/[0.06] bg-graphite-900/60 px-3 py-2.5 transition-colors hover:border-cyan/35"
+                className="group flex min-h-10 items-center gap-2 rounded-md border border-line/[0.06] bg-graphite-950/35 px-2.5 py-2 transition-colors hover:border-cyan/35 pointer-coarse:min-h-11"
               >
                 <CategoryIcon name={c.icon} className="size-4 shrink-0 text-steel-400 group-hover:text-cyan" />
                 <span className="min-w-0 flex-1 truncate text-sm text-paper">{c.title}</span>
@@ -290,7 +292,7 @@ function AtoZIndex() {
   if (!letters.length) return null
 
   return (
-    <section aria-labelledby="az-heading" className="mt-16">
+    <section aria-labelledby="az-heading" className="panel min-w-0 p-4">
       <h2 id="az-heading" className="text-lg font-semibold text-paper">
         A–Z index
       </h2>
@@ -305,7 +307,7 @@ function AtoZIndex() {
           </a>
         ))}
       </nav>
-      <div className="mt-5 gap-8 sm:columns-2 lg:columns-3">
+      <div className="mt-3 gap-4 sm:columns-2 xl:columns-3">
         {letters.map(([letter, list]) => (
           <div key={letter} id={`az-${letter}`} className="mb-5 scroll-mt-20 break-inside-avoid">
             <h3 className="font-mono text-xs text-cyan">{letter}</h3>

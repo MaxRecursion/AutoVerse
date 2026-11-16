@@ -16,19 +16,19 @@ export function CategoryGrid() {
       description={`${topics.length} lessons across ${categories.length} categories, from first principles to driving technique.`}
       action={{ to: '/learn', label: 'Lesson index' }}
     >
-      <ul className="grid grid-cols-2 gap-2.5 md:grid-cols-3 xl:grid-cols-5">
+      <ul className="grid grid-cols-2 gap-2 md:grid-cols-3">
         {tiles.map(({ category, count }) => (
           <li key={category.id}>
             <Link
               to={`/learn/${category.slug}`}
-              className="group panel flex h-full min-h-24 flex-col gap-2.5 p-3.5 transition-colors hover:border-cyan/35 hover:bg-graphite-850/90 sm:p-4"
+              className="group panel flex h-full min-h-20 flex-col gap-2 p-3 transition-colors hover:border-cyan/35 hover:bg-graphite-850/90 sm:p-3"
             >
               {/* Title first in the DOM (it names the link); shown under the icon row. */}
-              <span className="order-2 text-sm font-medium leading-snug text-paper transition-colors group-hover:text-cyan sm:text-[15px]">
+              <span className="order-2 text-sm font-medium leading-snug text-paper transition-colors group-hover:text-cyan sm:text-sm">
                 {category.title}
               </span>
               <span className="order-1 flex items-center justify-between gap-2">
-                <span className="grid size-9 place-items-center rounded-lg border border-line/[0.08] bg-graphite-950/80 text-steel-300 transition-colors group-hover:border-cyan/30 group-hover:text-cyan">
+                <span className="grid size-7 place-items-center rounded-lg border border-line/[0.08] bg-graphite-950/80 text-steel-300 transition-colors group-hover:border-cyan/30 group-hover:text-cyan">
                   <CategoryIcon name={category.icon} className="size-[18px]" />
                 </span>
                 <span className="font-mono text-[11px] tabular-nums text-steel-400">

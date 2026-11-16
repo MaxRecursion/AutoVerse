@@ -7,6 +7,7 @@ import { PracticeButton } from '@/features/practice/PracticeButton'
 import { groupByLetter } from '@/lib/glossary'
 import { glossary } from '@/lib/glossaryData'
 import { normalizeText } from '@/lib/search'
+import { cn } from '@/lib/utils'
 
 /** /glossary — every key concept from every lesson, defined in plain language and linked to where it is explained. */
 export default function GlossaryPage() {
@@ -18,19 +19,19 @@ export default function GlossaryPage() {
   const groups = groupByLetter(shown)
 
   return (
-    <div className="mx-auto max-w-4xl px-4 pb-20 pt-6 sm:px-6 lg:pt-10">
+    <div className="mx-auto max-w-[1400px] px-4 pb-12 pt-5 sm:px-6 lg:pt-6">
       <Breadcrumbs items={[{ label: 'Learn', to: '/learn' }, { label: 'Glossary' }]} />
       <header>
         <p className="eyebrow">Reference</p>
-        <h1 className="mt-2 text-4xl font-semibold tracking-tight sm:text-5xl">Car glossary: automotive terms explained</h1>
-        <p className="mt-4 max-w-2xl text-[17px] leading-relaxed text-steel-300">
+        <h1 className="mt-1 text-2xl font-semibold tracking-tight text-paper sm:text-3xl">Car glossary: automotive terms explained</h1>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-steel-300">
           {all.length} terms from across the lessons, each defined in plain language and linked to the lesson that explains it properly.
         </p>
       </header>
 
-      <div className="mt-8 flex flex-col gap-4">
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <label className="relative block sm:flex-1">
+      <div className="panel mt-4 flex flex-col gap-3 p-3">
+        <div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-[minmax(0,1fr)_auto]">
+          <label className="relative block min-w-0">
           <span className="sr-only">Filter terms</span>
           <Search aria-hidden className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-steel-500" />
           <input
@@ -38,10 +39,10 @@ export default function GlossaryPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Filter terms, e.g. torque, slip, camshaft…"
-            className="h-11 pointer-coarse:h-12 w-full rounded-lg border border-input bg-graphite-900 pl-9 pr-3 text-base placeholder:text-steel-500"
+            className="h-9 pointer-coarse:h-11 w-full rounded-md border border-input bg-graphite-950 pl-9 pr-3 text-base placeholder:text-steel-500 sm:text-sm"
           />
         </label>
-          <PracticeButton entries={shown} label={q ? 'Practise these terms' : 'Practise all terms'} className="h-11 pointer-coarse:h-12" />
+          <PracticeButton entries={shown} label={q ? 'Practise these terms' : 'Practise all terms'} className="h-9 pointer-coarse:h-11" />
         </div>
         <nav aria-label="Jump to letter" className="flex flex-wrap gap-1">
           {groupByLetter(all).map((g) => (
@@ -56,31 +57,31 @@ export default function GlossaryPage() {
         </nav>
       </div>
 
-      <p className="sr-only" role="status" aria-live="polite">
+      <p className="mt-3 text-xs text-steel-400" role="status" aria-live="polite">
         {shown.length} {shown.length === 1 ? 'term' : 'terms'} shown
       </p>
       {groups.length === 0 ? (
         <p className="mt-12 text-center text-steel-400">No terms match “{query}”.</p>
       ) : (
-        <div className="mt-10 flex flex-col gap-10">
+        <div className="mt-3 flex flex-col gap-5" data-testid="glossary-catalog">
           {groups.map((g) => (
             <section key={g.letter} id={`letter-${g.letter === '#' ? 'num' : g.letter}`} aria-labelledby={`heading-${g.letter}`} className="scroll-mt-20">
-              <h2 id={`heading-${g.letter}`} className="font-mono text-xl text-cyan">
-                {g.letter}
+              <h2 id={`heading-${g.letter}`} className="flex items-baseline gap-2 border-b border-line/[0.06] pb-2 font-mono text-base text-cyan">
+                {g.letter}<span className="text-xs text-steel-500">{g.entries.length} {g.entries.length === 1 ? 'term' : 'terms'}</span>
               </h2>
-              <dl className="mt-4 flex flex-col divide-y divide-line/[0.06] border-y border-line/[0.06]">
+              <dl className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-3">
                 {g.entries.map((e) => (
-                  <div key={e.slug} id={`term-${e.slug}`} className="scroll-mt-20 py-4">
-                    <dt className="text-lg font-semibold text-paper">{e.term}</dt>
-                    <dd className="mt-1.5 text-[15px] leading-relaxed text-steel-300">
+                  <div key={e.slug} id={`term-${e.slug}`} className={cn('panel min-w-0 scroll-mt-20 p-3', e.equation && 'sm:col-span-2')}>
+                    <dt className="text-base font-semibold text-paper">{e.term}</dt>
+                    <dd className="mt-1.5 text-sm leading-relaxed text-steel-300">
                       {e.definition}
-                      {e.equation && <code className="ml-2 rounded bg-graphite-800 px-1.5 py-0.5 font-mono text-[13px] text-amber">{e.equation}</code>}
+                      {e.equation && <code className="mt-2 block w-fit max-w-full break-words rounded-md border border-amber/20 bg-amber/[0.06] px-2 py-1.5 font-mono text-[13px] text-amber">{e.equation}</code>}
                     </dd>
-                    <dd className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+                    <dd className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
                       <span className="text-steel-500">Explained in:</span>
                       {e.topics.map((t, i) => (
                         <span key={t.id}>
-                          <Link to={`/topics/${t.slug}`} className="text-cyan underline-offset-4 hover:underline">
+                          <Link to={`/topics/${t.slug}`} className="relative hit-area inline-flex min-h-8 items-center text-cyan underline-offset-4 hover:underline pointer-coarse:min-h-11">
                             {t.title}
                           </Link>
                           {i < e.topics.length - 1 && <span className="text-steel-500">,</span>}

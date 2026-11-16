@@ -106,18 +106,18 @@ export function GettingStarted({ variant }: { variant: 'home' | 'page' }) {
             transition={{ type: 'spring', stiffness: 300, damping: 34 }}
             className="overflow-hidden"
           >
-            <ol className="flex flex-col gap-0.5 border-t border-line/[0.06] p-2 sm:p-3">
+            <ol className={cn('border-t border-line/[0.06] p-2 sm:p-3', variant === 'page' ? 'grid grid-cols-1 gap-2 md:grid-cols-2' : 'flex flex-col gap-0.5')}>
               {steps.map((s, i) => {
                 const go = where[s.id]
                 return (
-                  <li key={s.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg px-2 py-2">
+                  <li key={s.id} className={cn('flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg px-2 py-2', variant === 'page' && 'border border-line/[0.06] bg-graphite-950/30 md:grid md:grid-cols-[24px_minmax(0,1fr)] md:items-start md:gap-x-2 md:gap-y-2')}>
                     <span
                       aria-hidden
                       className={cn('grid size-6 shrink-0 place-items-center rounded-full font-mono text-[11px]', s.done ? 'bg-ok/20 text-ok' : 'border border-line/15 text-steel-300')}
                     >
                       {s.done ? <Check className="size-3.5" /> : i + 1}
                     </span>
-                    <span className="min-w-0 flex-1 basis-48">
+                    <span className={cn('min-w-0 flex-1 basis-48', variant === 'page' && 'md:basis-auto')}>
                       <span className={cn('block text-sm font-medium', s.done ? 'text-steel-400' : 'text-paper')}>
                         {s.label}
                         {s.done && <span className="sr-only"> (done)</span>}
@@ -126,13 +126,13 @@ export function GettingStarted({ variant }: { variant: 'home' | 'page' }) {
                     </span>
                     {!s.done &&
                       (go.to ? (
-                        <Button asChild variant="outline" size="sm" className="relative hit-area">
+                        <Button asChild variant="outline" size="sm" className={cn('relative hit-area', variant === 'page' && 'md:col-start-2 md:w-fit md:max-w-full md:whitespace-normal md:text-left')}>
                           <Link to={go.to}>
                             {go.label} <ArrowRight aria-hidden />
                           </Link>
                         </Button>
                       ) : (
-                        <Button variant="outline" size="sm" className="relative hit-area" onClick={go.onClick}>
+                        <Button variant="outline" size="sm" className={cn('relative hit-area', variant === 'page' && 'md:col-start-2 md:w-fit md:max-w-full md:whitespace-normal md:text-left')} onClick={go.onClick}>
                           {go.label} <ArrowRight aria-hidden />
                         </Button>
                       ))}

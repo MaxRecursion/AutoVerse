@@ -71,6 +71,8 @@ export default function ProgressPage() {
   const termsToRevisit = useMemo(() => glossary.filter((e) => practice[e.slug] && !practice[e.slug]!.known), [practice])
   const averageBest = quizRows.length ? Math.round((quizRows.reduce((s, r) => s + r.score / r.total, 0) / quizRows.length) * 100) : null
   const hasAny = recentTopics.length + completedTopics.length + bookmarkTopics.length + quizRows.length > 0
+  const activePathId = nextUp.route?.path?.path.id
+  const activePath = paths.find((item) => item.path.id === activePathId)
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-5 sm:px-6 lg:py-6">
@@ -82,85 +84,103 @@ export default function ProgressPage() {
         <ClearAllButton disabled={!hasAny} />
       </header>
 
-      <p className="mt-3 flex max-w-3xl items-start gap-2 rounded-lg border border-line/[0.07] bg-graphite-900/60 px-3 py-2 text-xs leading-relaxed text-steel-300">
-        <HardDrive aria-hidden className="mt-0.5 size-4 shrink-0 text-cyan" />
-        <span>
+      <details className="mt-2 max-w-3xl text-xs text-steel-400">
+        <summary className="relative hit-area w-fit cursor-pointer py-1 hover:text-paper">
+          <span className="inline-flex items-center gap-2 align-middle"><HardDrive aria-hidden className="size-3.5 shrink-0 text-cyan" /> Local to this browser · storage details</span>
+        </summary>
+        <p className="mt-2 rounded-lg border border-line/[0.07] bg-graphite-900/60 px-3 py-2 leading-relaxed text-steel-300">
           Progress is stored only in this browser on this device. There is no account and nothing is sent to a server, so it does not sync between
           devices and is lost if you clear site data.
-        </span>
-      </p>
+        </p>
+      </details>
 
-      <dl className="mt-4 grid grid-cols-2 gap-2 md:grid-cols-4">
-        <Stat label="Lessons completed" value={<AnimatedNumber value={completedTopics.length} />} detail={`of ${topics.length}`} />
-        <Stat label="Bookmarks" value={<AnimatedNumber value={bookmarkTopics.length} />} />
-        <Stat label="Quizzes taken" value={<AnimatedNumber value={quizRows.length} />} />
-        <Stat label="Average best score" value={averageBest === null ? '—' : <><AnimatedNumber value={averageBest} />%</>} />
-      </dl>
-
-      {curriculum && (
-        <Block id="current-course" title="Current course" description="The same course and next lesson as your navigation outline.">
-          <div className="panel flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
-            <div className="min-w-0 flex-1">
-              <h3 className="font-display text-xl font-semibold text-paper">All lessons</h3>
-              <p className="mt-1 text-sm text-steel-300">{curriculum.completed} of {curriculum.topics.length} lessons complete</p>
-              <Progress value={curriculum.topics.length ? Math.round((curriculum.completed / curriculum.topics.length) * 100) : 0} aria-label="All lessons progress" className="mt-3 h-1.5 bg-graphite-700" />
+      <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-12" data-testid="progress-overview">
+        {nextUp.route && (
+          <section aria-labelledby="current-course-heading" className="panel min-w-0 border-nav-learn/20 p-3 sm:p-4 lg:col-span-8">
+            <h2 id="current-course-heading" className="eyebrow text-nav-learn">Current course</h2>
+            <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0 flex-1">
+                <h3 className="font-display text-lg font-semibold text-paper">{nextUp.route.title}</h3>
+                <p className="mt-1 text-sm text-steel-300">{nextUp.route.completed} of {nextUp.route.topics.length} lessons complete</p>
+                <Progress value={nextUp.route.topics.length ? Math.round((nextUp.route.completed / nextUp.route.topics.length) * 100) : 0} aria-label={`${nextUp.route.title} progress`} className="mt-2 h-1.5 bg-graphite-700" />
+              </div>
+              <div className="min-w-0 sm:max-w-72">
+                {activePath ? (
+                  <PathAction progress={activePath} started={activePath.completed > 0 || recent.some((item) => activePath.path.topicIds.includes(item.topicId))} nextPath={!activePath.next ? resolveNextPathProgress(learningPaths, activePath.path.id, getTopic, completed) : undefined} />
+                ) : nextUp.topic ? (
+                  <Button asChild className="h-auto min-h-11 max-w-full whitespace-normal py-2.5 text-left">
+                    <Link to={topicHref(nextUp.topic)}>{nextUp.label}: {nextUp.topic.title} <ArrowRight aria-hidden /></Link>
+                  </Button>
+                ) : <p className="text-sm text-ok">Every lesson is complete.</p>}
+              </div>
             </div>
-            {nextUp.topic ? (
-              <Button asChild className="h-auto min-h-11 whitespace-normal py-2.5 text-left sm:max-w-80">
-                <Link to={topicHref(nextUp.topic)}>{nextUp.label}: {nextUp.topic.title} <ArrowRight aria-hidden /></Link>
-              </Button>
-            ) : <p className="text-sm text-ok">Every lesson is complete.</p>}
-          </div>
-        </Block>
-      )}
+          </section>
+        )}
 
-      <div className="mt-6 grid grid-cols-1 items-start gap-6 lg:grid-cols-2" data-testid="progress-workspace">
-        <section aria-labelledby="activity-heading">
-          <h2 id="activity-heading" className="text-lg font-semibold text-paper">Activity</h2>
-          <p className="mb-3 mt-1 text-sm text-steel-400">Lessons, quizzes, certificates and practice by day.</p>
-          <ActivityCalendar />
-        </section>
-        <GettingStarted variant="page" />
+        <dl className={cn('grid min-w-0 grid-cols-2 gap-2', nextUp.route ? 'lg:col-span-4' : 'lg:col-span-12 lg:grid-cols-4')}>
+          <Stat label="Lessons completed" value={<AnimatedNumber value={completedTopics.length} />} detail={`of ${topics.length}`} />
+          <Stat label="Bookmarks" value={<AnimatedNumber value={bookmarkTopics.length} />} />
+          <Stat label="Quizzes taken" value={<AnimatedNumber value={quizRows.length} />} />
+          <Stat label="Average best score" value={averageBest === null ? '—' : <><AnimatedNumber value={averageBest} />%</>} />
+        </dl>
       </div>
 
-      <Block id="practice" title="Practice" description="Flashcards for the car glossary: say whether you knew each term and it comes back until you do.">
-        <div className="panel flex flex-col gap-4 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
-          <p className="font-display text-2xl text-paper">
-            <AnimatedNumber value={termsKnown.length} /> <span className="text-sm text-steel-400">of {glossary.length} terms known</span>
-          </p>
-          <div className="flex flex-wrap gap-2">
-            <PracticeButton entries={glossary} label="Practise all terms" className="h-10" />
-            {termsToRevisit.length > 0 && <PracticeButton entries={termsToRevisit} label={`Revisit ${termsToRevisit.length} to review`} className="h-10" />}
+      <div className="mt-3 grid grid-cols-1 items-start gap-3 lg:grid-cols-12" data-testid="progress-workspace">
+        <section aria-labelledby="activity-heading" className="min-w-0 lg:col-span-5">
+          <div className="mb-2 flex flex-wrap items-baseline justify-between gap-1">
+            <h2 id="activity-heading" className="text-sm font-semibold text-paper">Activity</h2>
+            <p className="text-xs text-steel-400">Lessons, quizzes and practice by day</p>
           </div>
+          <ActivityCalendar />
+        </section>
+        <div className="min-w-0 space-y-3 lg:col-span-7">
+          <GettingStarted variant="page" />
+          <section aria-labelledby="practice-heading" className="panel flex min-w-0 flex-col flex-wrap gap-3 p-3 sm:flex-row sm:items-center sm:justify-between sm:p-4">
+            <div className="min-w-0 sm:flex-1 sm:basis-48">
+              <h2 id="practice-heading" className="text-sm font-semibold text-paper">Practice</h2>
+              <p className="mt-1 font-display text-xl text-paper"><AnimatedNumber value={termsKnown.length} /> <span className="text-xs text-steel-400">of {glossary.length} terms known</span></p>
+              <p className="mt-1 text-xs text-steel-400">Glossary flashcards; missed terms come back to review.</p>
+            </div>
+            <div className="flex min-w-0 max-w-full flex-wrap gap-2">
+              <PracticeButton entries={glossary} label="Practise all terms" className="h-9" />
+              {termsToRevisit.length > 0 && <PracticeButton entries={termsToRevisit} label={`Revisit ${termsToRevisit.length} to review`} className="h-9" />}
+            </div>
+          </section>
         </div>
-      </Block>
+      </div>
 
-      <Block id="certificates" title="Certificates" description="Finish every lesson and take every quiz in a course to earn its certificate.">
-        <CertificatesSection />
-      </Block>
+      <div className="mt-4">
+        <Block id="certificates" title="Certificates" description="Finish every lesson and take every quiz in a course to earn its certificate.">
+          <CertificatesSection />
+        </Block>
+      </div>
 
       {paths.length > 0 && (
-        <Block id="paths" title="Learning paths" description="Curated sequences of lessons. Lessons not written yet are skipped and noted.">
-          <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {paths.map((p) => (
-              <li key={p.path.id}>
-                <PathCard
-                  progress={p}
-                  completed={completed}
-                  current={p.path.id === currentPath?.path.id}
-                  started={p.completed > 0 || recent.some((item) => p.path.topicIds.includes(item.topicId))}
-                  nextPath={!p.next ? resolveNextPathProgress(learningPaths, p.path.id, getTopic, completed) : undefined}
-                />
-              </li>
-            ))}
-          </ul>
-        </Block>
+        <div className="mt-4">
+          <Block id="paths" title="Learning paths" description="Curated sequences of lessons. Lessons not written yet are skipped and noted.">
+            <ul className="grid grid-cols-1 gap-3 md:grid-cols-2 2xl:grid-cols-3">
+              {paths.map((p) => (
+                <li key={p.path.id}>
+                  <PathCard
+                    progress={p}
+                    completed={completed}
+                    current={p.path.id === currentPath?.path.id}
+                    started={p.completed > 0 || recent.some((item) => p.path.topicIds.includes(item.topicId))}
+                    nextPath={!p.next ? resolveNextPathProgress(learningPaths, p.path.id, getTopic, completed) : undefined}
+                  />
+                </li>
+              ))}
+            </ul>
+          </Block>
+        </div>
       )}
 
       {!hasAny && (
-        <div className="panel mt-10 flex flex-col items-start gap-3 p-6">
-          <p className="text-paper">Nothing here yet.</p>
-          <p className="text-sm text-steel-400">Open a lesson to start tracking. Lessons you view, bookmark, complete or quiz yourself on appear here.</p>
+        <div className="panel mt-4 flex flex-wrap items-center justify-between gap-3 p-3 sm:p-4">
+          <div className="min-w-0 flex-1 basis-64">
+            <p className="text-paper">Nothing here yet.</p>
+            <p className="mt-1 text-sm text-steel-400">Open a lesson to start tracking. Lessons you view, bookmark, complete or quiz yourself on appear here.</p>
+          </div>
           <Button asChild className="h-10">
             <Link to="/learn">
               Browse lessons <ArrowRight aria-hidden />
@@ -169,7 +189,7 @@ export default function ProgressPage() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-x-10 lg:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
         {recentTopics.length > 0 && (
           <Block id="recent" title="Recently viewed">
             <TopicList
@@ -254,7 +274,7 @@ export default function ProgressPage() {
 
 function Stat({ label, value, detail }: { label: string; value: ReactNode; detail?: string }) {
   return (
-    <div className="panel flex flex-col gap-1 px-3 py-2.5">
+    <div className="panel flex min-w-0 flex-col justify-center gap-1 px-3 py-2.5">
       <dt className="text-xs text-steel-400">{label}</dt>
       <dd className="font-display text-xl tabular-nums text-paper">
         {value}
@@ -266,7 +286,7 @@ function Stat({ label, value, detail }: { label: string; value: ReactNode; detai
 
 function Block({ id, title, description, children }: { id: string; title: string; description?: string; children: ReactNode }) {
   return (
-    <section aria-labelledby={`${id}-heading`} className="mt-6">
+    <section aria-labelledby={`${id}-heading`} className="min-w-0">
       <h2 id={`${id}-heading`} className="text-lg font-semibold text-paper">
         {title}
       </h2>
@@ -326,7 +346,7 @@ function PathCard({
   const { path, topics: list, missing, percent } = progress
   const setCourseId = usePreferences((state) => state.setCourseId)
   return (
-    <article className="panel flex h-full flex-col gap-4 p-5" aria-labelledby={`path-${path.id}`}>
+    <article className="panel flex h-full min-w-0 flex-col gap-3 p-3 sm:p-4" aria-labelledby={`path-${path.id}`}>
       <div>
         <p className="eyebrow flex items-center gap-2">
           <Route aria-hidden className="size-3.5 text-amber" />
@@ -351,7 +371,7 @@ function PathCard({
           const done = !!completed[t.id]
           return (
             <li key={t.id}>
-              <Link to={topicHref(t)} onClick={() => setCourseId(path.id)} className="flex min-h-9 pointer-coarse:min-h-12 items-center gap-3 rounded-md px-1 text-sm hover:bg-tint/[0.03]">
+              <Link to={topicHref(t)} onClick={() => setCourseId(path.id)} className="flex min-h-8 items-center gap-2 rounded-md px-1 text-sm hover:bg-tint/[0.03] pointer-coarse:min-h-12">
                 <span
                   aria-hidden
                   className={cn(

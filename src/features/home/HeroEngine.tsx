@@ -27,7 +27,7 @@ const CORNERS = [
  * annotated drawing frame. If the 3D chunk cannot load, a static drawing and
  * links to the lab take its place.
  */
-export function HeroEngine({ className }: { className?: string }) {
+export function HeroEngine({ className, compact = false }: { className?: string; compact?: boolean }) {
   return (
     <figure className={cn('relative m-0', className)}>
       <div aria-hidden className="annotation mb-2.5 flex items-center justify-between gap-3 uppercase tracking-wider text-steel-400">
@@ -49,7 +49,7 @@ export function HeroEngine({ className }: { className?: string }) {
           aria-hidden
           className="pointer-events-none absolute -left-5 bottom-6 top-6 hidden w-2 bg-[repeating-linear-gradient(to_bottom,rgb(var(--line-rgb)/0.22)_0_1px,transparent_1px_12px)] xl:block"
         />
-        <div className="relative h-[clamp(320px,52dvh,520px)] overflow-hidden rounded-2xl border border-line/[0.08] bg-graphite-950 bg-blueprint shadow-scene lg:h-[clamp(420px,64dvh,640px)]">
+        <div className={cn('relative overflow-hidden rounded-xl border border-line/[0.08] bg-graphite-950 bg-blueprint shadow-scene', compact ? 'h-[clamp(300px,42svh,420px)]' : 'h-[clamp(320px,52dvh,520px)] lg:h-[clamp(420px,64dvh,640px)]')}>
           <HeroBoundary fallback={<HeroUnavailable />}>
             <Suspense fallback={<HeroLoading />}>
               <EngineHero />

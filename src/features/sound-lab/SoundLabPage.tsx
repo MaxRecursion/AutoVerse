@@ -123,143 +123,149 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
       <div className="mt-4 grid grid-cols-1 items-start gap-3 lg:grid-cols-[200px_minmax(0,1fr)]">
         <EnginePicker current={spec.id} onPick={onPick} />
 
-        <section aria-labelledby="engine-heading" className="panel flex min-w-0 flex-col gap-4 p-3 sm:p-4">
-          <div className="space-y-3" data-testid="engine-workspace">
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <div className="min-w-0">
-                <p className="eyebrow">
-                  {spec.cylinders} cylinders · {LAYOUT_LABEL[spec.layout]}
-                  {spec.layout === 'v' ? ` · ${spec.bankAngle}°` : ''}
-                </p>
-                <h2 id="engine-heading" className="mt-1 text-xl font-semibold text-paper sm:text-2xl">
-                  {spec.name}
-                </h2>
-                <p className="mt-1 text-sm text-steel-300">{spec.engine}</p>
-                <p className="mt-1 text-xs text-steel-400">{spec.cars.join(' · ')}</p>
-              </div>
-              <div role="group" aria-label="Engine playback controls" className="grid w-full max-w-[240px] shrink-0 grid-cols-[72px_minmax(0,1fr)] items-center gap-2 sm:w-[240px]">
-                <Tachometer bus={bus} redlineRpm={spec.redlineRpm} reduced={reduced} />
-                <div className="flex min-w-0 flex-col gap-2">
-                  <Button size="sm" className="h-8 w-full min-w-0 px-2 text-xs pointer-coarse:h-11" onClick={toggle} disabled={!sound.supported || sound.loading} data-testid="sound-lab-start" aria-pressed={sound.running}>
-                    {sound.running ? <Square aria-hidden /> : <Play aria-hidden />}
-                    {sound.loading ? 'Starting…' : sound.running ? 'Stop engine' : 'Start engine'}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className={cn('h-8 w-full min-w-0 select-none touch-none px-2 text-xs pointer-coarse:h-11', revving && 'border-amber/60 text-amber')}
-                    aria-pressed={revving}
-                    onPointerDown={() => setRevving(true)}
-                    onPointerUp={() => setRevving(false)}
-                    onPointerLeave={() => setRevving(false)}
-                    onPointerCancel={() => setRevving(false)}
-                    onKeyDown={revKey(true)}
-                    onKeyUp={revKey(false)}
-                    onBlur={() => setRevving(false)}
-                  >
-                    <Gauge aria-hidden /> Hold to rev
-                  </Button>
+        <section aria-labelledby="engine-heading" className="sound-engine min-w-0">
+          <div className="sound-bento" data-testid="engine-workspace">
+            <div className="sound-bento-identity panel space-y-3 p-3">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="eyebrow">
+                    {spec.cylinders} cylinders · {LAYOUT_LABEL[spec.layout]}
+                    {spec.layout === 'v' ? ` · ${spec.bankAngle}°` : ''}
+                  </p>
+                  <h2 id="engine-heading" className="mt-1 text-xl font-semibold text-paper sm:text-2xl">
+                    {spec.name}
+                  </h2>
+                  <p className="mt-1 text-sm text-steel-300">{spec.engine}</p>
+                  <p className="mt-1 text-xs text-steel-400">{spec.cars.join(' · ')}</p>
+                </div>
+                <div role="group" aria-label="Engine playback controls" className="grid w-full max-w-[240px] shrink-0 grid-cols-[72px_minmax(0,1fr)] items-center gap-2 sm:w-[240px]">
+                  <Tachometer bus={bus} redlineRpm={spec.redlineRpm} reduced={reduced} />
+                  <div className="flex min-w-0 flex-col gap-2">
+                    <Button size="sm" className="h-8 w-full min-w-0 px-2 text-xs pointer-coarse:h-11" onClick={toggle} disabled={!sound.supported || sound.loading} data-testid="sound-lab-start" aria-pressed={sound.running}>
+                      {sound.running ? <Square aria-hidden /> : <Play aria-hidden />}
+                      {sound.loading ? 'Starting…' : sound.running ? 'Stop engine' : 'Start engine'}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className={cn('h-8 w-full min-w-0 select-none touch-none px-2 text-xs pointer-coarse:h-11', revving && 'border-amber/60 text-amber')}
+                      aria-pressed={revving}
+                      onPointerDown={() => setRevving(true)}
+                      onPointerUp={() => setRevving(false)}
+                      onPointerLeave={() => setRevving(false)}
+                      onPointerCancel={() => setRevving(false)}
+                      onKeyDown={revKey(true)}
+                      onKeyUp={revKey(false)}
+                      onBlur={() => setRevving(false)}
+                    >
+                      <Gauge aria-hidden /> Hold to rev
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-            {!sound.supported && <p className="rounded-md border border-amber/30 bg-amber/[0.06] p-3 text-sm text-paper">This browser cannot run the audio synthesiser: it needs Web Audio worklets on a secure (https) page. The diagrams still work.</p>}
-            {sound.error && <p className="rounded-md border border-amber/30 bg-amber/[0.06] p-3 text-sm text-paper" role="alert">{sound.error}</p>}
+              {!sound.supported && <p className="rounded-md border border-amber/30 bg-amber/[0.06] p-3 text-sm text-paper">This browser cannot run the audio synthesiser: it needs Web Audio worklets on a secure (https) page. The diagrams still work.</p>}
+              {sound.error && <p className="rounded-md border border-amber/30 bg-amber/[0.06] p-3 text-sm text-paper" role="alert">{sound.error}</p>}
 
-            <div className="grid grid-cols-2 gap-3 rounded-lg border border-line/[0.08] bg-graphite-950/40 px-3 py-2">
-              <Control label="Speed" value={`${rpm.toLocaleString('en-GB')} rpm`}>
-                <Slider value={[rpm]} min={spec.idleRpm} max={spec.redlineRpm} step={50} onValueChange={([v]) => setRpm(v!)} aria-label="Engine speed in rpm" data-testid="sound-lab-rpm" />
-              </Control>
-              <Control label="Throttle" value={`${Math.round(throttle * 100)}%`}>
-                <Slider value={[throttle * 100]} min={0} max={100} step={1} onValueChange={([v]) => setThrottle(v! / 100)} aria-label="Throttle opening in percent" />
-              </Control>
-            </div>
-
-            <Suspense fallback={<div className="grid min-h-[320px] place-items-center rounded-xl border border-cyan/20 bg-graphite-950/60 p-5 text-center text-steel-400" role="status">Preparing the 3D mechanical cutaway…</div>}>
-              <EngineCutaway spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} running={sound.running} reduced={reduced} />
-            </Suspense>
-          </div>
-
-          <h3 className="border-t border-line/[0.08] pt-4 text-sm font-semibold text-paper">Firing rhythm and exhaust pressure</h3>
-          <p className="text-sm leading-relaxed text-steel-300">{spec.character}</p>
-          <details className="rounded-xl border border-line/[0.08] p-3">
-            <summary className="relative hit-area min-h-9 cursor-pointer py-2 text-sm font-medium text-steel-300">Piston timing diagram</summary>
-            <div className="mt-3"><CylinderLayout spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} animating={animating} /></div>
-          </details>
-
-          <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-[200px_minmax(0,1fr)]">
-            <div className="mx-auto w-full max-w-[200px]">
-              <FiringRing events={events} bus={bus} reduced={reduced} />
-              <p className="mt-1 text-center text-xs text-steel-500">
-                {animating ? `Slowed ${VISUAL_SLOWDOWN}× so you can follow it` : sound.running ? 'Still view (reduced motion)' : 'Press Start to watch it turn'}
-              </p>
-            </div>
-            <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
-              <Fact label="Firing order" value={spec.order ? spec.order.join('-') : 'Not published here'} mono />
-              <Fact label="Firing gaps" value={pattern} testId="sound-lab-intervals" />
-              {spec.layout !== 'inline' && (
-                <>
-                  <Fact label={spec.separateBanks ? 'Left exhaust hears' : 'Bank A fires at gaps of'} value={`${bankGaps(events, 'A').join(', ')}°`} mono />
-                  <Fact label={spec.separateBanks ? 'Right exhaust hears' : 'Bank B fires at gaps of'} value={`${bankGaps(events, 'B').join(', ')}°`} mono />
-                </>
-              )}
-              <Fact label="Firing pulses" mono>
-                <LiveText bus={bus} fallback={`${Math.round(firingFrequency(spec.cylinders, targetRpm))} per second`} format={pulsesText} />
-              </Fact>
-              <Fact label="Exhaust" value={spec.separateBanks ? 'One per bank (left / right)' : 'Shared'} />
-              <Fact label="Simulation RPM range" value={`${spec.idleRpm.toLocaleString('en-GB')}–${spec.redlineRpm.toLocaleString('en-GB')} rpm`} mono />
-            </dl>
-          </div>
-
-          <figure className="flex flex-col gap-2">
-            <Oscilloscope bus={bus} events={events} config={config} reduced={reduced} />
-            <figcaption className="text-xs leading-relaxed text-steel-500">
-              {sound.running
-                ? `Exhaust pressure over one 720° cycle, held still on the first firing${reduced ? ' and refreshed once a second' : ''}. Faint lines mark each firing.`
-                : 'Idealised exhaust pulses over one 720° cycle, one per firing. Start the engine to see the synthesised pressure, pipe resonance included.'}
-            </figcaption>
-          </figure>
-
-
-
-          {spec.pairedV && (
-            <section aria-labelledby="experiment-heading" className="rounded-lg border border-line/[0.08] bg-graphite-950/40 p-4">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 id="experiment-heading" className="flex items-center gap-2 font-semibold text-paper">
-                  <Wand2 aria-hidden className="size-4 text-amber" /> Bend the V: bank angle and crankpins
-                </h3>
-                {modified && <span className="rounded-full border border-amber/40 px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider text-amber">Experiment · not production</span>}
-              </div>
-              <p className="mt-2 text-sm leading-relaxed text-steel-400">
-                Opposite cylinders share a crankpin, so they fire the bank angle apart, then wait for the next pin. Even firing needs a{' '}
-                {Math.round(720 / spec.cylinders)}° gap; with {bankAngle}° banks that takes a crankpin split of{' '}
-                <span className="font-mono text-steel-300">{evenSplit > 0 ? '+' : ''}{evenSplit}°</span>.
-              </p>
-              <div className="mt-4 grid grid-cols-1 gap-5 md:grid-cols-2">
-                <Control label="Bank angle" value={`${bankAngle}°`}>
-                  <Slider value={[bankAngle]} min={BANK_MIN} max={BANK_MAX} step={1} onValueChange={([v]) => setBankAngle(v!)} aria-label="Bank angle in degrees" />
+              <div className="grid grid-cols-2 gap-3 rounded-lg border border-line/[0.08] bg-graphite-950/40 px-3 py-2">
+                <Control label="Speed" value={`${rpm.toLocaleString('en-GB')} rpm`}>
+                  <Slider value={[rpm]} min={spec.idleRpm} max={spec.redlineRpm} step={50} onValueChange={([v]) => setRpm(v!)} aria-label="Engine speed in rpm" data-testid="sound-lab-rpm" />
                 </Control>
-                <Control label="Crankpin split" value={`${split > 0 ? '+' : ''}${split}°`}>
-                  <Slider value={[split]} min={splitMin} max={splitMax} step={1} onValueChange={([v]) => setSplit(v!)} aria-label="Crankpin split in degrees" />
+                <Control label="Throttle" value={`${Math.round(throttle * 100)}%`}>
+                  <Slider value={[throttle * 100]} min={0} max={100} step={1} onValueChange={([v]) => setThrottle(v! / 100)} aria-label="Throttle opening in percent" />
                 </Control>
               </div>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Button variant="outline" size="sm" className="h-9" onClick={() => setSplit(evenSplit)} disabled={isEvenFiring(intervals)}>
-                  Make it fire evenly
-                </Button>
-                <Button variant="ghost" size="sm" className="h-9" onClick={() => { setBankAngle(spec.pairedV!.bankAngle); setSplit(spec.pairedV!.split) }} disabled={!modified}>
-                  <RotateCcw aria-hidden /> Back to production
-                </Button>
-              </div>
+            </div>
+            <div className="sound-bento-model min-w-0">
+              <Suspense fallback={<div className="grid min-h-[320px] place-items-center rounded-xl border border-cyan/20 bg-graphite-950/60 p-5 text-center text-steel-400" role="status">Preparing the 3D mechanical cutaway…</div>}>
+                <EngineCutaway spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} running={sound.running} reduced={reduced} />
+              </Suspense>
+            </div>
+            <section aria-labelledby="engine-data-heading" className="panel flex min-w-0 flex-col gap-3 p-3" data-testid="engine-data-card">
+              <h3 id="engine-data-heading" className="text-sm font-semibold text-paper">Engine data and pressure</h3>
+              <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+                <Fact label="Firing order" value={spec.order ? spec.order.join('-') : 'Not published here'} mono />
+                <Fact label="Firing gaps" value={pattern} testId="sound-lab-intervals" />
+                {spec.layout !== 'inline' && (
+                  <>
+                    <Fact label={spec.separateBanks ? 'Left exhaust hears' : 'Bank A fires at gaps of'} value={`${bankGaps(events, 'A').join(', ')}°`} mono />
+                    <Fact label={spec.separateBanks ? 'Right exhaust hears' : 'Bank B fires at gaps of'} value={`${bankGaps(events, 'B').join(', ')}°`} mono />
+                  </>
+                )}
+                <Fact label="Firing pulses" mono>
+                  <LiveText bus={bus} fallback={`${Math.round(firingFrequency(spec.cylinders, targetRpm))} per second`} format={pulsesText} />
+                </Fact>
+                <Fact label="Exhaust" value={spec.separateBanks ? 'One per bank (left / right)' : 'Shared'} />
+                <Fact label="Simulation RPM range" value={`${spec.idleRpm.toLocaleString('en-GB')}–${spec.redlineRpm.toLocaleString('en-GB')} rpm`} mono />
+              </dl>
+              <figure className="flex flex-col gap-2 border-t border-line/[0.08] pt-3">
+                <Oscilloscope bus={bus} events={events} config={config} reduced={reduced} />
+                <figcaption className="text-xs leading-relaxed text-steel-500">
+                  {sound.running
+                    ? `Exhaust pressure over one 720° cycle, held still on the first firing${reduced ? ' and refreshed once a second' : ''}. Faint lines mark each firing.`
+                    : 'Idealised exhaust pulses over one 720° cycle, one per firing. Start the engine to see the synthesised pressure, pipe resonance included.'}
+                </figcaption>
+              </figure>
             </section>
-          )}
+          </div>
+
+          <div className={cn('mt-3 grid items-start gap-3', spec.pairedV ? 'sound-bento-secondary' : 'grid-cols-1')}>
+            <section aria-labelledby="engine-rhythm-heading" className="panel min-w-0 space-y-3 p-3">
+              <h3 id="engine-rhythm-heading" className="text-sm font-semibold text-paper">Firing rhythm</h3>
+              <div className="grid grid-cols-1 items-center gap-3 sm:grid-cols-[144px_minmax(0,1fr)]">
+                <div className="mx-auto w-full max-w-[144px]">
+                  <FiringRing events={events} bus={bus} reduced={reduced} />
+                  <p className="mt-1 text-center text-xs text-steel-500">
+                    {animating ? `Slowed ${VISUAL_SLOWDOWN}× so you can follow it` : sound.running ? 'Still view (reduced motion)' : 'Press Start to watch it turn'}
+                  </p>
+                </div>
+                <p className="text-sm leading-relaxed text-steel-300">{spec.character}</p>
+              </div>
+              <details className="rounded-xl border border-line/[0.08] p-3">
+                <summary className="relative hit-area min-h-9 cursor-pointer py-2 text-sm font-medium text-steel-300">Piston timing diagram</summary>
+                <div className="mt-3"><CylinderLayout spec={spec} events={events} bankAngle={bankAngle} sense={sense} bus={bus} animating={animating} /></div>
+              </details>
+            </section>
+            {spec.pairedV && (
+              <section aria-labelledby="experiment-heading" className="panel min-w-0 p-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <h3 id="experiment-heading" className="flex items-center gap-2 font-semibold text-paper">
+                    <Wand2 aria-hidden className="size-4 text-amber" /> Bend the V: bank angle and crankpins
+                  </h3>
+                  {modified && <span className="rounded-full border border-amber/40 px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider text-amber">Experiment · not production</span>}
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-steel-400">
+                  Opposite cylinders share a crankpin, so they fire the bank angle apart, then wait for the next pin. Even firing needs a{' '}
+                  {Math.round(720 / spec.cylinders)}° gap; with {bankAngle}° banks that takes a crankpin split of{' '}
+                  <span className="font-mono text-steel-300">{evenSplit > 0 ? '+' : ''}{evenSplit}°</span>.
+                </p>
+                <div className="mt-3 grid grid-cols-2 gap-3">
+                  <Control label="Bank angle" value={`${bankAngle}°`}>
+                    <Slider value={[bankAngle]} min={BANK_MIN} max={BANK_MAX} step={1} onValueChange={([v]) => setBankAngle(v!)} aria-label="Bank angle in degrees" />
+                  </Control>
+                  <Control label="Crankpin split" value={`${split > 0 ? '+' : ''}${split}°`}>
+                    <Slider value={[split]} min={splitMin} max={splitMax} step={1} onValueChange={([v]) => setSplit(v!)} aria-label="Crankpin split in degrees" />
+                  </Control>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Button variant="outline" size="sm" className="h-9" onClick={() => setSplit(evenSplit)} disabled={isEvenFiring(intervals)}>
+                    Make it fire evenly
+                  </Button>
+                  <Button variant="ghost" size="sm" className="h-9" onClick={() => { setBankAngle(spec.pairedV!.bankAngle); setSplit(spec.pairedV!.split) }} disabled={!modified}>
+                    <RotateCcw aria-hidden /> Back to production
+                  </Button>
+                </div>
+              </section>
+            )}
+          </div>
+
           <p className="sr-only" role="status" aria-live="polite">
             {spec.name}: firing {pattern}.{modified ? ' Experimental settings.' : ''}
           </p>
         </section>
       </div>
 
-      <section aria-labelledby="listen-heading" className="mt-6 max-w-3xl">
-        <h2 id="listen-heading" className="text-2xl font-semibold text-paper">Three comparisons worth hearing</h2>
-        <ul className="mt-4 flex flex-col gap-3 text-steel-300">
+      <section aria-labelledby="listen-heading" className="mt-4">
+        <h2 id="listen-heading" className="text-lg font-semibold text-paper">Three comparisons worth hearing</h2>
+        <ul className="mt-3 grid grid-cols-1 gap-3 text-steel-300 lg:grid-cols-3">
           <Compare a="v8-cross" b="v8-flat" onPick={onPick}>
             Same cylinders, same 90° banks, same even overall firing. Only the crank changes, and with it what each exhaust pipe hears.
           </Compare>
@@ -272,36 +278,38 @@ function SoundLab({ spec, sound, onPick }: { spec: EngineSpec; sound: SoundEngin
         </ul>
       </section>
 
-      <section aria-labelledby="sources-heading" className="mt-6 max-w-3xl">
-        <h2 id="sources-heading" className="text-2xl font-semibold text-paper">Sources</h2>
-        <p className="mt-2 text-sm text-steel-400">
-          Firing orders use each maker’s own cylinder numbering. Where we could not confirm a firing order, the lab labels firings by bank
-          rather than guessing. Inspired by{' '}
-          <a href={soundLabReference.url} className="text-cyan underline-offset-4 hover:underline" target="_blank" rel="noreferrer">
-            {soundLabReference.label}
-          </a>
-          ; no audio or footage from it is used.
-        </p>
-        <ul className="mt-3 flex flex-col gap-1.5 text-sm">
-          {soundLabSources.map((s) => (
-            <li key={s.url}>
-              <a href={s.url} target="_blank" rel="noreferrer" className="inline-flex items-start gap-1.5 text-steel-300 hover:text-cyan">
-                <ExternalLink aria-hidden className="mt-0.5 size-3.5 shrink-0" />
-                {s.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <div className="mt-4 grid grid-cols-1 items-start gap-3 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <section aria-labelledby="sources-heading" className="panel min-w-0 p-3">
+          <h2 id="sources-heading" className="text-lg font-semibold text-paper">Sources</h2>
+          <p className="mt-2 text-sm text-steel-400">
+            Firing orders use each maker’s own cylinder numbering. Where we could not confirm a firing order, the lab labels firings by bank
+            rather than guessing. Inspired by{' '}
+            <a href={soundLabReference.url} className="text-cyan underline-offset-4 hover:underline" target="_blank" rel="noreferrer">
+              {soundLabReference.label}
+            </a>
+            ; no audio or footage from it is used.
+          </p>
+          <ul className="mt-3 grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+            {soundLabSources.map((s) => (
+              <li key={s.url}>
+                <a href={s.url} target="_blank" rel="noreferrer" className="inline-flex items-start gap-1.5 text-steel-300 hover:text-cyan">
+                  <ExternalLink aria-hidden className="mt-0.5 size-3.5 shrink-0" />
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-      <section aria-labelledby="understand-heading" className="mt-6 max-w-3xl rounded-xl border border-cyan/20 bg-cyan/[0.03] p-5">
-        <h2 id="understand-heading" className="text-xl font-semibold text-paper">Go inside the sound</h2>
-        <p className="mt-2 leading-relaxed text-steel-300">Follow a piston through intake, compression, power and exhaust, then see how arranging more cylinders changes the engine.</p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <Button asChild variant="outline" className="h-auto min-h-10 whitespace-normal text-left"><Link to="/labs/engine">Explore the four-stroke cutaway</Link></Button>
-          <Button asChild variant="outline" className="h-auto min-h-10 whitespace-normal text-left"><Link to="/topics/engine-layouts">Read about engine layouts</Link></Button>
-        </div>
-      </section>
+        <section aria-labelledby="understand-heading" className="panel min-w-0 border-cyan/20 bg-cyan/[0.03] p-3">
+          <h2 id="understand-heading" className="text-lg font-semibold text-paper">Go inside the sound</h2>
+          <p className="mt-2 text-sm leading-relaxed text-steel-300">Follow a piston through intake, compression, power and exhaust, then see how arranging more cylinders changes the engine.</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Button asChild variant="outline" className="h-auto min-h-10 whitespace-normal text-left"><Link to="/labs/engine">Explore the four-stroke cutaway</Link></Button>
+            <Button asChild variant="outline" className="h-auto min-h-10 whitespace-normal text-left"><Link to="/topics/engine-layouts">Read about engine layouts</Link></Button>
+          </div>
+        </section>
+      </div>
     </div>
   )
 }
@@ -361,7 +369,7 @@ function Compare({ a, b, onPick, children }: { a: string; b: string; onPick: (id
   const ea = getEngine(a)!
   const eb = getEngine(b)!
   return (
-    <li className="rounded-lg border border-line/[0.06] p-3">
+    <li className="panel min-w-0 p-3">
       <div className="flex flex-wrap items-center gap-2">
         <Button variant="outline" size="sm" className="h-auto min-h-9 max-w-full whitespace-normal py-1.5 text-left" onClick={() => onPick(a)}>
           {ea.name} · {ea.cars[0]}

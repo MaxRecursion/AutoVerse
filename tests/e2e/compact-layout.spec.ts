@@ -32,6 +32,10 @@ test('the engine workspace fits a laptop viewport, with an optional larger view'
   await expect(page.getByTestId('scene-loading')).toHaveCount(0)
   const workspace = page.getByTestId('engine-workspace')
   expect((await workspace.boundingBox())!.height).toBeLessThan(820)
+  const model = (await page.getByTestId('engine-cutaway').boundingBox())!
+  const data = (await page.getByTestId('engine-data-card').boundingBox())!
+  expect(data.x).toBeGreaterThanOrEqual(model.x + model.width)
+  expect(Math.abs(data.y - model.y)).toBeLessThan(1)
   await workspace.scrollIntoViewIfNeeded()
   const bounds = (await workspace.boundingBox())!
   expect(bounds.y).toBeGreaterThanOrEqual(56)
@@ -56,6 +60,9 @@ test('compact engine controls and disclosures stay usable at 320px', async ({ pa
   await open(page, '/sound-lab?engine=v10-viper')
   await expect(page.getByTestId('engine-cutaway-canvas')).toBeVisible()
   await expect(page.getByRole('slider', { name: 'Throttle opening in percent', exact: true })).toBeVisible()
+  const model = (await page.getByTestId('engine-cutaway').boundingBox())!
+  const data = (await page.getByTestId('engine-data-card').boundingBox())!
+  expect(data.y).toBeGreaterThanOrEqual(model.y + model.height)
   await page.getByText('View guide and exhaust notes', { exact: true }).click()
   await expect(page.getByTestId('v10-throw-note')).toBeVisible()
   await page.getByRole('button', { name: 'Inspect cylinder 10', exact: true }).press('Enter')

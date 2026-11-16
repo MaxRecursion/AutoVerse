@@ -16,7 +16,7 @@ export function FeaturedLabs() {
       description="Each lab is a working 3D model whose parts move in step with one another. Run it, change its inputs and select any part to see what it does."
       action={{ to: '/labs', label: 'All labs' }}
     >
-      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {overviews.map((o) => (
           <li key={o.lab.id}>
             <LabCard overview={o} />
