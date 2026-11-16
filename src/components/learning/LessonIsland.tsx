@@ -17,6 +17,7 @@ import { jumpToSection } from './jumpToSection'
 import { LevelToggle } from './LevelToggle'
 import { ProgressRing } from './ProgressRing'
 import { useActiveSection } from './useActiveSection'
+import { stageAccents } from '@/lib/navigationAccents'
 
 export interface IslandSection {
   id: string
@@ -59,9 +60,9 @@ export function LessonIsland({ sections, stages, summary, complete, onFinish }: 
             <button
               type="button"
               aria-label={`Lesson progress and outline. ${summary.coreDone} of ${summary.coreTotal} core stages done.`}
-              className="tactile relative hit-area grid size-10 shrink-0 place-items-center rounded-full border border-line/[0.1] bg-graphite-850 outline-none transition-colors hover:border-cyan/40 focus-visible:ring-2 focus-visible:ring-cyan data-[state=open]:border-cyan/50"
+              className="tactile relative hit-area grid size-10 shrink-0 place-items-center rounded-full border border-line/[0.1] bg-graphite-850 outline-none transition-colors hover:border-nav-progress/40 focus-visible:ring-2 focus-visible:ring-nav-progress data-[state=open]:border-nav-progress/50"
             >
-              <ProgressRing percent={complete ? 100 : percent} size={32} stroke={3} barClassName={complete ? 'stroke-ok' : 'stroke-cyan'} />
+              <ProgressRing percent={complete ? 100 : percent} size={32} stroke={3} barClassName={complete ? 'stroke-ok' : 'stroke-nav-progress'} />
               <span aria-hidden className={cn('absolute font-mono text-[10px] tabular-nums', complete ? 'text-ok' : 'text-steel-300')}>
                 {complete ? <Check className="size-3.5" /> : `${summary.coreDone}/${summary.coreTotal}`}
               </span>
@@ -117,7 +118,7 @@ export function LessonIsland({ sections, stages, summary, complete, onFinish }: 
                         }}
                         className={cn(
                           'relative hit-area flex min-h-9 w-full items-center gap-3 rounded-md px-2 text-left text-sm transition-colors hover:bg-tint/[0.05]',
-                          active === s.id ? 'bg-cyan/10 text-cyan' : 'text-steel-300 hover:text-paper',
+                          active === s.id ? 'bg-nav-learn/10 text-nav-learn' : 'text-steel-300 hover:text-paper',
                         )}
                       >
                         <span className="w-5 font-mono text-[11px] tabular-nums text-steel-500">{String(i + 1).padStart(2, '0')}</span>
@@ -150,19 +151,22 @@ export function LessonIsland({ sections, stages, summary, complete, onFinish }: 
                       type="button"
                       onClick={() => jumpToSection(s.target, reduced)}
                       aria-current={isNext ? 'true' : undefined}
+                      data-nav-accent={stageAccents[s.id]}
+                      data-stage-state={s.done ? 'complete' : isNext ? 'next' : 'upcoming'}
                       title={s.detail}
                       className={cn(
                         'relative hit-area flex min-h-9 items-center gap-1.5 rounded-full border px-1.5 text-xs transition-colors sm:px-2.5',
                         s.done
                           ? 'border-ok/35 bg-ok/[0.07] text-ok'
                           : isNext
-                            ? 'tactile border-cyan/60 bg-cyan/10 text-cyan'
+                            ? 'tactile navigation-stage-next'
                             : 'border-line/10 text-steel-400 hover:border-line/25 hover:text-paper',
                       )}
                     >
                       <span
                         aria-hidden
-                        className={cn('grid size-5 shrink-0 place-items-center rounded-full font-mono text-[10px]', s.done ? 'bg-ok/20' : 'bg-tint/[0.06]')}
+                        data-stage-marker
+                        className={cn('grid size-5 shrink-0 place-items-center rounded-full font-mono text-[10px]', s.done ? 'bg-ok/20' : 'navigation-stage-index')}
                       >
                         {s.done ? <Check className="size-3" /> : i + 1}
                       </span>

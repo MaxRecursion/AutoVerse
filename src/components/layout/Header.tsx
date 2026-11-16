@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import { Menu } from 'lucide-react'
-import { NavLink } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { SearchCommand } from '@/features/search/SearchCommand'
-import { cn } from '@/lib/utils'
 import { Logo } from './Logo'
 import { primaryNav, secondaryNav } from './nav'
 import { TourButton } from '@/features/tour/TourButton'
@@ -12,6 +10,7 @@ import { useStartTour } from '@/features/tour/useStartTour'
 import { ProgressPill } from './ProgressPill'
 import { CourseNavigationTrigger } from '@/features/course-navigation/CourseNavigation'
 import { ThemeToggle } from '@/features/theme/ThemeToggle'
+import { NavigationLink } from './NavigationLink'
 
 export function Header() {
   const [open, setOpen] = useState(false)
@@ -22,17 +21,7 @@ export function Header() {
         <CourseNavigationTrigger />
         <Logo compactOnPhone />
         <nav aria-label="Primary" data-tour="nav" className="ml-4 hidden items-center gap-1 xl:flex">
-          {primaryNav.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                cn('rounded-md px-2 py-1.5 text-sm text-steel-300 transition-colors hover:text-paper', isActive && 'bg-tint/[0.06] text-paper')
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
+          {primaryNav.map((item) => <NavigationLink key={item.to} item={item} />)}
         </nav>
         <div className="ml-auto flex items-center gap-1 sm:gap-2 pointer-coarse:gap-2.5">
           <ProgressPill />
@@ -52,16 +41,7 @@ export function Header() {
                 </SheetTitle>
               </SheetHeader>
               <nav aria-label="Mobile" className="flex flex-col gap-1 px-4">
-                {[...primaryNav, ...secondaryNav].map((item) => (
-                  <NavLink
-                    key={item.to}
-                    to={item.to}
-                    onClick={() => setOpen(false)}
-                    className={({ isActive }) => cn('rounded-md px-3 py-3 text-base text-steel-300', isActive && 'bg-tint/[0.06] text-paper')}
-                  >
-                    {item.label}
-                  </NavLink>
-                ))}
+                {[...primaryNav, ...secondaryNav].map((item) => <NavigationLink key={item.to} item={item} variant="menu" onClick={() => setOpen(false)} />)}
                 <button
                   type="button"
                   onClick={() => {

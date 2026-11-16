@@ -1,6 +1,8 @@
-import { Link } from 'react-router'
 import { useStartTour } from '@/features/tour/useStartTour'
 import { Logo } from './Logo'
+import { NavigationLink } from './NavigationLink'
+import { primaryNav, secondaryNav } from './nav'
+import { BookOpen, Info } from 'lucide-react'
 
 export function Footer() {
   const startTour = useStartTour()
@@ -12,14 +14,14 @@ export function Footer() {
           <span className="text-xs">Original educational content. Simulations are illustrative, not validated engineering models.</span>
         </div>
         <nav aria-label="Footer" className="flex flex-wrap gap-x-4 gap-y-1 text-xs pointer-coarse:gap-y-0">
-          <Link to="/sound-lab" className="relative hit-area inline-flex items-center text-cyan hover:text-paper pointer-coarse:min-h-12">Engine Sound Lab</Link>
-          <Link to="/learn" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Topic index</Link>
-          <Link to="/pioneers" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Pioneers</Link>
-          <Link to="/glossary" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Glossary</Link>
-          <Link to="/map" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">System map</Link>
+          <NavigationLink item={{ ...primaryNav[0], label: 'Engine Sound Lab' }} variant="footer" />
+          <NavigationLink item={{ ...primaryNav[2], label: 'Topic index' }} variant="footer" />
+          <NavigationLink item={primaryNav[4]} variant="footer" />
+          <NavigationLink item={{ to: '/glossary', label: 'Glossary', accent: 'learn', icon: BookOpen }} variant="footer" />
+          <NavigationLink item={{ ...secondaryNav[0], label: 'System map' }} variant="footer" />
           <button type="button" onClick={startTour} className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Take the tour</button>
-          <Link to="/about" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Sources &amp; credits</Link>
-          <Link to="/progress" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Local progress</Link>
+          <NavigationLink item={{ to: '/about', label: 'Sources & credits', accent: 'map', icon: Info }} variant="footer" />
+          <NavigationLink item={{ ...primaryNav[5], label: 'Local progress' }} variant="footer" />
           <a href="https://maxrecursion.dev" className="relative hit-area inline-flex items-center hover:text-paper pointer-coarse:min-h-12">Made by Akshay Kulkarni</a>
         </nav>
       </div>
